@@ -1,6 +1,15 @@
+
 {
-  "name": "root",
+  "name": "ks",
   "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "build-ts": "lerna run build-ts",
+    "lint": "lerna run lint",
+    "postinstall": "npm run bootstrap && npm run build-ts",
+    "test": "lerna run test"
+  },
   "devDependencies": {
     "lerna": "^3.22.1"
   }
