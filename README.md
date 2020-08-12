@@ -18,7 +18,9 @@ The backend application is using the PERN Stack (Postgres, Express React, Node).
 
 - Install Node & NPM
 
-        brew install node
+        brew install node@12
+
+NOTE: use LTS, NOT current.  If you already have a different version of node installed, you can use https://github.com/nvm-sh/nvm to switch back and forth.  Do `nvm use` to switch.
 
 - Clone and go into the application
 
@@ -34,7 +36,7 @@ You should now be in the root of the project. We will start the backend first.
   node index.js
 ```
 
-If you navigate to `http://localhost:8080/` you should see "Hello World!".
+If you navigate to `http://localhost:8080/greeting` you should see "Hello World!".
 
 We will now start the frontend. Open up a new tab in the terminal and execute the following commands.
 
