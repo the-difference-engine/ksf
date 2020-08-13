@@ -18,7 +18,9 @@ The backend application is using the PERN Stack (Postgres, Express React, Node).
 
 - Install Node & NPM
 
-        brew install node
+        brew install node@12
+
+NOTE: use LTS, NOT current.  If you already have a different version of node installed, you can use https://github.com/nvm-sh/nvm to switch back and forth.  Do `nvm use` to switch.
 
 - Clone and go into the application
 
