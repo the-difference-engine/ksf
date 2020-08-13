@@ -38,6 +38,7 @@ You should now be in the root of the project. We will start the backend first.
 
 If you navigate to `http://localhost:8080/greeting` you should see "Hello World!".
 
+
 We will now start the frontend. Open up a new tab in the terminal and execute the following commands.
 
 ```
