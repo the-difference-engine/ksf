@@ -67,8 +67,8 @@ If you do not have Postgres installed, you can install it via brew
 4. Run the alias you just created: `pg_start`. Use this comment to start your database service.
    - alternatively, `pg_stop` stops your database service.
 5. Run the command: `createdb postgres`
-6. Connect to your postgres with the command: `psql`
-7. `createuser -s postgres` - fixes `role "postgres" does not exist`
+6. `createuser -s postgres` - fixes `role "postgres" does not exist`
+7. Connect to your postgres with the command: `psql`
 8. Test with `psql` command (and some additional commands if issues)
 
    ```
