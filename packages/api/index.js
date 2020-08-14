@@ -1,20 +1,21 @@
-
 const express = require('express');
-
-const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize('postgres://ryanmansfield:postgres@localhost:5432')
+require('dotenv').config()
+const sequelize =  require( './helper/sequelize.js');
 
 async function test(){
   try {
     await sequelize.authenticate();
+    console.log()
     console.log('Connection has been established successfully.');
     console.log('hi')
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
 }
- test();
+test();
+
+ console.log(process.env.postgres_user)
+
 const PORT = process.env.PORT || 8080;
 const app = express();
 
