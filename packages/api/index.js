@@ -1,5 +1,17 @@
-
 const express = require('express');
+require('dotenv').config()
+const sequelize =  require( './helper/sequelize.js');
+
+async function testSequelizeConnection(){
+  try {
+    await sequelize.authenticate();
+    console.log()
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
+testSequelizeConnection();
 
 const PORT = process.env.PORT || 8080;
 const app = express();

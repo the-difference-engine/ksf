@@ -1,3 +1,7 @@
 
 packages/api/node_modules
 packages/app/node_modules
+
+# dotenv environment variables file
+.env
+.env.test
