@@ -1,7 +1,17 @@
 const { Sequelize } = require('sequelize');
-const DATABASE_URL =
-  'postgres://ryanmansfield:postgres@localhost:5432/ryanmansfield';
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
 
-const sequelize = new Sequelize(DATABASE_URL);
+let sequelize;
+if (config.db_url) {
+  sequelize = new Sequelize(config.db_url, config);
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
+}
 
 module.exports = sequelize;
