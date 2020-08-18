@@ -8,7 +8,20 @@ Create a command center for receiving and managing the grant nomination process 
 
 ## What Technologies Are We Using?
 
-The backend application is using the PERN Stack (Postgres, Express React, Node). The backend application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application. 
+The backend application is using the PERN Stack (Postgres, Express React, Node). The backend application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application. [Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM.
+
+- Generate Model and Migration
+
+        npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+
+- Running Migration
+        npx sequelize-cli db:migrate
+
+- Create Seed
+        npx sequelize-cli seed:generate --name demo-user
+
+- Run Seed
+        npx sequelize-cli db:seed:all
 
 ## Getting Started With The App
 
@@ -27,7 +40,7 @@ NOTE: use LTS, NOT current.  If you already have a different version of node ins
         git clone https://github.com/the-difference-engine/ksf.git
         cd ksf
 
-You should now be in the root of the project. We will start the backend first. 
+You should now be in the root of the project. We will start the backend first.
 
 ```
   cd packages
@@ -79,4 +92,3 @@ If you do not have Postgres installed, you can install it via brew
    postgres=# ALTER ROLE postgres WITH SUPERUSER;
    postgres=# ALTER ROLE postgres WITH LOGIN;
    ```
-
