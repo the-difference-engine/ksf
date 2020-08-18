@@ -1,24 +1,19 @@
 {
   "development": {
-    "username": "root",
+    "username": "postgres",
     "password": null,
-    "database": "database_development",
+    "database": "postgres",
     "host": "127.0.0.1",
-    "dialect": "postgres",
-    "db_url": "postgres://hannah:postgres@localhost:5432/hannah"
+    "dialect": "postgres"
   },
   "test": {
-    "username": "root",
+    "username": "postgres",
     "password": null,
-    "database": "database_test",
+    "database": "postgres",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
     "dialect": "postgres"
   }
 }
