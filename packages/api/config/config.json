@@ -4,7 +4,8 @@
     "password": null,
     "database": "database_development",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "db_url": "postgres://hannah:postgres@localhost:5432/hannah"
   },
   "test": {
     "username": "root",
