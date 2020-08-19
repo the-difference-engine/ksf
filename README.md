@@ -96,14 +96,14 @@ If you do not have Postgres installed, you can install it via brew
    postgres=# ALTER ROLE postgres WITH LOGIN;
    ``
 
-### Set Up Enviroment Files
+### Set Up Enviroment Variables
 
-- Set Up Enviroment with DotENV Package [DotENV](https://www.npmjs.com/package/dotenv)
+- Set Up Enviroment Variables with DotENV Package [DotENV](https://www.npmjs.com/package/dotenv)
 
 ```
   cd packages
   cd api
   touch .ENV
 ```
-- Add you secrets here, they will be ignored by git.
+- Add your OAuth tokens, SSH keys, API credentials, and other secrets here they will be ignored by git.
 
