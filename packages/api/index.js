@@ -1,10 +1,10 @@
 const express = require('express');
 require('dotenv').config();
-const db = require('./helper/sequelize.js');
+const sequelize = require('./helper/sequelize.js');
 
 async function testSequelizeConnection() {
   try {
-    await db.sequelize.authenticate();
+    await sequelize.authenticate();
     console.log();
     console.log('Connection has been established successfully.');
   } catch (error) {

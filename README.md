@@ -8,7 +8,9 @@ Create a command center for receiving and managing the grant nomination process 
 
 ## What Technologies Are We Using?
 
-The backend application is using the PERN Stack (Postgres, Express React, Node). The backend application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application. [Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM.
+The backend application is using the PERN Stack (Postgres, Express React, Node). The backend application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application.
+
+[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file.
 
 - Generate Model and Migration
 
