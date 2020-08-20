@@ -1,27 +1,28 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   
   class Nomination extends Model {};
 
   Nomination.init({
-    id: DataTypes.UUIDV4,
-    status: DataTypes.STRING,
+    status: {
+      allowNull: false,
+      defaultValue: true,
+      type: DataTypes.STRING
+    },
     dateReceived: DataTypes.DATE,
     providerFirstName: DataTypes.STRING,
     providerLastName: DataTypes.STRING,
     providerNumber: DataTypes.INTEGER,
     emailAddress: DataTypes.STRING,
     title: DataTypes.STRING,
-    validated: DataTypes.BOOLEAN,
+    emailValidated: DataTypes.BOOLEAN,
     hospitalName: DataTypes.STRING,
     hospitalURL: DataTypes.STRING,
     hospitalAddress: DataTypes.STRING,
     hospitalCity: DataTypes.STRING,
     hospitalState: DataTypes.STRING,
-    hospitalZipCode: DataTypes.INTEGER,
+    hospitalZipCode: DataTypes.STRING,
     representativeFirstName: DataTypes.STRING,
     representativeLastName: DataTypes.STRING,
     representativeEmailAddress: DataTypes.STRING,
@@ -32,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     admissionDate: DataTypes.DATE,
     dischargeDate: DataTypes.DATE,
     patientDiagnosis: DataTypes.STRING,
-    amountRequested: DataTypes.INTEGER,
-    amountGranted: DataTypes.INTEGER,
+    amountRequestedCents: DataTypes.INTEGER,
+    amountGrantedCents: DataTypes.INTEGER,
     attachmentsDestination: DataTypes.STRING
   }, {
     sequelize,

@@ -10,6 +10,7 @@ module.exports = {
       },
       status: {
         allowNull: false,
+        defaultValue: true,
         type: Sequelize.STRING
       },
       dateReceived: {
@@ -30,7 +31,7 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-      validated: {
+      emailValidated: {
         type: Sequelize.BOOLEAN
       },
       hospitalName: {
@@ -49,7 +50,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       hospitalZipCode: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       representativeFirstName: {
         type: Sequelize.STRING
@@ -81,10 +82,10 @@ module.exports = {
       patientDiagnosis: {
         type: Sequelize.STRING
       },
-      amountRequested: {
+      amountRequestedCents: {
         type: Sequelize.INTEGER
       },
-      amountGranted: {
+      amountGrantedCents: {
         type: Sequelize.INTEGER
       },
       attachmentsDestination: {
