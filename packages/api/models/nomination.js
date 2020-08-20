@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   Nomination.init({
     status: {
       allowNull: false,
-      defaultValue: true,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: 'received'
     },
     dateReceived: DataTypes.DATE,
     providerFirstName: DataTypes.STRING,

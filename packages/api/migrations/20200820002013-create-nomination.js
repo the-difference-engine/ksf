@@ -10,8 +10,8 @@ module.exports = {
       },
       status: {
         allowNull: false,
-        defaultValue: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'received',
       },
       dateReceived: {
         type: Sequelize.DATE
