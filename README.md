@@ -96,11 +96,11 @@ If you do not have Postgres installed, you can install it via brew
 
    postgres=# ALTER ROLE postgres WITH SUPERUSER;
    postgres=# ALTER ROLE postgres WITH LOGIN;
-   ``
+   ```
 
-### Set Up Enviroment Variables
+### Set Up Environment Variables
 
-- Set Up Enviroment Variables with DotENV Package [DotENV](https://www.npmjs.com/package/dotenv)
+- Set Up Environment Variables with DotENV Package [DotENV](https://www.npmjs.com/package/dotenv)
 
 ```
   cd packages
