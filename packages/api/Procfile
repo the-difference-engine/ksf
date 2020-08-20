@@ -1,1 +1,2 @@
 web: cd packages/api && npm start
+release: sequelize db:migrate
