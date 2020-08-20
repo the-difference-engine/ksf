@@ -17,12 +17,15 @@ The backend application is using the PERN Stack (Postgres, Express React, Node).
         npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
 
 - Running Migration
+
         npx sequelize-cli db:migrate
 
 - Create Seed
+
         npx sequelize-cli seed:generate --name demo-user
 
 - Run Seed
+
         npx sequelize-cli db:seed:all
 
 ## Getting Started With The App
@@ -94,3 +97,15 @@ If you do not have Postgres installed, you can install it via brew
    postgres=# ALTER ROLE postgres WITH SUPERUSER;
    postgres=# ALTER ROLE postgres WITH LOGIN;
    ```
+
+### Set Up Environment Variables
+
+- Set Up Environment Variables with DotENV Package [DotENV](https://www.npmjs.com/package/dotenv)
+
+```
+  cd packages
+  cd api
+  touch .ENV
+```
+- Add your OAuth tokens, SSH keys, API credentials, and other secrets here they will be ignored by git.
+
