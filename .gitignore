@@ -6,3 +6,5 @@ packages/app/node_modules
 .env
 .env.test
 *.DS_Store
+/node_modules
+/.vscode
