@@ -17,6 +17,7 @@
     "sequelize": "^6.3.4"
   },
   "devDependencies": {
+    "eslint": "^7.7.0",
     "sequelize-cli": "^6.2.0"
   }
 }
