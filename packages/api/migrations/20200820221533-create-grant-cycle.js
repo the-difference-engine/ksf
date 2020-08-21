@@ -13,6 +13,7 @@ module.exports = {
       },
       isActive: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       openedOn: {
         type: Sequelize.DATE,
