@@ -38,6 +38,10 @@ The backend application is using the PERN Stack (Postgres, Express React, Node).
 
         brew install node@12
 
+- Install Lerna globally
+
+        npm i -g lerna
+
 NOTE: use LTS, NOT current.  If you already have a different version of node installed, you can use https://github.com/nvm-sh/nvm to switch back and forth.  Do `nvm use` to switch.
 
 - Clone and go into the application
