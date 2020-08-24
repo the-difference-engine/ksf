@@ -1,12 +1,12 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Nominations', {
+    await queryInterface.createTable('nominations', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
       },
       status: {
         allowNull: false,
@@ -14,94 +14,94 @@ module.exports = {
         defaultValue: 'received',
       },
       dateReceived: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       providerFirstName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       providerLastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       providerNumber: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       emailAddress: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       emailValidated: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       hospitalName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       hospitalURL: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       hospitalAddress: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       hospitalCity: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       hospitalState: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       hospitalZipCode: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       representativeFirstName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       representativeLastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       representativeEmailAddress: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       relationship: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       patientFirstName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       patientLastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       age: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       admissionDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       dischargeDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       patientDiagnosis: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       amountRequestedCents: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       amountGrantedCents: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       attachmentsDestination: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('Nominations');
-  }
+    await queryInterface.dropTable('nominations');
+  },
 };
