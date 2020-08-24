@@ -38,7 +38,7 @@ The backend application is using the PERN Stack (Postgres, Express React, Node).
 
         brew install node@12
 
-NOTE: use LTS, NOT current.  If you already have a different version of node installed, you can use https://github.com/nvm-sh/nvm to switch back and forth.  Do `nvm use` to switch.
+NOTE: use LTS, NOT current. If you already have a different version of node installed, you can use https://github.com/nvm-sh/nvm to switch back and forth. Do `nvm use` to switch.
 
 - Clone and go into the application
 
@@ -107,5 +107,19 @@ If you do not have Postgres installed, you can install it via brew
   cd api
   touch .ENV
 ```
+
 - Add your OAuth tokens, SSH keys, API credentials, and other secrets here they will be ignored by git.
 
+## Usage
+
+### Migrateion
+
+Connect to your postgres with the command: `psql`
+
+To run migration to your local database open up a new tab in the terminal, navigate to api folder, and execute the following command.
+
+```
+npx sequelize-cli db:migrate
+```
+
+If you check your postgres database you should see the tables intergrated!
