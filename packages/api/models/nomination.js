@@ -1,9 +1,9 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class nomination extends Model {}
+  class Nomination extends Model {}
 
-  nomination.init(
+  Nomination.init(
     {
       status: {
         allowNull: false,
@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'nomination',
+      modelName: 'Nomination',
     }
   );
-  return nomination;
+  return Nomination;
 };
