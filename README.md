@@ -10,23 +10,7 @@ Create a command center for receiving and managing the grant nomination process 
 
 The backend application is using the PERN Stack (Postgres, Express React, Node). The backend application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application.
 
-[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file.
-
-- Generate Model and Migration
-
-        npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
-
-- Running Migration
-
-        npx sequelize-cli db:migrate
-
-- Create Seed
-
-        npx sequelize-cli seed:generate --name demo-user
-
-- Run Seed
-
-        npx sequelize-cli db:seed:all
+[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file. [Quick overview of commands](https://github.com/the-difference-engine/ksf/tree/develop/sequelize-cli_shortcut.md)
 
 ## Getting Started With The App
 
@@ -116,7 +100,11 @@ If you do not have Postgres installed, you can install it via brew
 
 ## Usage
 
-### Migrateion
+### Creating models and migrations
+
+Using [Sequelize-Cli](https://sequelize.org/master/manual/migrations.html) will allow you to create tables to be intergrated in your local database. The models and migrations folders will both need to be reviewed and updated to reflect the name sake standard of app. See [naming convetion docs](https://github.com/the-difference-engine/ksf/tree/develop/database_naming_convention)
+
+### Migration
 
 Connect to your postgres with the command: `psql`
 
