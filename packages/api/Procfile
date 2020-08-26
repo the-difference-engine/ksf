@@ -1,1 +1,2 @@
-web: cd packages/api && npx sequelize-cli db:migrate && npm start
+web: npm start
+release: npx sequelize-cli db:migrate --url $DATABASE_URL
