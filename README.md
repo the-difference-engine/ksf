@@ -96,6 +96,7 @@ If you do not have Postgres installed, you can install it via brew
 
 - Add your OAuth tokens, SSH keys, API credentials, and other secrets here they will be ignored by git.
 
+
 ## Usage
 
 ### Creating models and migrations
@@ -115,3 +116,8 @@ npx sequelize-cli db:migrate
 ```
 
 If you check your postgres database you should see the tables intergrated!
+
+### Continuous Integration (CI)
+
+[Github Actions](https://docs.github.com/en/actions/building-and-testing-code-with-continuous-integration) is the CI provider. Node.js workflow configuration documentation found [here](https://docs.github.com/en/actions/language-and-framework-guides/using-nodejs-with-github-actions)
+
