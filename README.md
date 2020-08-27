@@ -10,24 +10,6 @@ Create a command center for receiving and managing the grant nomination process 
 
 The backend application is using the PERN Stack (Postgres, Express React, Node). The backend application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application.
 
-[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file.
-
-- Generate Model and Migration
-
-        npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
-
-- Running Migration
-
-        npx sequelize-cli db:migrate
-
-- Create Seed
-
-        npx sequelize-cli seed:generate --name demo-user
-
-- Run Seed
-
-        npx sequelize-cli db:seed:all
-
 ## Getting Started With The App
 
 - Install homebrew
@@ -38,7 +20,7 @@ The backend application is using the PERN Stack (Postgres, Express React, Node).
 
         brew install node@12
 
-NOTE: use LTS, NOT current.  If you already have a different version of node installed, you can use https://github.com/nvm-sh/nvm to switch back and forth.  Do `nvm use` to switch.
+NOTE: use LTS, NOT current. If you already have a different version of node installed, you can use https://github.com/nvm-sh/nvm to switch back and forth. Do `nvm use` to switch.
 
 - Install Lerna globally
 
@@ -111,7 +93,28 @@ If you do not have Postgres installed, you can install it via brew
   cd api
   touch .ENV
 ```
+
 - Add your OAuth tokens, SSH keys, API credentials, and other secrets here they will be ignored by git.
+
+## Usage
+
+### Creating models and migrations
+
+[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file. [Quick overview of commands](docs/sequelize-cli_shortcut.md)
+
+The models and migrations folders will both need to be reviewed and updated to reflect the name sake standard of app. See [naming convention docs](docs/database_naming_convention.md)
+
+### Migration
+
+Connect to your postgres with the command: `psql`
+
+To run migration to your local database open up a new tab in the terminal, navigate to api folder, and execute the following command.
+
+```
+npx sequelize-cli db:migrate
+```
+
+If you check your postgres database you should see the tables intergrated!
 
 ### Continuous Integration (CI)
 

@@ -1,9 +1,9 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Grant_Cycle extends Model {}
+  class GrantCycle extends Model {}
 
-  Grant_Cycle.init(
+  GrantCycle.init(
     {
       name: DataTypes.STRING,
       isActive: DataTypes.BOOLEAN,
@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Grant_Cycle',
+      modelName: 'GrantCycle',
     }
   );
-  return Grant_Cycle;
+  return GrantCycle;
 };
