@@ -100,9 +100,9 @@ If you do not have Postgres installed, you can install it via brew
 
 ### Creating models and migrations
 
-[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file. [Quick overview of commands](sequelize-cli_shortcut.md)
+[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file. [Quick overview of commands](docs/sequelize-cli_shortcut.md)
 
-The models and migrations folders will both need to be reviewed and updated to reflect the name sake standard of app. See [naming convetion docs](database_naming_convention.md)
+The models and migrations folders will both need to be reviewed and updated to reflect the name sake standard of app. See [naming convention docs](docs/database_naming_convention.md)
 
 ### Migration
 
