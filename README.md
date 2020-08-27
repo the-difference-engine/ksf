@@ -115,3 +115,7 @@ npx sequelize-cli db:migrate
 ```
 
 If you check your postgres database you should see the tables intergrated!
+
+### Continuous Integration (CI)
+
+[Github Actions](https://docs.github.com/en/actions/building-and-testing-code-with-continuous-integration) is the CI provider. Node.js workflow configuration documentation found [here](https://docs.github.com/en/actions/language-and-framework-guides/using-nodejs-with-github-actions)
