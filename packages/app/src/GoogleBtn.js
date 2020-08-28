@@ -4,43 +4,34 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 const CLIENT_ID = "216565480006-kir74928iff14l4ln6p5kn0llrd5jk9a.apps.googleusercontent.com";
 
 class GoogleBtn extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    isLogined: false,
+    accessToken: ""
+  };
 
-    this.state = {
-      isLogined: false,
-      accessToken: ""
-    };
-
-    this.login = this.login.bind(this);
-    this.handleLoginFailure = this.handleLoginFailure.bind(this);
-    this.logout = this.logout.bind(this);
-    this.handleLogoutFailure = this.handleLogoutFailure.bind(this);
-  }
-
-  login(response) {
+  login = (response) => {
     if (response.accessToken) {
       this.setState((state) => ({
         isLogined: true,
         accessToken: response.accessToken
       }));
     }
-  }
+  };
 
-  logout(response) {
+  logout = (response) => {
     this.setState((state) => ({
       isLogined: false,
       accessToken: ""
     }));
-  }
+  };
 
-  handleLoginFailure(response) {
+  handleLoginFailure = (response) => {
     alert("Failed to log in");
-  }
+  };
 
-  handleLogoutFailure(response) {
+  handleLogoutFailure = (response) => {
     alert("Failed to log out");
-  }
+  };
 
   render() {
     return (
@@ -62,12 +53,7 @@ class GoogleBtn extends Component {
             responseType="code,token"
           />
         )}
-        {this.state.accessToken ? (
-          <h5>
-            Your Access Token: <br />
-            <br /> {this.state.accessToken}
-          </h5>
-        ) : null}
+        {this.state.accessToken ? <h5>You have successfully logged in!</h5> : null}
       </div>
     );
   }
