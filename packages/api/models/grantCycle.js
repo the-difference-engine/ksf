@@ -1,7 +1,16 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class GrantCycle extends Model {}
+  class GrantCycle extends Model {
+    static associate(models) {
+      GrantCycles.associate = function (models) {
+        GrantCycles.hasMany(models.Nominations, {
+          foreignKey: 'grantCycleId',
+          as: 'Nominations',
+        });
+      };
+    }
+  }
 
   GrantCycle.init(
     {
