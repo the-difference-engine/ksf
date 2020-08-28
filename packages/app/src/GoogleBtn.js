@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
-const CLIENT_ID = "216565480006-kir74928iff14l4ln6p5kn0llrd5jk9a.apps.googleusercontent.com";
+const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 class GoogleBtn extends Component {
   state = {
@@ -34,6 +34,7 @@ class GoogleBtn extends Component {
   };
 
   render() {
+    console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
     return (
       <div>
         {this.state.isLogined ? (
