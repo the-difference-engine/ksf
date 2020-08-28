@@ -66,3 +66,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Using Environmental Variables
+
+In order to use any environmental variables, you must prefix them with REACT_APP_ in order for them to be properly referenced.
