@@ -12,7 +12,5 @@
   "devDependencies": {
     "lerna": "^3.22.1"
   },
-  "dependencies": {
-    "react-google-login": "^5.1.21"
-  }
+  "dependencies": {}
 }
