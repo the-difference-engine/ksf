@@ -37,7 +37,12 @@ You should now be in the root of the project. We will start the backend first.
   cd packages
   cd api
   npm install
-  node index.js
+  node index.js 
+```
+You can also run nodemon, which is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected. To do so run the command below instead of node index.js.
+
+```
+  npm run dev
 ```
 
 If you navigate to `http://localhost:8080/greeting` you should see "Hello World!".
