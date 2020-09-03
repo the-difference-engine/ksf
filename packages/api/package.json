@@ -9,7 +9,8 @@
     "lint": "npx eslint .",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
-    "pretest": "cross-env NODE_ENV=test npm run migrate:reset"
+    "pretest": "cross-env NODE_ENV=test npm run migrate:reset",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "cross-env": "^7.0.2",
     "eslint": "^7.7.0",
+    "nodemon": "^2.0.4",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "jest": "^26.4.2",
