@@ -3,10 +3,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class GrantCycle extends Model {
     static associate(models) {
-      GrantCycles.associate = function (models) {
-        GrantCycles.hasMany(models.Nominations, {
+      GrantCycle.associate = function (models) {
+        GrantCycle.hasMany(models.Nomination, {
           foreignKey: 'grantCycleId',
-          as: 'Nominations',
+          as: 'Nomination',
         });
       };
     }
