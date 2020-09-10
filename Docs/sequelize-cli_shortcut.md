@@ -18,6 +18,14 @@
 
         npx sequelize-cli db:migrate:undo:all
 
-- Append table with migration [see also doc](https://sequelize.readthedocs.io/en/latest/docs/migrations/)
+- Generates a new migration file [see also doc](https://sequelize.readthedocs.io/en/latest/docs/migrations/)
 
           sequelize migration:create --name name_of_your_migration
+
+- Create skeleton seed
+
+        npx sequelize seed:generate --name name_of_your_seed
+
+- Remove seed
+
+          npx sequelize-cli db:seed:undo:all
