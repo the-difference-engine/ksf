@@ -1,9 +1,4 @@
 const { google } = require('googleapis');
-const keys = require('./keys.json');
-
-// const client = new google.auth.JWT(keys.client_email, null, keys.private_key, [
-//   'https://www.googleapis.com/auth/spreadsheets',
-// ]);
 
 const client = new google.auth.JWT(
   process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
@@ -27,7 +22,7 @@ async function gsrun(cl) {
 
   const opt = {
     spreadsheetId: '1iHh5t7RMsYo7gOzsy_4tHYXztMB-2onb6svEf13EJBs',
-    range: 'Sheet1!A1:b2',
+    range: 'Sheet1',
   };
 
   let data = await gsapi.spreadsheets.values.get(opt);
