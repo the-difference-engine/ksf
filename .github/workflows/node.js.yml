@@ -10,6 +10,24 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # Tests depend on having postgres around. This will spin a DB up inside
+    # a Docker container and expose it to the build steps. 
+    services:
+      postgres:
+        image: postgres
+        # A password is required for this image to work
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Ensure the database is up before we proceed
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        # Expose the database's port to the external system (where tests run)
+        ports:
+          - 5432:5432
+
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js

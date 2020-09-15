@@ -87,6 +87,7 @@ If you do not have Postgres installed, you can install it via brew
 
    postgres=# ALTER ROLE postgres WITH SUPERUSER;
    postgres=# ALTER ROLE postgres WITH LOGIN;
+   postgres=# ALTER ROLE postgres WITH PASSWORD postgres;
    ```
 
 ### Set Up Environment Variables
