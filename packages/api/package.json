@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"no test have been configured\"",
     "lint": "npx eslint ."
   },
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "eslint": "^7.7.0",
+    "nodemon": "^2.0.4",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "sequelize-cli": "^6.2.0"
