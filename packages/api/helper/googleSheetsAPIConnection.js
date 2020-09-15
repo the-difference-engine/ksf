@@ -21,7 +21,7 @@ async function gsrun(cl) {
   const gsapi = google.sheets({ version: 'v4', auth: cl });
 
   const opt = {
-    spreadsheetId: '1iHh5t7RMsYo7gOzsy_4tHYXztMB-2onb6svEf13EJBs',
+    spreadsheetId: '1GGtT9THPQZBHJSFcQHNu1mYBOdRLeBHZjTz0B5gcY2U',
     range: 'Sheet1',
   };
 
