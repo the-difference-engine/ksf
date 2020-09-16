@@ -1,4 +1,6 @@
 const { google } = require('googleapis');
+const spreadsheetsIdPar = '1GGtT9THPQZBHJSFcQHNu1mYBOdRLeBHZjTz0B5gcY2U';
+const rangePar = 'Sheet1';
 
 const client = new google.auth.JWT(
   process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
@@ -12,7 +14,7 @@ client.authorize(function (err, tokens) {
     console.log(err);
     return;
   } else {
-    console.log('Connected!');
+    console.log('Connected to google sheets API!');
     gsrun(client);
   }
 });
@@ -21,11 +23,11 @@ async function gsrun(cl) {
   const gsapi = google.sheets({ version: 'v4', auth: cl });
 
   const opt = {
-    spreadsheetId: '1GGtT9THPQZBHJSFcQHNu1mYBOdRLeBHZjTz0B5gcY2U',
-    range: 'Sheet1',
+    spreadsheetId: spreadsheetsIdPar,
+    range: rangePar,
   };
 
   let data = await gsapi.spreadsheets.values.get(opt);
 
-  console.log(data.data.values);
+  return data.data.values;
 }
