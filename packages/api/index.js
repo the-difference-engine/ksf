@@ -3,7 +3,6 @@ require('dotenv').config();
 const sequelize = require('./helper/sequelize.js');
 const app = require('./server');
 const PORT = process.env.PORT || 8080;
-const routes = require('./routes');
 
 async function testSequelizeConnection() {
   try {
@@ -15,6 +14,5 @@ async function testSequelizeConnection() {
   }
 }
 testSequelizeConnection();
-app.use('/api', routes);
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
