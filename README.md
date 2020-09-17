@@ -37,7 +37,7 @@ You should now be in the root of the project. We will start the backend first.
   cd packages
   cd api
   npm install
-  node index.js 
+  node index.js
 ```
 You can also run nodemon, which is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected. To do so run the command below instead of node index.js.
 
@@ -87,6 +87,7 @@ If you do not have Postgres installed, you can install it via brew
 
    postgres=# ALTER ROLE postgres WITH SUPERUSER;
    postgres=# ALTER ROLE postgres WITH LOGIN;
+   postgres=# ALTER ROLE postgres WITH PASSWORD 'postgres';
    ```
 
 ### Set Up Environment Variables
