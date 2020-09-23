@@ -1,13 +1,8 @@
 const express = require('express');
 require('dotenv').config();
-const routes = require('./routes')
-const app = express();
+const routes = require('./routes');
 
-// app.get('/greeting', (req, res) => {
-//   res.send({
-//     message: `Hello, ${req.query.name || 'World'}!`,
-//   });
-// });
+const app = express();
 
 app.use('/', routes);
 

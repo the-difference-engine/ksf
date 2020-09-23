@@ -3,6 +3,6 @@ const controllers = require('../controllers');
 
 const router = Router();
 
-router.get('/nomination/:id', controllers.getNomiationById);
+router.get('/nomination/:id', controllers.getNominationById);
 
 module.exports = router
