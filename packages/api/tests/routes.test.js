@@ -25,4 +25,10 @@ describe('GET Nomination Endpoint', () => {
       .get('/nomination/00000000-0000-0000-0000-000000000000');
     expect(res.statusCode).toBe(404);
   });
+
+  it('when id is not a valid uuid it should return a 404', async () => {
+    const res = await request(app)
+      .get('/nomination/326');
+    expect(res.statusCode).toBe(404);
+  });
 });

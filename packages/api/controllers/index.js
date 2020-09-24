@@ -1,11 +1,16 @@
 const db = require('../models');
+const { validate: uuidValidate } = require('uuid');
 
 const getNominationById = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!uuidValidate(id)) {
+      return res.status(404).send('Nomination with the specified ID does not exist!');
+    }
+
     const nomination = await db.Nomination.findByPk(id);
-    // TODO Logic to check if ID is valid UUID before sending 500?
-    // console.log(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(id));
+
     if (nomination) {
       return res.status(200).json({ nomination });
     }
