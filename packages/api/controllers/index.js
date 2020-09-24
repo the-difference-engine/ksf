@@ -1,12 +1,12 @@
-const db = require('../models');
 const { validate: uuidValidate } = require('uuid');
+const db = require('../models');
 
 const getNominationById = async (req, res) => {
   try {
     const { id } = req.params;
 
     if (!uuidValidate(id)) {
-      return res.status(404).send('Nomination with the specified ID does not exist!');
+      return res.status(400).send('Provided ID is not a valid UUID');
     }
 
     const nomination = await db.Nomination.findByPk(id);
@@ -20,4 +20,4 @@ const getNominationById = async (req, res) => {
   }
 };
 
-module.exports = { getNominationById }
+module.exports = { getNominationById };

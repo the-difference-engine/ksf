@@ -14,21 +14,21 @@ describe('GET Nomination Endpoint', () => {
     nomination.destroy();
   });
 
-  it('when nomination exist it should return a 200', async () => {
+  it('returns a 200 when nomination exist', async () => {
     const res = await request(app)
       .get(`/nomination/${nomination.id}`);
     expect(res.statusCode).toBe(200);
   });
 
-  it('when nomination does not exist it should return a 404', async () => {
+  it('return a 404 when nomination does not exist', async () => {
     const res = await request(app)
       .get('/nomination/00000000-0000-0000-0000-000000000000');
     expect(res.statusCode).toBe(404);
   });
 
-  it('when id is not a valid uuid it should return a 404', async () => {
+  it('return a 400 when uuid is not a valid uuid', async () => {
     const res = await request(app)
       .get('/nomination/326');
-    expect(res.statusCode).toBe(404);
+    expect(res.statusCode).toBe(400);
   });
 });
