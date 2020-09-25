@@ -1,12 +1,13 @@
 const { Router } = require('express');
-const controllers = require('../controllers');
+const nominationController = require('../controllers/nomination.js');
+const userController = require('../controllers/user.js');
 
 const router = Router();
 
-// nomitation endpoints
-router.get('/nomination/:id', controllers.getNominationById);
+// nomintation endpoints
+router.get('/nomination/:id', nominationController.getNominationById);
 
 // user endpoints
-router.get('/user/:id', controllers.getUserById);
+router.get('/user/:id', userController.getUserById);
 
-module.exports = router
+module.exports = router;
