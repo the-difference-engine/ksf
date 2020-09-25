@@ -1,6 +1,6 @@
 const request = require('supertest');
-const app = require('../server');
-const db = require('../models');
+const app = require('../../server');
+const db = require('../../models');
 
 describe('GET Nomination Endpoint', () => {
   let nomination;
