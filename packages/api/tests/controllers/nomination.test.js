@@ -6,7 +6,9 @@ describe('GET Nomination Endpoint', () => {
   let nomination;
 
   beforeAll(() => {
-    nomination = db.Nomination.build({ id: 'b5a27641-d76b-4ab0-9cef-8bf9eb9e8fab' });
+    nomination = db.Nomination.build({
+      id: 'b5a27641-d76b-4ab0-9cef-8bf9eb9e8fab',
+    });
     return nomination.save();
   });
 
@@ -15,20 +17,34 @@ describe('GET Nomination Endpoint', () => {
   });
 
   it('returns a 200 when nomination exist', async () => {
-    const res = await request(app)
-      .get(`/nomination/${nomination.id}`);
+    const res = await request(app).get(`/nomination/${nomination.id}`);
     expect(res.statusCode).toBe(200);
   });
 
   it('return a 404 when nomination does not exist', async () => {
-    const res = await request(app)
-      .get('/nomination/00000000-0000-0000-0000-000000000000');
+    const res = await request(app).get(
+      '/nomination/00000000-0000-0000-0000-000000000000'
+    );
     expect(res.statusCode).toBe(404);
   });
 
   it('return a 400 when uuid is not a valid uuid', async () => {
-    const res = await request(app)
-      .get('/nomination/326');
+    const res = await request(app).get('/nomination/326');
     expect(res.statusCode).toBe(400);
+  });
+});
+
+describe('Create Nomination Endpoint', () => {
+  it('returns 500 when field is null', async () => {
+    const res = await request(app).post('/nomination');
+    expect(res.statusCode).toBe(500);
+  });
+
+  it('return 201 when nomination is created', async () => {
+    const data = {
+      providerFirstName: 'test provider',
+    };
+    const res = await request(app).post('/nomination').send(data);
+    expect(res.statusCode).toBe(201);
   });
 });

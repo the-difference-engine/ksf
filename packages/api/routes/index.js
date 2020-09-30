@@ -6,6 +6,7 @@ const router = Router();
 
 // nomintation endpoints
 router.get('/nomination/:id', nominationController.getNominationById);
+router.put('/nomination', nominationController.createNomination);
 
 // user endpoints
 router.get('/user/:id', userController.getUserById);

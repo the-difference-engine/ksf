@@ -1,4 +1,6 @@
 'use strict';
+const { v4: uuidv4 } = require('uuid');
+
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Nomination extends Model {
@@ -18,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: 'received',
+      },
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
       },
       dateReceived: DataTypes.DATE,
       providerFirstName: DataTypes.STRING,
@@ -52,5 +59,6 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'nominations',
     }
   );
+  Nomination.beforeCreate((nomination) => (nomination.id = uuidv4()));
   return Nomination;
 };
