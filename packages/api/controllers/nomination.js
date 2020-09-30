@@ -26,7 +26,7 @@ const createNomination = async (req, res) => {
   try {
     const nomination = await db.Nomination.create(req.body);
 
-    return res.status(201);
+    return res.status(201).json({});
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
