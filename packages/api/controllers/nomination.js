@@ -25,9 +25,9 @@ const getNominationById = async (req, res) => {
 const createNomination = async (req, res) => {
   try {
     const nomination = await db.Nomination.create(req.body);
-    console.log('this is the nom ', nomination);
 
     return res.status(201).json({
+      woohoo: 'nom created',
       nomination,
     });
   } catch (error) {
