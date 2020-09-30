@@ -36,7 +36,10 @@ describe('GET Nomination Endpoint', () => {
 
 describe('Create Nomination Endpoint', () => {
   it('returns 500 when field is null', async () => {
-    const res = await request(app).post('/nomination');
+    const data = {
+      providerFirstName: 'test provider',
+    };
+    const res = await request(app).post('/nomination').send(data);
     expect(res.statusCode).toBe(500);
   });
 
