@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
-const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-
 class GoogleBtn extends Component {
   state = {
     isLogined: false,
@@ -38,14 +36,14 @@ class GoogleBtn extends Component {
       <div>
         {this.state.isLogined ? (
           <GoogleLogout
-            clientId={CLIENT_ID}
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             buttonText="Logout"
             onLogoutSuccess={this.logout}
             onFailure={this.handleLogoutFailure}
           ></GoogleLogout>
         ) : (
           <GoogleLogin
-            clientId={CLIENT_ID}
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             buttonText="Login"
             onSuccess={this.login}
             onFailure={this.handleLoginFailure}
