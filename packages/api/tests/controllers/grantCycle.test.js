@@ -7,54 +7,50 @@ const db = require('../../models');
 describe('POST Grant Cycle Endpoint', () => {
   let body = {};
 
-  beforeAll(() => {
+  beforeEach(() => {
     body = {
       name: "test grant",
       openedOn: new Date("2019-01-01"),
-      closedOn: new Date("2020-01-01")
+      closedOn: new Date("2020-02-02"),
     };
     return body;
   });
 
-  it('returns a 201 when grant is created', async () => {
-    try {
-      const res = await request(app)
-        .post("/grantcycle/new")
-        .send(body)
-        .set('Content-Type', 'application/x-www-form-urlencoded');
-
-      expect(res.statusCode).toBe(201);
-
-    } catch (error) {
-      throw error;
-    }
+  it('returns a 201 when grant is created', (done) => {
+    request(app)
+      .post("/grantcycle")
+      .send(body)
+      .set('Content-Type', 'application/json')
+      .expect(201)
+      .end((error) => {
+        if (error) return done(error);
+        done();
+      });
   });
 
-  it('returns a 400 if openedOn >= ClosedOn', async () => {
+  it('returns a 400 if openedOn >= ClosedOn', (done) => {
     body.openedOn = body.closedOn;
-    try {
-      const res = await request(app)
-        .post("/grantcycle/new")
-        .send(body)
-        .set('Content-Type', 'application/x-www-form-urlencoded');
-
-      expect(res.statusCode).toBe(400);
-    } catch (error) {
-      throw error;
-    }
+    request(app)
+      .post("/grantcycle")
+      .send(body)
+      .set('Content-Type', 'application/json')
+      .expect(400)
+      .end((error) => {
+        if (error) return done(error);
+        done();
+      });
   });
 
-  it('returns a 400 on missing name', async () => {
+  it('returns a 400 on missing name', (done) => {
     delete body.name;
-    try {
-      const res = await request(app)
-        .post("/grantcycle/new")
-        .send(body)
-        .set('Content-Type', 'application/x-www-form-urlencoded');
-
-      expect(res.statusCode).toBe(400);
-    } catch (error) {
-      throw error;
-    }
+    request(app)
+      .post("/grantcycle")
+      .send(body)
+      .set('Content-Type', 'application/json')
+      .expect(400)
+      .end((error) => {
+        if (error) return done(error);
+        done();
+      });
   });
 });

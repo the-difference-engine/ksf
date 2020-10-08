@@ -12,6 +12,11 @@ router.get('/nomination/:id', nominationController.getNominationById);
 router.get('/user/:id', userController.getUserById);
 
 // grant cycle endpoints
-router.post('/grantcycle/new', grantCycleController.createGrantCycle);
+router.get('/grantcycle/findAll', grantCycleController.findAll);
+router.post('/grantcycle/', grantCycleController.create);
+router.post('/grantcycle/findByName', grantCycleController.findByName);
+router.put('/grantcycle/update', grantCycleController.update);
+
+// router.get('/grantcycle/getActive', grantCycleController.createGrantCycle);
 
 module.exports = router;

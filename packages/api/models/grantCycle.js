@@ -5,10 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class GrantCycle extends Model {
     static associate(models) {
       GrantCycle.associate = function (models) {
-        GrantCycle.hasMany(models.Nomination, {
-          foreignKey: 'nominationId',
-          as: 'Nomination',
-        });
+        GrantCycle.hasMany(models.Nomination);
       };
     }
   }
@@ -16,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   GrantCycle.init(
     {
       id: {
-        type: Sequelize.UUID,
+        type: DataTypes.UUID,
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
@@ -29,7 +26,10 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
-      isActive: DataTypes.BOOLEAN,
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       openedOn: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -49,7 +49,6 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeSave: (instance) => {
           if (instance.openedOn >= instance.closedOn) throw new Error('openedOn >= closedOn');
-          instance.isActive = instance.closedOn >= Date.now();
           return instance;
         },
       },
