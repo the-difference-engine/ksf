@@ -4,7 +4,7 @@ packages/app/node_modules
 lerna-debug.log
 
 # dotenv environment variables file
-.env
+*.env
 .env.test
 *.DS_Store
 /node_modules
