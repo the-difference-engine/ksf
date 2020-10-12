@@ -37,7 +37,7 @@ describe('GET Nomination Endpoint', () => {
 describe('Create Nomination Endpoint', () => {
   it('returns 500 when field is null', async () => {
     const data = {
-      providerFirstName: 'test provider',
+      id: null,
     };
     const res = await request(app).post('/nomination').send(data);
     expect(res.statusCode).toBe(500);
@@ -45,7 +45,6 @@ describe('Create Nomination Endpoint', () => {
 
   it('return 201 when nomination is created', async () => {
     const data = {
-      id: '914f97cb-5540-421b-ad6d-d3d4ceb5c44e',
       providerFirstName: 'test provider',
     };
     const res = await request(app).post('/nomination').send(data);

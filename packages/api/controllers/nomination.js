@@ -23,6 +23,9 @@ const getNominationById = async (req, res) => {
 };
 
 const createNomination = async (req, res) => {
+  if (req.body === null) {
+    return res.status(404).send('Required fields are not completed');
+  }
   try {
     const nomination = await db.Nomination.create(req.body);
 
