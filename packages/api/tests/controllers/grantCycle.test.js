@@ -249,26 +249,63 @@ describe('POST /grantcycle/findbyname', () => {
     }
   });
 
-  it('400 on missing name input', async (done) => {
-    try {
-      // const req = { name: testGrant.name };
-      const req = { dummyKey: 'none' };
-      const res = await request(app)
-        .post('/grantcycle/findbyname')
-        .send(req)
-        .set('Content-Type', 'application/json');
-      expect(res.statusCode).toEqual(400);
-      expect(res.body).toEqual({});
-      expect(req).not.toEqual(expect.objectContaining({
-        name: expect.any(String),
-      }));
-    } catch (error) {
-      console.error('error @ GET /grantcycle/findbyname', error);
-    }
-    done();
+  it('400 on missing name input', (done) => {
+    const req = { dummyKey: 'none' };
+    request(app)
+      .post('/grantcycle/findbyname')
+      .send(req)
+      .set('Content-Type', 'application/json')
+      .end((error, res) => {
+        expect(res.statusCode).toEqual(400);
+        expect(res.body).toEqual({});
+        expect(req).not.toEqual(expect.objectContaining({
+          name: expect.any(String),
+        }));
+        if (error) {
+          console.log(res.text);
+          console.error('error @ POST /grantcycle/findbyname', error);
+          return done(error);
+        }
+        done();
+      });
   });
-  // it('200 returns grant cycle', (done) => { });
-  // it('200 returns null if grant does not exist', (done) => { });
+  it('200 returns grant cycle', (done) => {
+    const req = { name: testGrant.name };
+    request(app)
+      .post('/grantcycle/findbyname')
+      .send(req)
+      .set('Content-Type', 'application/json')
+      .end((error, res) => {
+        expect(res.statusCode).toEqual(200);
+        // checks for the keys of res.body to be included in a new instance of GrantCycle
+        // couldn't figure how to do this with only object comparison and keep it in one line
+        expect(Object.keys(res.body))
+          .toEqual(expect.arrayContaining(Object.keys(new db.GrantCycle(testGrant).dataValues)));
+        if (error) {
+          console.log(res.text);
+          console.error('error @ POST /grantcycle/findbyname', error);
+          return done(error);
+        }
+        done();
+      });
+  });
+  it('200 returns null if grant does not exist', (done) => {
+    const req = { name: 'non-existent grant' };
+    request(app)
+      .post('/grantcycle/findbyname')
+      .send(req)
+      .set('Content-Type', 'application/json')
+      .end((error, res) => {
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toBeNull();
+        if (error) {
+          console.log(res.text);
+          console.error('error @ POST /grantcycle/findbyname', error);
+          return done(error);
+        }
+        done();
+      });
+  });
 });
 
 // describe('GET /grantcycle/findactive', () => {
