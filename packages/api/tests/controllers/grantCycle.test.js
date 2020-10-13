@@ -2,9 +2,13 @@ const request = require('supertest');
 const app = require('../../server');
 const db = require('../../models');
 
-// TODO make test to make sure relations work with Nomination as expected
+// memo make test to make sure relations work with Nomination as expected
 
-let testGrant = {
+// memo Jest did not exit one second after the test run has completed.
+/* This usually means that there are asynchronous operations that weren't stopped in your tests.
+Consider running Jest with `--detectOpenHandles` to troubleshoot this issue. */
+
+const testGrant = {
   name: 'test grant',
   openedOn: new Date('2019-01-01'),
   closedOn: new Date('2020-02-02'),
@@ -13,16 +17,10 @@ let testGrant = {
 
 describe('POST /grantcycle', () => {
   afterEach(async () => {
-    testGrant = {
-      name: 'test grant',
-      openedOn: new Date('2019-01-01'),
-      closedOn: new Date('2020-02-02'),
-      isActive: true,
-    };
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.log('error afterEach on POST /grantcycle', error.message);
+      console.log('error afterEach @ POST /grantcycle', error.message);
     }
     return testGrant;
   });
@@ -77,10 +75,9 @@ describe('POST /grantcycle', () => {
   });
 
   it('returns a 400 if openedOn >= ClosedOn', (done) => {
-    testGrant.openedOn = testGrant.closedOn;
     request(app)
       .post('/grantcycle')
-      .send(testGrant)
+      .send({ ...testGrant, openedOn: testGrant.closedOn })
       .set('Content-Type', 'application/json')
       .expect(400)
       .end((error, res) => {
@@ -91,10 +88,13 @@ describe('POST /grantcycle', () => {
   });
 
   it('returns a 400 on missing name', (done) => {
-    delete testGrant.name;
     request(app)
       .post('/grantcycle')
-      .send(testGrant)
+      .send({
+        openedOn: testGrant.openedOn,
+        closedOn: testGrant.closedOn,
+        isActive: testGrant.isActive,
+      })
       .set('Content-Type', 'application/json')
       .expect(400)
       .end((error, res) => {
@@ -114,9 +114,8 @@ describe('PUT /grantcycle', () => {
         db.GrantCycle.create({ ...testGrant, isActive: false, name: 'second grant' }),
       ]);
       grants = { firstGrant, secondGrant };
-      console.log('grants\n\n\n\n ', grants);
     } catch (error) {
-      console.error('error \n\n\n\n', error);
+      console.error('error beforeAll @ PUT /grantcycle', error);
     }
     return grants;
   });
@@ -125,7 +124,7 @@ describe('PUT /grantcycle', () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.log('error afterEach on PUT /grantcycle', error.message);
+      console.log('error afterEach @ PUT /grantcycle', error.message);
     }
   });
 
@@ -181,3 +180,100 @@ describe('PUT /grantcycle', () => {
       });
   });
 });
+
+describe('GET /grantcycle/findall', () => {
+  let grants;
+  beforeAll(async () => {
+    try {
+      const [firstGrant, secondGrant] = await Promise.all([
+        db.GrantCycle.create({ ...testGrant }),
+        db.GrantCycle.create({ ...testGrant, isActive: false, name: 'second grant' }),
+      ]);
+      grants = { firstGrant, secondGrant };
+    } catch (error) {
+      console.error('error beforeAll @ GET /grantcycle/findall', error);
+    }
+    return grants;
+  });
+
+  afterAll(async () => {
+    try {
+      await db.GrantCycle.destroy({ where: {} });
+    } catch (error) {
+      console.error('error afterEach @ GET /grantcycle/findall', error);
+    }
+  });
+
+  it('200 returns all cycles', async (done) => {
+    try {
+      const res = await request(app).get('/grantcycle/findall');
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.length).toEqual(2);
+      await done();
+    } catch (error) {
+      console.error('error @ GET /grantcycle/findall', error);
+    }
+  });
+  it('200 returns empty array if no cycles', async (done) => {
+    try {
+      await db.GrantCycle.destroy({ where: {} });
+      const res = await request(app).get('/grantcycle/findall');
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.length).toEqual(0);
+      await done();
+    } catch (error) {
+      console.error('error @ GET /grantcycle/findall', error);
+    }
+  });
+});
+
+describe('POST /grantcycle/findbyname', () => {
+  let grants;
+  beforeAll(async () => {
+    try {
+      const [firstGrant, secondGrant] = await Promise.all([
+        db.GrantCycle.create({ ...testGrant }),
+        db.GrantCycle.create({ ...testGrant, isActive: false, name: 'second grant' }),
+      ]);
+      grants = { firstGrant, secondGrant };
+    } catch (error) {
+      console.error('error beforeAll @ POST /grantcycle/findbyname', error);
+    }
+    return grants;
+  });
+  afterAll(async () => {
+    try {
+      await db.GrantCycle.destroy({ where: {} });
+    } catch (error) {
+      console.error('error afterEach @ POST /grantcycle/findbyname', error);
+    }
+  });
+
+  it('400 on missing name input', async (done) => {
+    try {
+      // const req = { name: testGrant.name };
+      const req = { dummyKey: 'none' };
+      const res = await request(app)
+        .post('/grantcycle/findbyname')
+        .send(req)
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toEqual(400);
+      expect(res.body).toEqual({});
+      expect(req).not.toEqual(expect.objectContaining({
+        name: expect.any(String),
+      }));
+    } catch (error) {
+      console.error('error @ GET /grantcycle/findbyname', error);
+    }
+    done();
+  });
+  // it('200 returns grant cycle', (done) => { });
+  // it('200 returns null if grant does not exist', (done) => { });
+});
+
+// describe('GET /grantcycle/findactive', () => {
+//   beforeAll(()=> {})
+  // afterAll(()=> {})
+//   it('200 returns active grant', (done) => {});
+//   it('200 returns null, no active grants', (done) => {});
+// });
