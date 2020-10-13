@@ -308,9 +308,53 @@ describe('POST /grantcycle/findbyname', () => {
   });
 });
 
-// describe('GET /grantcycle/findactive', () => {
-//   beforeAll(()=> {})
-  // afterAll(()=> {})
-//   it('200 returns active grant', (done) => {});
-//   it('200 returns null, no active grants', (done) => {});
-// });
+describe('GET /grantcycle/findactive', () => {
+  beforeAll(async () => {
+    try {
+      await db.GrantCycle.create(testGrant);
+    } catch (error) {
+      console.error('error beforeAll @ GET /grantcycle/findactive', error.message);
+    }
+  });
+  afterAll(async () => {
+    try {
+      await db.GrantCycle.destroy({ where: {} });
+    } catch (error) {
+      console.error('error afterAll @ GET /grantcycle/findactive', error.message);
+    }
+  });
+  it('200 returns active grant', (done) => {
+    request(app)
+      .get('/grantcycle/findactive')
+      .end((error, res) => {
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).not.toBeNull();
+        expect(res.body.isActive).toBe(true);
+        if (error) {
+          console.log(res.text);
+          console.error('error @ POST /grantcycle/findbyname', error);
+          return done(error);
+        }
+        done();
+      });
+  });
+  it('200 returns null, no active grants', async (done) => {
+    try {
+      await db.GrantCycle.destroy({ where: {} });
+    } catch (error) {
+      console.error('error @ GET /grantcycle/findactive', error.message);
+    }
+    request(app)
+      .get('/grantcycle/findactive')
+      .end((error, res) => {
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toBeNull();
+        if (error) {
+          console.log(res.text);
+          console.error('error @ POST /grantcycle/findbyname', error);
+          return done(error);
+        }
+        done();
+      });
+  });
+});
