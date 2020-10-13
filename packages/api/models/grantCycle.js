@@ -1,6 +1,7 @@
 'use strict';
 
-const { Model, Sequelize, DataTypes } = require('sequelize');
+const { Model, Sequelize, DataTypes, ValidationError } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class GrantCycle extends Model {
     static associate(models) {
@@ -21,7 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: {
+          args: true,
+          msg: 'name already in use!',
+        },
         validate: {
           notEmpty: true,
         },
@@ -47,8 +51,34 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeSave: (instance) => {
-          if (instance.openedOn >= instance.closedOn) throw new Error('openedOn >= closedOn');
+        beforeSave: async (instance) => {
+          if (instance.openedOn >= instance.closedOn) throw new ValidationError('openedOn must be before closedOn');
+
+          try {
+            const grant = await GrantCycle.findOne({ where: { name: instance.name } });
+            if (grant) {
+              throw new ValidationError('Grant with that name already exists');
+            }
+          } catch (error) {
+            if (error instanceof ValidationError) {
+              throw error;
+            }
+            throw new Error('something went wrong on validation');
+          }
+
+          if (instance.isActive) {
+            try {
+              const activeGrant = await GrantCycle.findOne({ where: { isActive: true } });
+              if (activeGrant) {
+                throw new ValidationError('Active grant already exists: ', activeGrant.name);
+              }
+            } catch (error) {
+              if (error instanceof ValidationError) {
+                throw error;
+              }
+              throw new Error('something went wrong on validation');
+            }
+          }
           return instance;
         },
       },

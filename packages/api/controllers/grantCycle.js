@@ -3,18 +3,18 @@ const db = require('../models');
 
 const create = async (req, res) => {
   try {
-    if (req.body.isActive) {
-      const activeGrant = await db.GrantCycle.findOne({ where: { isActive: true } });
-      if (activeGrant) return res.status(400).send(`Active grant already exists: ${activeGrant.name}`);
-    }
-    const grant = await db.GrantCycle.create({ ...req.body });
+    // if (req.body.isActive) {
+    //   const activeGrant = await db.GrantCycle.findOne({ where: { isActive: true } });
+    //   if (activeGrant) return res.status(400).send(`Active grant already exists: ${activeGrant.name}`);
+    // }
+    const grant = await db.GrantCycle.create(req.body);
     return res.status(201).json(grant);
   } catch (error) {
     if (error instanceof ValidationError) {
-      console.error('400 error at POST /grantcycle/', error);
+      console.error('400 error at POST /grantcycle', error);
       return res.status(400).send(error.message);
     }
-    console.error('500 error at POST /grantcycle/', error);
+    console.error('500 error at POST /grantcycle', error);
     return res.status(500).send('Something went wrong. Please try again');
   }
 };
@@ -24,14 +24,17 @@ const update = async (req, res) => {
     return res.status(400).send('Missing Grant cycle ID');
   }
 
-  const { id, name, openedOn, closedOn, isActive } = req.body;
+  const {
+    id, name, openedOn, closedOn, isActive,
+  } = req.body;
   try {
-    const [grant, activeGrant] = await Promise.all([
-      db.GrantCycle.findByPk(id),
-      db.GrantCycle.findOne({
-        where: { isActive: true },
-      }),
-    ]);
+    // const [grant, activeGrant] = await Promise.all([
+    //   db.GrantCycle.findByPk(id),
+    //   db.GrantCycle.findOne({
+    //     where: { isActive: true },
+    //   }),
+    // ]);
+    const grant = await db.GrantCycle.findByPk(id);
 
     if (!grant) {
       return res.status(404).send('Grant does not exist for the given ID');
@@ -40,20 +43,21 @@ const update = async (req, res) => {
     if (name) grant.name = name;
     if (openedOn) grant.openedOn = openedOn;
     if (closedOn) grant.closedOn = closedOn;
-    if (isActive) {
-      if (activeGrant) {
-        return res.status(400).send(`Active grant already exists: ${activeGrant.name}`);
-      }
-      grant.isActive = isActive;
-    }
+    if (isActive) grant.isActive = isActive;
+    // if (isActive) {
+    //   if (activeGrant) {
+    //     return res.status(400).send(`Active grant with this name already exists: ${activeGrant.name}`);
+    //   }
+    //   grant.isActive = isActive;
+    // }
     await grant.save();
-    return res.status(204).json(grant);
+    return res.status(200).send(`Updated ${grant.name} successfully`);
   } catch (error) {
     if (error instanceof ValidationError) {
-      console.error('400 error at PUT /grantcycle/update', error);
+      console.error('400 error at PUT /grantcycle', error);
       return res.status(400).send(error.message);
     }
-    console.error('500 error at POST /grantcycle/update', error);
+    console.error('500 error at PUT /grantcycle', error);
     return res.status(500).send('Something went wrong. Please try again');
   }
 };
@@ -63,7 +67,7 @@ const findAll = async (req, res) => {
     const grants = await db.GrantCycle.findAll();
     return res.status(200).json(grants);
   } catch (error) {
-    console.error('500 error at POST /grantcycle/update', error);
+    console.error('500 error at GET /grantcycle/findall', error);
     return res.status(500).send('Something went wrong. Please try again');
   }
 };
@@ -77,6 +81,7 @@ const findByName = async (req, res) => {
     const grant = await db.GrantCycle.findOne({ where: { name: req.body.name } });
     return res.status(200).json(grant);
   } catch (error) {
+    console.error('500 error at POST /grantcycle/findbyname', error);
     return res.status(500).send(error.message);
   }
 };
@@ -95,5 +100,5 @@ module.exports = {
   findAll,
   findByName,
   update,
-  findActive
+  findActive,
 };
