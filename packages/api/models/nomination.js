@@ -46,10 +46,34 @@ module.exports = (sequelize, DataTypes) => {
       attachmentsDestination: DataTypes.STRING,
     },
     {
+      hooks: {
+        beforeCreate: (nomination, option) => {
+          console.log("Hello from beforeCreate___________________________________________________________________________________________________");
+          console.log(nomination);
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          console.log(nomination)
+          const publicDomains = ['@google.com', '@yahoo.com']
+          if (publicDomains.some(domain => nomination.emailAddress.split('@')[1].includes(domain))) {
+            // nomination.publicEmailDomain = true;
+            console.log('public domain ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+          }
+        },
+      },
       sequelize,
       modelName: 'Nomination',
       tableName: 'nominations',
     }
   );
+  // Nomination.beforeCreate(async (nomination, options) => {
+  //   const negEmails =["gmail.com", "aol.com", "outlook.com", "zoho.com", "mail.com", "yahoo.com", "protonmail.com", "icloud.com"];
+  //   negEmails.forEach(function(domain){
+  //     if(nomination.emailAddress.includes(domain)){
+  //       // nomination.emailValidated = false;
+  //       // console.log("PUBLIC DOMAIN!!")
+  //     }
+  //   })
+  // });
+
+
   return Nomination;
 };
