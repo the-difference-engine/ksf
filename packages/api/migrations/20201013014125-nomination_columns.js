@@ -53,7 +53,7 @@ module.exports = {
         type: Sequelize.STRING,
       }),
       queryInterface.addColumn('nominations', 'providerNumber', {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       }),
       queryInterface.removeColumn('nominations', 'providerName'),
       queryInterface.removeColumn('nominations', 'patientName'),
