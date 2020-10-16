@@ -19,6 +19,7 @@
 [How HTTPS Works](https://howhttps.works/)
 [Impostor Syndrome Article - Turn into an Advantage](https://www.zainrizvi.io/blog/the-impostors-advantage/)
 [Impostor Syndrome Talk - You are not an imposture](https://www.youtube.com/watch?v=l_Vqp1dPuPo)
+[KeyValues - Eng Job Board around Values](https://www.keyvalues.com/)
 
 ### Interviewing 
 [Interview Cake](https://www.interviewcake.com/) (note: do not pay, checkout Glossary and Interview Tips)
