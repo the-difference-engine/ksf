@@ -9,7 +9,7 @@ module.exports = {
       queryInterface.removeColumn('nominations', 'patientFirstName'),
       queryInterface.removeColumn('nominations', 'patientLastName'),
       queryInterface.removeColumn('nominations', 'age'),
-
+      queryInterface.removeColumn('nominations', 'providerNumber'),
       queryInterface.addColumn('nominations', 'providerName', {
         type: Sequelize.STRING,
       }),
@@ -25,6 +25,10 @@ module.exports = {
       queryInterface.addColumn('nominations', 'representativePhoneNumber', {
         type: Sequelize.INTEGER,
       }),
+      queryInterface.addColumn('nominations', 'providerPhoneNumber', {
+        type: Sequelize.STRING,
+      }),
+      queryInterface.renameColumn('nominations', 'title', 'providerTitle'),
     ]);
   },
 
@@ -46,14 +50,18 @@ module.exports = {
         type: Sequelize.STRING,
       }),
       queryInterface.addColumn('nominations', 'age', {
+        type: Sequelize.STRING,
+      }),
+      queryInterface.addColumn('nominations', 'providerNumber', {
         type: Sequelize.INTEGER,
       }),
-
       queryInterface.removeColumn('nominations', 'providerName'),
       queryInterface.removeColumn('nominations', 'patientName'),
       queryInterface.removeColumn('nominations', 'representativeRelationship'),
-      queryInterface.removeColumn('nominations', 'representativePhoneNumber'),
       queryInterface.removeColumn('nominations', 'patientAge'),
+      queryInterface.removeColumn('nominations', 'representativePhoneNumber'),
+      queryInterface.removeColumn('nominations', 'providerPhoneNumber'),
+      queryInterface.renameColumn('nominations', 'providerTitle', 'title'),
     ]);
   },
 };
