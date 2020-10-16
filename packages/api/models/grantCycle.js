@@ -50,21 +50,12 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
+      indexes: [
+        { unique: true, fields: ['name'] },
+      ],
       hooks: {
         beforeSave: async (instance) => {
           if (instance.openedOn >= instance.closedOn) throw new ValidationError('openedOn must be before closedOn');
-
-          try {
-            const grant = await GrantCycle.findOne({ where: { name: instance.name } });
-            if (grant) {
-              throw new ValidationError('Grant with that name already exists');
-            }
-          } catch (error) {
-            if (error instanceof ValidationError) {
-              throw error;
-            }
-            throw new Error('something went wrong on validation');
-          }
 
           if (instance.isActive) {
             try {

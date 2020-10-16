@@ -14,9 +14,8 @@ router.get('/user/:id', userController.getUserById);
 // grant cycle endpoints
 router.get('/grantcycle/findall', grantCycleController.findAll);
 router.get('/grantcycle/findactive', grantCycleController.findActive);
-router.post('/grantcycle/findbyname', grantCycleController.findByName);
+router.get('/grantcycle/findbyname/:name', grantCycleController.findByName);
 router.post('/grantcycle', grantCycleController.create);
-router.put('/grantcycle', grantCycleController.update);
-
+router.put('/grantcycle/:id', grantCycleController.update);
 
 module.exports = router;
