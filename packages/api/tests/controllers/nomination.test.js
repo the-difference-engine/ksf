@@ -6,7 +6,7 @@ describe('GET Nomination Endpoint', () => {
   let nomination;
 
   beforeAll(() => {
-    nomination = db.Nomination.build({ id: 'b5a27641-d76b-4ab0-9cef-8bf9eb9e8fab' });
+    nomination = db.Nomination.build({ id: 'b5a27641-d76b-4ab0-9cef-8bf9eb9e8fab', emailAddress: 'test@gmail.com' });
     return nomination.save();
   });
 
