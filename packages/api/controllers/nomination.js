@@ -16,20 +16,17 @@ const getNominationById = async (req, res) => {
       return res.status(200).json({ nomination });
     }
     return res
-      .status(400)
+      .status(404)
       .send('Nomination with the specified ID does not exist!');
   } catch (error) {
+    console.error('500 - something is not right', error);
     return res.status(500).send(error.message);
   }
 };
 
 const createNomination = async (req, res) => {
-  if (req.body === null) {
-    return res.status(404).send('Required fields are not completed');
-  }
   try {
     const nomination = await db.Nomination.create(req.body);
-
     return res.status(201).json({ nomination });
   } catch (error) {
     if (error instanceof ValidationError) {

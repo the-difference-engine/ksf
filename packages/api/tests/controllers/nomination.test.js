@@ -21,11 +21,11 @@ describe('GET Nomination Endpoint', () => {
     expect(res.statusCode).toBe(200);
   });
 
-  it('return a 400 when nomination does not exist', async () => {
+  it('return a 404 when nomination does not exist', async () => {
     const res = await request(app).get(
       '/nomination/00000000-0000-0000-0000-000000000000'
     );
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(404);
   });
 
   it('return a 400 when uuid is not a valid uuid', async () => {
@@ -45,7 +45,7 @@ describe('Create Nomination Endpoint', () => {
 
   it('return 201 when nomination is created', async () => {
     const data = {
-      providerFirstName: 'test provider',
+      providerName: 'test provider',
     };
     const res = await request(app).post('/nomination').send(data);
     expect(res.statusCode).toBe(201);
