@@ -35,12 +35,12 @@ describe('GET Nomination Endpoint', () => {
 });
 
 describe('Create Nomination Endpoint', () => {
-  it('returns 500 when field is null', async () => {
+  it('returns 400 when field is not valid', async () => {
     const data = {
       id: null,
     };
     const res = await request(app).post('/nomination').send(data);
-    expect(res.statusCode).toBe(500);
+    expect(res.statusCode).toBe(400);
   });
 
   it('return 201 when nomination is created', async () => {
