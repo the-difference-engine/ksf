@@ -16,7 +16,7 @@ const getNominationById = async (req, res) => {
       return res.status(200).json({ nomination });
     }
     return res
-      .status(404)
+      .status(400)
       .send('Nomination with the specified ID does not exist!');
   } catch (error) {
     return res.status(500).send(error.message);
