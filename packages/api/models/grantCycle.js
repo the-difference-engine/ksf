@@ -50,9 +50,6 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      indexes: [
-        { unique: true, fields: ['name'] },
-      ],
       hooks: {
         beforeSave: async (instance) => {
           if (instance.openedOn >= instance.closedOn) throw new ValidationError('openedOn must be before closedOn');
