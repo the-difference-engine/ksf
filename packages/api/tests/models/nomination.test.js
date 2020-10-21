@@ -5,7 +5,7 @@ const db = require('../../models');
 describe('nomination model email validation', () => {
   let nomination;
 
-  afterAll(() => {
+  afterEach(() => {
     nomination.destroy();
   });
 
