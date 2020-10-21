@@ -1,4 +1,5 @@
 'use strict';
+const publicEmailDomains = ['gmail.com', 'aol.com', 'outlook.com', 'zoho.com', 'mail.com', 'yahoo.com', 'protonmail.com', 'icloud.com'];
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Nomination extends Model {
@@ -52,8 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate: (nomination, option) => {
-          const negEmails = ['gmail.com', 'aol.com', 'outlook.com', 'zoho.com', 'mail.com', 'yahoo.com', 'protonmail.com', 'icloud.com'];
-          negEmails.forEach((domain) => {
+          publicEmailDomains.forEach((domain) => {
             if (nomination.emailAddress.includes(domain)) {
               nomination.publicEmailDomain = true;
             }
