@@ -1,5 +1,14 @@
 'use strict';
-const publicEmailDomains = ['gmail.com', 'aol.com', 'outlook.com', 'zoho.com', 'mail.com', 'yahoo.com', 'protonmail.com', 'icloud.com'];
+const publicEmailDomains = [
+  'gmail.com',
+  'aol.com',
+  'outlook.com',
+  'zoho.com',
+  'mail.com',
+  'yahoo.com',
+  'protonmail.com',
+  'icloud.com',
+];
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Nomination extends Model {
@@ -23,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       dateReceived: DataTypes.DATE,
       providerName: DataTypes.STRING,
       providerPhoneNumber: DataTypes.STRING,
-      emailAddress: DataTypes.STRING,
+      providerEmailAddress: DataTypes.STRING,
       providerTitle: DataTypes.STRING,
       emailValidated: DataTypes.BOOLEAN,
       hospitalName: DataTypes.STRING,
@@ -54,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate: (nomination, option) => {
           publicEmailDomains.forEach((domain) => {
-            if (nomination.emailAddress.includes(domain)) {
+            if (nomination.providerEmailAddress.includes(domain)) {
               nomination.publicEmailDomain = true;
             }
           });
@@ -63,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Nomination',
       tableName: 'nominations',
-    },
+    }
   );
   return Nomination;
 };
