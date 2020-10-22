@@ -20,4 +20,34 @@ const getUserById = async (req, res) => {
   }
 };
 
-module.exports = { getUserById };
+const create = async (req, res) => {
+  const { email, username } = req.body;
+  if (!email) {
+    return res.status(400).send('Missing email');
+  }
+  if (!username) {
+    return res.status(400).send('Missing username');
+  }
+
+  try {
+    const [user, created] = await db.User.findOrCreate({
+      where: {
+        email,
+      },
+      defaults: {
+        username, email,
+      },
+    });
+    if (user) {
+      if (created) return res.status(201).json({ user });
+      return res.status(200).json({ user });
+    }
+    console.info('unknown 400 error @ POST /user');
+    return res.status(400).send('Something went wrong');
+  } catch (error) {
+    console.error('500 error @ POST /user', error);
+    return res.status(500).send('Something went wrong');
+  }
+};
+
+module.exports = { getUserById, create };
