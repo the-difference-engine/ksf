@@ -36,29 +36,87 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
-      dateReceived: DataTypes.DATE,
-      providerName: DataTypes.STRING,
-      providerPhoneNumber: DataTypes.STRING,
-      providerEmailAddress: DataTypes.STRING,
-      providerTitle: DataTypes.STRING,
-      emailValidated: DataTypes.BOOLEAN,
-      hospitalName: DataTypes.STRING,
-      hospitalURL: DataTypes.STRING,
-      hospitalAddress: DataTypes.STRING,
-      hospitalCity: DataTypes.STRING,
-      hospitalState: DataTypes.STRING,
-      hospitalZipCode: DataTypes.STRING,
-      representativeFirstName: DataTypes.STRING,
-      representativeLastName: DataTypes.STRING,
-      representativeEmailAddress: DataTypes.STRING,
-      representativePhoneNumber: DataTypes.STRING,
-      representativeRelationship: DataTypes.STRING,
-      patientName: DataTypes.STRING,
-      patientAge: DataTypes.INTEGER,
+      dateReceived: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      providerName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      providerPhoneNumber: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      providerEmailAddress: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      providerTitle: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      emailValidated: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      hospitalName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      hospitalURL: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      hospitalAddress: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      hospitalCity: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      hospitalState: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      hospitalZipCode: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      representativeName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      representativeEmailAddress: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: 'unknown',
+      },
+      representativePhoneNumber: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      representativeRelationship: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      patientName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      patientAge: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
       admissionDate: DataTypes.DATE,
       dischargeDate: DataTypes.DATE,
       patientDiagnosis: DataTypes.STRING,
-      amountRequestedCents: DataTypes.INTEGER,
+      amountRequestedCents: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       amountGrantedCents: DataTypes.INTEGER,
       attachmentsDestination: DataTypes.STRING,
       publicEmailDomain: {
