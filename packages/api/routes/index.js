@@ -10,6 +10,7 @@ router.get('/nomination/:id', nominationController.getNominationById);
 
 // user endpoints
 router.get('/user/:id', userController.getUserById);
+router.post('/user', userController.create);
 
 // grant cycle endpoints
 router.post('/grantcycle/new', grantCycleController.createGrantCycle);
