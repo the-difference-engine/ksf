@@ -39,8 +39,8 @@ const create = async (req, res) => {
       },
     });
     if (user) {
-      if (created) return res.status(201).json({ user });
-      return res.status(200).json({ user });
+      if (created) return res.status(201).json({ user }); 
+      return res.status(400).send('User already exists!');
     }
     console.info('unknown 400 error @ POST /user');
     return res.status(400).send('Something went wrong');
