@@ -8,6 +8,7 @@ describe('GET Nomination Endpoint', () => {
   beforeAll(() => {
     nomination = db.Nomination.build({
       id: 'b5a27641-d76b-4ab0-9cef-8bf9eb9e8fab',
+      providerEmailAddress: 'test@gmail.com',
     });
     return nomination.save();
   });
