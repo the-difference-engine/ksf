@@ -10,7 +10,7 @@ const publicEmailDomains = [
   'protonmail.com',
   'icloud.com',
 ];
-const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Nomination extends Model {
     static associate(models) {

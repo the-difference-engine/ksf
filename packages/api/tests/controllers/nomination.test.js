@@ -47,6 +47,7 @@ describe('Create Nomination Endpoint', () => {
   it('return 201 when nomination is created', async () => {
     const data = {
       providerName: 'test provider',
+      providerEmailAddress: 'test@gmail.com',
     };
     const res = await request(app).post('/nomination').send(data);
     expect(res.statusCode).toBe(201);
