@@ -19,19 +19,73 @@ describe('GET user Endpoint', () => {
     user.destroy();
   });
 
-  it('returns a 200 when user exist', async () => {
+  xit('returns a 200 when user exist', async () => {
     const res = await request(app)
       .get(`/user/${user.id}`);
     expect(res.statusCode).toBe(200);
   });
 
-  it('return a 404 when user does not exist', async () => {
+  xit('return a 404 when user does not exist', async () => {
     const res = await request(app)
       .get('/user/00000000-0000-0000-0000-000000000000');
     expect(res.statusCode).toBe(404);
   });
 
-  it('return a 400 when uuid is not a valid uuid', async () => {
+  xit('return a 400 when uuid is not a valid uuid', async () => {
+    const res = await request(app)
+      .get('/user/326');
+    expect(res.statusCode).toBe(400);
+  });
+});
+
+describe('POST user Endpoint', () => {
+const user = {
+  email: 'test@test.com',
+  username: 'test_username',
+}
+ 
+   afterAll( async () => {
+    await db.User.destroy();
+  });
+
+  it('returns a 201 when user is created', (done) => {
+    request(app)
+      .post(`/user`)
+      .set('Content-Type', 'application/json')
+      .send(user)
+      .end((err, res) => {
+        expect(res.statusCode).toBe(201)
+        console.log(res.body)
+        if (err) {
+          return done(err);
+        }
+        return done();
+      });
+  });
+
+  it('returns a 400 if user already exists', (done) => {
+    request(app)
+      .post(`/user`)
+      .set('Content-Type', 'application/json')
+      .send(user)
+      .end((err, res) => {
+        expect(res.statusCode).toBe(400)
+        console.log(res.text)
+        if (err) {
+          return done(err);
+        }
+        return done();
+      });
+  });
+
+
+  xit('return a 404 when user does not exist', async () => {
+    const res = await request(app)
+      .get('/user/00000000-0000-0000-0000-000000000000');
+    expect(res.statusCode).toBe(404);
+  });
+
+  xit('return a 400 when uuid is not a valid uuid', async () => {
     const res = await request(app)
       .get('/user/326');
     expect(res.statusCode).toBe(400);
