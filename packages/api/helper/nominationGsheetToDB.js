@@ -32,11 +32,30 @@ async function getRawNominationData(cl) {
   nominations.forEach((nomination, index) => {
     if (index !== 0) {
       db.Nomination.create({
-        emailAddress: 'test@email.com',
+        providerName: nomination[10],
+        providerPhoneNumber: nomination[11],
+        providerEmailAddress: nomination[12],
+        providerTitle: nomination[13],
+        hospitalName: nomination[18],
+        hospitalURL: nomination[19],
+        hospitalAddress: nomination[20],
+        hospitalCity: nomination[21],
+        hospitalState: nomination[22],
+        hospitalZipCode: nomination[23],
+        representativeName: nomination[24],
+        representativeEmailAddress: nomination[25],
+        representativePhoneNumber: nomination[26],
+        representativeRelationship: nomination[27],
+        patientName: nomination[29],
+        patientAge: nomination[30],
+        admissionDate: nomination[31],
+        dischargeDate: nomination[32],
+        patientDiagnosis: nomination[34],
+        amountRequestedCents: nomination[37],
       });
     }
   });
 
-  console.log(data.data.values);
+  console.log(nomination);
   return data.data.values;
 }
