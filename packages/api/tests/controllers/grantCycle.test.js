@@ -121,6 +121,19 @@ describe('PUT /grantcycle', () => {
     }
   });
 
+  it('returns 204 on successfully updating', (done) => {
+    const { id } = grants.secondGrant;
+    request(app)
+      .put(`/grantcycle/${id}`)
+      .send({ name: 'another unique name' })
+      .set('Content-Type', 'application/json')
+      .expect(204)
+      .end((error, res) => {
+        console.log(res.text);
+        if (error) return done(error);
+        done();
+      });
+  });
   it('returns 400 if no ID is provided', (done) => {
     request(app)
       .put('/grantcycle')
