@@ -33,8 +33,6 @@ module.exports = function gsheetToDB() {
 
     nominations.forEach((nomination, index) => {
       if (index !== 0) {
-        console.log(nomination[1]);
-
         db.Nomination.findOrCreate({
           where: {
             dateReceived: nomination[0],
@@ -65,6 +63,6 @@ module.exports = function gsheetToDB() {
       }
     });
 
-    return data.data.values;
+    return nominations;
   }
 };
