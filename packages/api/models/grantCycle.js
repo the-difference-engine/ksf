@@ -57,8 +57,8 @@ module.exports = (sequelize, DataTypes) => {
           if (instance.isActive) {
             try {
               const activeGrant = await GrantCycle.findOne({ where: { isActive: true } });
-              if (activeGrant) {
-                throw new ValidationError('Active grant already exists: ', activeGrant.name);
+              if (activeGrant && instance.id !== activeGrant.id) {
+                throw new ValidationError(`Active grant already exists: ${activeGrant.name}`);
               }
             } catch (error) {
               if (error instanceof ValidationError) {
