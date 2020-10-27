@@ -1,4 +1,5 @@
 const { validate: uuidValidate } = require('uuid');
+const { ValidationError } = require('sequelize');
 const db = require('../models');
 
 const getNominationById = async (req, res) => {
@@ -14,10 +15,27 @@ const getNominationById = async (req, res) => {
     if (nomination) {
       return res.status(200).json({ nomination });
     }
-    return res.status(404).send('Nomination with the specified ID does not exist!');
+    return res
+      .status(404)
+      .send('Nomination with the specified ID does not exist!');
   } catch (error) {
+    console.error('500 - something is not right', error);
     return res.status(500).send(error.message);
   }
 };
 
-module.exports = { getNominationById };
+const createNomination = async (req, res) => {
+  try {
+    const nomination = await db.Nomination.create(req.body);
+    return res.status(201).json({ nomination });
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      console.log('400 validation error', error);
+      return res.status(400).json({ error: error.message });
+    }
+
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { getNominationById, createNomination };
