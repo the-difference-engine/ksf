@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       hospitalName: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       hospitalURL: {
         allowNull: false,
@@ -71,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       hospitalAddress: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       hospitalCity: {
         allowNull: false,
@@ -87,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       representativeName: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       representativeEmailAddress: {
         allowNull: false,
@@ -111,14 +111,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       admissionDate: DataTypes.DATE,
-      dischargeDate: DataTypes.DATE,
-      patientDiagnosis: DataTypes.STRING,
+      dischargeDate: DataTypes.STRING,
+      patientDiagnosis: DataTypes.TEXT,
       amountRequestedCents: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
       amountGrantedCents: DataTypes.INTEGER,
-      attachmentsDestination: DataTypes.STRING,
+      attachmentsDestination: DataTypes.TEXT,
       publicEmailDomain: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
