@@ -1,14 +1,94 @@
+const { ValidationError } = require('sequelize');
 const db = require('../models');
 
-const createGrantCycle = async (req, res) => {
+const create = async (req, res) => {
   try {
-    const grant = await db.GrantCycle.create({ ...req.body });
-    if (grant) {
-      return res.status(201).json(grant);
-    }
+    const grant = await db.GrantCycle.create(req.body);
+    return res.status(201).json(grant);
   } catch (error) {
-    return res.status(400).send(error.message);
+    if (error instanceof ValidationError) {
+      console.info('400 at POST /grantcycle', error);
+      return res.status(400).send(error.message);
+    }
+    console.error('500 error at POST /grantcycle', error);
+    return res.status(500).send('Something went wrong. Please try again');
   }
 };
 
-module.exports = { createGrantCycle };
+const update = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).send('Missing Grant cycle ID');
+  }
+  const {
+    name, openedOn, closedOn, isActive,
+  } = req.body;
+  try {
+    const grant = await db.GrantCycle.findByPk(id);
+
+    if (!grant) {
+      return res.status(404).send('Grant does not exist for the given ID');
+    }
+
+    if (name) grant.name = name;
+    if (openedOn) grant.openedOn = openedOn;
+    if (closedOn) grant.closedOn = closedOn;
+    if (isActive) grant.isActive = isActive;
+    await grant.save();
+    return res.status(204).send(`Updated ${grant.name} successfully`);
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      console.info('400 error at PUT /grantcycle', error);
+      return res.status(400).send(error.message);
+    }
+    console.error('500 error at PUT /grantcycle', error);
+    return res.status(500).send('Something went wrong. Please try again');
+  }
+};
+
+const findAll = async (req, res) => {
+  try {
+    const grants = await db.GrantCycle.findAll();
+    if (grants.length) {
+      return res.status(200).json(grants);
+    }
+    return res.status(404).send('No grants found');
+  } catch (error) {
+    console.error('500 error at GET /grantcycle/findall', error);
+    return res.status(500).send('Something went wrong. Please try again');
+  }
+};
+
+const findByName = async (req, res) => {
+  const name = decodeURI(req.params.name);
+  try {
+    const grant = await db.GrantCycle.findOne({ where: { name } });
+    if (grant) {
+      return res.status(200).json(grant);
+    }
+    return res.status(404).send(`No grant cycle found with name: ${name}`);
+  } catch (error) {
+    console.error('500 error at POST /grantcycle/findbyname', error);
+    return res.status(500).send(error.message);
+  }
+};
+
+const findActive = async (req, res) => {
+  try {
+    const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
+    if (grant) {
+      return res.status(200).json(grant);
+    }
+    return res.status(404).send('No active grant cycles found');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+module.exports = {
+  create,
+  findAll,
+  findByName,
+  update,
+  findActive,
+};

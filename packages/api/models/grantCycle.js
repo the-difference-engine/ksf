@@ -1,14 +1,12 @@
 'use strict';
 
-const { Model, Sequelize, DataTypes } = require('sequelize');
+const { Model, Sequelize, DataTypes, ValidationError } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class GrantCycle extends Model {
     static associate(models) {
       GrantCycle.associate = function (models) {
-        GrantCycle.hasMany(models.Nomination, {
-          foreignKey: 'nominationId',
-          as: 'Nomination',
-        });
+        GrantCycle.hasMany(models.Nomination);
       };
     }
   }
@@ -16,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   GrantCycle.init(
     {
       id: {
-        type: Sequelize.UUID,
+        type: DataTypes.UUID,
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
@@ -24,12 +22,18 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: {
+          args: true,
+          msg: 'name already in use!',
+        },
         validate: {
           notEmpty: true,
         },
       },
-      isActive: DataTypes.BOOLEAN,
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       openedOn: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -47,9 +51,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeSave: (instance) => {
-          if (instance.openedOn >= instance.closedOn) throw new Error('openedOn >= closedOn');
-          instance.isActive = instance.closedOn >= Date.now();
+        beforeSave: async (instance) => {
+          if (instance.openedOn >= instance.closedOn) throw new ValidationError('openedOn must be before closedOn');
+
+          if (instance.isActive) {
+            try {
+              const activeGrant = await GrantCycle.findOne({ where: { isActive: true } });
+              if (activeGrant) {
+                throw new ValidationError('Active grant already exists: ', activeGrant.name);
+              }
+            } catch (error) {
+              if (error instanceof ValidationError) {
+                throw error;
+              }
+              throw new Error('something went wrong on validation');
+            }
+          }
           return instance;
         },
       },
