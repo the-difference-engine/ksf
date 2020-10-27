@@ -13,7 +13,6 @@ module.exports = function gsheetToDB() {
   client.authorize(function (err, tokens) {
     if (err) {
       console.log(err);
-      return;
     } else {
       console.log('Connected to google sheets API!');
       getRawNominationData(client);
@@ -21,6 +20,7 @@ module.exports = function gsheetToDB() {
   });
 
   async function getRawNominationData(cl) {
+    let data;
     const gsapi = google.sheets({ version: 'v4', auth: cl });
 
     const opt = {
@@ -28,11 +28,17 @@ module.exports = function gsheetToDB() {
       range: rangePar,
     };
 
-    let data = await gsapi.spreadsheets.values.get(opt);
+    try {
+      data = await gsapi.spreadsheets.values.get(opt);
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+
     let nominations = data.data.values;
 
-    nominations.forEach((nomination, index) => {
-      if (index !== 0) {
+    nominations.slice(1).forEach((nomination) => {
+      try {
         db.Nomination.findOrCreate({
           where: {
             dateReceived: nomination[0],
@@ -60,6 +66,8 @@ module.exports = function gsheetToDB() {
             ),
           },
         });
+      } catch (error) {
+        console.error(error);
       }
     });
 
