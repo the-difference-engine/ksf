@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail: true,
           notEmpty: true,
+          notNull: true,
         },
       },
       username: {

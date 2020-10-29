@@ -1,6 +1,8 @@
 const { validate: uuidValidate } = require('uuid');
 const db = require('../models');
 
+const { ValidationError } = require('sequelize');
+
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -22,29 +24,17 @@ const getUserById = async (req, res) => {
 
 const create = async (req, res) => {
   const { email, username } = req.body;
-  if (!email) {
-    return res.status(400).send('Missing email');
-  }
-  if (!username) {
-    return res.status(400).send('Missing username');
-  }
-
+  
   try {
-    const [user, created] = await db.User.findOrCreate({
-      where: {
-        email,
-      },
-      defaults: {
-        username, email,
-      },
-    });
-    if (user) {
-      if (created) return res.status(201).json({ user }); 
-      return res.status(400).send('User already exists!');
-    }
-    console.info('unknown 400 error @ POST /user');
-    return res.status(400).send('Something went wrong');
+    const user = await db.User.create({username, email});
+    return res.status(201).json({ user }); 
   } catch (error) {
+    if (error instanceof ValidationError) {
+      console.info('400 error @ POST /user', error);
+      return res.status(400).send(error.message);
+    }
+    console.error(error instanceof Error);
+    console.error(error instanceof ValidationError);
     console.error('500 error @ POST /user', error);
     return res.status(500).send('Something went wrong');
   }
