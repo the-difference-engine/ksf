@@ -39,23 +39,23 @@ describe('GET user Endpoint', () => {
 });
 
 describe('POST user Endpoint', () => {
-const user = {
-  email: 'test@test.com',
-  username: 'test_username',
-}
- 
-   afterAll( async () => {
+  const user = {
+    email: 'test@test.com',
+    username: 'test_username',
+  };
+
+  afterAll(async () => {
     await db.User.destroy();
   });
 
-  it('returns a 201 when user is created', (done) => {
+  it('returns 201 when user is created', (done) => {
     request(app)
       .post(`/user`)
       .set('Content-Type', 'application/json')
       .send(user)
       .end((err, res) => {
-        expect(res.statusCode).toBe(201)
-        console.log(res.body)
+        expect(res.statusCode).toBe(201);
+        console.log(res.body);
         if (err) {
           return done(err);
         }
@@ -63,14 +63,14 @@ const user = {
       });
   });
 
-  it('returns a 400 if user already exists', (done) => {
+  it('returns 400 if user already exists', (done) => {
     request(app)
       .post(`/user`)
       .set('Content-Type', 'application/json')
       .send(user)
       .end((err, res) => {
-        expect(res.statusCode).toBe(400)
-        console.log(res.text)
+        expect(res.statusCode).toBe(400);
+        console.log(res.text);
         if (err) {
           return done(err);
         }
@@ -78,16 +78,18 @@ const user = {
       });
   });
 
-
-  xit('return a 404 when user does not exist', async () => {
-    const res = await request(app)
-      .get('/user/00000000-0000-0000-0000-000000000000');
-    expect(res.statusCode).toBe(404);
-  });
-
-  xit('return a 400 when uuid is not a valid uuid', async () => {
-    const res = await request(app)
-      .get('/user/326');
-    expect(res.statusCode).toBe(400);
+  it('returns 400 on missing email', async () => {
+    request(app)
+      .post(`/user`)
+      .set('Content-Type', 'application/json')
+      .send({ username: user.username })
+      .end((err, res) => {
+        expect(res.statusCode).toBe(400);
+        console.log(res.text);
+        if (err) {
+          return done(err);
+        }
+        return done();
+      });
   });
 });

@@ -26,8 +26,25 @@ const create = async (req, res) => {
   const { email, username } = req.body;
   
   try {
+<<<<<<< HEAD
     const user = await db.User.create({username, email});
     return res.status(201).json({ user }); 
+=======
+    const [user, created] = await db.User.findOrCreate({
+      where: {
+        email,
+      },
+      defaults: {
+        username, email,
+      },
+    });
+    if (user) {
+      if (created) return res.status(201).json({ user });
+      return res.status(400).send('User already exists!');
+    }
+    console.info('unknown 400 error @ POST /user');
+    return res.status(400).send('Something went wrong');
+>>>>>>> ed09c06330f77973e082f6840e93c056ddd17df9
   } catch (error) {
     if (error instanceof ValidationError) {
       console.info('400 error @ POST /user', error);
