@@ -33,7 +33,7 @@ const update = async (req, res) => {
     if (name) grant.name = name;
     if (openedOn) grant.openedOn = openedOn;
     if (closedOn) grant.closedOn = closedOn;
-    if (isActive) grant.isActive = isActive;
+    if (isActive != null) grant.isActive = isActive;
     await grant.save();
     return res.status(204).send(`Updated ${grant.name} successfully`);
   } catch (error) {
