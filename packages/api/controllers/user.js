@@ -23,19 +23,14 @@ const getUserById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  const { email, username } = req.body;
-
   try {
-    const user = await db.User.create({ username, email });
+    const user = await db.User.create(req.body);
     return res.status(201).json({ user });
   } catch (error) {
     if (error instanceof ValidationError) {
-      // TODO: add 409 handler?
       console.info('400 error @ POST /user', error);
       return res.status(400).send(error.message);
     }
-    console.error(error instanceof Error);
-    console.error(error instanceof ValidationError);
     console.error('500 error @ POST /user', error);
     return res.status(500).send('Something went wrong');
   }

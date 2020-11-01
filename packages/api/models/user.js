@@ -14,10 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: {
+          args: true,
+          msg: 'Email already in use!',
+        },
         validate: {
           isEmail: true,
           notEmpty: true,
-          notNull: true,
         },
       },
       username: {
