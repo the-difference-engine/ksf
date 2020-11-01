@@ -30,6 +30,7 @@ const create = async (req, res) => {
     return res.status(201).json({ user });
   } catch (error) {
     if (error instanceof ValidationError) {
+      // TODO: add 409 handler?
       console.info('400 error @ POST /user', error);
       return res.status(400).send(error.message);
     }
