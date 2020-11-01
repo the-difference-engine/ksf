@@ -134,7 +134,7 @@ describe('PUT /grantcycle', () => {
         done();
       });
   });
-  it('returns 200 on successfully Active --> Inactive', (done) => {
+  it('returns 200 on successfully updating Active --> Inactive', (done) => {
     const { id } = grants.secondGrant;
     request(app)
       .put(`/grantcycle/${id}`)
