@@ -19,19 +19,19 @@ describe('GET user Endpoint', () => {
     user.destroy();
   });
 
-  xit('returns a 200 when user exist', async () => {
+  it('returns a 200 when user exist', async () => {
     const res = await request(app)
       .get(`/user/${user.id}`);
     expect(res.statusCode).toBe(200);
   });
 
-  xit('return a 404 when user does not exist', async () => {
+  it('return a 404 when user does not exist', async () => {
     const res = await request(app)
       .get('/user/00000000-0000-0000-0000-000000000000');
     expect(res.statusCode).toBe(404);
   });
 
-  xit('return a 400 when uuid is not a valid uuid', async () => {
+  it('return a 400 when uuid is not a valid uuid', async () => {
     const res = await request(app)
       .get('/user/326');
     expect(res.statusCode).toBe(400);
@@ -42,53 +42,54 @@ describe('POST user Endpoint', () => {
   const user = {
     email: 'test@test.com',
     username: 'test_username',
+    password: 'test_password',
   };
+  let newUser;
 
-  afterAll(async () => {
-    await db.User.destroy();
+  beforeEach(async () => {
+    newUser = await db.User.create(user);
+    return newUser;
+  });
+
+  afterEach(async () => {
+    await db.User.destroy({ where: {} });
   });
 
   it('returns 201 when user is created', (done) => {
     request(app)
       .post(`/user`)
       .set('Content-Type', 'application/json')
-      .send(user)
-      .end((err, res) => {
+      .send({ ...user, email: 'unique@email.com' })
+      .end((error, res) => {
         expect(res.statusCode).toBe(201);
-        console.log(res.body);
-        if (err) {
-          return done(err);
-        }
+        if (error) return done(error);
         return done();
       });
   });
 
-  xit('returns 409 if user already exists', (done) => {
+  it('returns 400 if user email already exists', (done) => {
     request(app)
       .post(`/user`)
       .set('Content-Type', 'application/json')
       .send(user)
-      .end((err, res) => {
-        expect(res.statusCode).toBe(409);
-        console.log(res.text);
-        if (err) {
-          return done(err);
-        }
+      .end((error, res) => {
+        expect(res.statusCode).toBe(400);
+        expect(res.text).toBe('Email already in use!');
+        if (error) return done(error);
         return done();
       });
   });
 
-  it('returns 400 on missing email', async () => {
+  it('returns 400 on missing email', async (done) => {
+    const { username, password } = user;
     request(app)
       .post(`/user`)
       .set('Content-Type', 'application/json')
-      .send({ username: user.username })
-      .end((err, res) => {
+      .send({ username, password })
+      .end((error, res) => {
         expect(res.statusCode).toBe(400);
-        console.log(res.text);
-        if (err) {
-          return done(err);
-        }
+        expect(res.text).toBe('notNull Violation: User.email cannot be null');
+        if (error) return done(error);
         return done();
       });
   });
