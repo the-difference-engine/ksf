@@ -4,15 +4,17 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import NominationsShow from './components/nomination';
 
 ReactDOM.render(
   <Router>
     <div className='container'>
-      <Switch>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      </Switch>
+      <React.StrictMode>
+        <Switch>
+          <Route path="/" exact component={App} />
+          <Route path="/nomination/:id" exact component={NominationsShow} />
+        </Switch>
+      </React.StrictMode>
     </div>
   </Router>,
   document.getElementById('root')
