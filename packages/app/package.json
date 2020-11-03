@@ -147,6 +147,7 @@
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^2.34.0",
+    "milligram": "^1.4.1",
     "typescript": "^4.0.2"
   }
 }
