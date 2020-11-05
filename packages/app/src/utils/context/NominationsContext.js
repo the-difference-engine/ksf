@@ -14,9 +14,18 @@ export const NominationsDataProvider = (props) => {
     nominationsAPI
       .getNominations()
       .then((res) => {
-        setNominationsData(res.data);
+        setNominationsData([res.data]);
+        console.log(
+          'woohoo! this should be the nominatin data from the nom context',
+          NominationsData
+        );
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        console.log(
+          err,
+          '*******************************************************'
+        )
+      );
   }
 
   return (
