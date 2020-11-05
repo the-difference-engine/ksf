@@ -10,7 +10,6 @@ describe('GET user Endpoint', () => {
       id: 'b5a27641-d76b-4ab0-9cef-8bf9eb9e8fab',
       email: 'test@test.com',
       username: 'test_username',
-      password: 'test_password',
     });
     return user.save();
   });
@@ -42,13 +41,11 @@ describe('POST user Endpoint', () => {
   const user = {
     email: 'test@test.com',
     username: 'test_username',
-    password: 'test_password',
   };
   let newUser;
 
   beforeEach(async () => {
-    newUser = await db.User.create(user);
-    return newUser;
+    return db.User.create(user);
   });
 
   afterEach(async () => {
@@ -81,11 +78,11 @@ describe('POST user Endpoint', () => {
   });
 
   it('returns 400 on missing email', async (done) => {
-    const { username, password } = user;
+    const { username} = user;
     request(app)
       .post(`/user`)
       .set('Content-Type', 'application/json')
-      .send({ username, password })
+      .send({ username})
       .end((error, res) => {
         expect(res.statusCode).toBe(400);
         expect(res.text).toBe('notNull Violation: User.email cannot be null');
