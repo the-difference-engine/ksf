@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NominationsShow from './components/nomination';
+import NominationShow from './components/nominationShow';
 
 ReactDOM.render(
   <Router>
@@ -12,7 +12,7 @@ ReactDOM.render(
       <React.StrictMode>
         <Switch>
           <Route path="/" exact component={App} />
-          <Route path="/nomination/:id" exact component={NominationsShow} />
+          <Route path="/nomination/:id" exact component={NominationShow} />
         </Switch>
       </React.StrictMode>
     </div>
