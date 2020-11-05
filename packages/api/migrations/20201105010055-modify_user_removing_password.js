@@ -2,16 +2,12 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return Promise.all([
-    queryInterface.removeColumn('users', 'password')
-    ])
+    return queryInterface.removeColumn('users', 'password')
   },
 
   down: async (queryInterface, Sequelize) => {
-    return Promise.all([
-      queryInterface.addColumn('users', 'password', {
+      return queryInterface.addColumn('users', 'password', {
         type: Sequelize.STRING,
-      }),
-      ])
+      })
   }
 };

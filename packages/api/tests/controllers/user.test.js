@@ -45,7 +45,7 @@ describe('POST user Endpoint', () => {
   let newUser;
 
   beforeEach(async () => {
-    return db.User.create(user);
+    return await db.User.create(user);
   });
 
   afterEach(async () => {
@@ -59,8 +59,8 @@ describe('POST user Endpoint', () => {
       .send({ ...user, email: 'unique@email.com' })
       .end((error, res) => {
         expect(res.statusCode).toBe(201);
-        if (error) return done(error);
-        return done();
+        // if (error) return done(error);
+        return done(error);
       });
   });
 
@@ -72,8 +72,8 @@ describe('POST user Endpoint', () => {
       .end((error, res) => {
         expect(res.statusCode).toBe(400);
         expect(res.text).toBe('Email already in use!');
-        if (error) return done(error);
-        return done();
+        // if (error) return done(error);
+        return done(error);
       });
   });
 
@@ -86,8 +86,8 @@ describe('POST user Endpoint', () => {
       .end((error, res) => {
         expect(res.statusCode).toBe(400);
         expect(res.text).toBe('notNull Violation: User.email cannot be null');
-        if (error) return done(error);
-        return done();
+        // if (error) return done(error);
+        return done(error);
       });
   });
 });
