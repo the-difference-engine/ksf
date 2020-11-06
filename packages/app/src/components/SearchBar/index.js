@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 
@@ -56,11 +55,15 @@ const SearchBar = () => {
     if (searchTerm) {
       NominationsData.filter((nomination) => {
         formatSearch(nomination.providerName) === formatSearch(searchTerm)
-          ? console.log(
-              nomination,
-              'find search results runs providerName as expected'
-            )
-          : console.log('not found');
+          ? setAllSearchResultData(nomination)
+          : formatSearch(nomination.patientName) === formatSearch(searchTerm)
+          ? setAllSearchResultData(nomination)
+          : formatSearch(nomination.hospitalName) === formatSearch(searchTerm)
+          ? setAllSearchResultData(nomination)
+          : formatSearch(nomination.representativeName) ===
+            formatSearch(searchTerm)
+          ? setAllSearchResultData(nomination)
+          : setMessage('Could not find what you are looking for');
       });
     }
   }
@@ -70,7 +73,6 @@ const SearchBar = () => {
     console.log(value, '+_+_+_+_+_');
     setSearchTerm(value);
     setLoading(true);
-    setMessage('');
   }
 
   function formatSearch(str) {
@@ -82,12 +84,30 @@ const SearchBar = () => {
       <div>{searchTerm}</div>
       {NominationsData ? (
         <>
-          {console.log('this is in the component')}
           <div>{NominationsData[0].patientName}</div>
         </>
       ) : (
         <div>Nadda </div>
       )}
+
+      {SearchResultData ? (
+        <>
+          <div>{SearchResultData[0]}</div>
+        </>
+      ) : (
+        <div>Nadda </div>
+      )}
+
+      {message ? (
+        <>
+          {console.log(message)}
+          <div> hello world </div>
+        </>
+      ) : (
+        <div>goodbye world</div>
+      )}
+
+      {console.log(message)}
       <form>
         <fieldset>
           <input
