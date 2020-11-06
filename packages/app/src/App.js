@@ -2,17 +2,19 @@ import React from "react";
 import logo from "./logo.svg";
 import GoogleBtn from "./components/GoogleBtn/GoogleBtn";
 import "./App.css";
-import FamilyMemberInfo from "./family_information#121/family_information"
-import family_info from "./family_information#121/family_info"
+import FamilyMemberInfo from "./components/familyInformation/familyInformation";
+import family_info from "./components/familyInformation/dummyData";
 
 function App() {
   return (
     <div className="App">
       <div>
         <GoogleBtn />
-        <FamilyMemberInfo {...family_info} />
+        <div style={{ width: "40vw", margin: "0 auto" }}>
+          <FamilyMemberInfo {...family_info} />
+        </div>
       </div>
-    </div>
+    </div >
   );
 }
 
