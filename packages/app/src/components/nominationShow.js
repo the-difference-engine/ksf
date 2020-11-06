@@ -1,26 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import fetchNomination from '../utils/API/fetchNomination'
+import axios from 'axios';
+import NominationBanner from './nominationBanner'
 
 const NominationShow = (props) => {
-  const [NominationData, setNominationData] = useState([])
-  // const nonimationId = props.match.params.id
-
-  function findNominationById(props) {
-    // console.log(props.match.params.id)
-    fetchNomination(props.match.params.id)
-    .then((res) => {
-      setNominationData([res.data.nomination])
-    })
-  }
+  const [NominationData, setNominationData] = useState({})
 
   useEffect(() => {
-    findNominationById(props)
-  })
-
+    axios.get(`/nomination/${props.match.params.id}`)
+      .then(function (response) {
+          const nomination = response.data.nomination
+          console.log(nomination)
+          setNominationData(nomination)
+  })},[props.match.params.id])
 
   return (
     <div className="nomination-show-page">
-      <p>{NominationData.hospitalCity}</p>
+      <NominationBanner nomination={NominationData && NominationData}/>
     </div>
   );
 };
