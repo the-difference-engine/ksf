@@ -5,21 +5,16 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
   const [loading, setLoading] = useState(false);
-  const [SearchResultData, setSearchResultData] = useState();
-  const [message, setMessage] = useState('');
+  const [SearchResultData, setSearchResultData] = useState([]);
+  const [errorMessageActive, setErrorMessageActive] = useState(false);
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     findAllNominations();
   }, []);
-
-  useEffect(() => {
-    findSearchResults(searchTerm);
-  }, [searchTerm]);
-
-  useEffect(() => {});
 
   function findAllNominations() {
     nominationsAPI
@@ -31,47 +26,47 @@ const SearchBar = () => {
   }
 
   function findSearchResults(searchTerm) {
-    if (searchTerm) {
-      NominationsData.filter((nomination) => {
-        if (
-          formatSearch(nomination.providerName) === formatSearch(searchTerm)
-        ) {
-          setSearchResultData(nomination);
-        }
-        if (formatSearch(nomination.patientName) === formatSearch(searchTerm)) {
-          {
-            setSearchResultData(nomination);
-          }
-        }
-        if (
-          formatSearch(nomination.hospitalName) === formatSearch(searchTerm)
-        ) {
-          {
-            setSearchResultData(nomination);
-          }
-        }
-        if (
-          formatSearch(nomination.representativeName) ===
-          formatSearch(searchTerm)
-        ) {
-          {
-            setSearchResultData(nomination);
-          }
-        } else {
-          console.log('Could not find what you are looking for');
-        }
-      });
-    }
+    let results = [];
+    NominationsData.filter((nomination) => {
+      if (formatSearch(nomination.providerName) === formatSearch(searchTerm)) {
+        results.push(nomination);
+        setErrorMessageActive(false);
+        setSearchResultData(...SearchResultData, results);
+      }
+    });
+    NominationsData.filter((nomination) => {
+      if (formatSearch(nomination.patientName) === formatSearch(searchTerm)) {
+        results.push(nomination);
+        setErrorMessageActive(false);
+        setSearchResultData(...SearchResultData, results);
+      }
+    });
+    NominationsData.filter((nomination) => {
+      if (formatSearch(nomination.hospitalName) === formatSearch(searchTerm)) {
+        results.push(nomination);
+        setErrorMessageActive(false);
+        setSearchResultData(...SearchResultData, results);
+      }
+    });
   }
 
   function handleInputChange(e) {
     const { value } = e.target;
-    console.log(value, '+_+_+_+_+_');
-    if (value.length === 3 || value.length === 6 || value.length > 8) {
-      console.log(value.length);
+    if (value.length % 3 === 0) {
+      console.log(value.length, '-- value length');
       setSearchTerm(value);
+      findSearchResults(value);
     }
     setLoading(true);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log('nothing happend on submit');
+    findSearchResults(searchTerm);
+    if (errorMessageActive === true) {
+      setShowErrorMessage(true);
+    }
   }
 
   function formatSearch(str) {
@@ -80,8 +75,9 @@ const SearchBar = () => {
 
   return (
     <>
-      {/* {console.log(SearchResultData)} */}
-      <form>
+      {console.log('search result data:', SearchResultData)}
+      {console.log(SearchResultData.length, 'Result data length')}
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <input
             type="text"
@@ -92,9 +88,9 @@ const SearchBar = () => {
           ></input>
         </fieldset>
       </form>
-      {message ? (
+      {showErrorMessage ? (
         <>
-          <div>{message} </div>
+          <div>Application Not Found</div>
         </>
       ) : (
         <></>
