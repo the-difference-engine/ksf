@@ -28,41 +28,36 @@ const SearchBar = () => {
   function findSearchResults(searchTerm) {
     let results = [];
     NominationsData.filter((nomination) => {
-      if (formatSearch(nomination.providerName) === formatSearch(searchTerm)) {
-        results.push(nomination);
-        setErrorMessageActive(false);
-        setSearchResultData(...SearchResultData, results);
-      }
+      [nomination.providerName, nomination.patientName].map((nomName) => {
+        if (
+          formatSearch(nomName).includes(formatSearch(searchTerm)) &&
+          !results.includes(nomination.id)
+        ) {
+          results.push(nomination);
+          setErrorMessageActive(false);
+        } else {
+          setErrorMessageActive(true);
+        }
+      });
     });
-    NominationsData.filter((nomination) => {
-      if (formatSearch(nomination.patientName) === formatSearch(searchTerm)) {
-        results.push(nomination);
-        setErrorMessageActive(false);
-        setSearchResultData(...SearchResultData, results);
-      }
-    });
-    NominationsData.filter((nomination) => {
-      if (formatSearch(nomination.hospitalName) === formatSearch(searchTerm)) {
-        results.push(nomination);
-        setErrorMessageActive(false);
-        setSearchResultData(...SearchResultData, results);
-      }
-    });
+    console.log('---------------------results', results);
+    setSearchResultData(results);
   }
 
   function handleInputChange(e) {
     const { value } = e.target;
+    console.log(value, '------');
     if (value.length % 3 === 0) {
       console.log(value.length, '-- value length');
       setSearchTerm(value);
       findSearchResults(value);
     }
+    setSearchTerm(value);
     setLoading(true);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log('nothing happend on submit');
     findSearchResults(searchTerm);
     if (errorMessageActive === true) {
       setShowErrorMessage(true);
@@ -76,7 +71,7 @@ const SearchBar = () => {
   return (
     <>
       {console.log('search result data:', SearchResultData)}
-      {console.log(SearchResultData.length, 'Result data length')}
+      {console.log(SearchResultData.length, 'searchResult data length')}
       <form onSubmit={handleSubmit}>
         <fieldset>
           <input
