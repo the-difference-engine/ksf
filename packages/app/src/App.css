@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+/*Nomination-Show-Banner START*/
+.nomination-banner {
+  display: flex;
+  flex-direction: column;
+}
+
+.nomination-banner p {
+  font-size: 0.875rem;
+  text-decoration:#A1AABA;
+}
+
+.nomination-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nomination-name span {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nomination-name button {
+  color: #128B3E;
+  font-weight: bold;
+  width: 100px;
+  height: 35px;
+  border-radius: 1rem;
+}
+
+.nomination-overview {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/* .nomination-overview p {
+  font-size: 0.875rem;
+} */
+
+.nomination-overview span {
+  font-weight: bold;
+  font-size: 1rem;
+}
+/*Nomination-Show-Banner END*/

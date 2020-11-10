@@ -5,12 +5,16 @@ const NominationBanner = (props) => {
 
   return (
     <div className="nomination-banner">
-      <h1>application name: lastname-state-abbrevation</h1>
-      <h1>{props.nomination.providerName}</h1>
-      <h1>{props.nomination.representativeName}</h1>
-      <h1>{props.nomination.createdAt}</h1>
-      <h1>{props.nomination.amountRequestedCents}</h1>
-      <button>edit</button>
+      <div className="nomination-name">
+        <p>Application <br></br> <span>lastname-state-abbrevation</span></p>
+        <button>Edit</button>
+      </div>
+      <div className="nomination-overview">
+        <p>HP Name <br></br> <span>{props.nomination.providerName}</span></p>
+        <p>Family Member Name <br></br> <span>{props.nomination.representativeName}</span></p>
+        <p>Created Date <br></br> <span>{props.nomination.createdAt}</span></p>
+        <p>Grant Amount Requested <br></br> <span>{props.nomination.amountRequestedCents}</span></p>
+      </div>
     </div>
   );
 };
