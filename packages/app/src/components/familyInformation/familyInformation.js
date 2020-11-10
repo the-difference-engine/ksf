@@ -2,12 +2,23 @@ import React from "react";
 import styles from "./styles.module.css";
 
 function FamilyMemberInfo(props) {
-  const fields = {
-    "Name": props.familyRepresentativeName,
-    "Email Address": props.familyRepresentativeEmailAddress,
-    "Phone Number": props.familyRepresentativePhoneNumber,
-    "Relationship": props.representativeRelationship,
-  };
+  const fields = [
+    {
+      label: "Name",
+      value: props.familyRepresentativeName
+    },
+    {
+      label: "Email Address",
+      value: props.familyRepresentativeEmailAddress
+    },
+    {
+      label: "Phone Number",
+      value: props.familyRepresentativePhoneNumber
+    },
+    {
+      label: "Relationship",
+      value: props.representativeRelationship
+    }];
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -15,9 +26,9 @@ function FamilyMemberInfo(props) {
       </div>
       <div className={styles.content}>
         {
-          Object.keys(fields).map((label) => (<div key={label}>
-            <label>{label}</label>
-            <span>{fields[label]}</span>
+          fields.map((obj) => (<div key={obj.label}>
+            <label>{obj.label}</label>
+            <span>{obj.value}</span>
           </div>))
         }
       </div>
