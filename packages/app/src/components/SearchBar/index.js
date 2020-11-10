@@ -4,9 +4,7 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
-  const [loading, setLoading] = useState(false);
   const [SearchResultData, setSearchResultData] = useState([]);
-  const [errorMessageActive, setErrorMessageActive] = useState(false);
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
@@ -26,41 +24,32 @@ const SearchBar = () => {
   }
 
   function findSearchResults(searchTerm) {
-    let results = [];
-    NominationsData.filter((nomination) => {
-      [nomination.providerName, nomination.patientName].map((nomName) => {
-        if (
-          formatSearch(nomName).includes(formatSearch(searchTerm)) &&
-          !results.includes(nomination.id)
-        ) {
-          results.push(nomination);
-          setErrorMessageActive(false);
-        } else {
-          setErrorMessageActive(true);
-        }
-      });
+    const filteredNoms = NominationsData.filter((nomination) => {
+      return [
+        formatSearch(nomination.providerName),
+        formatSearch(nomination.patientName),
+        formatSearch(nomination.hospitalName),
+        formatSearch(nomination.representativeName),
+      ].some((nom) => nom.includes(searchTerm));
     });
-    console.log('---------------------results', results);
-    setSearchResultData(results);
+    setSearchResultData(filteredNoms);
   }
 
   function handleInputChange(e) {
     const { value } = e.target;
-    console.log(value, '------');
     if (value.length % 3 === 0) {
-      console.log(value.length, '-- value length');
       setSearchTerm(value);
       findSearchResults(value);
     }
-    setSearchTerm(value);
-    setLoading(true);
+    setSearchTerm(formatSearch(value));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    findSearchResults(searchTerm);
-    if (errorMessageActive === true) {
-      setShowErrorMessage(true);
+    if (!searchTerm) {
+      return;
+    } else {
+      findSearchResults(searchTerm);
     }
   }
 
@@ -70,8 +59,6 @@ const SearchBar = () => {
 
   return (
     <>
-      {console.log('search result data:', SearchResultData)}
-      {console.log(SearchResultData.length, 'searchResult data length')}
       <form onSubmit={handleSubmit}>
         <fieldset>
           <input
