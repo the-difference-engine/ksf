@@ -53,18 +53,9 @@ describe('GET Nomination Endpoint', () => {
 });
 
 describe('GET ALL Nomination Endpoint', () => {
-  let nomination;
-
-  beforeAll(() => {
-    nomination = db.Nomination.build(nominationData);
-    return nomination.save();
-  });
-
-  afterAll(() => {
-    nomination.destroy();
-  });
-
   it('returns a 200 when nominations exist', async () => {
+    const nomination = await db.Nomination.build(nominationData);
+    nomination.save();
     const res = await request(app).get(`/nominations`);
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toEqual(1);
