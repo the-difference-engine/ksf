@@ -121,15 +121,28 @@ describe('PUT /grantcycle', () => {
     }
   });
 
-  it('returns 204 on successfully updating', (done) => {
+  it('returns 200 on successfully updating name', (done) => {
     const { id } = grants.secondGrant;
     request(app)
       .put(`/grantcycle/${id}`)
       .send({ name: 'another unique name' })
       .set('Content-Type', 'application/json')
-      .expect(204)
+      .expect(200)
       .end((error, res) => {
-        console.log(res.text);
+        expect(res.body.name).toBe('another unique name');
+        if (error) return done(error);
+        done();
+      });
+  });
+  it('returns 200 on successfully updating Active --> Inactive', (done) => {
+    const { id } = grants.secondGrant;
+    request(app)
+      .put(`/grantcycle/${id}`)
+      .send({ isActive: false })
+      .set('Content-Type', 'application/json')
+      .expect(200)
+      .end((error, res) => {
+        expect(res.body.isActive).toBe(false);
         if (error) return done(error);
         done();
       });

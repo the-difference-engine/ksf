@@ -33,9 +33,9 @@ const update = async (req, res) => {
     if (name) grant.name = name;
     if (openedOn) grant.openedOn = openedOn;
     if (closedOn) grant.closedOn = closedOn;
-    if (isActive) grant.isActive = isActive;
+    if (isActive != null) grant.isActive = isActive;
     await grant.save();
-    return res.status(204).send(`Updated ${grant.name} successfully`);
+    return res.status(200).send(grant);
   } catch (error) {
     if (error instanceof ValidationError) {
       console.info('400 error at PUT /grantcycle', error);

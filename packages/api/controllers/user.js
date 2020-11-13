@@ -1,6 +1,8 @@
 const { validate: uuidValidate } = require('uuid');
 const db = require('../models');
 
+const { ValidationError } = require('sequelize');
+
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -20,4 +22,18 @@ const getUserById = async (req, res) => {
   }
 };
 
-module.exports = { getUserById };
+const create = async (req, res) => {
+  try {
+    const user = await db.User.create(req.body);
+    return res.status(201).json({ user });
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      console.info('400 error @ POST /user', error);
+      return res.status(400).send(error.message);
+    }
+    console.error('500 error @ POST /user', error);
+    return res.status(500).send('Something went wrong');
+  }
+};
+
+module.exports = { getUserById, create };
