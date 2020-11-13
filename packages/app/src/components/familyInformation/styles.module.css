@@ -18,10 +18,10 @@
 /* content */
 /***********/
 
-.content > div > span:last-child,
+/* .content > div > span:last-child,
 .main > div > span:last-child {
   font-weight: bold;
-}
+} */
 
 .content > div {
   margin: 1rem 2rem;

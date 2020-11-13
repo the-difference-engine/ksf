@@ -22,7 +22,7 @@ function FamilyMemberInfo(props) {
   return (
     <div className={styles.main}>
       <div className={styles.header}>
-        <span className={styles.bold}>Family Member Information</span>
+        <label className={styles.bold}>Family Member Information</label>
       </div>
       <div className={styles.content}>
         {

@@ -6,6 +6,7 @@ import dummyData from './dummyData';
 //Todo - make this a Jest snapshot test - https://jestjs.io/docs/en/snapshot-testing
 test("renders prop name familyRepresentativeName", () => {
   const { getByText } = render(<FamilyInformation {...dummyData} />);
-  const familyName = getByText(/Lisa Samson/i);
+  const reg = new RegExp(dummyData.familyRepresentativeName, 'i')
+  const familyName = getByText(reg);
   expect(familyName).toBeInTheDocument();
 });
