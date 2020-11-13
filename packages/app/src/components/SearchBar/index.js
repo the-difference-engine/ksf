@@ -33,13 +33,20 @@ const SearchBar = () => {
       ].some((nom) => nom.includes(searchTerm));
     });
     setSearchResultData(filteredNoms);
+
+    filteredNoms.length < 1
+      ? setShowErrorMessage(true)
+      : setShowErrorMessage(false);
   }
 
   function handleInputChange(e) {
     const { value } = e.target;
-    if (value.length % 3 === 0) {
-      setSearchTerm(value);
-      findSearchResults(value);
+    if (value.length % 3 === 0 && value.length !== 0) {
+      findSearchResults(formatSearch(value));
+    }
+    if (value.length === 0) {
+      setSearchResultData([]);
+      setShowErrorMessage(false);
     }
     setSearchTerm(formatSearch(value));
   }
@@ -65,18 +72,15 @@ const SearchBar = () => {
             type="text"
             name="search"
             placeholder="  Search"
-            id="search-input"
+            data-id="search-input"
             onChange={handleInputChange}
-          ></input>
+            aria-label="search-input"
+          />
+          <div data-id="error-message">
+            {showErrorMessage ? <>Application Not Found</> : null}
+          </div>
         </fieldset>
       </form>
-      {showErrorMessage ? (
-        <>
-          <div>Application Not Found</div>
-        </>
-      ) : (
-        <></>
-      )}
     </>
   );
 };
