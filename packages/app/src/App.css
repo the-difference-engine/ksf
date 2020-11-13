@@ -38,48 +38,28 @@
 }
 
 /*Nomination-Show-Banner START*/
-.nomination-banner {
-  display: flex;
-  flex-direction: column;
+.nomination-banner-container {
+  padding: 3rem;
+}
+.icon-container {
+  height: 60px;
+  width: 60px;
 }
 
-.nomination-banner p {
-  font-size: 0.875rem;
-  text-decoration:#A1AABA;
+p {
+  font-size: .875rem;
+  margin-bottom: .5rem;
 }
 
-.nomination-name {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nomination-name span {
+h1  {
   font-size: 1.5rem;
-  font-weight: bold;
 }
 
-.nomination-name button {
-  color: #128B3E;
-  font-weight: bold;
-  width: 100px;
-  height: 35px;
-  border-radius: 1rem;
-}
-
-.nomination-overview {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-/* .nomination-overview p {
-  font-size: 0.875rem;
-} */
-
-.nomination-overview span {
-  font-weight: bold;
+h2 {
   font-size: 1rem;
 }
-/*Nomination-Show-Banner END*/
+
+.edit-button {
+  border-radius: 4rem;
+}
+
