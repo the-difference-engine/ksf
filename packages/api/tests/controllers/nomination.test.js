@@ -52,6 +52,22 @@ describe('GET Nomination Endpoint', () => {
   });
 });
 
+describe('GET ALL Nomination Endpoint', () => {
+  it('returns a 200 when nominations exist', async () => {
+    const nomination = await db.Nomination.build(nominationData);
+    nomination.save();
+    const res = await request(app).get(`/nominations`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.length).toEqual(1);
+  });
+
+  it('return a 404 when no nomination exist', async () => {
+    await db.Nomination.destroy({ where: {} });
+    const res = await request(app).get('/nominations');
+    expect(res.statusCode).toBe(404);
+  });
+});
+
 describe('Create Nomination Endpoint', () => {
   let nomination;
 

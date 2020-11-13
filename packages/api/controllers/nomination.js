@@ -24,6 +24,19 @@ const getNominationById = async (req, res) => {
   }
 };
 
+const findAllNominataions = async (req, res) => {
+  try {
+    const nominations = await db.Nomination.findAll();
+    if (nominations.length) {
+      return res.status(200).json(nominations);
+    }
+    return res.status(404).send('No nominations found');
+  } catch (error) {
+    console.error('500 on findAllNominations', error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 const createNomination = async (req, res) => {
   try {
     const nomination = await db.Nomination.create(req.body);
@@ -38,4 +51,4 @@ const createNomination = async (req, res) => {
   }
 };
 
-module.exports = { getNominationById, createNomination };
+module.exports = { getNominationById, findAllNominataions, createNomination };
