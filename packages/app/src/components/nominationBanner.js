@@ -25,7 +25,7 @@ const NominationBanner = (props) => {
             </div>
           </div>
 
-          <div className="row  banner-bottom">
+          <div className="row banner-bottom">
             <div className="column hp-name">
               <p>HP Name</p>
               <span><h2><strong>{props.nomination.providerName}</strong></h2></span>
