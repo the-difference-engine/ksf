@@ -67,28 +67,53 @@ const SearchBar = () => {
 
   return (
     <>
-      <div className="searchBar">
+      <section className="searchBarWrapper">
         <div className="row">
           <form
             className="column column-40 column-offset-25"
             onSubmit={handleSubmit}
           >
             <fieldset>
-              <input
-                type="text"
-                name="search"
-                placeholder="  Search"
-                data-id="search-input"
-                onChange={handleInputChange}
-                aria-label="search-input"
-              />
+              <div className="searchBarInput">
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="  Search"
+                  data-id="search-input"
+                  onChange={handleInputChange}
+                  aria-label="search-input"
+                />
+              </div>
               <div data-id="error-message">
                 {showErrorMessage ? <>Application Not Found</> : null}
               </div>
             </fieldset>
           </form>
         </div>
-      </div>
+      </section>
+
+      <section className="searchResultCard">
+        <table className="searchResultTable">
+          <thead>
+            <tr>
+              <th>Provider's Name</th>
+              <th>Patient Name</th>
+              <th>Recieved Date </th>
+            </tr>
+          </thead>
+          <tbody>
+            {SearchResultData
+              ? SearchResultData.map((result) => (
+                  <tr>
+                    <td>{result.providerName}</td>
+                    <td>{result.patientName}</td>
+                    <td>{result.dateReceived}</td>
+                  </tr>
+                ))
+              : null}
+          </tbody>
+        </table>
+      </section>
     </>
   );
 };

@@ -1,3 +1,18 @@
-.searchBar {
+.searchBarWrapper {
   padding: 3rem;
+}
+
+.searchBarInput {
+  background: white;
+}
+
+.searchResultCard {
+  padding: 3rem;
+}
+
+.searchResultTable {
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0px 5px 10px 0px;
+  background-color: white;
 }
