@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import nominationsAPI from '../../utils/API/nominationsAPI';
+import './style.css';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
@@ -66,21 +67,28 @@ const SearchBar = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <input
-            type="text"
-            name="search"
-            placeholder="  Search"
-            data-id="search-input"
-            onChange={handleInputChange}
-            aria-label="search-input"
-          />
-          <div data-id="error-message">
-            {showErrorMessage ? <>Application Not Found</> : null}
-          </div>
-        </fieldset>
-      </form>
+      <div className="searchBar">
+        <div className="row">
+          <form
+            className="column column-40 column-offset-25"
+            onSubmit={handleSubmit}
+          >
+            <fieldset>
+              <input
+                type="text"
+                name="search"
+                placeholder="  Search"
+                data-id="search-input"
+                onChange={handleInputChange}
+                aria-label="search-input"
+              />
+              <div data-id="error-message">
+                {showErrorMessage ? <>Application Not Found</> : null}
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </>
   );
 };
