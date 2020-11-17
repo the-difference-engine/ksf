@@ -18,15 +18,15 @@ function HealthProvider(props) {
         {
             label: "Title",
             value: props.providerTitle
-          },
-        //   {
-        //     label: "Email Validated",
-        //     value: props.emailValidated
-        //   },
-        //   {
-        //     label: "Public Email Domain",
-        //     value: props.publicEmailDomain  ??
-        //   },
+        },
+        {
+          label: "Email Validated",
+          value: props.emailValidated
+        },
+        {
+          label: "Public Email Domain",
+          value: props.publicEmailDomain
+        },
         {
           label: "Patient Diagnosis",
           value: props.patientDiagnosis
@@ -36,11 +36,11 @@ function HealthProvider(props) {
           <div className={styles.header}>
             <label className={styles.bold}>Health Provider Information</label>
           </div>
-          <div className={styles.content}>
+          <div className={[styles.content, styles["grid-container"]].join(" ")}>
             {
               fields.map((obj) => (<div key={obj.label}>
                 <label>{obj.label}</label>
-                <span>{obj.value}</span>
+                <span>{String(obj.value)}</span>
               </div>))
             }
           </div>
