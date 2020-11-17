@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NominationShow from './components/nominationShow';
+import NominationShow from './components/nomination/nominationShow';
 
 ReactDOM.render(
   <Router>

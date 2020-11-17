@@ -1,15 +1,14 @@
 import React, {  } from 'react';
-var states = require('us-state-codes');
+const states = require('us-state-codes');
 
-const NominationBanner = (props) => {
+const NominationBanner = ( { nomination }) => {
 
-  const date = new Date(props.nomination.createdAt).toLocaleDateString()
-  const lastName = new String (props.nomination.patientName).split(' ')[1]
-  const state = states.getStateCodeByStateName(props.nomination.hospitalState)
+  const date = new Date(nomination.createdAt).toLocaleDateString()
+  const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : ''
+  const state = states.getStateCodeByStateName(nomination.hospitalState)
   const nominationName = `${lastName}-${state}`
 
   return (
-
     <div className="nomination-banner-container">
       <div className="row">
         <div className="column column-10 icon-container">
@@ -28,11 +27,11 @@ const NominationBanner = (props) => {
           <div className="row banner-bottom">
             <div className="column hp-name">
               <p>HP Name</p>
-              <span><h2><strong>{props.nomination.providerName}</strong></h2></span>
+              <span><h2><strong>{nomination.providerName}</strong></h2></span>
             </div>
             <div className="column fam-name">
               <p>Family Member Name</p>
-              <span><h2><strong>{props.nomination.representativeName}</strong></h2></span>
+              <span><h2><strong>{nomination.representativeName}</strong></h2></span>
             </div>
             <div className="column created-at">
               <p>Created Date</p>
@@ -40,7 +39,7 @@ const NominationBanner = (props) => {
             </div>
             <div className="column amount">
                <p>Grant Amount Requested</p>
-              <span><h2><strong>${props.nomination.amountRequestedCents}</strong></h2></span>
+              <span><h2><strong>${nomination.amountRequestedCents}</strong></h2></span>
             </div>
           </div>
         </div>
