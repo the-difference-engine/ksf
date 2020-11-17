@@ -1,8 +1,7 @@
 import React, {  } from 'react';
 const states = require('us-state-codes');
 
-const NominationBanner = ( { nomination }) => {
-
+const NominationBanner = ({ nomination }) => {
   const date = new Date(nomination.createdAt).toLocaleDateString()
   const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : ''
   const state = states.getStateCodeByStateName(nomination.hospitalState)

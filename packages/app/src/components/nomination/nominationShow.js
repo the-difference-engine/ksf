@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
 import nominationsAPI from '../../utils/API/nominationsAPI';
 
-const NominationShow = ({ match: {params: {id } } }) => {
+const NominationShow = ({ match: { params: { id } } }) => {
   const [NominationData, setNominationData] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
 
@@ -32,7 +32,6 @@ const NominationShow = ({ match: {params: {id } } }) => {
       </div>
     );
   }
-
 
   return (
     <div className="nomination-show-page">
