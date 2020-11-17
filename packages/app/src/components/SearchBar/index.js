@@ -67,7 +67,7 @@ const SearchBar = () => {
 
   return (
     <>
-      <section className="searchBarWrapper">
+      <section className="search-bar-wrapper">
         <div className="row">
           <form
             className="column column-40 column-offset-25"
@@ -92,8 +92,8 @@ const SearchBar = () => {
         </div>
       </section>
 
-      <section className="searchResultCard">
-        <table className="searchResultTable">
+      <section className="search-result-card">
+        <table className="search-result-table">
           <thead>
             <tr>
               <th>Provider's Name</th>
