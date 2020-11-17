@@ -64,6 +64,20 @@ h2 {
   border-radius: 4rem;
 }
 
+#edit-button {
+  color: #128B3E;
+  border-color: #EEF1F6;
+}
+
 .banner-top {
   border-bottom: 1px solid #EEF1F6;
+}
+
+.hp-name, .fam-name, .created-at{
+  border-right: 1px solid #EEF1F6;
+  margin-top: 1rem;
+}
+
+.amount {
+  margin-top: 1rem;
 }

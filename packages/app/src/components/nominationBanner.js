@@ -45,7 +45,7 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button">Edit</button>
+          <button className="button button-outline edit-button" id="edit-button">Edit</button>
         </div>
       </div>
     </div>

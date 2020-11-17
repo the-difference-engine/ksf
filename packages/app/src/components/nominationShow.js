@@ -9,7 +9,7 @@ const NominationShow = (props) => {
     axios.get(`/nomination/${props.match.params.id}`)
       .then(function (response) {
           const nomination = response.data.nomination
-          console.log(nomination)
+          // console.log(nomination)
           setNominationData(nomination)
   })},[props.match.params.id])
 
