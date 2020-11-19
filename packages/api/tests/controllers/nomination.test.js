@@ -47,7 +47,7 @@ describe('GET Nomination Endpoint', () => {
   });
 
   it('return a 400 when uuid is not a valid uuid', async () => {
-    const res = await request(app).get('/nomination/326');
+    const res = await request(app).get('/nominations/326');
     expect(res.statusCode).toBe(400);
   });
 });
