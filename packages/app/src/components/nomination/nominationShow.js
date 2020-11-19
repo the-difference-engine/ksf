@@ -11,11 +11,11 @@ const NominationShow = ({ match: { params: { id } } }) => {
       .then(function (response) {
         const nomination = response.data.nomination
         setNominationData(nomination)
-     })
-    .catch(function (err) {
-      setErrorMessage(err.response)
-    })
-  },[id])
+      })
+      .catch(function (err) {
+        setErrorMessage(err.response)
+      })
+  }, [id])
 
   if (errorMessage && (errorMessage.status === 404 || errorMessage.status === 400)) {
     return (

@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React from 'react';
 const states = require('us-state-codes');
 
 const NominationBanner = ({ nomination }) => {
