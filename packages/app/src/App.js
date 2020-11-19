@@ -8,6 +8,7 @@ import Home from './components/pages/Home/index';
 import { NominationsDataProvider } from './utils/context/NominationsContext';
 import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 
+
 function App() {
   return (
     <BrowserRouter>

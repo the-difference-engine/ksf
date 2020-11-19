@@ -2,3 +2,82 @@
   text-align: center;
 }
 
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*Nomination-Show-Banner START*/
+.nomination-banner-container {
+  padding: 3rem;
+}
+.icon-container {
+  height: 60px;
+  width: 60px;
+}
+
+p {
+  font-size: .875rem;
+  margin-bottom: .5rem;
+}
+
+h1  {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+.edit-button {
+  border-radius: 4rem;
+}
+
+#edit-button {
+  color: #128B3E;
+  border-color: #EEF1F6;
+}
+
+.banner-top {
+  border-bottom: 1px solid #EEF1F6;
+}
+
+.hp-name, .fam-name, .created-at{
+  border-right: 1px solid #EEF1F6;
+  margin-top: 1rem;
+}
+
+.amount {
+  margin-top: 1rem;
+}
