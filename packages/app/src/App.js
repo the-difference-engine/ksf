@@ -7,6 +7,7 @@ import Login from './components/pages/Login/index';
 import Home from './components/pages/Home/index';
 import { NominationsDataProvider } from './utils/context/NominationsContext';
 
+
 function App() {
   return (
     <BrowserRouter>
