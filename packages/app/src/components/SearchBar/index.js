@@ -1,15 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
+import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import nominationsAPI from '../../utils/API/nominationsAPI';
+import SearchResultsCard from '../SearchResultsCard';
 import './style.css';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
-  const [SearchResultData, setSearchResultData] = useState([]);
+  const [SearchResultData, setSearchResultData] = useContext(
+    SearchResultDataContext
+  );
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+  const [state = { redirect: true }, setState] = useState(null);
 
   useEffect(() => {
     findAllNominations();
@@ -69,51 +76,27 @@ const SearchBar = () => {
     <>
       <section className="search-bar-wrapper">
         <div className="row">
-          <form
-            className="column column-40 column-offset-25"
-            onSubmit={handleSubmit}
-          >
+          <div className="column column-25  search-header">
+            <strong>Comand Center</strong>
+          </div>
+          <form className="column column-40 " onSubmit={handleSubmit}>
             <fieldset>
-              <div className="searchBarInput">
-                <input
-                  type="text"
-                  name="search"
-                  placeholder="  Search"
-                  data-id="search-input"
-                  onChange={handleInputChange}
-                  aria-label="search-input"
-                />
-              </div>
-              <div data-id="error-message">
-                {showErrorMessage ? <>Application Not Found</> : null}
-              </div>
+              <input
+                type="text"
+                name="search"
+                placeholder="  Search"
+                data-id="search-input"
+                onChange={handleInputChange}
+                aria-label="search-input"
+              />
             </fieldset>
           </form>
         </div>
       </section>
-
-      <section className="search-result-card">
-        <table className="search-result-table">
-          <thead>
-            <tr>
-              <th>Provider's Name</th>
-              <th>Patient Name</th>
-              <th>Recieved Date </th>
-            </tr>
-          </thead>
-          <tbody>
-            {SearchResultData
-              ? SearchResultData.map((result) => (
-                  <tr>
-                    <td>{result.providerName}</td>
-                    <td>{result.patientName}</td>
-                    <td>{result.dateReceived}</td>
-                  </tr>
-                ))
-              : null}
-          </tbody>
-        </table>
-      </section>
+      <div data-id="error-message">
+        {showErrorMessage ? <>Application Not Found</> : null}
+      </div>
+      {SearchResultData.length > 1 ? <SearchResultsCard /> : null}
     </>
   );
 };

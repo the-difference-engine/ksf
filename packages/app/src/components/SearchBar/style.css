@@ -1,14 +1,8 @@
 .search-bar-wrapper {
-  padding: 3rem;
-}
-
-.search-result-card {
-  padding: 3rem;
-}
-
-.search-result-table {
+  margin: 3rem;
   padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: 0px 5px 10px 0px;
-  background-color: white;
+}
+
+.search-header {
+  color: #128b3e;
 }

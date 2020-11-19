@@ -6,25 +6,28 @@ import family_info from './components/familyInformation/dummyData';
 import Login from './components/pages/Login/index';
 import Home from './components/pages/Home/index';
 import { NominationsDataProvider } from './utils/context/NominationsContext';
+import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <NominationsDataProvider>
-          <Route exact path={'/'} component={Home} />
-          <Route exact path={'/login'} component={Login} />
-          <Route path="/applicationdetails">
-            <div
-              style={{
-                margin: '0 auto',
-                backgroundColor: 'grey',
-                padding: '2em',
-              }}
-            >
-              <FamilyMemberInfo {...family_info} />
-            </div>
-          </Route>
+          <SearchResultDataProvider>
+            <Route exact path={'/'} component={Home} />
+            <Route exact path={'/login'} component={Login} />
+            <Route path="/applicationdetails">
+              <div
+                style={{
+                  margin: '0 auto',
+                  backgroundColor: 'grey',
+                  padding: '2em',
+                }}
+              >
+                <FamilyMemberInfo {...family_info} />
+              </div>
+            </Route>
+          </SearchResultDataProvider>
         </NominationsDataProvider>
       </Switch>
     </BrowserRouter>
