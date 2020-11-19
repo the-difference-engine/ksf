@@ -15,7 +15,7 @@ const NominationShow = ({ match: { params: { id } } }) => {
       .catch(function (err) {
         setErrorMessage(err.response)
       })
-  }, [id])
+  }, [id]);
 
   if (errorMessage && (errorMessage.status === 404 || errorMessage.status === 400)) {
     return (
