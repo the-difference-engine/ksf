@@ -1,4 +1,6 @@
 'use strict';
+const  {sendVerification}  = require('../helper/mailer.js');
+const creds = require('../config/config.json').credentials
 const { Model, Sequelize, DataTypes } = require('sequelize');
 const publicEmailDomains = [
   'gmail.com',
@@ -123,6 +125,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      verificationCode: {
+        allowNull: false,
+        type: DataTypes.UUID,
+        defaultValue: Sequelize.UUIDV4,
+      }
     },
     {
       hooks: {
@@ -133,6 +140,9 @@ module.exports = (sequelize, DataTypes) => {
             }
           });
         },
+        afterCreate: (nomination, option) => {
+          sendVerification(nomination);
+        }
       },
       sequelize,
       modelName: 'Nomination',
