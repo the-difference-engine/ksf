@@ -15,7 +15,7 @@ import provider_info from './components/healthProvider/dummyData';
 import family_info from './components/familyInformation/dummyData';
 const dummyStyle = {
   margin: '0 auto',
-  backgroundColor: 'grey',
+  backgroundColor: 'var(--light-background)',
   padding: '2em',
 }
 

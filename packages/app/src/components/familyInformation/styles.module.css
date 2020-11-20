@@ -1,6 +1,6 @@
 .main {
   border-radius: 10px;
-  background-color: white;
+  background-color: #FFFFFF;
   text-align: left;
 }
 
@@ -10,7 +10,7 @@
 
 .header {
   font-size: 1.2em;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #EEF1F6;
   padding: 1rem 2rem;
 }
 
@@ -23,5 +23,5 @@
   padding-bottom: 1rem;
 }
 .content > div:not(:last-child) {
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #EEF1F6;
 }
