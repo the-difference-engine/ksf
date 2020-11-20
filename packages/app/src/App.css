@@ -1,7 +1,17 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #eef1f6;
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
 
 .App-logo {
   height: 40vmin;
@@ -48,11 +58,11 @@
 }
 
 p {
-  font-size: .875rem;
-  margin-bottom: .5rem;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 }
 
-h1  {
+h1 {
   font-size: 1.5rem;
 }
 
@@ -65,16 +75,18 @@ h2 {
 }
 
 #edit-button {
-  color: #128B3E;
-  border-color: #EEF1F6;
+  color: #128b3e;
+  border-color: #eef1f6;
 }
 
 .banner-top {
-  border-bottom: 1px solid #EEF1F6;
+  border-bottom: 1px solid #eef1f6;
 }
 
-.hp-name, .fam-name, .created-at{
-  border-right: 1px solid #EEF1F6;
+.hp-name,
+.fam-name,
+.created-at {
+  border-right: 1px solid #eef1f6;
   margin-top: 1rem;
 }
 
