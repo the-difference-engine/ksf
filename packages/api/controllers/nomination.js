@@ -58,13 +58,10 @@ const updateNomination = async (req, res) => {
       { status: req.body.status },
       { where: { id } }
     );
-    return res.status(204).json(nomination);
+    return res.status(200).json(nomination);
   } catch (error) {
-    if (error) {
-      console.log('400 Update Bad Reuest', error);
-      return res.status(400).json({ error: error.message });
-    }
-    return res.status(500).json({ error: error.message });
+    console.log('400 Update Bad Reuest', error);
+    return res.status(400).json({ error: error.message });
   }
 };
 module.exports = {

@@ -115,6 +115,6 @@ describe('Update Nomination Endpoint', () => {
     const res = await request(app)
       .put(`/nominations/${nomination.id}`)
       .send({ status: 'test' });
-    expect(res.statusCode).toBe(204);
+    expect(res.statusCode).toBe(200);
   });
 });
