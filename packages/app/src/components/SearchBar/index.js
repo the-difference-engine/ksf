@@ -74,14 +74,20 @@ const SearchBar = () => {
 
   return (
     <>
-      <section className="search-bar-wrapper">
-        <div className="row">
-          <div className="column column-25  search-header">
-            <strong>Comand Center</strong>
+      <div className="search-bar-wrapper">
+        <section className="row">
+          <div className=" column column-25">
+            <div className="search-header-container row">
+              <img className="ksf-logo " src="/ksflogo.png" alt="other" />
+              <div className="comand-center-header column">
+                <strong>Comand Center</strong>
+              </div>
+            </div>
           </div>
-          <form className="column column-40 " onSubmit={handleSubmit}>
-            <fieldset>
+          <div className="form-container column column-50">
+            <form onSubmit={handleSubmit}>
               <input
+                className="search-input-class"
                 type="text"
                 name="search"
                 placeholder="  Search"
@@ -89,14 +95,18 @@ const SearchBar = () => {
                 onChange={handleInputChange}
                 aria-label="search-input"
               />
-            </fieldset>
-          </form>
+            </form>
+          </div>
+        </section>
+        <div data-id="error-message">
+          {showErrorMessage ? <>Application Not Found</> : null}
         </div>
-      </section>
-      <div data-id="error-message">
-        {showErrorMessage ? <>Application Not Found</> : null}
       </div>
-      {SearchResultData.length > 1 ? <SearchResultsCard /> : null}
+      {SearchResultData.length === 1 ? (
+        <Redirect to={`/nomination/${SearchResultData[0].id}`} />
+      ) : SearchResultData.length > 1 ? (
+        <SearchResultsCard />
+      ) : null}
     </>
   );
 };

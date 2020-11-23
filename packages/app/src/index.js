@@ -8,13 +8,14 @@ import family_info from './components/familyInformation/dummyData';
 import Login from './components/pages/Login/index';
 import Home from './components/pages/Home/index';
 import { NominationsDataProvider } from './utils/context/NominationsContext';
+import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 import './App.css';
 ReactDOM.render(
   <Router>
-    <div className="container">
-      <React.StrictMode>
-        <Switch>
-          <NominationsDataProvider>
+    <React.StrictMode>
+      <Switch>
+        <NominationsDataProvider>
+          <SearchResultDataProvider>
             <Route exact path={'/'} component={Home} />
             <Route exact path={'/login'} component={Login} />
             <Route path="/nomination/:id" exact component={NominationShow} />
@@ -29,10 +30,10 @@ ReactDOM.render(
                 <FamilyMemberInfo {...family_info} />
               </div>
             </Route>
-          </NominationsDataProvider>
-        </Switch>
-      </React.StrictMode>
-    </div>
+          </SearchResultDataProvider>
+        </NominationsDataProvider>
+      </Switch>
+    </React.StrictMode>
   </Router>,
   document.getElementById('root')
 );
