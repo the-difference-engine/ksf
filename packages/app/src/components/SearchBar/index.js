@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
+import states from 'us-state-codes';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import nominationsAPI from '../../utils/API/nominationsAPI';
-import SearchResultsCard from '../SearchResultsCard';
 import './style.css';
 
 const SearchBar = () => {
@@ -16,8 +16,6 @@ const SearchBar = () => {
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-  const [state = { redirect: true }, setState] = useState(null);
-
   useEffect(() => {
     findAllNominations();
   }, []);
@@ -26,7 +24,20 @@ const SearchBar = () => {
     nominationsAPI
       .getNominations()
       .then((res) => {
-        setNominationsData(res.data);
+        const nominations = res.data;
+        let nomName = (n) => {
+          const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
+          const state = states.getStateCodeByStateName(n.hospitalState);
+          return `${lastName}-${state}`;
+        };
+        const adjustedNoms = nominations.map((n) => {
+          let container = {};
+          container = n;
+          container.applicationName = nomName(n);
+          return container;
+        });
+
+        setNominationsData(adjustedNoms);
       })
       .catch((err) => console.log(err));
   }
@@ -36,7 +47,7 @@ const SearchBar = () => {
       return [
         formatSearch(nomination.providerName),
         formatSearch(nomination.patientName),
-        formatSearch(nomination.hospitalName),
+        formatSearch(nomination.applicationName),
         formatSearch(nomination.representativeName),
       ].some((nom) => nom.includes(searchTerm));
     });
@@ -49,9 +60,6 @@ const SearchBar = () => {
 
   function handleInputChange(e) {
     const { value } = e.target;
-    if (value.length % 3 === 0 && value.length !== 0) {
-      findSearchResults(formatSearch(value));
-    }
     if (value.length === 0) {
       setSearchResultData([]);
       setShowErrorMessage(false);
@@ -105,7 +113,7 @@ const SearchBar = () => {
       {SearchResultData.length === 1 ? (
         <Redirect to={`/nomination/${SearchResultData[0].id}`} />
       ) : SearchResultData.length > 1 ? (
-        <SearchResultsCard />
+        <Redirect to="/searchresults" />
       ) : null}
     </>
   );
