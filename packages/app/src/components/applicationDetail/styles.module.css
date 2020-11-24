@@ -26,9 +26,17 @@
   border-bottom: 1px solid var(--light-background);
 }
 
+.mobileHide {
+  display: none;
+}
+
 @media screen and (min-width: 700px) {
   .grid-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(300px, 1fr));
+  }
+
+  .mobileHide {
+    display: block;
   }
 }

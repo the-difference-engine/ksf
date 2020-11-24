@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
 import nominationsAPI from '../../utils/API/nominationsAPI';
-import HealthProvider from '../healthProvider/healthProvider';
-import FamilyMemberInfo from '../familyInformation/familyInformation';
+import ApplicationDetail from '../applicationDetail/applicationDetail';
 
 const dummyStyle = {
   margin: '0 auto',
@@ -40,7 +39,6 @@ const NominationShow = ({ match: { params: { id } } }) => {
       </div>
     );
   }
-  
   const fields = [
     {
       label: "Name",
@@ -93,10 +91,10 @@ const NominationShow = ({ match: { params: { id } } }) => {
     <div className="nomination-show-page">
       <NominationBanner nomination={NominationData && NominationData}/>
       <div style={dummyStyle}>
-        <HealthProvider fields={fields} />
+        <ApplicationDetail fields={fields} gridContent={true} title="Health Provider Information" />
       </div>
       <div style={dummyStyle}>
-        <FamilyMemberInfo fields={familyinfo} />
+        <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
       </div>
     </div>
   );

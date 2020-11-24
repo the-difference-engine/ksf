@@ -25,7 +25,6 @@ const SearchBar = () => {
   }
 
   function findSearchResults(searchTerm) {
-    console.log(NominationsData)
     const filteredNoms = NominationsData.filter((nomination) => {
       return [
         formatSearch(nomination.providerName),

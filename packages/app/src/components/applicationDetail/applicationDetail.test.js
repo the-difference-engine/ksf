@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import HealthProvider from './healthProvider';
+import ApplicationDetail from './applicationDetail';
 import dummyData from './dummyData';
 
 test("renders prop name providerName", () => {
@@ -33,7 +33,7 @@ test("renders prop name providerName", () => {
       label: "Patient Diagnosis",
       value: dummyData.patientDiagnosis
     }];
-  const { getByText } = render(<HealthProvider fields={fields} />);
+  const { getByText } = render(<ApplicationDetail fields={fields} />);
   const reg = new RegExp(dummyData.providerName, 'i')
   const providerName = getByText(reg);
   expect(providerName).toBeInTheDocument();
