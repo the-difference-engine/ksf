@@ -9,7 +9,6 @@ const SearchResultsCard = () => {
   );
   return (
     <>
-      {console.table(SearchResultData)}
       <section className="search-result-card">
         <table className="search-result-table">
           <thead>
