@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
+import '../../App.css'
 
 class GoogleBtn extends Component {
   state = {
@@ -38,13 +39,15 @@ class GoogleBtn extends Component {
           <GoogleLogout
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             buttonText="Logout"
+            className="google-logout"
             onLogoutSuccess={this.logout}
             onFailure={this.handleLogoutFailure}
           ></GoogleLogout>
         ) : (
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText="Login"
+            className="google-login"
+            buttonText="Sign in with Google"
             onSuccess={this.login}
             onFailure={this.handleLoginFailure}
             cookiePolicy={"single_host_origin"}

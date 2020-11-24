@@ -4,6 +4,6 @@ import GoogleBtn from "./GoogleBtn";
 
 test("Rendering Google Login button", () => {
   const { getByText } = render(<GoogleBtn />);
-  const linkElement = getByText(/Login/i);
+  const linkElement = getByText(/Sign in with Google/i);
   expect(linkElement).toBeInTheDocument();
 });
