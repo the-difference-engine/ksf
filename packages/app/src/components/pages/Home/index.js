@@ -1,10 +1,16 @@
 import React from 'react';
 import SearchBar from '../../SearchBar';
+import NewFilesToReview from './NewFilesToReview';
 
 const home = () => {
   return (
     <>
-      <SearchBar />
+      <div>
+        <SearchBar />
+      </div>
+      <div>
+        <NewFilesToReview />
+      </div>
     </>
   );
 };
