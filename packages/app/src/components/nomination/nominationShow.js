@@ -94,7 +94,7 @@ const NominationShow = ({ match: { params: { id } } }) => {
       <NominationBanner nomination={NominationData && NominationData}/>
       <div style={dummyStyle}>
         <HealthProvider fields={fields} />
-        <FamilyMemberInfo familyinfo={familyinfo} />
+        <FamilyMemberInfo fields={familyinfo} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 
 export default ({
-    familyRepresentativeName: "Lisa Samson",
-    familyRepresentativeEmailAddress: "lsamson@example.com",
-    familyRepresentativePhoneNumber: "773-403-8977 ",
+    representativeName: "Lisa Samson",
+    representativeEmailAddress: "lsamson@example.com",
+    representativePhoneNumber: "773-403-8977 ",
     representativeRelationship: "Mother"
 })

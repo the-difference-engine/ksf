@@ -3,9 +3,38 @@ import { render } from "@testing-library/react";
 import HealthProvider from './healthProvider';
 import dummyData from './dummyData';
 
-test("renders prop name familyRepresentativeName", () => {
-  const { getByText } = render(<HealthProvider {...dummyData} />);
+test("renders prop name providerName", () => {
+  const fields = [
+    {
+      label: "Name",
+      value: dummyData.providerName
+    },
+    {
+      label: "Email Address",
+      value: dummyData.providerEmailAddress
+    },
+    {
+      label: "Phone Number",
+      value: dummyData.providerPhoneNumber
+    },
+    {
+        label: "Title",
+        value: dummyData.providerTitle
+    },
+    {
+      label: "Email Validated",
+      value: dummyData.emailValidated
+    },
+    {
+      label: "Public Email Domain",
+      value: dummyData.publicEmailDomain
+    },
+    {
+      label: "Patient Diagnosis",
+      value: dummyData.patientDiagnosis
+    }];
+  const { getByText } = render(<HealthProvider fields={fields} />);
   const reg = new RegExp(dummyData.providerName, 'i')
-  const familyName = getByText(reg);
-  expect(familyName).toBeInTheDocument();
+  const providerName = getByText(reg);
+  expect(providerName).toBeInTheDocument();
 });

@@ -9,7 +9,7 @@ function FamilyMemberInfo(props) {
       </div>
       <div className={styles.content}>
         {
-          props.familyinfo.map((obj) => (<div key={obj.label}>
+          props.fields.map((obj) => (<div key={obj.label}>
             <label>{obj.label}</label>
             <span>{obj.value}</span>
           </div>))
