@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
 import nominationsAPI from '../../utils/API/nominationsAPI';
-import ApplicationDetail from '../applicationDetail/applicationDetail';
-
-const dummyStyle = {
-  margin: '0 auto',
-  backgroundColor: 'var(--light-background)',
-  padding: '2em',
-}
+import NominationInfo from '../nominationInfo';
 
 const NominationShow = ({ match: { params: { id } } }) => {
   const [NominationData, setNominationData] = useState({})
@@ -39,63 +33,15 @@ const NominationShow = ({ match: { params: { id } } }) => {
       </div>
     );
   }
-  const fields = [
-    {
-      label: "Name",
-      value: NominationData.providerName
-    },
-    {
-      label: "Email Address",
-      value: NominationData.providerEmailAddress
-    },
-    {
-      label: "Phone Number",
-      value: NominationData.providerPhoneNumber
-    },
-    {
-        label: "Title",
-        value: NominationData.providerTitle
-    },
-    {
-      label: "Email Validated",
-      value: NominationData.emailValidated
-    },
-    {
-      label: "Public Email Domain",
-      value: NominationData.publicEmailDomain
-    },
-    {
-      label: "Patient Diagnosis",
-      value: NominationData.patientDiagnosis
-    }];
-
-    const familyinfo = [
-      {
-        label: "Name",
-        value: NominationData.representativeName
-      },
-      {
-        label: "Email Address",
-        value: NominationData.representativeEmailAddress
-      },
-      {
-        label: "Phone Number",
-        value: NominationData.representativePhoneNumber
-      },
-      {
-        label: "Relationship",
-        value: NominationData.representativeRelationship
-      }];
-    
+  console.log(NominationData)
   return (
     <div className="nomination-show-page">
-      <NominationBanner nomination={NominationData && NominationData}/>
-      <div style={dummyStyle}>
-        <ApplicationDetail fields={fields} gridContent={true} title="Health Provider Information" />
-      </div>
-      <div style={dummyStyle}>
-        <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
-      </div>
+      {NominationData &&
+        <React.Fragment>
+          <NominationBanner nomination={NominationData}/>
+          <NominationInfo NominationData={NominationData}/>
+        </React.Fragment>
+      }
     </div>
   );
 };

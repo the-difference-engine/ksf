@@ -1,13 +1,10 @@
 /* theme colors */
 :root {
-  /* (Page Heading, Links,Button Bg, Active Tab etc) */
   --brand:#128B3E;
   --light-background: #EEF1F6;
   --dark-icon:#54698D;
-  /* (Section Title,Body Text Secondary) */
   --secondary-dark:#6D7278;
   --body-text:#000;
-  /* (not focused) */
   --search-input:#F7F9FC;
   --input-placeholder:#A1AABA;
 }
