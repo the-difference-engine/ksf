@@ -6,9 +6,10 @@ const grantCycleController = require('../controllers/grantCycle.js');
 const router = Router();
 
 // nomintation endpoints
-router.get('/nomination/:id', nominationController.getNominationById);
+router.get('/nominations/:id', nominationController.getNominationById);
 router.get('/nominations', nominationController.findAllNominataions);
-router.post('/nomination', nominationController.createNomination);
+router.post('/nominations', nominationController.createNomination);
+router.put('/nominations/:id', nominationController.updateNomination);
 
 // user endpoints
 router.get('/user/:id', userController.getUserById);
