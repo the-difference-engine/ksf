@@ -33,7 +33,6 @@ const NominationShow = ({ match: { params: { id } } }) => {
       </div>
     );
   }
-  console.log(NominationData)
   return (
     <div className="nomination-show-page">
       {NominationData &&
