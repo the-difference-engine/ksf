@@ -30,14 +30,13 @@ const SearchBar = () => {
           const state = states.getStateCodeByStateName(n.hospitalState);
           return `${lastName}-${state}`;
         };
-        const adjustedNoms = nominations.map((n) => {
-          let container = {};
-          container = n;
-          container.applicationName = nomName(n);
-          return container;
+        nominations.forEach((nomination) => {
+          nomination.nominationName = nomName(nomination);
+          nomination.dateReceived = new Date(
+            nomination.dateReceived
+          ).toLocaleDateString();
         });
-
-        setNominationsData(adjustedNoms);
+        setNominationsData(nominations);
       })
       .catch((err) => console.log(err));
   }
@@ -47,7 +46,7 @@ const SearchBar = () => {
       return [
         formatSearch(nomination.providerName),
         formatSearch(nomination.patientName),
-        formatSearch(nomination.applicationName),
+        formatSearch(nomination.nominationName),
         formatSearch(nomination.representativeName),
       ].some((nom) => nom.includes(searchTerm));
     });
