@@ -1,14 +1,18 @@
+.ksf-logo {
+  width: 4rem;
+  height: 4rem;
+}
+
 .search-bar-wrapper {
-  padding: 3rem;
-}
-
-.search-result-card {
-  padding: 3rem;
-}
-
-.search-result-table {
-  padding: 1rem;
+  background: rgb(255, 255, 255);
+  margin: 1rem;
+  padding-top: 2rem;
+  padding-left: 2rem;
   border-radius: 1rem;
-  box-shadow: 0px 5px 10px 0px;
-  background-color: white;
+}
+
+.search-header-container {
+  color: #128b3e;
+  display: flex;
+  align-items: center;
 }

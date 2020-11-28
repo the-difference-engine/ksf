@@ -1,11 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import states from 'us-state-codes';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
+import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
-  const [SearchResultData, setSearchResultData] = useState([]);
+  const [SearchResultData, setSearchResultData] = useContext(
+    SearchResultDataContext
+  );
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
@@ -19,7 +24,19 @@ const SearchBar = () => {
     nominationsAPI
       .getNominations()
       .then((res) => {
-        setNominationsData(res.data);
+        const nominations = res.data;
+        let nomName = (n) => {
+          const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
+          const state = states.getStateCodeByStateName(n.hospitalState);
+          return `${lastName}-${state}`;
+        };
+        nominations.forEach((nomination) => {
+          nomination.nominationName = nomName(nomination);
+          nomination.dateReceived = new Date(
+            nomination.dateReceived
+          ).toLocaleDateString();
+        });
+        setNominationsData(nominations);
       })
       .catch((err) => console.log(err));
   }
@@ -29,7 +46,7 @@ const SearchBar = () => {
       return [
         formatSearch(nomination.providerName),
         formatSearch(nomination.patientName),
-        formatSearch(nomination.hospitalName),
+        formatSearch(nomination.nominationName),
         formatSearch(nomination.representativeName),
       ].some((nom) => nom.includes(searchTerm));
     });
@@ -42,9 +59,6 @@ const SearchBar = () => {
 
   function handleInputChange(e) {
     const { value } = e.target;
-    if (value.length % 3 === 0 && value.length !== 0) {
-      findSearchResults(formatSearch(value));
-    }
     if (value.length === 0) {
       setSearchResultData([]);
       setShowErrorMessage(false);
@@ -67,53 +81,39 @@ const SearchBar = () => {
 
   return (
     <>
-      <section className="search-bar-wrapper">
-        <div className="row">
-          <form
-            className="column column-40 column-offset-25"
-            onSubmit={handleSubmit}
-          >
-            <fieldset>
-              <div className="searchBarInput">
-                <input
-                  type="text"
-                  name="search"
-                  placeholder="  Search"
-                  data-id="search-input"
-                  onChange={handleInputChange}
-                  aria-label="search-input"
-                />
+      <div className="search-bar-wrapper">
+        <section className="row">
+          <div className=" column column-25">
+            <div className="search-header-container row">
+              <img className="ksf-logo " src="/ksflogo.png" alt="other" />
+              <div className="comand-center-header column">
+                <strong>Comand Center</strong>
               </div>
-              <div data-id="error-message">
-                {showErrorMessage ? <>Application Not Found</> : null}
-              </div>
-            </fieldset>
-          </form>
+            </div>
+          </div>
+          <div className="form-container column column-50">
+            <form onSubmit={handleSubmit}>
+              <input
+                className="search-input-class"
+                type="text"
+                name="search"
+                placeholder="  Search"
+                data-id="search-input"
+                onChange={handleInputChange}
+                aria-label="search-input"
+              />
+            </form>
+          </div>
+        </section>
+        <div data-id="error-message">
+          {showErrorMessage ? <>Application Not Found</> : null}
         </div>
-      </section>
-
-      <section className="search-result-card">
-        <table className="search-result-table">
-          <thead>
-            <tr>
-              <th>Provider's Name</th>
-              <th>Patient Name</th>
-              <th>Recieved Date </th>
-            </tr>
-          </thead>
-          <tbody>
-            {SearchResultData
-              ? SearchResultData.map((result) => (
-                  <tr>
-                    <td>{result.providerName}</td>
-                    <td>{result.patientName}</td>
-                    <td>{result.dateReceived}</td>
-                  </tr>
-                ))
-              : null}
-          </tbody>
-        </table>
-      </section>
+      </div>
+      {SearchResultData.length === 1 ? (
+        <Redirect to={`/nomination/${SearchResultData[0].id}`} />
+      ) : SearchResultData.length > 1 ? (
+        <Redirect to="/searchresults" />
+      ) : null}
     </>
   );
 };
