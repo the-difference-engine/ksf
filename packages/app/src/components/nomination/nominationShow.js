@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
 import nominationsAPI from '../../utils/API/nominationsAPI';
+import NominationInfo from '../nominationInfo';
 
 const NominationShow = ({ match: { params: { id } } }) => {
   const [NominationData, setNominationData] = useState({})
@@ -32,10 +33,14 @@ const NominationShow = ({ match: { params: { id } } }) => {
       </div>
     );
   }
-
   return (
     <div className="nomination-show-page">
-      <NominationBanner nomination={NominationData && NominationData}/>
+      {NominationData &&
+        <React.Fragment>
+          <NominationBanner nomination={NominationData}/>
+          <NominationInfo NominationData={NominationData}/>
+        </React.Fragment>
+      }
     </div>
   );
 };
