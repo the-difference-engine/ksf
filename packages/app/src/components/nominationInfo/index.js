@@ -52,9 +52,31 @@ function NominationInfo({ NominationData }) {
         label: "Relationship",
         value: NominationData.representativeRelationship
       }];
+    const patientInfo = [
+      {
+        label: "Name",
+        value: NominationData.patientName
+      },
+      {
+        label: "",
+        value: ""
+      },
+      {
+        label: "Admission Date",
+        value: NominationData.admissionDate
+      },
+      {
+        label: "Discharge Date",
+        value: NominationData.dischargeDate
+      },
+      {
+        label: "Diagnosis/case information",
+        value: NominationData.patientDiagnosis
+      },
+    ];
       return (
         <div className={styles.layout}>
-            <ApplicationDetail fields={fields} gridContent={true} title="This is fake Information" />
+            <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
             <ApplicationDetail fields={fields} gridContent={true} title="Health Provider Information" />
         </div>
