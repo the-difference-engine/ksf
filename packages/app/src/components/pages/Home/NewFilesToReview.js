@@ -1,72 +1,50 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 
 const NewFilesToReview = () => {
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
-  const [newNominations, setNewNominations] = useState([])
-
-  const renderList = () => {
-    if(NominationsData) {
-      return NominationsData.forEach((nomination) => {
-        if (nomination.status === 'received') {
-          return (
-           nomination
-          );
-        }
-      });
-    }
-  };
-
-  // if(NominationsData) {
-  //   renderList(NominationsData)
-  // }
 
   return (
-    <div className="flat-list">
-      {renderList()}
+    <div>
+      <section className="home-new-files">
+        <table className="home-rew-files-table">
+          <thead>
+            <tr>
+              {/* {console.log(NominationsData)} */}
+              New Files To Review
+            </tr>
+          </thead>
+        <tbody>
+          <tr>
+            <td>Application Name</td>
+            <td>HP Name</td>
+            <td>Family Member Name</td>
+            <td>Received Date</td>
+            <td>Stage</td>
+          </tr>
+            {NominationsData
+              ?
+              NominationsData.filter(nominations =>
+                nominations.status === "received"
+              )
+              .map(nomination =>
+                  <tr key={nomination.id}>
+                    <td>{nomination.nominationName}</td>
+                    <td>{nomination.providerName}</td>
+                    <td>{nomination.providerName}</td>
+                    <td>{nomination.dateReceived}</td>
+                    <td>need stage info</td>
+                  </tr>
+              ) :
+            <h2>No New Nominations</h2>
+            }
+          </tbody>
+          </table>
+        </section>
     </div>
   );
-
-  // if (NominationsData) {
-  //   const filteredNoms = NominationsData.forEach((nomination) => {
-  //     if(nomination.status === "received") {
-  //       return [
-  //         (nomination.providerName),
-  //         (nomination.nominationName),
-  //         (nomination.representativeName),
-  //         (nomination.dateReceived),
-  //       ]
-  //     }
-  //   })
-  //   // return setNewNominations(filteredNoms)
-  //   // return filteredNoms
-  // }
-
-
-//   return (
-//     <div>
-//       <h1>
-//         {console.log(NominationsData)}
-//         New Files To Review
-//       </h1>
-//       <div>
-//         <ul>
-//           {/* {console.log(newNominations)} */}
-//           {newNominations.map(nomination => {
-//             console.log(nomination)
-//             return <li key={nomination.id}>
-//               <div>
-//                 HP Name
-//                 {nomination.providerName}
-//               </div>
-//             </li>
-//           })}
-//         </ul>
-//       </div>
-//     </div>
-//   );
 };
 
 export default NewFilesToReview;

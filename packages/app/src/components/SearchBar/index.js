@@ -14,7 +14,6 @@ const SearchBar = () => {
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-
   function findSearchResults(searchTerm) {
     const filteredNoms = NominationsData.filter((nomination) => {
       return [
