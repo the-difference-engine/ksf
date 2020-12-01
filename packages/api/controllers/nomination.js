@@ -51,4 +51,22 @@ const createNomination = async (req, res) => {
   }
 };
 
-module.exports = { getNominationById, findAllNominataions, createNomination };
+const updateNomination = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const nomination = await db.Nomination.update(
+      { status: req.body.status },
+      { where: { id } }
+    );
+    return res.status(200).json(nomination);
+  } catch (error) {
+    console.log('400 Update Bad Reuest', error);
+    return res.status(400).json({ error: error.message });
+  }
+};
+module.exports = {
+  getNominationById,
+  findAllNominataions,
+  createNomination,
+  updateNomination,
+};

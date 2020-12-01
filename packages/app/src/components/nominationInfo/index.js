@@ -31,8 +31,7 @@ function NominationInfo({ NominationData }) {
     },
     {
       label: "Patient Diagnosis",
-      value: 'NominationData.patientDiagnosis'
-      // value: NominationData.patientDiagnosis
+      value: NominationData.patientDiagnosis
     }];
 
     const familyinfo = [

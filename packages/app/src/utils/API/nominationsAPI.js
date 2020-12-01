@@ -5,8 +5,8 @@ const nominationsAPI = {
     return axios.get('/nominations');
   },
   fetchNomination: function (id) {
-    return axios.get(`/nomination/${id}`);
-  }
+    return axios.get(`/nominations/${id}`);
+  },
 };
 
 export default nominationsAPI;
