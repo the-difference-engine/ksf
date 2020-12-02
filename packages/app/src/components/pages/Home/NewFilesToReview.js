@@ -1,24 +1,49 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
-
 
 const NewFilesToReview = () => {
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
 
-  const filteredNoms = NominationsDataContext.each((nomination) => {
-      return [
-       (nomination.providerName),
-        (nomination.applicationName),
-        (nomination.representativeName),
-        (nomination.receivedDate),
-      ].some((nom) => nom.includes(searchTerm));
-    });
-    setSearchResultData(filteredNoms);
-
   return (
-    <h1>hi</h1>
+    <div>
+      <section className="home-new-files">
+        <table className="home-rew-files-table">
+          <thead>
+            <tr>
+              {/* {console.log(NominationsData)} */}
+              New Files To Review
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Application Name</td>
+              <td>HP Name</td>
+              <td>Family Member Name</td>
+              <td>Received Date</td>
+              <td>Stage</td>
+            </tr>
+              {NominationsData
+                ?
+                NominationsData.filter(nominations =>
+                  nominations.status === "received"
+                )
+                .map(nomination =>
+                    <tr key={nomination.id}>
+                      <td>{nomination.nominationName}</td>
+                      <td>{nomination.providerName}</td>
+                      <td>{nomination.providerName}</td>
+                      <td>{nomination.dateReceived}</td>
+                      <td>need stage info</td>
+                    </tr>
+                ) :
+              <h2>No New Nominations</h2>
+              }
+            </tbody>
+        </table>
+      </section>
+    </div>
   );
 };
 
