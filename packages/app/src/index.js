@@ -20,10 +20,10 @@ ReactDOM.render(
         <NominationsDataProvider>
           <SearchResultDataProvider>
             <ActiveNominationProvider>
-              <Route exact path={'/'} component={Home} />
+              <Route path={['/', '/home']} component={Home} />
               <Route exact path={'/login'} component={Login} />
               <Route exact path={'/searchresults'} component={SearchResults} />
-              <Route path="/nomination/:id" exact component={NominationShow} />
+              {/* <Route path="/nomination/:id" exact component={NominationShow} /> */}
               <Route path="/applicationdetails">
                 <div
                   style={{
