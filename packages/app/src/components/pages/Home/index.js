@@ -10,6 +10,7 @@ const Home = () => {
     NominationsDataContext
   );
 
+// TODO figure out way to garuantee global state is set before things render
   useEffect(() => {
     findAllNominations();
   }, []);
