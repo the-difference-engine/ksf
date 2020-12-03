@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
 import nominationsAPI from '../../utils/API/nominationsAPI';
+import { NominationsDataContext } from '../../utils/context/NominationsContext';
+import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 
 const NominationShow = ({ match: { params: { id } } }) => {
   const [NominationData, setNominationData] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
+  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext)
+  const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
 
   useEffect(() => {
     nominationsAPI.fetchNomination(id)
       .then(function (response) {
         const nomination = response.data.nomination
-        setNominationData(nomination)
+        setNominationData(nomination);
+        setActiveNomination(nomination);
       })
       .catch(function (err) {
         setErrorMessage(err.response)
       })
   }, [id]);
+
+  useEffect(() => {
+    if(NominationsData) {
+      console.table(NominationsData);
+      for(var i; i<=NominationsData.length; i++) {
+        if(id === NominationsData[i].id) {
+          console.log("is a match");
+        }
+      }
+    }
+  }, []);
 
   if (errorMessage && (errorMessage.status === 404 || errorMessage.status === 400)) {
     return (
