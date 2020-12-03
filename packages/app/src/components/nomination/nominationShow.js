@@ -5,29 +5,18 @@ import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 
 const NominationShow = ({ match: { params: { id } } }) => {
-  const [NominationData, setNominationData] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext)
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
 
   useEffect(() => {
-    nominationsAPI.fetchNomination(id)
-      .then(function (response) {
-        const nomination = response.data.nomination
-        setNominationData(nomination);
-        setActiveNomination(nomination);
-      })
-      .catch(function (err) {
-        setErrorMessage(err.response)
-      })
-  }, [id]);
-
-  useEffect(() => {
-    if(NominationsData) {
-      console.table(NominationsData);
-      for(var i; i<=NominationsData.length; i++) {
-        if(id === NominationsData[i].id) {
-          console.log("is a match");
+    if (NominationsData) {
+      for (var i = 0; i < NominationsData.length; i++) {
+        if (id === NominationsData[i].id) {
+          console.log('is a match');
+          setActiveNomination(NominationsData[i]);
+        } else {
+          console.log("not a match");
         }
       }
     }
@@ -51,7 +40,7 @@ const NominationShow = ({ match: { params: { id } } }) => {
 
   return (
     <div className="nomination-show-page">
-      <NominationBanner nomination={NominationData && NominationData}/>
+      <NominationBanner nomination={activeNomination && activeNomination}/>
     </div>
   );
 };
