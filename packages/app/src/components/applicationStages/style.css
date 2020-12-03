@@ -1,0 +1,13 @@
+.nomination-bar-wrapper {
+    background: rgb(255, 255, 255);
+    margin: 1rem;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    border-radius: 1rem;
+}
+
+.nomination-stage-bar {
+    list-style: none;
+	padding: 0px;
+	margin: auto;
+}
