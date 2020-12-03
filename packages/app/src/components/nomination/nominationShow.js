@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
-import nominationsAPI from '../../utils/API/nominationsAPI';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 
@@ -11,36 +10,28 @@ const NominationShow = ({ match: { params: { id } } }) => {
 
   useEffect(() => {
     if (NominationsData) {
-      for (var i = 0; i < NominationsData.length; i++) {
-        if (id === NominationsData[i].id) {
-          console.log('is a match');
-          setActiveNomination(NominationsData[i]);
-        } else {
-          console.log("not a match");
-        }
-      }
+    NominationsData.filter((nomination) => {
+      if(nomination.id === id) {
+        setActiveNomination(nomination);
+      } 
+    })
+    if(activeNomination.length === 0) {
+      setErrorMessage(true);
     }
-  }, []);
-
-  if (errorMessage && (errorMessage.status === 404 || errorMessage.status === 400)) {
-    return (
-      <div className="nomination-show-page">
-        <p>Nomination does not exist.</p>
-      </div>
-    );
   }
+  }, [id]);
 
-  if (errorMessage && errorMessage.status === 500) {
+  if (errorMessage && (errorMessage === true)) {
     return (
       <div className="nomination-show-page">
-        <p>Unknown Error, Please try again in a few minutes.</p>
+        <p>There has been an error locating the application.</p>
       </div>
     );
   }
 
   return (
     <div className="nomination-show-page">
-      <NominationBanner nomination={activeNomination && activeNomination}/>
+      <NominationBanner nomination={activeNomination}/>
     </div>
   );
 };
