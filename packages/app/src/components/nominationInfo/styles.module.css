@@ -4,8 +4,9 @@
   background-color: var(--light-background);
   grid-gap: 2em;
   padding: 2em;
+  flex-direction: column;
 }
-
+/* 
 .layout > .main:first-child {
   flex: 2;
 }
@@ -17,7 +18,7 @@
 .layout > .main:last-child {
   width: 60%;
   justify-self: flex-start;
-}
+} */
 
 .main {
   border-radius: 10px;
@@ -52,6 +53,10 @@
 }
 
 @media screen and (min-width: 700px) {
+  .layout {
+    flex-direction: row;
+  }
+  
   .grid-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(300px, 1fr));
@@ -60,4 +65,5 @@
   .mobileHide {
     display: block;
   }
+
 }
