@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from "./styles.css";
 
 const NewFilesToReview = () => {
@@ -18,18 +19,30 @@ const NewFilesToReview = () => {
   }
 
   return (
-    <div className="container new-files-container">
-
-        <table className="home-rew-files-table">
+    <div className="new-files-container">
+        <table className="home-new-files-table">
           <thead>
             <tr>
-              <h1>New Files To Review</h1>
+              <td className="add-padding-left new-files-title">
+                <FontAwesomeIcon icon="file-image" color="green" />
+                <h1>New Files To Review</h1>
+              </td>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td className="new-files-see-more">
+                <div onClick={() => handleClick()}>
+                  { showAll ? <FontAwesomeIcon icon="chevron-circle-up" /> : <FontAwesomeIcon icon="chevron-circle-down" />}
+                </div>
+              </td>
             </tr>
-            <button onClick={() => handleClick()}>see more</button>
           </thead>
           <tbody>
-            <tr>
-              <td><h2>Application Name</h2></td>
+            <tr className="home-new-files-headers">
+              <td className="add-padding-left"><h2>Application Name</h2></td>
               <td><h2>HP Name</h2></td>
               <td><h2>Family Member Name</h2></td>
               <td><h2>Received Date</h2></td>
@@ -39,7 +52,7 @@ const NewFilesToReview = () => {
                 ?
                 conditionalNominationRender().map(nomination =>
                   <tr key={nomination.id}>
-                    <td><p>{nomination.nominationName}</p></td>
+                    <td className="new-files-application-name add-padding-left"><p>{nomination.nominationName}</p></td>
                     <td><p>{nomination.providerName}</p></td>
                     <td><p>{nomination.providerName}</p></td>
                     <td><p>{nomination.dateReceived}</p></td>
@@ -50,7 +63,6 @@ const NewFilesToReview = () => {
               }
             </tbody>
         </table>
-
     </div>
   );
 };

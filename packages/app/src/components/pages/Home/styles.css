@@ -14,8 +14,34 @@ p {
 .new-files-container {
   background-color: white;
   border-radius: 1rem;
+  margin: 2rem;
 }
 
-thead {
+.home-new-files-headers {
   background-color: #EEF1F6;
+}
+
+.new-files-see-more {
+  text-align: end;
+  padding-right: 2rem !important;
+  /* using important to override inline styles rendered by 3rd party component Milligram */
+}
+
+.new-files-application-name {
+  color: #128B3E;
+}
+
+.add-padding-left {
+  padding-left: 2rem !important;
+  /* using important to override inline styles rendered by 3rd party component Milligram */
+}
+
+.new-files-title {
+  display: flex;
+  align-items: center;
+}
+
+.new-files-title h1{
+  padding-bottom: 0rem !important;
+  margin-left: 5px;
 }
