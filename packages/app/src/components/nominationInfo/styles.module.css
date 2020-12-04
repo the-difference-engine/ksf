@@ -6,19 +6,20 @@
   padding: 2em;
   flex-direction: column;
 }
-/* 
+
 .layout > .main:first-child {
-  flex: 2;
+  flex: 3 2 20em;
 }
 
 .layout > .main:nth-child(2) {
-  flex: 2;
+  flex: 2 3 20em;
+  height: 100%;
 }
 
 .layout > .main:last-child {
-  width: 60%;
+  width: calc(60% - 1em);
   justify-self: flex-start;
-} */
+}
 
 .main {
   border-radius: 10px;
