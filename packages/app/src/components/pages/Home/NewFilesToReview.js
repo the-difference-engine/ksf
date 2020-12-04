@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
+import styles from "./styles.css";
 
 const NewFilesToReview = () => {
   const [NominationsData, setNominationsData] = useContext(
@@ -17,39 +18,39 @@ const NewFilesToReview = () => {
   }
 
   return (
-    <div className="container">
-      <section className="home-new-files">
+    <div className="container new-files-container">
+
         <table className="home-rew-files-table">
           <thead>
             <tr>
-              New Files To Review
+              <h1>New Files To Review</h1>
             </tr>
             <button onClick={() => handleClick()}>see more</button>
           </thead>
           <tbody>
             <tr>
-              <td>Application Name</td>
-              <td>HP Name</td>
-              <td>Family Member Name</td>
-              <td>Received Date</td>
-              <td>Stage</td>
+              <td><h2>Application Name</h2></td>
+              <td><h2>HP Name</h2></td>
+              <td><h2>Family Member Name</h2></td>
+              <td><h2>Received Date</h2></td>
+              <td><h2>Stage</h2></td>
             </tr>
               {NominationsData
                 ?
                 conditionalNominationRender().map(nomination =>
                   <tr key={nomination.id}>
-                    <td>{nomination.nominationName}</td>
-                    <td>{nomination.providerName}</td>
-                    <td>{nomination.providerName}</td>
-                    <td>{nomination.dateReceived}</td>
-                    <td>need stage info</td>
+                    <td><p>{nomination.nominationName}</p></td>
+                    <td><p>{nomination.providerName}</p></td>
+                    <td><p>{nomination.providerName}</p></td>
+                    <td><p>{nomination.dateReceived}</p></td>
+                    <td><p>need stage info</p></td>
                   </tr>
                 ) :
                 <p>no new nominations</p>
               }
             </tbody>
         </table>
-      </section>
+
     </div>
   );
 };
