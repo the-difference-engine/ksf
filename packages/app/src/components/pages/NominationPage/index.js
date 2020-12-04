@@ -5,9 +5,8 @@ import NominationShow from '../../nomination/nominationShow';
 const nominationsPage = (props) => {
   return (
     <>
-      <ApplicationStages />
       <NominationShow {...props} />
-      {console.log(props.match.url, "********************")}
+      <ApplicationStages />
     </>
   );
 };
