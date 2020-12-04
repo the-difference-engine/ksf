@@ -6,8 +6,44 @@
     border-radius: 1rem;
 }
 
-.nomination-stage-bar {
-    list-style: none;
-	padding: 0px;
-	margin: auto;
+.complete {
+    background-color: rgb(178, 178, 178);
+    color: rgb(22, 123, 47);
+}
+
+.hippa-bar {
+    height:40px;
+    background:red;
+    color:#fff;
+    position:relative;
+    width:200px;
+    text-align:center;
+    line-height:40px;
+}
+
+.hippa-bar:after {
+content:"";
+position:absolute;
+height:0;
+width:0;
+left:100%;
+top:0;
+border:20px solid transparent;
+border-left: 20px solid red;
+}
+
+/* .active {
+    color: rgb(178, 178, 178);
+    background-color: rgb(22, 123, 47);
+}
+
+.awaiting {
+    color: #000;
+    background-color: rgb(216, 222, 233);
+} */
+
+.complete-button {
+    background-color: rgb(22, 123, 47);
+    border-radius: 20%;
+    margin-left: 1em;
 }
