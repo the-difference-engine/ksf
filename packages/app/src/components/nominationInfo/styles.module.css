@@ -1,24 +1,9 @@
 .layout {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   background-color: var(--light-background);
   grid-gap: 2em;
   padding: 2em;
-  flex-direction: column;
-}
-
-.layout > .main:first-child {
-  flex: 3 2 20em;
-}
-
-.layout > .main:nth-child(2) {
-  flex: 2 3 20em;
-  height: 100%;
-}
-
-.layout > .main:last-child {
-  width: calc(60% - 1em);
-  justify-self: flex-start;
 }
 
 .main {
@@ -55,12 +40,25 @@
 
 @media screen and (min-width: 700px) {
   .layout {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
   }
-  
+
+  .layout > .main:first-child {
+    grid-row: 1 / span 3;
+  }
+
+  .layout > .main:nth-child(2) {
+    grid-row: 1 / span 4;
+  }
+
+  .layout > .main:last-child {
+    grid-row: 4 / span 5;
+  }
+
   .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .mobileHide {
