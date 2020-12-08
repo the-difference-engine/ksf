@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NominationShow from './components/nomination/nominationShow';
-import FamilyMemberInfo from './components/familyInformation/familyInformation';
-import family_info from './components/familyInformation/dummyData';
 import Login from './components/pages/Login/index';
 import Home from './components/pages/Home/index';
 import SearchResults from './components/SearchResultsCard';
@@ -13,12 +11,15 @@ import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 import { ActiveNominationProvider } from './utils/context/ActiveNominationContext';
 
 import './App.css';
+
+
 ReactDOM.render(
   <Router>
     <React.StrictMode>
       <Switch>
         <NominationsDataProvider>
           <SearchResultDataProvider>
+<<<<<<< HEAD
             <ActiveNominationProvider>
               <Route path={['/', '/home']} component={Home} />
               <Route exact path={'/login'} component={Login} />
@@ -36,6 +37,12 @@ ReactDOM.render(
                 </div>
               </Route>
             </ActiveNominationProvider>
+=======
+            <Route exact path={'/'} component={Home} />
+            <Route exact path={'/login'} component={Login} />
+            <Route exact path={'/searchresults'} component={SearchResults} />
+            <Route path="/nomination/:id" exact component={NominationShow} />
+>>>>>>> 25fdfb9d94f91819c6374f528d337028437590c4
           </SearchResultDataProvider>
         </NominationsDataProvider>
       </Switch>

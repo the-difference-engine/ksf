@@ -1,51 +1,12 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #eef1f6;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* theme colors */
+:root {
+  --brand:#128B3E;
+  --light-background: #EEF1F6;
+  --dark-icon:#54698D;
+  --secondary-dark:#6D7278;
+  --body-text:#000;
+  --search-input:#F7F9FC;
+  --input-placeholder:#A1AABA;
 }
 
 /*Nomination-Show-Banner START*/
@@ -75,18 +36,18 @@ h2 {
 }
 
 #edit-button {
-  color: #128b3e;
-  border-color: #eef1f6;
+  color: var(--brand);
+  border-color: var(--light-background);
 }
 
 .banner-top {
-  border-bottom: 1px solid #eef1f6;
+  border-bottom: 1px solid var(--light-background);
 }
 
 .hp-name,
 .fam-name,
 .created-at {
-  border-right: 1px solid #eef1f6;
+  border-right: 1px solid var(--light-background);
   margin-top: 1rem;
 }
 

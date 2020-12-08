@@ -28,7 +28,6 @@ const NominationShow = ({ match: { params: { id } } }) => {
       </div>
     );
   }
-
   return (
     <div className="nomination-show-page">
       <NominationBanner nomination={activeNomination}/>
