@@ -47,14 +47,16 @@ const NewFilesToReview = () => {
                 ?
                 conditionalNominationRender().map(nomination =>
                   <tr key={nomination.id}>
-                    <td className="new-files-application-name add-padding-left"><p>{nomination.nominationName}</p></td>
-                    <td><p>{nomination.providerName}</p></td>
-                    <td><p>{nomination.providerName}</p></td>
-                    <td><p>{nomination.dateReceived}</p></td>
-                    <td><p>need stage info</p></td>
+                    <td className="new-files-application-name add-padding-left">{nomination.nominationName}</td>
+                    <td>{nomination.providerName}</td>
+                    <td>{nomination.representativeName}</td>
+                    <td>{nomination.dateReceived}</td>
+                    <td>need stage info</td>
                   </tr>
                 ) :
-                <p>no new nominations</p>
+                <tr>
+                  <td>no new nominations</td>
+                </tr>
               }
             </tbody>
         </table>
