@@ -33,6 +33,7 @@ p {
 
 .add-padding-left {
   padding-left: 2rem !important;
+
   /* using important to override inline styles rendered by 3rd party component Milligram */
 }
 
@@ -42,6 +43,17 @@ p {
 }
 
 .new-files-title h1{
-  padding-bottom: 0rem !important;
   margin-left: 5px;
+  margin-bottom: 0rem !important;
+}
+
+.home-new-files-headers h2{
+  margin-bottom: 0rem !important;
+}
+
+
+
+td {
+  border: none;
+  padding: 1.5rem 2rem;
 }

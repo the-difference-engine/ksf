@@ -4,9 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from "./styles.css";
 
 const NewFilesToReview = () => {
-  const [NominationsData, setNominationsData] = useContext(
-    NominationsDataContext
-  );
+  const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
   const [showAll, setShowAll] = useState(false);
   const receivedNominations = NominationsData ? NominationsData.filter(nominations => nominations.status === "received") : []
 
@@ -27,12 +25,9 @@ const NewFilesToReview = () => {
                 <FontAwesomeIcon icon="file-image" color="green" />
                 <h1>New Files To Review</h1>
               </td>
-              <td>
-              </td>
-              <td>
-              </td>
-              <td>
-              </td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td className="new-files-see-more">
                 <div onClick={() => handleClick()}>
                   { showAll ? <FontAwesomeIcon icon="chevron-circle-up" /> : <FontAwesomeIcon icon="chevron-circle-down" />}
