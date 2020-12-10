@@ -36,5 +36,10 @@
   margin-top: 1rem;
 }
 
+.secondary-dark {
+  color: var(--secondary-dark);
+}
 
-
+.body-font {
+  color: black;
+}

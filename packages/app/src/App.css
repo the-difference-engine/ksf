@@ -20,16 +20,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #eef1f6;
+  color: var(--body-text);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-p {
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
 }
 
 h1 {
@@ -38,4 +34,10 @@ h1 {
 
 h2 {
   font-size: 1rem;
+  color: var(--secondary-dark);
+}
+
+p {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 }
