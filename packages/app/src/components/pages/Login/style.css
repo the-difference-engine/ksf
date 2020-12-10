@@ -1,0 +1,15 @@
+/*LOGIN GOOGLE BUTTON*/
+.google-button {
+  text-align: center;
+}
+
+.google-login, .google-logout {
+  /* using important to override inline styles rendered by 3rd party component */
+  padding: 30px !important;
+}
+
+.login-logo {
+  max-width: 25%;
+  margin: 30% auto;
+  margin-bottom: 5%;
+}

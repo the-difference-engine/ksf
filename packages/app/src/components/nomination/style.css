@@ -1,0 +1,46 @@
+/*Nomination-Show-Banner START*/
+.nomination-banner-container {
+  padding: 3rem;
+}
+.icon-container {
+  height: 60px;
+  width: 60px;
+}
+
+p {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+.edit-button {
+  border-radius: 4rem;
+}
+
+#edit-button {
+  color: var(--brand);
+  border-color: var(--light-background);
+}
+
+.banner-top {
+  border-bottom: 1px solid var(--light-background);
+}
+
+.hp-name,
+.fam-name,
+.created-at {
+  border-right: 1px solid var(--light-background);
+  margin-top: 1rem;
+}
+
+.amount {
+  margin-top: 1rem;
+}
+
