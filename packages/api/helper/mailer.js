@@ -1,8 +1,5 @@
 const nodemailer = require('nodemailer');
-// const creds = require('./config');
 const smtpTransport = require('nodemailer-smtp-transport');
-
-const creds = require('../config/config.json').credentials;
 
 module.exports = {
   sendVerification: (nomination) => {
@@ -39,7 +36,7 @@ module.exports = {
 
     let mailOptions = {
       from: 'formmaster@keepswimmingfoundation.org',
-      to: 'hannah.chamorro@gmail.com', // nomination.providerEmail
+      to: nomination.providerEmail,
       subject: 'test',
       text: `Please verify ${nomination.verificationCode}`,
     };
@@ -54,6 +51,9 @@ module.exports = {
     });
   },
 };
+
+// const creds = require('./config');
+// const creds = require('../config/config.json').credentials;
 
 // node mailer function
 // update model to say that email has been verified.
