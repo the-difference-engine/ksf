@@ -14,7 +14,7 @@ const NominationBanner = ({ nomination }) => {
           <img src="/ksflogo.png" alt="other"/>
         </div>
 
-        <div className="column column-90 nomination-details">
+        <div className="column column-80 nomination-details">
 
           <div className="row banner-top">
             <div className="column name">
