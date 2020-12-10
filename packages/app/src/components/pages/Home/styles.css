@@ -7,10 +7,6 @@ h2 {
   font-weight: bold;
 }
 
-p {
-  font-size: .875rem;
-}
-
 .new-files-container {
   background-color: white;
   border-radius: 1rem;
@@ -51,7 +47,9 @@ p {
   margin-bottom: 0rem !important;
 }
 
-
+.detail-font-size {
+  font-size: .875rem;
+}
 
 td {
   border: none;

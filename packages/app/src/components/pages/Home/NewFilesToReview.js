@@ -28,6 +28,7 @@ const NewFilesToReview = () => {
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
               <td className="new-files-see-more">
                 <div onClick={() => handleClick()}>
                   { showAll ? <FontAwesomeIcon icon="chevron-circle-up" /> : <FontAwesomeIcon icon="chevron-circle-down" />}
@@ -42,16 +43,18 @@ const NewFilesToReview = () => {
               <td><h2>Family Member Name</h2></td>
               <td><h2>Received Date</h2></td>
               <td><h2>Stage</h2></td>
+              <td></td>
             </tr>
               {NominationsData
                 ?
                 conditionalNominationRender().map(nomination =>
                   <tr key={nomination.id}>
-                    <td className="new-files-application-name add-padding-left">{nomination.nominationName}</td>
-                    <td>{nomination.providerName}</td>
-                    <td>{nomination.representativeName}</td>
-                    <td>{nomination.dateReceived}</td>
-                    <td>need stage info</td>
+                    <td className="new-files-application-name add-padding-left detail-font-size">{nomination.nominationName}</td>
+                    <td className="detail-font-size">{nomination.providerName}</td>
+                    <td className="detail-font-size">{nomination.representativeName}</td>
+                    <td className="detail-font-size">{nomination.dateReceived}</td>
+                    <td className="detail-font-size">need stage info</td>
+                    <td className="dot-fa-ellipsis"><FontAwesomeIcon icon="ellipsis-v"/></td> {/* placeholder for future drag feature */}
                   </tr>
                 ) :
                 <tr>
