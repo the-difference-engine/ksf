@@ -49,7 +49,7 @@
   }
 
   .layout > .main:nth-child(2) {
-    grid-row: 1 / span 4;
+    grid-row: 1;
   }
 
   .layout > .main:last-child {
