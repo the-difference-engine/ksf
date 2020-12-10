@@ -23,6 +23,7 @@ Object {
               <td />
               <td />
               <td />
+              <td />
               <td
                 class="new-files-see-more"
               >
@@ -61,10 +62,13 @@ Object {
                   Stage
                 </h2>
               </td>
+              <td />
             </tr>
-            <p>
-              no new nominations
-            </p>
+            <tr>
+              <td>
+                no new nominations
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -86,6 +90,7 @@ Object {
                 New Files To Review
               </h1>
             </td>
+            <td />
             <td />
             <td />
             <td />
@@ -127,10 +132,13 @@ Object {
                 Stage
               </h2>
             </td>
+            <td />
           </tr>
-          <p>
-            no new nominations
-          </p>
+          <tr>
+            <td>
+              no new nominations
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
