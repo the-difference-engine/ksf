@@ -7,6 +7,6 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/', routes);
+// app.use(proxy('/', { target : 'http://localhost:8080/'}));
 
 module.exports = app;
