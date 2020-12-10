@@ -3,6 +3,9 @@
 /*Nomination-Show-Banner START*/
 .nomination-banner-container {
   padding: 3rem;
+  background-color: white;
+  margin: 1rem;
+  border-radius: 10px;
 }
 .icon-container {
   height: 60px;
