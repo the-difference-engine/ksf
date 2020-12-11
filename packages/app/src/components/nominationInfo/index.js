@@ -2,11 +2,6 @@ import React from "react";
 import ApplicationDetail from "./applicationDetail";
 import styles from "./styles.module.css";
 
-const dummyStyle = {
-  margin: '0 auto',
-  backgroundColor: 'var(--light-background)',
-  padding: '2em',
-}
 
 function NominationInfo({ NominationData }) {
   const fields = [
@@ -56,14 +51,33 @@ function NominationInfo({ NominationData }) {
         label: "Relationship",
         value: NominationData.representativeRelationship
       }];
+    const patientInfo = [
+      {
+        label: "Name",
+        value: NominationData.patientName
+      },
+      {
+        label: "",
+        value: ""
+      },
+      {
+        label: "Admission Date",
+        value: NominationData.admissionDate
+      },
+      {
+        label: "Discharge Date",
+        value: NominationData.dischargeDate
+      },
+      {
+        label: "Diagnosis/case information",
+        value: NominationData.patientDiagnosis
+      },
+    ];
       return (
-        <div>
-          <div style={dummyStyle}>
-            <ApplicationDetail fields={fields} gridContent={true} title="Health Provider Information" />
-          </div>
-          <div style={dummyStyle}>
+        <div className={styles.layout}>
+            <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
-          </div>
+            <ApplicationDetail fields={fields} gridContent={true} title="Health Provider Information" />
         </div>
       );
     }
