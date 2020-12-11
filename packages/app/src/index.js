@@ -10,6 +10,7 @@ import { NominationsDataProvider } from './utils/context/NominationsContext';
 import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 import { ActiveNominationProvider } from './utils/context/ActiveNominationContext';
 
+
 import './App.css';
 
 
@@ -19,7 +20,6 @@ ReactDOM.render(
       <Switch>
         <NominationsDataProvider>
           <SearchResultDataProvider>
-<<<<<<< HEAD
             <ActiveNominationProvider>
               <Route path={['/', '/home']} component={Home} />
               <Route exact path={'/login'} component={Login} />
@@ -33,16 +33,9 @@ ReactDOM.render(
                     padding: '2em',
                   }}
                 >
-                  <FamilyMemberInfo {...family_info} />
                 </div>
               </Route>
             </ActiveNominationProvider>
-=======
-            <Route exact path={'/'} component={Home} />
-            <Route exact path={'/login'} component={Login} />
-            <Route exact path={'/searchresults'} component={SearchResults} />
-            <Route path="/nomination/:id" exact component={NominationShow} />
->>>>>>> 25fdfb9d94f91819c6374f528d337028437590c4
           </SearchResultDataProvider>
         </NominationsDataProvider>
       </Switch>

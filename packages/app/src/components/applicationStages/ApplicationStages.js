@@ -1,62 +1,81 @@
-import React, { useState, useContext } from "react";
-import { ActiveNominationContext } from  '../../utils/context/ActiveNominationContext';
+import React, { useState, useContext, useEffect } from 'react';
+import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import './style.css';
 const ApplicationStages = () => {
+    const [activeNomination, setActiveNomination] = useContext(
+        ActiveNominationContext
+    );
+    const [currentStatus, setCurrentStatus] = useState("received");
+    const status = [
+        'received',
+        'awaiting HIPPA',
+        'HIPPA verified',
+        'document review',
+    ];
 
-    const [activeNomination, setActiveNomination] = useContext( ActiveNominationContext );
-    
-    function advanceStage(e) {
-        console.log(activeNomination.status);
-        if(activeNomination.status === "received") {
-            console.log("i am clicked");
-            let holderArr = activeNomination;
-            holderArr.status = "awaiting HIPPA"
-            setActiveNomination(holderArr);
-            console.log(holderArr.status);
-            console.log(activeNomination.status);
+    useEffect(() => {
+        setCurrentStatus(activeNomination.status);
+    }, [currentStatus]);
+
+    function advanceStage(activeNomStatus) {
+        switch (activeNomStatus) {
+        case 'received':
+            activeNomination.status = 'awaiting HIPPA';
+            setCurrentStatus("awaiting HIPPA");
+            break;
+        case 'awaiting HIPPA':
+            activeNomination.status = 'HIPPA verified';
+            setCurrentStatus("HIPPA verified");
+            break;
+        case 'HIPPA verified':
+            activeNomination.status = 'document review';
+            setCurrentStatus("document review");
+            break;
+        case 'document review':
+            activeNomination.status = 'ready for board review';
+            break;
         }
-        if(activeNomination.status === "awaiting HIPPA") {
-            console.log("i am clicked");
-            let holderArr = activeNomination;
-            holderArr.status = "HIPPA verified"
-            setActiveNomination(holderArr);
-            console.log(holderArr.status);
-            console.log(activeNomination.status);
-        }
-        if(activeNomination.status === "HIPPA verified") {
-            console.log("i am clicked");
-            let holderArr = activeNomination;
-            holderArr.status = "document review"
-            setActiveNomination(holderArr);
-            console.log(holderArr.status);
-            console.log(activeNomination.status);
-        }
-        if(activeNomination.status === "document review") {
-            console.log("i am clicked");
-            let holderArr = activeNomination;
-            holderArr.status = "ready for board review"
-            setActiveNomination(holderArr);
-            console.log(holderArr.status);
-            console.log(activeNomination.status);
-        }
+    };
+
+    function createStatusEl() {
+        const iOfActiveNomStat = status.indexOf(activeNomination.status);
+        return status.map((stat, i) => (
+        <>
+            { iOfActiveNomStat === i ? (
+            <div key={i} className="step current">
+                <span>{stat}</span>
+            </div>
+            ) : iOfActiveNomStat < i ? (
+            <div key={i} className="step">
+                <span>{stat}</span>
+            </div>
+            ) : iOfActiveNomStat > i ? (
+            <div key={i} className="step complete">
+                <span>{stat}</span>
+            </div>
+            ) : (
+            null
+            )}
+        </>
+        ));
     }
-
     return (
         <>
-        {console.log(activeNomination)}
-        <div className="nomination-bar-wrapper">
-            <div className="nomination-stage-bar row">
-                <div className="column complete bar">&#10003;</div>
-                <div className="column active hippa-bar">Awaiting HIPAA<span className="arrow"></span></div> 
-                <div className="column awaiting bar">HIPAA Verified</div>
-                <div className="column awaiting bar">Document Review</div>
-                <div className="column awaiting bar">Ready for Board Review</div>
-                <div className="column"></div>
-                <div className="column complete-button"onClick={() => advanceStage()}>&#10003; Mark Stage as Complete</div>
+        <div className="container">
+            <div className="wrapper">
+            <div className="arrow-steps clearfix">{createStatusEl()}</div>
+            <div className="nav clearfix">
+                <div
+                href="#"
+                className="next pull-right"
+                onClick={() => advanceStage(activeNomination.status)}
+                >
+                &#10003; Mark Stage as Complete
+                </div>
+            </div>
             </div>
         </div>
         </>
     );
 };
-
 export default ApplicationStages;
