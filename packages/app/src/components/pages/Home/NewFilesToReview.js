@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from "./styles.css";
+import NewNomination from "./NewNomination.js"
 
 const NewFilesToReview = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
@@ -30,8 +31,8 @@ const NewFilesToReview = () => {
               <td></td>
               <td></td>
               <td className="new-files-see-more">
-                <div onClick={() => handleClick()}>
-                  { showAll ? <FontAwesomeIcon icon="chevron-circle-up" /> : <FontAwesomeIcon icon="chevron-circle-down" />}
+                <div onClick={handleClick}>
+                  <FontAwesomeIcon icon={showAll ? "chevron-circle-up" : "chevron-circle-down"} />
                 </div>
               </td>
             </tr>
@@ -47,19 +48,13 @@ const NewFilesToReview = () => {
             </tr>
               {NominationsData
                 ?
-                conditionalNominationRender().map(nomination =>
-                  <tr key={nomination.id}>
-                    <td className="new-files-application-name add-padding-left detail-font-size">{nomination.nominationName}</td>
-                    <td className="detail-font-size">{nomination.providerName}</td>
-                    <td className="detail-font-size">{nomination.representativeName}</td>
-                    <td className="detail-font-size">{nomination.dateReceived}</td>
-                    <td className="detail-font-size">need stage info</td>
-                    <td className="dot-fa-ellipsis"><FontAwesomeIcon icon="ellipsis-v"/></td> {/* placeholder for future drag feature */}
+                  conditionalNominationRender().map(nomination =>
+                    <NewNomination nomination={nomination} key={nomination.id} />
+                  )
+                :
+                  <tr>
+                    <td>no new nominations</td>
                   </tr>
-                ) :
-                <tr>
-                  <td>no new nominations</td>
-                </tr>
               }
             </tbody>
         </table>
