@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from "./styles.css";
 import NewNomination from "./NewNomination.js"
+import styles from "./styles.css";
 
 const NewFilesToReview = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
@@ -18,47 +18,45 @@ const NewFilesToReview = () => {
   }
 
   return (
-    <div className="new-files-container">
-        <table className="home-new-files-table">
-          <thead>
-            <tr>
-              <td className="add-padding-left new-files-title">
-                <FontAwesomeIcon icon="file-image" color="green" />
-                <h1>New Files To Review</h1>
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td className="new-files-see-more">
-                <div onClick={handleClick}>
-                  <FontAwesomeIcon icon={showAll ? "chevron-circle-up" : "chevron-circle-down"} />
-                </div>
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="home-new-files-headers">
-              <td className="add-padding-left"><h2>Application Name</h2></td>
-              <td><h2>HP Name</h2></td>
-              <td><h2>Family Member Name</h2></td>
-              <td><h2>Received Date</h2></td>
-              <td><h2>Stage</h2></td>
-              <td></td>
-            </tr>
-              {NominationsData
-                ?
-                  conditionalNominationRender().map(nomination =>
-                    <NewNomination nomination={nomination} key={nomination.id} />
-                  )
-                :
-                  <tr>
-                    <td>no new nominations</td>
-                  </tr>
-              }
-            </tbody>
-        </table>
-    </div>
+    <table className="new-files-table">
+      <thead>
+        <tr>
+          <td className="add-padding-left new-files-title">
+            <FontAwesomeIcon icon="file-image" color="green" />
+            <h1>New Files To Review</h1>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td className="new-files-see-more">
+            <div onClick={handleClick}>
+              <FontAwesomeIcon icon={showAll ? "chevron-circle-up" : "chevron-circle-down"} />
+            </div>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr className="home-new-files-headers">
+          <td className="add-padding-left"><h2><strong>Application Name</strong></h2></td>
+          <td><h2><strong>HP Name</strong></h2></td>
+          <td><h2><strong>Family Member Name</strong></h2></td>
+          <td><h2><strong>Received Date</strong></h2></td>
+          <td><h2><strong>Stage</strong></h2></td>
+          <td></td>
+        </tr>
+          {NominationsData
+            ?
+              conditionalNominationRender().map(nomination =>
+                <NewNomination nomination={nomination} key={nomination.id} />
+              )
+            :
+              <tr>
+                <td>no new nominations</td>
+              </tr>
+          }
+        </tbody>
+    </table>
   );
 };
 

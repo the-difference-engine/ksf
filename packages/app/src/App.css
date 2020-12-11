@@ -34,10 +34,14 @@ h1 {
 
 h2 {
   font-size: 1rem;
-  color: var(--secondary-dark);
 }
 
 p {
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
+}
+
+td {
+  border: none;
+  padding: 1.5rem 2rem;
 }
