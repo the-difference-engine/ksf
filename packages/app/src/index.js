@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NominationShow from './components/nomination/nominationShow';
-import FamilyMemberInfo from './components/familyInformation/familyInformation';
-import family_info from './components/familyInformation/dummyData';
 import Login from './components/pages/Login/index';
 import Home from './components/pages/Home/index';
 import SearchResults from './components/SearchResultsCard';
@@ -12,7 +10,10 @@ import { NominationsDataProvider } from './utils/context/NominationsContext';
 import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 import { ActiveNominationProvider } from './utils/context/ActiveNominationContext';
 
+
 import './App.css';
+
+
 ReactDOM.render(
   <Router>
     <React.StrictMode>
@@ -32,7 +33,6 @@ ReactDOM.render(
                     padding: '2em',
                   }}
                 >
-                  <FamilyMemberInfo {...family_info} />
                 </div>
               </Route>
             </ActiveNominationProvider>

@@ -2,77 +2,77 @@ import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import './style.css';
 const ApplicationStages = () => {
-  const [activeNomination, setActiveNomination] = useContext(
-    ActiveNominationContext
-  );
-  const [status, setStatus] = useState([
-    'received',
-    'awaiting HIPPA',
-    'HIPPA verified',
-    'document review',
-  ]);
+    const [activeNomination, setActiveNomination] = useContext(
+        ActiveNominationContext
+    );
+    const [currentStatus, setCurrentStatus] = useState("received");
+    const status = [
+        'received',
+        'awaiting HIPPA',
+        'HIPPA verified',
+        'document review',
+    ];
 
-  useEffect(() => {}, [activeNomination]);
+    useEffect(() => {
+        setCurrentStatus(activeNomination.status);
+    }, [currentStatus]);
 
-  function advanceStage(e) {
-    console.log(activeNomination.status);
-    console.log(activeNomination);
-    if (activeNomination.status === 'received') {
-      return (activeNomination.status = 'awaiting HIPPA');
-    }
-    if (activeNomination.status === 'awaiting HIPPA') {
-      return (activeNomination.status = 'HIPPA verified');
-    }
-    if (activeNomination.status === 'HIPPA verified') {
-      return (activeNomination.status = 'document review');
-    }
-    if (activeNomination.status === 'document review') {
-      return (activeNomination.status = 'ready for board review');
-    }
-  }
-  const statusEl = status.map((x, i) => (
-    <>
-      {status.indexOf(activeNomination.status) === i ? (
-        <div className="step current">
-          {console.log('*** :) ***')}
-          {console.log(i, 'index of map')}
-          {console.log(status.indexOf(activeNomination.status))}
-          <span>{x}</span>
-        </div>
-      ) : status.indexOf(activeNomination.status) < i ? (
-        <div className="step">
-          <span>{x}</span>
-        </div>
-      ) : status.indexOf(activeNomination.status) > i ? (
-        <div className="step done">
-          <span>{x}</span>
-        </div>
-      ) : (
-        console.log(':(')
-      )}
-    </>
-  ));
+    function advanceStage(activeNomStatus) {
+        switch (activeNomStatus) {
+        case 'received':
+            activeNomination.status = 'awaiting HIPPA';
+            setCurrentStatus("awaiting HIPPA");
+            break;
+        case 'awaiting HIPPA':
+            activeNomination.status = 'HIPPA verified';
+            setCurrentStatus("HIPPA verified");
+            break;
+        case 'HIPPA verified':
+            activeNomination.status = 'document review';
+            setCurrentStatus("document review");
+            break;
+        case 'document review':
+            activeNomination.status = 'ready for board review';
+            break;
+        }
+    };
 
-  function createStatusEl(name) {
-    const iOfAcitveNomStat = status.indexOf(activeNomination.status);
-    name = 'hello';
-    return <div>{name}</div>;
-  }
-
-  return (
-    <>
-      {console.log(activeNomination)}
-      <div className="container">
-        <div className="wrapper">
-          <div className="arrow-steps clearfix">{statusEl}</div>
-          <div>{createStatusEl()}</div>
-          <div className="nav clearfix">
-            <div
-              href="#"
-              className="next pull-right"
-              onClick={() => advanceStage()}
-            >
-              &#10003; Mark Stage as Complete
+    function createStatusEl() {
+        const iOfActiveNomStat = status.indexOf(activeNomination.status);
+        return status.map((stat, i) => (
+        <>
+            { iOfActiveNomStat === i ? (
+            <div key={i} className="step current">
+                <span>{stat}</span>
+            </div>
+            ) : iOfActiveNomStat < i ? (
+            <div key={i} className="step">
+                <span>{stat}</span>
+            </div>
+            ) : iOfActiveNomStat > i ? (
+            <div key={i} className="step complete">
+                <span>{stat}</span>
+            </div>
+            ) : (
+            null
+            )}
+        </>
+        ));
+    }
+    return (
+        <>
+        <div className="container">
+            <div className="wrapper">
+            <div className="arrow-steps clearfix">{createStatusEl()}</div>
+            <div className="nav clearfix">
+                <div
+                href="#"
+                className="next pull-right"
+                onClick={() => advanceStage(activeNomination.status)}
+                >
+                &#10003; Mark Stage as Complete
+                </div>
+            </div>
             </div>
           </div>
         </div>
