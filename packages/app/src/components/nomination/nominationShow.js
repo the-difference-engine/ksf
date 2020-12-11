@@ -4,6 +4,7 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 import NominationInfo from '../nominationInfo';
 import './style.css';
 
+
 const NominationShow = ({ match: { params: { id } } }) => {
   const [NominationData, setNominationData] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
