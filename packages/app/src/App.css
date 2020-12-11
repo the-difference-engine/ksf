@@ -9,18 +9,23 @@
   --input-placeholder:#A1AABA;
 }
 
-/*Nomination-Show-Banner START*/
-.nomination-banner-container {
-  padding: 3rem;
-}
-.icon-container {
-  height: 60px;
-  width: 60px;
+/*This has been lost from the when it was switched over from index.css,*/
+/*it is currently in index.css on develop and not being used*/
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #eef1f6;
+  color: var(--body-text);
 }
 
-p {
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 h1 {
@@ -29,44 +34,10 @@ h1 {
 
 h2 {
   font-size: 1rem;
+  color: var(--secondary-dark);
 }
 
-.edit-button {
-  border-radius: 4rem;
-}
-
-#edit-button {
-  color: var(--brand);
-  border-color: var(--light-background);
-}
-
-.banner-top {
-  border-bottom: 1px solid var(--light-background);
-}
-
-.hp-name,
-.fam-name,
-.created-at {
-  border-right: 1px solid var(--light-background);
-  margin-top: 1rem;
-}
-
-.amount {
-  margin-top: 1rem;
-}
-
-/*LOGIN GOOGLE BUTTON*/
-.google-button {
-  text-align: center;
-}
-
-.google-login, .google-logout {
-  /* using important to override inline styles rendered by 3rd party component */
-  padding: 30px !important;
-}
-
-.login-logo {
-  max-width: 25%;
-  margin: 30% auto;
-  margin-bottom: 5%;
+p {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 }

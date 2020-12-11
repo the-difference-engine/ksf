@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import NominationInfo from '../nominationInfo';
+import './style.css';
 
 const NominationShow = ({ match: { params: { id } } }) => {
   const [NominationData, setNominationData] = useState({})
