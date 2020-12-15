@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import SearchBar from '../../SearchBar';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
 import nominationShow from '../../nomination/nominationShow';
@@ -14,4 +14,4 @@ const home = (props) => {
   );
 };
 
-export default home;
+export default Home;

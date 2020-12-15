@@ -1,0 +1,48 @@
+@import "../../../App.css"
+
+#new-files-container {
+  background-color: white;
+}
+.new-files-table {
+  background-color: white;
+  border-radius: 1rem;
+  margin: 1rem;
+  width: -webkit-fill-available;
+}
+
+.home-new-files-headers {
+  background-color: var(--light-background);
+}
+
+.new-files-see-more {
+  text-align: end;
+  padding-right: 2rem !important;
+  /* using important to override inline styles rendered by 3rd party component Milligram */
+}
+
+.new-files-application-name {
+  color: var(--brand);
+}
+
+.add-padding-left {
+  padding-left: 2rem !important;
+  /* using important to override inline styles rendered by 3rd party component Milligram */
+}
+
+.new-files-title {
+  display: flex;
+  align-items: center;
+}
+
+.new-files-title h1{
+  margin-left: 5px;
+  margin-bottom: 0rem !important;
+}
+
+.home-new-files-headers h2{
+  margin-bottom: 0rem !important;
+}
+
+.detail-font-size {
+  font-size: .875rem;
+}

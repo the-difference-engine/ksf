@@ -1,0 +1,210 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders new files to review component on the home page 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <table
+        class="new-files-table"
+      >
+        <thead>
+          <tr>
+            <td
+              class="add-padding-left new-files-title"
+            >
+              <h1>
+                New Files To Review
+              </h1>
+            </td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td
+              class="new-files-see-more"
+            >
+              <div />
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="home-new-files-headers"
+          >
+            <td
+              class="add-padding-left"
+            >
+              <h2>
+                <strong>
+                  Application Name
+                </strong>
+              </h2>
+            </td>
+            <td>
+              <h2>
+                <strong>
+                  HP Name
+                </strong>
+              </h2>
+            </td>
+            <td>
+              <h2>
+                <strong>
+                  Family Member Name
+                </strong>
+              </h2>
+            </td>
+            <td>
+              <h2>
+                <strong>
+                  Received Date
+                </strong>
+              </h2>
+            </td>
+            <td>
+              <h2>
+                <strong>
+                  Stage
+                </strong>
+              </h2>
+            </td>
+            <td />
+          </tr>
+          <tr>
+            <td>
+              no new nominations
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>,
+  "container": <div>
+    <table
+      class="new-files-table"
+    >
+      <thead>
+        <tr>
+          <td
+            class="add-padding-left new-files-title"
+          >
+            <h1>
+              New Files To Review
+            </h1>
+          </td>
+          <td />
+          <td />
+          <td />
+          <td />
+          <td
+            class="new-files-see-more"
+          >
+            <div />
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="home-new-files-headers"
+        >
+          <td
+            class="add-padding-left"
+          >
+            <h2>
+              <strong>
+                Application Name
+              </strong>
+            </h2>
+          </td>
+          <td>
+            <h2>
+              <strong>
+                HP Name
+              </strong>
+            </h2>
+          </td>
+          <td>
+            <h2>
+              <strong>
+                Family Member Name
+              </strong>
+            </h2>
+          </td>
+          <td>
+            <h2>
+              <strong>
+                Received Date
+              </strong>
+            </h2>
+          </td>
+          <td>
+            <h2>
+              <strong>
+                Stage
+              </strong>
+            </h2>
+          </td>
+          <td />
+        </tr>
+        <tr>
+          <td>
+            no new nominations
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

@@ -1,0 +1,45 @@
+@import "../../App.css";
+
+/*Nomination-Show-Banner START*/
+.nomination-banner-container {
+  padding: 3rem;
+  background-color: white;
+  margin: 1rem;
+  border-radius: 10px;
+}
+.icon-container {
+  height: 60px;
+  width: 60px;
+}
+
+.edit-button {
+  border-radius: 4rem;
+}
+
+#edit-button {
+  color: var(--brand);
+  border-color: var(--light-background);
+}
+
+.banner-top {
+  border-bottom: 1px solid var(--light-background);
+}
+
+.hp-name,
+.fam-name,
+.created-at {
+  border-right: 1px solid var(--light-background);
+  margin-top: 1rem;
+}
+
+.amount {
+  margin-top: 1rem;
+}
+
+.secondary-dark {
+  color: var(--secondary-dark);
+}
+
+.body-font {
+  color: black;
+}

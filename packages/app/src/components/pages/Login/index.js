@@ -1,6 +1,6 @@
 import React from 'react';
-import GoogleBtn from '../../GoogleBtn/GoogleBtn';
-import '../../../App.css';
+import GoogleBtn from './GoogleBtn/GoogleBtn';
+import './style.css';
 
 const Login = () => {
   return (
