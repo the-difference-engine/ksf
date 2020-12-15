@@ -19,16 +19,17 @@ const Home = () => {
     findAllNominations();
   }, []);
 
+  const nomName = (n) => {
+    const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
+    const state = states.getStateCodeByStateName(n.hospitalState);
+    return `${lastName}-${state}`;
+  };
+
   function findAllNominations() {
     nominationsAPI
       .getNominations()
       .then((res) => {
         const nominations = res.data;
-        let nomName = (n) => {
-          const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
-          const state = states.getStateCodeByStateName(n.hospitalState);
-          return `${lastName}-${state}`;
-        };
         nominations.forEach((nomination) => {
           nomination.nominationName = nomName(nomination);
           nomination.dateReceived = new Date(
