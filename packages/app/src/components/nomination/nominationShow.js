@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
-import { NominationsDataContext } from '../../utils/context/NominationsContext';
-import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+import nominationsAPI from '../../utils/API/nominationsAPI';
+import NominationInfo from '../nominationInfo';
+import {ActiveNominationContext} from '../../utils/context/ActiveNominationContext';
+import {NominationsDataContext} from '../../utils/context/NominationsContext';
+
+import './style.css';
+
 
 const NominationShow = ({ match: { params: { id } } }) => {
   const [errorMessage, setErrorMessage] = useState(null)

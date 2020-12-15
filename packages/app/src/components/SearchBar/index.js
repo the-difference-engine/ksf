@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import states from 'us-state-codes';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
-import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 
 const SearchBar = () => {
@@ -16,30 +14,6 @@ const SearchBar = () => {
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-  useEffect(() => {
-    findAllNominations();
-  }, []);
-
-  function findAllNominations() {
-    nominationsAPI
-      .getNominations()
-      .then((res) => {
-        const nominations = res.data;
-        let nomName = (n) => {
-          const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
-          const state = states.getStateCodeByStateName(n.hospitalState);
-          return `${lastName}-${state}`;
-        };
-        nominations.forEach((nomination) => {
-          nomination.nominationName = nomName(nomination);
-          nomination.dateReceived = new Date(
-            nomination.dateReceived
-          ).toLocaleDateString();
-        });
-        setNominationsData(nominations);
-      })
-      .catch((err) => console.log(err));
-  }
 
   function findSearchResults(searchTerm) {
     const filteredNoms = NominationsData.filter((nomination) => {
