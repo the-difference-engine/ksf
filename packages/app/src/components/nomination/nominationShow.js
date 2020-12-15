@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import NominationBanner from './nominationBanner'
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import NominationInfo from '../nominationInfo';
+import {ActiveNominationContext} from '../../utils/context/ActiveNominationContext';
+import {NominationsDataContext} from '../../utils/context/NominationsContext';
+
 import './style.css';
 
 
