@@ -9,6 +9,6 @@ const gSheetsToDB = require('./helper/nominationGsheetToDB')
 gSheetsToDB()
 app.use(cors());
 app.use(bodyParser.json());
-// app.use(proxy('/', { target : 'http://localhost:8080/'}));
+app.use('/', routes);
 
 module.exports = app;
