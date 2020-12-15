@@ -6,24 +6,6 @@
     border-radius: 1rem;
 }
 
-/* .active {
-    color: rgb(178, 178, 178);
-    background-color: rgb(22, 123, 47);
-}
-
-.awaiting {
-    color: #000;
-    background-color: rgb(216, 222, 233);
-}
-
-.complete-button {
-    background-color: rgb(22, 123, 47);
-    border-radius: 20%;
-    margin-left: 1em;
-} */
-
-/* Global CSS, you probably don't need that */
-
 .clearfix:after {
     clear: both;
     content: "";
@@ -38,9 +20,9 @@
 }
 
 .wrapper {
-	display: table-cell;
-	height: 400px;
 	vertical-align: middle;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .nav {
@@ -63,7 +45,8 @@ a:hover {
 /* Breadcrups CSS */
 
 .arrow-steps .step {
-	font-size: 14px;
+	font-size: 1rem;
+	font-weight: bold;
 	text-align: center;
 	color: #666;
 	cursor: default;
@@ -95,6 +78,14 @@ a:hover {
   transition: border-color 0.2s ease;
 }
 
+.arrow-steps .step:last-child:after {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top: 19px solid rgb(216, 222, 233);
+    border-bottom: 17px solid rgb(216, 222, 233);
+    border-left: 17px solid rgb(216, 222, 233);
+}
+
 .arrow-steps .step:before {
 	right: auto;
 	left: 0;
@@ -107,6 +98,15 @@ a:hover {
 }
 
 .arrow-steps .step:first-child {
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 25px;
+}
+
+.checkmark:before {
+	content: "✓";
+}
+
+.arrow-steps .step:last-child {
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 }
@@ -133,18 +133,48 @@ a:hover {
 
 .arrow-steps .step.current {
 	color: rgb(178, 178, 178);
-	background-color: rgb(22, 123, 47);
+	color: white;
+	background-color: #128B3E;
 }
 
 .arrow-steps .step.current:after {
-    border-left: 17px solid rgb(22, 123, 47);	
+    border-left: 17px solid #128B3E;	
 }
 
 .arrow-steps .step.complete {
-	color: rgb(22, 123, 47);
+	color: #128B3E;
 	background-color: rgb(178, 178, 178);
 }
 
 .arrow-steps .step.complete:after {
 	border-left: 17px solid rgb(178, 178, 178);	
+}
+
+.arrow-steps .step.current:last-child:after {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top: 19px solid #128B3E;
+    border-bottom: 17px solid #128B3E;
+    border-left: 17px solid #128B3E;
+}
+
+.next {
+    display: inline-block;
+    background-color: #128B3E;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    width: 15%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    margin: 0px;
+    cursor: pointer;
+}
+
+.next span {
+	margin-right: 1rem;
 }

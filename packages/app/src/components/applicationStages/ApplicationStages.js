@@ -1,16 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
+
 const ApplicationStages = () => {
     const [activeNomination, setActiveNomination] = useContext(
         ActiveNominationContext
     );
     const [currentStatus, setCurrentStatus] = useState("received");
     const status = [
-        'received',
-        'awaiting HIPPA',
-        'HIPPA verified',
-        'document review',
+        'Received',
+        'Awaiting HIPAA',
+        'HIPAA Verified',
+        'Document Review',
+        'Ready for Board Review'
     ];
 
     useEffect(() => {
@@ -19,25 +22,33 @@ const ApplicationStages = () => {
 
     function advanceStage(activeNomStatus) {
         switch (activeNomStatus) {
-        case 'received':
-            activeNomination.status = 'awaiting HIPPA';
-            setCurrentStatus("awaiting HIPPA");
+        case 'Received':
+            activeNomination.status = 'Awaiting HIPAA';
+            setCurrentStatus('Awaiting HIPAA');
+            updateNom('Awaiting HIPAA');
             break;
-        case 'awaiting HIPPA':
-            activeNomination.status = 'HIPPA verified';
-            setCurrentStatus("HIPPA verified");
+        case 'Awaiting HIPAA':
+            activeNomination.status = 'HIPAA Verified';
+            setCurrentStatus('HIPAA Verified');
+            updateNom('HIPAA Verified');
             break;
-        case 'HIPPA verified':
-            activeNomination.status = 'document review';
-            setCurrentStatus("document review");
+        case 'HIPAA Verified':
+            activeNomination.status = 'Document Review';
+            setCurrentStatus('Document Review');
+            updateNom('Document Review');
             break;
-        case 'document review':
-            activeNomination.status = 'ready for board review';
+        case 'Document Review':
+            activeNomination.status = 'Ready for Board Review';
+            setCurrentStatus('Ready for Board Review');
+            updateNom('Ready for Board Review');
             break;
         }
     };
 
     function createStatusEl() {
+        if (activeNomination.status === 'received') {
+            activeNomination.status = 'Received';
+        }
         const iOfActiveNomStat = status.indexOf(activeNomination.status);
         return status.map((stat, i) => (
         <>
@@ -51,7 +62,7 @@ const ApplicationStages = () => {
             </div>
             ) : iOfActiveNomStat > i ? (
             <div key={i} className="step complete">
-                <span>{stat}</span>
+                <span className="checkmark">✓</span>
             </div>
             ) : (
             null
@@ -59,20 +70,26 @@ const ApplicationStages = () => {
         </>
         ));
     }
+
+    function updateNom(currentStatus) {
+        nominationsAPI
+            .updateNomination(activeNomination.id, currentStatus)
+            .then((res) => {
+            })
+            .catch((err) => console.log(err));
+    }
+
     return (
         <>
-        <div className="container">
+        <div className="nomination-bar-wrapper">
             <div className="wrapper">
             <div className="arrow-steps clearfix">{createStatusEl()}</div>
-            <div className="nav clearfix">
                 <div
-                href="#"
                 className="next pull-right"
                 onClick={() => advanceStage(activeNomination.status)}
                 >
-                &#10003; Mark Stage as Complete
+                <span>&#10003;</span>Mark Stage as Complete
                 </div>
-            </div>
             </div>
         </div>
         </>
