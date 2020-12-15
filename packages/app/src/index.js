@@ -9,10 +9,8 @@ import SearchResults from './components/SearchResultsCard';
 import { NominationsDataProvider } from './utils/context/NominationsContext';
 import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 import { ActiveNominationProvider } from './utils/context/ActiveNominationContext';
-
-
+import NominationsPage from './components/pages/NominationPage';
 import './App.css';
-
 
 ReactDOM.render(
   <Router>
@@ -24,7 +22,7 @@ ReactDOM.render(
               <Route path={['/', '/home']} component={Home} />
               <Route exact path={'/login'} component={Login} />
               <Route exact path={'/searchresults'} component={SearchResults} />
-              {/* <Route path="/nomination/:id" exact component={NominationShow} /> */}
+              <Route path="/nomination/:id" exact component={NominationsPage} />
               <Route path="/applicationdetails">
                 <div
                   style={{
@@ -32,8 +30,7 @@ ReactDOM.render(
                     backgroundColor: 'grey',
                     padding: '2em',
                   }}
-                >
-                </div>
+                ></div>
               </Route>
             </ActiveNominationProvider>
           </SearchResultDataProvider>
