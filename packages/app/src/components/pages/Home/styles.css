@@ -1,20 +1,17 @@
-h1 {
-  font-size: 1.5rem;
-}
+@import "../../../App.css"
 
-h2 {
-  font-size: 1rem;
-  font-weight: bold;
+#new-files-container {
+  background-color: white;
 }
-
-.new-files-container {
+.new-files-table {
   background-color: white;
   border-radius: 1rem;
-  margin: 2rem;
+  margin: 1rem;
+  width: -webkit-fill-available;
 }
 
 .home-new-files-headers {
-  background-color: #EEF1F6;
+  background-color: var(--light-background);
 }
 
 .new-files-see-more {
@@ -24,12 +21,11 @@ h2 {
 }
 
 .new-files-application-name {
-  color: #128B3E;
+  color: var(--brand);
 }
 
 .add-padding-left {
   padding-left: 2rem !important;
-
   /* using important to override inline styles rendered by 3rd party component Milligram */
 }
 
@@ -49,9 +45,4 @@ h2 {
 
 .detail-font-size {
   font-size: .875rem;
-}
-
-td {
-  border: none;
-  padding: 1.5rem 2rem;
 }
