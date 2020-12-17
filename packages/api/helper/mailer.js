@@ -1,8 +1,12 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
+const emailTemplate = require('email-templates');
+const previewEmail = require('preview-email');
 
-module.exports = {
-  sendVerification: (nomination) => {
+
+
+// module.exports = {
+  // sendVerification: () => {
     var transport = {
       port: 587,
       secure: false,
@@ -10,8 +14,10 @@ module.exports = {
       service: 'gmail',
       host: 'smtp.gmail.com',
       auth: {
-        user: process.env.MAILER_USER,
-        pass: process.env.MAILER_PASS,
+        // user: process.env.MAILER_USER,
+        // pass: process.env.MAILER_PASS,
+        user: 'formmaster@keepswimmingfoundation.org',
+        pass: 'keepswimming',
       },
     };
 
@@ -27,18 +33,27 @@ module.exports = {
 
     let mailOptions = {
       from: 'formmaster@keepswimmingfoundation.org',
-      to: nomination.providerEmail,
+      to: 'ryanmansfield86@gmail.com',
       subject: 'test',
-      text: `Please verify ${nomination.verificationCode}`,
+      text: `email text`,
     };
 
-    transporter.sendMail(mailOptions, function (err, data) {
-      if (err) {
-        console.log(err);
-        console.log('there was an error, email did not send');
-      } else {
-        console.log('email sent!');
-      }
-    });
-  },
-};
+previewEmail(mailOptions)
+  .then(console.log(mailOptions))
+  .catch(console.error('some values'));
+
+
+    // transporter.sendMail(mailOptions, function (err, data) {
+    //   if (err) {
+    //     console.log(err);
+    //     console.log('there was an error, email did not send');
+    //   } else {
+    //     console.log(data)
+    //     console.log('email sent!');
+    //     console.log('res.originalMessage', res.originalMessage);
+    //   }
+    // })
+
+  // },
+// };
+
