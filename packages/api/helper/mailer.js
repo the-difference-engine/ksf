@@ -20,6 +20,7 @@ module.exports = {
     transporter.verify((error, success) => {
       if (error) {
         console.log(error);
+        console.log('transporter is not working');
       } else {
         console.log('All works fine, congratz!');
       }
