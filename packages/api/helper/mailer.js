@@ -16,8 +16,6 @@ const previewEmail = require('preview-email');
       auth: {
         // user: process.env.MAILER_USER,
         // pass: process.env.MAILER_PASS,
-        user: 'formmaster@keepswimmingfoundation.org',
-        pass: 'keepswimming',
       },
     };
 
@@ -33,7 +31,7 @@ const previewEmail = require('preview-email');
 
     let mailOptions = {
       from: 'formmaster@keepswimmingfoundation.org',
-      to: 'ryanmansfield86@gmail.com',
+      to: 'ryan.mansfield@thedifferenceengine.io',
       subject: 'test',
       text: `email text`,
     };
