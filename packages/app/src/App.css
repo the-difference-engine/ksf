@@ -1,38 +1,47 @@
-.App {
-  text-align: center;
+/* theme colors */
+:root {
+  --brand:#128B3E;
+  --light-background: #EEF1F6;
+  --dark-icon:#54698D;
+  --secondary-dark:#6D7278;
+  --body-text:#000;
+  --search-input:#F7F9FC;
+  --input-placeholder:#A1AABA;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/*This has been lost from the when it was switched over from index.css,*/
+/*it is currently in index.css on develop and not being used*/
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #eef1f6;
+  color: var(--body-text);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h1 {
+  font-size: 1.5rem;
 }
 
-.App-link {
-  color: #61dafb;
+h2 {
+  font-size: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+p {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+td {
+  border: none;
+  padding: 1.5rem 2rem;
 }
