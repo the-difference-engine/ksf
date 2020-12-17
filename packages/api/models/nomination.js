@@ -1,6 +1,5 @@
 'use strict';
 const { sendVerification } = require('../helper/mailer.js');
-const creds = require('../config/config.json').credentials;
 const { Model, Sequelize, DataTypes } = require('sequelize');
 const publicEmailDomains = [
   'gmail.com',
