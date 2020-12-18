@@ -8,7 +8,7 @@ Create a command center for receiving and managing the grant nomination process 
 
 ## What Technologies Are We Using?
 
-The backend application is using the PERN Stack (Postgres, Express React, Node). The backend application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application.
+The back end application is using the PERN Stack (Postgres, Express React, Node). The back end application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application.
 
 ## Getting Started With The App
 
@@ -30,6 +30,9 @@ NOTE: use LTS, NOT current. If you already have a different version of node inst
 
         git clone https://github.com/the-difference-engine/ksf.git
         cd ksf
+
+
+### Postgress
 
 Postgres is our database. You will need to have Postgres installed on your computer to persist data and run the application.
 
@@ -61,9 +64,9 @@ If you do not have Postgres installed, you can install it via brew
    postgres=# ALTER ROLE postgres WITH PASSWORD 'postgres';
    ```
 
+### Migrations, Dependencies & Start Back End 
 
-
-You should now be in the root of the project. We will start the backend first. So lets head to the backend directory 
+You should now be in the root of the project. We will start the back end first. So lets head to the back end directory 
 
 ```
   cd packages
@@ -96,6 +99,9 @@ You can also run nodemon, which is a tool that helps develop node.js based appli
 ```
   npm run dev
 ```
+
+
+### Start Front End
 
 We will now start the frontend. Open up a new tab in the terminal and execute the following commands.
 
