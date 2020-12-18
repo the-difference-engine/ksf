@@ -66,7 +66,7 @@ If you do not have Postgres installed, you can install it via brew
 
 ### Migrations, Dependencies & Start Back End 
 
-You should now be in the root of the project. We will start the back end first. So lets head to the back end directory 
+You should still be in the root of the project. We will start the back end first. So lets head to the back end directory 
 
 ```
   cd packages
