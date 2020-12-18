@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
+
 const ApplicationStages = () => {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext

@@ -1,17 +1,17 @@
 .nomination-bar-wrapper {
-    background: rgb(255, 255, 255);
-	margin: 1rem;
-	padding: 2rem;
-    padding-top: 2rem;
-    padding-left: 2rem;
-    border-radius: 1rem;
+  background: rgb(255, 255, 255);
+  margin: 1rem;
+  padding: 2rem;
+	padding-top: 2rem;
+	padding-left: 2rem;
+	border-radius: 1rem;
 }
 
 .clearfix:after {
-    clear: both;
-    content: "";
-    display: block;
-    height: 0;
+	clear: both;
+	content: "";
+	display: block;
+	height: 0;
 }
 
 .container {
@@ -22,8 +22,8 @@
 
 .wrapper {
 	vertical-align: middle;
-    display: flex;
-    justify-content: space-evenly;
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .nav {
@@ -42,8 +42,6 @@ a, a:active {
 a:hover {
 	color: #999;
 }
-
-/* Breadcrups CSS */
 
 .arrow-steps .step {
 	font-size: 1rem;
@@ -80,11 +78,11 @@ a:hover {
 }
 
 .arrow-steps .step:last-child:after {
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-top: 19px solid rgb(216, 222, 233);
-    border-bottom: 17px solid rgb(216, 222, 233);
-    border-left: 17px solid rgb(216, 222, 233);
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border-top: 19px solid rgb(216, 222, 233);
+	border-bottom: 17px solid rgb(216, 222, 233);
+	border-left: 17px solid rgb(216, 222, 233);
 }
 
 .arrow-steps .step:before {
@@ -139,7 +137,7 @@ a:hover {
 }
 
 .arrow-steps .step.current:after {
-    border-left: 17px solid #128B3E;	
+	border-left: 17px solid #128B3E;	
 }
 
 .arrow-steps .step.complete {
@@ -152,28 +150,28 @@ a:hover {
 }
 
 .arrow-steps .step.current:last-child:after {
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-top: 19px solid #128B3E;
-    border-bottom: 17px solid #128B3E;
-    border-left: 17px solid #128B3E;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border-top: 19px solid #128B3E;
+	border-bottom: 17px solid #128B3E;
+	border-left: 17px solid #128B3E;
 }
 
 .next {
-    display: inline-block;
-    background-color: #128B3E;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 10px;
-    text-align: center;
-    width: 15%;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-    margin: 0px;
-    cursor: pointer;
+	display: inline-block;
+	background-color: #128B3E;
+	color: white;
+	font-size: 1rem;
+	font-weight: bold;
+	padding: 10px;
+	text-align: center;
+	width: 15%;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 25px;
+	margin: 0px;
+	cursor: pointer;
 }
 
 .next span {
