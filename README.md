@@ -31,35 +31,6 @@ NOTE: use LTS, NOT current. If you already have a different version of node inst
         git clone https://github.com/the-difference-engine/ksf.git
         cd ksf
 
-You should now be in the root of the project. We will start the backend first.
-
-```
-  cd packages
-  cd api
-  npm install
-  node index.js
-```
-You can also run nodemon, which is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected. To do so run the command below instead of node index.js.
-
-```
-  npm run dev
-```
-
-If you navigate to `http://localhost:8080/greeting` you should see "Hello World!".
-
-We will now start the frontend. Open up a new tab in the terminal and execute the following commands.
-
-```
-  cd ..
-  cd app
-  npm install
-  npm start
-```
-
-If you navigate to `http://localhost:3000/` you should see the home page!
-
-### Postgres
-
 Postgres is our database. You will need to have Postgres installed on your computer to persist data and run the application.
 
 If you do not have Postgres installed, you can install it via brew
@@ -90,6 +61,53 @@ If you do not have Postgres installed, you can install it via brew
    postgres=# ALTER ROLE postgres WITH PASSWORD 'postgres';
    ```
 
+
+
+You should now be in the root of the project. We will start the backend first. So lets head to the backend directory 
+
+```
+  cd packages
+  cd api
+  npm install
+```
+
+
+[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file. [Quick overview of commands](docs/sequelize-cli_shortcut.md)
+
+The models and migrations folders will both need to be reviewed and updated to reflect the name sake standard of app. See [naming convention docs](docs/database_naming_convention.md)
+
+Let's run the migration to set up our database.
+
+To run migration you must be in the api folder, and execute the following command.
+
+```
+npx sequelize-cli db:migrate
+```
+
+If you check your postgres database you should see the tables intergrated!
+
+Now we can go ahead and start he application with the following command:
+
+```
+  node index.js
+```
+You can also run nodemon, which is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected. To do so run the command below instead of node index.js.
+
+```
+  npm run dev
+```
+
+We will now start the frontend. Open up a new tab in the terminal and execute the following commands.
+
+```
+  cd ..
+  cd app
+  npm install
+  npm start
+```
+
+If you navigate to `http://localhost:3000/` you should see the home page!
+
 ### Set Up Environment Variables
 
 - Set Up Environment Variables with DotENV Package [DotENV](https://www.npmjs.com/package/dotenv)
@@ -104,23 +122,6 @@ If you do not have Postgres installed, you can install it via brew
 
 ## Usage
 
-### Creating models and migrations
-
-[Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file. [Quick overview of commands](docs/sequelize-cli_shortcut.md)
-
-The models and migrations folders will both need to be reviewed and updated to reflect the name sake standard of app. See [naming convention docs](docs/database_naming_convention.md)
-
-### Migration
-
-Connect to your postgres with the command: `psql`
-
-To run migration to your local database open up a new tab in the terminal, navigate to api folder, and execute the following command.
-
-```
-npx sequelize-cli db:migrate
-```
-
-If you check your postgres database you should see the tables intergrated!
 
 ### Continuous Integration (CI)
 
