@@ -61,7 +61,7 @@ a:hover {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none; 
-  transition: background-color 0.2s ease;
+	transition: background-color 0.2s ease;
 }
 
 .arrow-steps .step:after,
@@ -76,7 +76,7 @@ a:hover {
 	border-bottom: 17px solid transparent;
 	border-left: 17px solid rgb(216, 222, 233);	
 	z-index: 2;
-  transition: border-color 0.2s ease;
+	transition: border-color 0.2s ease;
 }
 
 .arrow-steps .step:last-child:after {

@@ -7,9 +7,9 @@ const nominationsAPI = {
   fetchNomination: function (id) {
     return axios.get(`/nominations/${id}`);
   },
-  updateNomination: function (id, w) {
+  updateNomination: function (id, value) {
     return axios.put(`/nominations/${id}`, {
-      status: w
+      status: value
     });
   },
 };

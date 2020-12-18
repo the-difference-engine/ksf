@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NominationShow from './components/nomination/nominationShow';
 import Login from './components/pages/Login/index';
 import Home from './components/pages/Home/index';
 import SearchResults from './components/SearchResultsCard';
@@ -23,15 +22,6 @@ ReactDOM.render(
               <Route exact path={'/login'} component={Login} />
               <Route exact path={'/searchresults'} component={SearchResults} />
               <Route path="/nomination/:id" exact component={NominationsPage} />
-              <Route path="/applicationdetails">
-                <div
-                  style={{
-                    margin: '0 auto',
-                    backgroundColor: 'grey',
-                    padding: '2em',
-                  }}
-                ></div>
-              </Route>
             </ActiveNominationProvider>
           </SearchResultDataProvider>
         </NominationsDataProvider>
