@@ -138,6 +138,9 @@ module.exports = (sequelize, DataTypes) => {
             }
           });
         },
+        afterCreate: (nomination, option) => {
+          sendVerification(nomination);
+        },
       },
       sequelize,
       modelName: 'Nomination',
