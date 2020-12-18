@@ -27,7 +27,7 @@ module.exports = {
 
     let mailOptions = {
       from: 'formmaster@keepswimmingfoundation.org',
-      to: nomination.providerEmail,
+      to: nomination.providerEmailAddress,
       subject: 'test',
       text: `Please verify ${nomination.verificationCode}`,
     };
