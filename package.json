@@ -12,5 +12,8 @@
   "devDependencies": {
     "lerna": "^3.22.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "email-templates": "^8.0.2",
+    "pug": "^3.0.0"
+  }
 }
