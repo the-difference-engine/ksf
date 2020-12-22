@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { ActiveNominationContext } from '../../../utils/context/ActiveNominationContext';
+import { NominationsDataContext } from '../../../utils/context/NominationsContext';
+import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
-import NominationShow from '../../nomination/nominationShow';
 
-const nominationsPage = (props) => {
+const NominationsPage = ({
+  match: {
+    params: { id },
+  },
+}) => {
+  const [activeNomination, setActiveNomination] = useContext(
+    ActiveNominationContext
+  );
+  const [NominationsData, setNominationsData] = useContext(
+    NominationsDataContext
+  );
+
+  useEffect(() => {
+    if (NominationsData) {
+      NominationsData.filter((nomination) => {
+        if (nomination.id === id) {
+          return setActiveNomination(nomination);
+        }
+      });
+    }
+  }, [id]);
+
   return (
-    <>
-      <NominationShow {...props} />
+    <div className="nomination-show-page">
+      <NominationBanner nomination={activeNomination} />
       <ApplicationStages />
-    </>
+    </div>
   );
 };
 
-export default nominationsPage;
+export default NominationsPage;

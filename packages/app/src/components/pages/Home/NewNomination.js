@@ -2,7 +2,6 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const NewNomination = (nomination) => {
-  console.log(nomination)
   if (nomination) {
     return (
       <tr key={nomination.nomination.id}>
