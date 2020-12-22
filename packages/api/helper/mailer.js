@@ -3,7 +3,7 @@ const smtpTransport = require('nodemailer-smtp-transport');
 
 module.exports = {
   sendVerification: (nomination) => {
-    var transport = {
+    const transport = {
       port: 587,
       secure: false,
       requireTLS: true,
@@ -15,7 +15,7 @@ module.exports = {
       },
     };
 
-    var transporter = nodemailer.createTransport(smtpTransport(transport));
+    const transporter = nodemailer.createTransport(smtpTransport(transport));
 
     transporter.verify((error, success) => {
       if (error) {
@@ -33,7 +33,7 @@ module.exports = {
       text: `Please verify ${nomination.verificationCode}`,
     };
 
-    transporter.sendMail(mailOptions, function (err, data) {
+    transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
         console.log(err);
         console.log('there was an error, email did not send');
