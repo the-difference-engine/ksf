@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import NewNomination from "./NewNomination.js"
+import NewNomination from './NewNomination';
 import styles from "./styles.css";
 
 const NewFilesToReview = () => {

@@ -1,8 +1,9 @@
 @import "../../../App.css"
 
-#new-files-container {
+.new-files-container {
   background-color: white;
 }
+
 .new-files-table {
   background-color: white;
   border-radius: 1rem;

@@ -1,27 +1,24 @@
 const request = require('supertest');
 const app = require('../../server');
 const db = require('../../models');
-
 const testGrant = {
   name: 'test grant',
   openedOn: new Date('2019-01-01'),
   closedOn: new Date('2020-02-02'),
   isActive: true,
 };
-
-describe('POST /grantcycle', () => {
+describe('POST /api/grantcycle', () => {
   afterEach(async () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.log('error afterEach @ POST /grantcycle', error.message);
+      console.log('error afterEach @ POST /api/grantcycle', error.message);
     }
     return testGrant;
   });
-
   it('returns a 201 when grant is created', (done) => {
     request(app)
-      .post('/grantcycle')
+      .post('/api/grantcycle')
       .send(testGrant)
       .set('Content-Type', 'application/json')
       .expect(201)
@@ -31,7 +28,6 @@ describe('POST /grantcycle', () => {
         done();
       });
   });
-
   it('returns 400 on creating more than one active grant', async (done) => {
     try {
       await db.GrantCycle.create({ ...testGrant, name: 'another one' });
@@ -39,7 +35,7 @@ describe('POST /grantcycle', () => {
       console.error(error);
     }
     request(app)
-      .post('/grantcycle')
+      .post('/api/grantcycle')
       .send(testGrant)
       .set('Content-Type', 'application/json')
       .expect(400)
@@ -56,7 +52,7 @@ describe('POST /grantcycle', () => {
       console.error(error);
     }
     request(app)
-      .post('/grantcycle')
+      .post('/api/grantcycle')
       .send(testGrant)
       .set('Content-Type', 'application/json')
       .expect(400)
@@ -66,10 +62,9 @@ describe('POST /grantcycle', () => {
         done();
       });
   });
-
   it('returns a 400 if openedOn >= ClosedOn', (done) => {
     request(app)
-      .post('/grantcycle')
+      .post('/api/grantcycle')
       .send({ ...testGrant, openedOn: testGrant.closedOn })
       .set('Content-Type', 'application/json')
       .expect(400)
@@ -79,10 +74,9 @@ describe('POST /grantcycle', () => {
         done();
       });
   });
-
   it('returns a 400 on missing name', (done) => {
     request(app)
-      .post('/grantcycle')
+      .post('/api/grantcycle')
       .send({
         openedOn: testGrant.openedOn,
         closedOn: testGrant.closedOn,
@@ -97,8 +91,7 @@ describe('POST /grantcycle', () => {
       });
   });
 });
-
-describe('PUT /grantcycle', () => {
+describe('PUT /api/grantcycle', () => {
   let grants;
   beforeAll(async () => {
     try {
@@ -108,23 +101,21 @@ describe('PUT /grantcycle', () => {
       ]);
       grants = { firstGrant, secondGrant };
     } catch (error) {
-      console.error('error beforeAll @ PUT /grantcycle', error);
+      console.error('error beforeAll @ PUT /api/grantcycle', error);
     }
     return grants;
   });
-
   afterAll(async () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.log('error afterEach @ PUT /grantcycle', error.message);
+      console.log('error afterEach @ PUT /api/grantcycle', error.message);
     }
   });
-
   it('returns 200 on successfully updating name', (done) => {
     const { id } = grants.secondGrant;
     request(app)
-      .put(`/grantcycle/${id}`)
+      .put(`/api/grantcycle/${id}`)
       .send({ name: 'another unique name' })
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -137,7 +128,7 @@ describe('PUT /grantcycle', () => {
   it('returns 200 on successfully updating Active --> Inactive', (done) => {
     const { id } = grants.secondGrant;
     request(app)
-      .put(`/grantcycle/${id}`)
+      .put(`/api/grantcycle/${id}`)
       .send({ isActive: false })
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -149,7 +140,7 @@ describe('PUT /grantcycle', () => {
   });
   it('returns 400 if no ID is provided', (done) => {
     request(app)
-      .put('/grantcycle')
+      .put('/api/grantcycle')
       .send(null)
       .set('Content-Type', 'application/json')
       .expect(400)
@@ -162,7 +153,7 @@ describe('PUT /grantcycle', () => {
   it('returns 404 if no grant found for given uuid', (done) => {
     const id = '938e6eb7-4959-4a34-a31b-55cb5a8ea31a';
     request(app)
-      .put(`/grantcycle/${id}`)
+      .put(`/api/grantcycle/${id}`)
       .set('Content-Type', 'application/json')
       .expect(404)
       .end((error, res) => {
@@ -171,11 +162,10 @@ describe('PUT /grantcycle', () => {
         done();
       });
   });
-
   it('returns 400 if requesting to turn grant active when there is already an active grant', async (done) => {
     const { id } = grants.secondGrant;
     request(app)
-      .put(`/grantcycle/${id}`)
+      .put(`/api/grantcycle/${id}`)
       .send({ isActive: true })
       .set('Content-Type', 'application/json')
       .expect(400)
@@ -185,11 +175,10 @@ describe('PUT /grantcycle', () => {
         done();
       });
   });
-
   it('returns 400 on renaming grant to already existing name', (done) => {
     const { id } = grants.secondGrant;
     request(app)
-      .put(`/grantcycle/${id}`)
+      .put(`/api/grantcycle/${id}`)
       .send({ name: grants.firstGrant.name })
       .set('Content-Type', 'application/json')
       .expect(400)
@@ -200,7 +189,6 @@ describe('PUT /grantcycle', () => {
       });
   });
 });
-
 describe('GET /grantcycles', () => {
   let grants;
   beforeAll(async () => {
@@ -211,42 +199,39 @@ describe('GET /grantcycles', () => {
       ]);
       grants = { firstGrant, secondGrant };
     } catch (error) {
-      console.error('error beforeAll @ GET /grantcycles', error);
+      console.error('error beforeAll @ GET /api/grantcycles', error);
     }
     return grants;
   });
-
   afterAll(async () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.error('error afterEach @ GET /grantcycles', error);
+      console.error('error afterEach @ GET /api/grantcycles', error);
     }
   });
-
   it('returns 200 && all grant cycles', async (done) => {
     try {
-      const res = await request(app).get('/grantcycles');
+      const res = await request(app).get('/api/grantcycles');
       expect(res.statusCode).toEqual(200);
       expect(res.body.length).toEqual(2);
       await done();
     } catch (error) {
-      console.error('error @ GET /grantcycles', error);
+      console.error('error @ GET /api/grantcycles', error);
     }
   });
   it('returns 404 if no grant cycles found', async (done) => {
     try {
       await db.GrantCycle.destroy({ where: {} });
-      const res = await request(app).get('/grantcycles');
+      const res = await request(app).get('/api/grantcycles');
       expect(res.statusCode).toEqual(404);
       await done();
     } catch (error) {
-      console.error('error @ GET /grantcycles', error);
+      console.error('error @ GET /api/grantcycles', error);
     }
   });
 });
-
-describe('GET /grantcycle/findbyname/:name', () => {
+describe('GET /api/grantcycle/findbyname/:name', () => {
   let grants;
   beforeAll(async () => {
     try {
@@ -256,7 +241,7 @@ describe('GET /grantcycle/findbyname/:name', () => {
       ]);
       grants = { firstGrant, secondGrant };
     } catch (error) {
-      console.error('error beforeAll @ GET /grantcycle/findbyname/:name', error);
+      console.error('error beforeAll @ GET /api/grantcycle/findbyname/:name', error);
     }
     return grants;
   });
@@ -264,14 +249,13 @@ describe('GET /grantcycle/findbyname/:name', () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.error('error afterEach @ GET /grantcycle/findbyname/:name', error);
+      console.error('error afterEach @ GET /api/grantcycle/findbyname/:name', error);
     }
   });
-
   it('returns 200 && grant cycle', (done) => {
     const { name } = testGrant;
     request(app)
-      .get(`/grantcycle/findbyname/${name}`)
+      .get(`/api/grantcycle/findbyname/${name}`)
       .set('Content-Type', 'application/json')
       .end((error, res) => {
         expect(res.statusCode).toEqual(200);
@@ -281,7 +265,7 @@ describe('GET /grantcycle/findbyname/:name', () => {
           .toEqual(expect.arrayContaining(Object.keys(new db.GrantCycle(testGrant).dataValues)));
         if (error) {
           console.log(res.text);
-          console.error('error @ GET /grantcycle/findbyname/:name', error);
+          console.error('error @ GET /api/grantcycle/findbyname/:name', error);
           return done(error);
         }
         done();
@@ -290,46 +274,45 @@ describe('GET /grantcycle/findbyname/:name', () => {
   it('returns 404 if grant by name does not exist', (done) => {
     const name = 'non-existent grant';
     request(app)
-      .get(`/grantcycle/findbyname/${name}`)
+      .get(`/api/grantcycle/findbyname/${name}`)
       .set('Content-Type', 'application/json')
       .end((error, res) => {
         expect(res.statusCode).toEqual(404);
         expect(res.body).toEqual({});
         if (error) {
           console.log(res.text);
-          console.error('error @ GET /grantcycle/findbyname/:name', error);
+          console.error('error @ GET /api/grantcycle/findbyname/:name', error);
           return done(error);
         }
         done();
       });
   });
 });
-
-describe('GET /grantcycle/findactive', () => {
+describe('GET /api/grantcycle/findactive', () => {
   beforeAll(async () => {
     try {
       await db.GrantCycle.create(testGrant);
     } catch (error) {
-      console.error('error beforeAll @ GET /grantcycle/findactive', error.message);
+      console.error('error beforeAll @ GET /api/grantcycle/findactive', error.message);
     }
   });
   afterAll(async () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.error('error afterAll @ GET /grantcycle/findactive', error.message);
+      console.error('error afterAll @ GET /api/grantcycle/findactive', error.message);
     }
   });
   it('returns 200 && active grant', (done) => {
     request(app)
-      .get('/grantcycle/findactive')
+      .get('/api/grantcycle/findactive')
       .end((error, res) => {
         expect(res.statusCode).toEqual(200);
         expect(res.body).not.toBeNull();
         expect(res.body.isActive).toBe(true);
         if (error) {
           console.log(res.text);
-          console.error('error @ POST /grantcycle/findactive', error);
+          console.error('error @ POST /api/grantcycle/findactive', error);
           return done(error);
         }
         done();
@@ -339,16 +322,16 @@ describe('GET /grantcycle/findactive', () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.error('error @ GET /grantcycle/findactive', error.message);
+      console.error('error @ GET /api/grantcycle/findactive', error.message);
     }
     request(app)
-      .get('/grantcycle/findactive')
+      .get('/api/grantcycle/findactive')
       .end((error, res) => {
         expect(res.statusCode).toEqual(404);
         expect(res.body).toEqual({});
         if (error) {
           console.log(res.text);
-          console.error('error @ POST /grantcycle/findbyname', error);
+          console.error('error @ POST /api/grantcycle/findbyname', error);
           return done(error);
         }
         done();

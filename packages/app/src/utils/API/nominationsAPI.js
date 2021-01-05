@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const nominationsAPI = {
   getNominations: function () {
-    return axios.get('/nominations');
+    return axios.get('/api/nominations');
   },
   fetchNomination: function (id) {
-    return axios.get(`/nominations/${id}`);
+    return axios.get(`/api/nominations/${id}`);
   },
 };
 
