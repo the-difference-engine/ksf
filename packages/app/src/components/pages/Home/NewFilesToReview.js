@@ -52,7 +52,7 @@ const NewFilesToReview = () => {
               )
             :
               <tr>
-                <td>no new nominations</td>
+                <td>No new nominations.</td>
               </tr>
           }
         </tbody>
