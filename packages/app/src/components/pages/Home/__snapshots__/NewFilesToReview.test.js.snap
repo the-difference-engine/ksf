@@ -9,7 +9,7 @@ Object {
         class="new-files-container"
       >
         <table
-          class="home-new-files-table"
+          class="new-files-table"
         >
           <thead>
             <tr>
@@ -39,34 +39,44 @@ Object {
                 class="add-padding-left"
               >
                 <h2>
-                  Application Name
+                  <strong>
+                    Application Name
+                  </strong>
                 </h2>
               </td>
               <td>
                 <h2>
-                  HP Name
+                  <strong>
+                    HP Name
+                  </strong>
                 </h2>
               </td>
               <td>
                 <h2>
-                  Family Member Name
+                  <strong>
+                    Family Member Name
+                  </strong>
                 </h2>
               </td>
               <td>
                 <h2>
-                  Received Date
+                  <strong>
+                    Received Date
+                  </strong>
                 </h2>
               </td>
               <td>
                 <h2>
-                  Stage
+                  <strong>
+                    Stage
+                  </strong>
                 </h2>
               </td>
               <td />
             </tr>
             <tr>
               <td>
-                no new nominations
+                No new nominations
               </td>
             </tr>
           </tbody>
@@ -79,7 +89,7 @@ Object {
       class="new-files-container"
     >
       <table
-        class="home-new-files-table"
+        class="new-files-table"
       >
         <thead>
           <tr>
@@ -109,34 +119,44 @@ Object {
               class="add-padding-left"
             >
               <h2>
-                Application Name
+                <strong>
+                  Application Name
+                </strong>
               </h2>
             </td>
             <td>
               <h2>
-                HP Name
+                <strong>
+                  HP Name
+                </strong>
               </h2>
             </td>
             <td>
               <h2>
-                Family Member Name
+                <strong>
+                  Family Member Name
+                </strong>
               </h2>
             </td>
             <td>
               <h2>
-                Received Date
+                <strong>
+                  Received Date
+                </strong>
               </h2>
             </td>
             <td>
               <h2>
-                Stage
+                <strong>
+                  Stage
+                </strong>
               </h2>
             </td>
             <td />
           </tr>
           <tr>
             <td>
-              no new nominations
+              No new nominations
             </td>
           </tr>
         </tbody>
