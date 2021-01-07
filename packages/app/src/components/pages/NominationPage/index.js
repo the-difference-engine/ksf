@@ -4,7 +4,7 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
 
-const NominationsPage = ({
+const NominationPage = ({
   match: {
     params: { id },
   },
@@ -18,7 +18,7 @@ const NominationsPage = ({
 
   useEffect(() => {
     if (NominationsData) {
-      NominationsData.filter((nomination) => {
+      NominationsData.forEach((nomination) => {
         if (nomination.id === id) {
           return setActiveNomination(nomination);
         }
@@ -34,4 +34,4 @@ const NominationsPage = ({
   );
 };
 
-export default NominationsPage;
+export default NominationPage;
