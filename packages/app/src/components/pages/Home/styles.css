@@ -42,8 +42,9 @@
 
 .home-new-files-headers h2{
   margin-bottom: 0rem !important;
+  font-size: 1.2rem;
 }
 
 .detail-font-size {
-  font-size: .875rem;
+  font-size: 1rem;
 }
