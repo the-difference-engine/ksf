@@ -9,6 +9,11 @@ const nominationsAPI = {
   fetchNomination: function (id) {
     return axios.get(`${API_URL}/api/nominations/${id}`);
   },
+  updateNomination: function (id, value) {
+    return axios.put(`/nominations/${id}`, {
+      status: value
+    });
+  },
 };
 
 export default nominationsAPI;
