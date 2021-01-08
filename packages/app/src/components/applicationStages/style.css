@@ -23,15 +23,11 @@
 .wrapper {
   vertical-align: middle;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .nav {
   margin-top: 40px;
-}
-
-.pull-right {
-  float: right;
 }
 
 a, a:active {
