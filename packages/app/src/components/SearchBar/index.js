@@ -16,14 +16,18 @@ const SearchBar = () => {
 
 
   function findSearchResults(searchTerm) {
-    const filteredNoms = NominationsData.filter((nomination) => {
-      return [
-        formatSearch(nomination.providerName),
-        formatSearch(nomination.patientName),
-        formatSearch(nomination.nominationName),
-        formatSearch(nomination.representativeName),
-      ].some((nom) => nom.includes(searchTerm));
-    });
+    let filteredNoms = []
+    console.log('NominationsData ', NominationsData)
+    if(NominationsData) {
+      filteredNoms = NominationsData.filter((nomination) => {
+        return [
+          formatSearch(nomination.providerName),
+          formatSearch(nomination.patientName),
+          formatSearch(nomination.nominationName),
+          formatSearch(nomination.representativeName),
+        ].some((nom) => nom.includes(searchTerm));
+      });
+    } else 
     setSearchResultData(filteredNoms);
 
     filteredNoms.length < 1
