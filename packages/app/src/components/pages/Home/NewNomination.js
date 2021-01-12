@@ -1,16 +1,17 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom'
 
-const NewNomination = (nomination) => {
+const NewNomination = ({nomination}) => {
   if (nomination) {
     return (
-      <tr key={nomination.nomination.id}>
-        <td className="new-files-application-name add-padding-left detail-font-size">{nomination.nomination.nominationName}</td>
-        <td className="detail-font-size">{nomination.nomination.providerName}</td>
-        <td className="detail-font-size">{nomination.nomination.representativeName}</td>
-        <td className="detail-font-size">{nomination.nomination.dateReceived}</td>
-        <td className="detail-font-size">need stage info</td>
-        <td className="dot-fa-ellipsis"><FontAwesomeIcon icon="ellipsis-v"/></td>
+      <tr key={nomination.id}>
+        <td className="new-files-application-name add-padding-left detail-font-size"><Link to={`/nomination/${nomination.id}`}>{nomination.nominationName}</Link></td>
+        <td className="detail-font-size">{nomination.providerName}</td>
+        <td className="detail-font-size">{nomination.representativeName}</td>
+        <td className="detail-font-size">{nomination.dateReceived}</td>
+        <td className="detail-font-size">{nomination.status}</td>
+        <td className="dot-fa-ellipsis"><Link to={`/nomination/${nomination.id}`}><FontAwesomeIcon icon="ellipsis-v"/></Link></td>
       </tr>
     )
   }
