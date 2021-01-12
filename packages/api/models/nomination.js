@@ -123,6 +123,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      verificationCode: {
+        type: DataTypes.UUID,
+        defaultValue: Sequelize.UUIDV4,
+      },
     },
     {
       hooks: {
