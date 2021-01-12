@@ -1,4 +1,6 @@
 'use strict';
+const { sendVerification } = require('../helper/mailer.js');
+const creds = require('../config/config.json').credentials;
 const { Model, Sequelize, DataTypes } = require('sequelize');
 const publicEmailDomains = [
   'gmail.com',
@@ -136,6 +138,9 @@ module.exports = (sequelize, DataTypes) => {
               nomination.publicEmailDomain = true;
             }
           });
+        },
+        afterCreate: (nomination, option) => {
+          sendVerification(nomination);
         },
       },
       sequelize,
