@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 const NewNomination = ({nomination}) => {
   if (nomination) {
+
     return (
       <tr key={nomination.id}>
         <td className="new-files-application-name add-padding-left detail-font-size"><Link to={`/nomination/${nomination.id}`}>{nomination.nominationName}</Link></td>
