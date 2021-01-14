@@ -1,6 +1,7 @@
 const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
+const mailer = require('../helper/mailer')
 
 const getNominationById = async (req, res) => {
   try {
@@ -58,6 +59,8 @@ const updateNomination = async (req, res) => {
       { status: req.body.status },
       { where: { id } }
     );
+    console.log(nomination)
+    console.log(nomination.status)
     return res.status(200).json(nomination);
   } catch (error) {
     console.log('400 Update Bad Reuest', error);
