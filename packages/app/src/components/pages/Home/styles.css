@@ -38,11 +38,13 @@
 .new-files-title h1{
   margin-left: 5px;
   margin-bottom: 0rem !important;
+  letter-spacing: none !important;
 }
 
 .home-new-files-headers h2{
   margin-bottom: 0rem !important;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  letter-spacing: none !important;
 }
 
 .detail-font-size {

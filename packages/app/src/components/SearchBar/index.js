@@ -16,19 +16,22 @@ const SearchBar = () => {
 
 
   function findSearchResults(searchTerm) {
-    const filteredNoms = NominationsData.filter((nomination) => {
-      return [
-        formatSearch(nomination.providerName),
-        formatSearch(nomination.patientName),
-        formatSearch(nomination.nominationName),
-        formatSearch(nomination.representativeName),
-      ].some((nom) => nom.includes(searchTerm));
-    });
-    setSearchResultData(filteredNoms);
-
+    let filteredNoms = []
+    if(NominationsData) {
+      filteredNoms = NominationsData.filter((nomination) => {
+        return [
+          formatSearch(nomination.providerName),
+          formatSearch(nomination.patientName),
+          formatSearch(nomination.nominationName),
+          formatSearch(nomination.representativeName),
+        ].some((nom) => nom.includes(searchTerm));
+      });
+      setSearchResultData(filteredNoms);
+    } else {
     filteredNoms.length < 1
       ? setShowErrorMessage(true)
       : setShowErrorMessage(false);
+    }
   }
 
   function handleInputChange(e) {
