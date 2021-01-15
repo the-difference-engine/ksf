@@ -18,7 +18,7 @@ hospitalCity: "Gotham "
 hospitalName: "Gotham General Hospital"
 hospitalState: "New Jersey"
 hospitalURL: "ggh.com"
-hospitalZipCode: "07320"
+hospitalZipCode: "07320"a
 id: "764f8167-52da-44ff-9c1d-a42e98cf672b"
 nominationName: "undefined-NJ"
 patientAge: "18 Years of age or older"
@@ -38,9 +38,10 @@ updatedAt: "2021-01-08T01:12:59.547Z"
 verificationCode: "55fb8126-6f87-4309-b3db-05082ecf45c5"
 
 
-const admit = new Date()
-let apply = new Date()
-apply.setDate(apply.getDate() + 80)
+const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+const firstDate = new Date(2008, 1, 12);
+const secondDate = new Date(2008, 1, 22);
+const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 
 console.log('admint ', admit.toString())
 console.log('apply ', apply.toString())
@@ -50,6 +51,14 @@ function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
+
+  const admissionDate = activeNomination.admissionDate;
+  // const todaysDate = new Date()
+  const determineDischargeDate = activeNomination.dischargeDate === null ? new Date() : activeNomination.dischargeDate;
+  const diffDays = Math.round(Math.abs((admissionDate - determineDischargeDate) / (24*60*60*1000) /* <- hours*minutes*seconds*milliseconds */));
+  const patientDaysInHospital = 'Patient was hospitalized for '+diffDays.toString()+ ' days';
+
+
   console.log('activeNomination ',activeNomination)
   const fields = [
     {
@@ -104,10 +113,6 @@ function NominationInfo() {
         value: activeNomination.patientName
       },
       {
-        label: "",
-        value: ""
-      },
-      {
         label: "Patient Age",
         value: activeNomination.patientAge
       },
@@ -121,7 +126,7 @@ function NominationInfo() {
       },
       {
         label: "Hospitalized for at least 21 days?",
-        value: activeNomination.dischargeDate
+        value: patientDaysInHospital 
       },
       {
         label: "Diagnosis/case information",
