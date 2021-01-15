@@ -7,7 +7,7 @@ const NominationBanner = ({ nomination }) => {
   const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : ''
   const state = states.getStateCodeByStateName(nomination.hospitalState)
   const nominationName = `${lastName}-${state}`
-  console.log(nomination)
+
   return (
     <div className="nomination-banner-container">
       <div className="row">

@@ -17,7 +17,6 @@ const SearchBar = () => {
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
-    console.log('NominationsData ', NominationsData)
     if(NominationsData) {
       filteredNoms = NominationsData.filter((nomination) => {
         return [
@@ -28,10 +27,11 @@ const SearchBar = () => {
         ].some((nom) => nom.includes(searchTerm));
       });
       setSearchResultData(filteredNoms);
-    } else
+    } else {
     filteredNoms.length < 1
       ? setShowErrorMessage(true)
       : setShowErrorMessage(false);
+    }
   }
 
   function handleInputChange(e) {

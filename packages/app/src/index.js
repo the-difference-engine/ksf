@@ -22,7 +22,7 @@ ReactDOM.render(
               <Route exact path={'/searchresults'} component={SearchResults} />
               <Route exact path="/nomination/:id" component={NominationsPage} />
               <Route exact path={['/', '/home']} component={Home} />
-              {/* <Route component={Home} /> */}
+              {/* <Route path={'*'} component={Home} /> */}
               {/* redirect nonavailable urls to home component */}
             </ActiveNominationProvider>
           </SearchResultDataProvider>
