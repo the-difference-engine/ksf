@@ -51,14 +51,9 @@ transporter.verify((error, success) => {
 
 const email = new emailTemplate({
   transport: transporter,
-  send: false,
+  send: true,
   preview: true,
 });
-
-// if(nomination.status === 'Awaiting HIPAA') {
-
-//   sendDeclineEmail(nomination)
-// }
 
 function sendDeclineEmail(nomination) {
 
@@ -67,6 +62,7 @@ function sendDeclineEmail(nomination) {
     template: 'decline',
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
+      to: 'sophia@thedifferenceengine.io'
       // to: `${nomination.providerEmailAddress}`,
     },
     locals: {
@@ -76,5 +72,9 @@ function sendDeclineEmail(nomination) {
     }
   }).then(() => console.log('email has been sent!'));
 
+}
+
+module.exports = {
+  sendDeclineEmail
 }
 
