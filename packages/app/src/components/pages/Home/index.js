@@ -12,20 +12,12 @@ const Home = () => {
 
   return (
     <>
-    {
-      NominationsData
-      ?
-        <>
-          <div>
-            <SearchBar />
-          </div>
-          <div>
-            <NewFilesToReview />
-          </div>
-        </>
-      :
-      <p>Data Loading...</p>
-    }
+      <div>
+        <SearchBar />
+      </div>
+      <div>
+        <NewFilesToReview />
+      </div>
     </>
   );
 };
