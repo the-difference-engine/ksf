@@ -38,13 +38,21 @@
 .new-files-title h1{
   margin-left: 5px;
   margin-bottom: 0rem !important;
+<<<<<<< HEAD
   letter-spacing: normal !important;
+=======
+  letter-spacing: none !important;
+>>>>>>> 42b97c30d10813b514458eb1b5beaf3687fb61ff
 }
 
 .home-new-files-headers h2{
   margin-bottom: 0rem !important;
   font-size: 1.4rem;
+<<<<<<< HEAD
   letter-spacing: normal !important;
+=======
+  letter-spacing: none !important;
+>>>>>>> 42b97c30d10813b514458eb1b5beaf3687fb61ff
 }
 
 .detail-font-size {
