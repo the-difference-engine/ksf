@@ -37,15 +37,6 @@ status: "received"
 updatedAt: "2021-01-08T01:12:59.547Z"
 verificationCode: "55fb8126-6f87-4309-b3db-05082ecf45c5"
 
-
-const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-const firstDate = new Date(2008, 1, 12);
-const secondDate = new Date(2008, 1, 22);
-const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
-
-console.log('admint ', admit.toString())
-console.log('apply ', apply.toString())
-console.log('diff ', new Date(apply-admit).toString())
 */
 function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
