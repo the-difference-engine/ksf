@@ -64,7 +64,7 @@ const SearchBar = () => {
             <div className="search-header-container row">
               <img className="ksf-logo " src="/ksflogo.png" alt="other" />
               <div className="comand-center-header column">
-                <strong>Comand Center</strong>
+                <strong>Command Center</strong>
               </div>
             </div>
           </div>
