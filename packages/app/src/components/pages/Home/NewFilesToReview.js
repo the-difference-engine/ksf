@@ -52,7 +52,7 @@ const NewFilesToReview = () => {
               )
             :
               <tr>
-                <td className="add-padding-left"><h1>No new nominations.</h1></td>
+                <td className="add-padding-left new-files-title"><h1>No new nominations.</h1></td>
               </tr>
           }
         </tbody>
