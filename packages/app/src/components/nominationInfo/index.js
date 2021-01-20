@@ -1,60 +1,65 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from 'react';
+import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ApplicationDetail from "./applicationDetail";
 import styles from "./styles.module.css";
 
 
-function NominationInfo({ NominationData }) {
+function NominationInfo() {
+  const [activeNomination, setActiveNomination] = useContext(
+    ActiveNominationContext
+  );
+  console.log('activeNomination ',activeNomination)
   const fields = [
     {
       label: "Name",
-      value: NominationData.providerName
+      value: activeNomination.providerName
     },
     {
       label: "Email Address",
-      value: NominationData.providerEmailAddress
+      value: activeNomination.providerEmailAddress
     },
     {
       label: "Phone Number",
-      value: NominationData.providerPhoneNumber
+      value: activeNomination.providerPhoneNumber
     },
     {
         label: "Title",
-        value: NominationData.providerTitle
+        value: activeNomination.providerTitle
     },
     {
       label: "Email Validated",
-      value: NominationData.emailValidated
+      value: activeNomination.emailValidated
     },
     {
       label: "Public Email Domain",
-      value: NominationData.publicEmailDomain
+      value: activeNomination.publicEmailDomain
     },
     {
       label: "Patient Diagnosis",
-      value: NominationData.patientDiagnosis
+      value: activeNomination.patientDiagnosis
     }];
 
     const familyinfo = [
       {
         label: "Name",
-        value: NominationData.representativeName
+        value: activeNomination.representativeName
       },
       {
         label: "Email Address",
-        value: NominationData.representativeEmailAddress
+        value: activeNomination.representativeEmailAddress
       },
       {
         label: "Phone Number",
-        value: NominationData.representativePhoneNumber
+        value: activeNomination.representativePhoneNumber
       },
       {
         label: "Relationship",
-        value: NominationData.representativeRelationship
+        value: activeNomination.representativeRelationship
       }];
     const patientInfo = [
       {
         label: "Name",
-        value: NominationData.patientName
+        value: activeNomination.patientName
       },
       {
         label: "",
@@ -62,15 +67,15 @@ function NominationInfo({ NominationData }) {
       },
       {
         label: "Admission Date",
-        value: NominationData.admissionDate
+        value: activeNomination.admissionDate
       },
       {
         label: "Discharge Date",
-        value: NominationData.dischargeDate
+        value: activeNomination.dischargeDate
       },
       {
         label: "Diagnosis/case information",
-        value: NominationData.patientDiagnosis
+        value: activeNomination.patientDiagnosis
       },
     ];
       return (

@@ -1,12 +1,12 @@
 @import "../../App.css";
 
-/*Nomination-Show-Banner START*/
 .nomination-banner-container {
   padding: 3rem;
   background-color: white;
   margin: 1rem;
   border-radius: 10px;
 }
+
 .icon-container {
   height: 60px;
   width: 60px;
@@ -37,9 +37,9 @@
 }
 
 .secondary-dark {
-  color: var(--secondary-dark);
+  font-size: 1.1rem;
 }
 
 .body-font {
-  color: black;
+  font-size: 1.5rem;
 }

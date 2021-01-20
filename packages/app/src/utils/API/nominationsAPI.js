@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_URL
 
 const cleanURL = (str) => {
-  if (str.endsWith('/')) {
+  if (str && str.endsWith('/')) {
     return str.slice(0, -1);
   }
   return str

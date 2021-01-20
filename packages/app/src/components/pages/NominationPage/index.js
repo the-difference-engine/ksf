@@ -4,6 +4,8 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
 
+import NominationInfo from '../../nominationInfo';
+
 const NominationPage = ({
   match: {
     params: { id },
@@ -24,12 +26,12 @@ const NominationPage = ({
         }
       });
     }
-  }, [id]);
-
+  }, [NominationsData]);
   return (
     <div className="nomination-show-page">
       <NominationBanner nomination={activeNomination} />
       <ApplicationStages />
+      <NominationInfo />
     </div>
   );
 };
