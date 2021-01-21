@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NominationShow from './components/nomination/nominationShow';
 import Login from './components/pages/Login/index';
 import Home from './components/pages/Home/index';
 import SearchResults from './components/SearchResultsCard';
 import { NominationsDataProvider } from './utils/context/NominationsContext';
 import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
+import { ActiveNominationProvider } from './utils/context/ActiveNominationContext';
+import NominationsPage from './components/pages/NominationPage';
 import './App.css';
-
 
 ReactDOM.render(
   <Router>
@@ -17,10 +17,14 @@ ReactDOM.render(
       <Switch>
         <NominationsDataProvider>
           <SearchResultDataProvider>
-            <Route exact path={'/'} component={Home} />
-            <Route exact path={'/login'} component={Login} />
-            <Route exact path={'/searchresults'} component={SearchResults} />
-            <Route path="/nomination/:id" exact component={NominationShow} />
+            <ActiveNominationProvider>
+              <Route exact path={'/login'} component={Login} />
+              <Route exact path={'/searchresults'} component={SearchResults} />
+              <Route exact path="/nomination/:id" component={NominationsPage} />
+              <Route exact path={['/', '/home']} component={Home} />
+              {/* <Route path={'*'} component={Home} /> */}
+              {/* redirect nonavailable urls to home component */}
+            </ActiveNominationProvider>
           </SearchResultDataProvider>
         </NominationsDataProvider>
       </Switch>

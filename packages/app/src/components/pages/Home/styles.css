@@ -1,8 +1,9 @@
 @import "../../../App.css"
 
-#new-files-container {
+.new-files-container {
   background-color: white;
 }
+
 .new-files-table {
   background-color: white;
   border-radius: 1rem;
@@ -37,12 +38,15 @@
 .new-files-title h1{
   margin-left: 5px;
   margin-bottom: 0rem !important;
+  letter-spacing: normal !important;
 }
 
 .home-new-files-headers h2{
   margin-bottom: 0rem !important;
+  font-size: 1.4rem;
+  letter-spacing: normal !important;
 }
 
 .detail-font-size {
-  font-size: .875rem;
+  font-size: 1rem;
 }
