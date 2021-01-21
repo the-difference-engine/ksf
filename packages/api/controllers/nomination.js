@@ -1,7 +1,7 @@
 const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
-const { sendDecineEmail } = require('../helper/mailer')
+const { sendDeclineEmail } = require('../helper/mailer')
 
 const getNominationById = async (req, res) => {
   try {
@@ -57,16 +57,19 @@ const updateNomination = async (req, res) => {
   try {
     const nomination = await db.Nomination.update(
       { status: req.body.status },
-      { where: { id } }
+      { where: { id }, returning: true }
     );
-    console.log(nomination)
-    console.log(nomination.status)
-    if(nomination.status === 'Decline') {
-      sendDeclineEmail(nomination)
+    const updatedNom = nomination[1][0].dataValues
+    const updatedStatus = nomination[1][0].dataValues.status
+    //updated nom is being captured under updatedNom, can continue using additional conditional to use other email functions,
+    //depending on status of application
+    //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
+    if(updatedStatus === 'Decline') {
+      sendDeclineEmail(updatedNom)
     }
     return res.status(200).json(nomination);
   } catch (error) {
-    console.log('400 Update Bad Reuest', error);
+    console.log('400 Update Bad Request', error);
     return res.status(400).json({ error: error.message });
   }
 };
