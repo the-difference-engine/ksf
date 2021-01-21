@@ -77,4 +77,3 @@ function sendDeclineEmail(nomination) {
 module.exports = {
   sendDeclineEmail
 }
-
