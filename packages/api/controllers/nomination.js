@@ -37,9 +37,37 @@ const findAllNominataions = async (req, res) => {
   }
 };
 
+// separate function to get email providers id to check if there is already this email in the db
+const getNominationByProviderEmail = async (req, res) => {
+  try {
+    const { providerEmailAddress } = req.params;
+
+    if (!providerEmailAddress ) {
+      return res.status(400).send('Provider Email Address is not found');
+    }
+
+    const nomination = await db.Nomination.findOne(providerEmailAddress);
+
+    if (nomination) {
+      return res.status(200).json({ nomination });
+    }
+    return res
+      .status(404)
+      .send('Nomination with the specified ID does not exist!');
+  } catch (error) {
+    console.error('500 - something is not right', error);
+    return res.status(500).send(error.message);
+  }
+};
+
 const createNomination = async (req, res) => {
   try {
+    // check if email address is in the db already, and if it is, then nomination.emailValidated == true
     const nomination = await db.Nomination.create(req.body);
+    // if false or email address is not in database, then send verification email
+    if(nomination.emailValidated == false) {
+
+    }
     return res.status(201).json({ nomination });
   } catch (error) {
     if (error instanceof ValidationError) {
@@ -60,7 +88,7 @@ const updateNomination = async (req, res) => {
     );
     return res.status(200).json(nomination);
   } catch (error) {
-    console.log('400 Update Bad Reuest', error);
+    console.log('400 Update Bad Request', error);
     return res.status(400).json({ error: error.message });
   }
 };

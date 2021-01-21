@@ -140,7 +140,7 @@ module.exports = (sequelize, DataTypes) => {
           });
         },
         afterCreate: (nomination, option) => {
-          sendVerification(nomination);
+          // sendVerification(nomination);
         },
       },
       sequelize,
