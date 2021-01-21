@@ -26,52 +26,26 @@ transporter.verify((error, success) => {
   }
 });
 
-// module.exports = {
-  // sendVerification: (nomination) => {
-    // let mailOptions = {
-    //   from: 'formmaster@keepswimmingfoundation.org',
-    //   to: 'ryan.mansfield@thedifferenceengine.io',
-    //   subject: 'test',
-    //   text: `email text`,
-    // };
-
-    // transporter.sendMail(mailOptions, function (err, data) {
-    //   if (err) {
-    //     console.log(err);
-    //     console.log('there was an error, email did not send');
-    //   } else {
-    //     console.log(data)
-    //     console.log('email sent!');
-    //     console.log('res.originalMessage', res.originalMessage);
-    //   }
-    // })
-
-  // },
-// };
-
 const email = new emailTemplate({
   transport: transporter,
-  send: true,
+  send: false,
+  //send status will eventually need to be updated to true
   preview: true,
 });
 
 function sendDeclineEmail(nomination) {
-
-//   console.log(nomination)
   email.send({
     template: 'decline',
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
-      to: 'sophia@thedifferenceengine.io'
-      // to: `${nomination.providerEmailAddress}`,
+      // to: 'sophia@thedifferenceengine.co'
+      to: `${nomination.providerEmailAddress}`,
     },
     locals: {
-      name: 'John',
-      // name: `${nomination.patientName}`,
-      // lname: 'Snow',
+      name: `${nomination.providerName}`,
+      patientName: `${nomination.patientName}`,
     }
-  }).then(() => console.log('email has been sent!'));
-
+  }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
 }
 
 module.exports = {
