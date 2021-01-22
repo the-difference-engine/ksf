@@ -5,11 +5,10 @@ import dummyData from './dummyData';
 
 test("renders prop name patientInfo", () => {
 
-  const admissionDate = dummyData.admissionDate;
-  // const todaysDate = new Date()
-  const determineDischargeDate = dummyData.dischargeDate === null ? new Date() : dummyData.dischargeDate;
-  const diffDays = Math.round(Math.abs((admissionDate - determineDischargeDate) / (24*60*60*1000) /* <- hours*minutes*seconds*milliseconds */));
-  const patientDaysInHospital = 'Patient was hospitalized for '+diffDays.toString()+ ' days';
+  const diffDays = Math.round(Math.abs((dummyData.admissionDate
+    - dummyData.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
+
+
 
   const patientInfo = [
     {
@@ -30,7 +29,7 @@ test("renders prop name patientInfo", () => {
     },
     {
       label: "Hospitalized for at least 21 days?",
-      value: patientDaysInHospital 
+      value: diffDays
     },
     {
       label: "Diagnosis/case information",

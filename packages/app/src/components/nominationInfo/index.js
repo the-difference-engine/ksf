@@ -3,51 +3,14 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import ApplicationDetail from "./applicationDetail";
 import styles from "./styles.module.css";
 
-/*
 
-  admissionDate: null
-amountGrantedCents: null
-amountRequestedCents: 3654
-attachmentsDestination: null
-  createdAt: "2021-01-08T01:12:59.547Z"
-  dateReceived: "11/6/2020"
-  dischargeDate: null
-emailValidated: false
-hospitalAddress: "456 N Main St."
-hospitalCity: "Gotham "
-hospitalName: "Gotham General Hospital"
-hospitalState: "New Jersey"
-hospitalURL: "ggh.com"
-hospitalZipCode: "07320"a
-id: "764f8167-52da-44ff-9c1d-a42e98cf672b"
-nominationName: "undefined-NJ"
-patientAge: "18 Years of age or older"
-patientDiagnosis: null
-patientName: "Jack Napier"
-providerEmailAddress: "gotham.general@gmail.com"
-providerName: "Bruce Wayne"
-providerPhoneNumber: "555-137-5681"
-providerTitle: "Professor"
-publicEmailDomain: true
-representativeEmailAddress: "hquinn@dc.com"
-representativeName: "Harley Quinn"
-representativePhoneNumber: "222-222-2222"
-representativeRelationship: "Significant Other"
-status: "received"
-updatedAt: "2021-01-08T01:12:59.547Z"
-verificationCode: "55fb8126-6f87-4309-b3db-05082ecf45c5"
-
-*/
 function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
 
-  const admissionDate = activeNomination.admissionDate;
-  // const todaysDate = new Date()
-  const determineDischargeDate = activeNomination.dischargeDate === null ? new Date() : activeNomination.dischargeDate;
-  const diffDays = Math.round(Math.abs((admissionDate - determineDischargeDate) / (24*60*60*1000) /* <- hours*minutes*seconds*milliseconds */));
-  const patientDaysInHospital = 'Patient was hospitalized for '+diffDays.toString()+ ' days';
+  const diffDays = Math.round(Math.abs((activeNomination.admissionDate
+     - activeNomination.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
 
 
   console.log('activeNomination ',activeNomination)
@@ -117,7 +80,7 @@ function NominationInfo() {
       },
       {
         label: "Hospitalized for at least 21 days?",
-        value: patientDaysInHospital 
+        value: diffDays
       },
       {
         label: "Diagnosis/case information",
