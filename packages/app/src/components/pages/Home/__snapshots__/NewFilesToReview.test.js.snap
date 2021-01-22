@@ -73,7 +73,7 @@ Object {
           </tr>
           <tr>
             <td
-              class="add-padding-left"
+              class="add-padding-left new-files-title"
             >
               <h1>
                 No new nominations.
@@ -153,7 +153,7 @@ Object {
         </tr>
         <tr>
           <td
-            class="add-padding-left"
+            class="add-padding-left new-files-title"
           >
             <h1>
               No new nominations.
