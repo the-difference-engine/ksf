@@ -17,7 +17,7 @@ const nominationsAPI = {
     return axios.get(`${cleanURL(API_URL)}/api/nominations/${id}`);
   },
   updateNomination: function (id, value) {
-    return axios.put(`/nominations/${id}`, {
+    return axios.put(`${cleanURL(API_URL)}/api/nominations/${id}`, {
       status: value
     });
   },
