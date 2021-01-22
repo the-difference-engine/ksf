@@ -13,7 +13,11 @@
     "lerna": "^3.22.1"
   },
   "dependencies": {
+<<<<<<< HEAD
     "email-templates": "^8.0.2",
     "pug": "^3.0.0"
+=======
+    "nodemailer": "^6.4.17"
+>>>>>>> develop
   }
 }

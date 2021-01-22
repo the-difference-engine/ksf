@@ -28,7 +28,7 @@ transporter.verify((error, success) => {
 
 const email = new emailTemplate({
   transport: transporter,
-  send: false,
+  send: true,
   //send status will eventually need to be updated to true
   preview: true,
 });
@@ -48,6 +48,22 @@ function sendDeclineEmail(nomination) {
   }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
 }
 
+function verifyHcEmail(nomination) {
+  email.send({
+    template: 'verifyHcEmail',
+    message: {
+      from: 'formmaster@keepswimmingfoundation.org',
+      to: nomination.providerEmailAddress,
+    },
+    locals: {
+      name: nomination.providerName,
+      appUrl: process.env.APP_URL
+    }
+  }).then(() => console.log('email has been sent!'))
+    .catch(console.error);
+}
+
 module.exports = {
-  sendDeclineEmail
+  sendDeclineEmail,
+  verifyHcEmail
 }

@@ -2,6 +2,7 @@ const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
 const { sendDeclineEmail } = require('../helper/mailer')
+const { verifyHcEmail } = require('../helper/mailer')
 
 const getNominationById = async (req, res) => {
   try {
@@ -40,8 +41,16 @@ const findAllNominataions = async (req, res) => {
 
 const createNomination = async (req, res) => {
   try {
-    const nomination = await db.Nomination.create(req.body);
-    return res.status(201).json({ nomination });
+    const { providerEmailAddress } = req.body;
+    const newNomination = await db.Nomination.create(req.body);
+    const nominations = await db.Nomination.findAll();
+    const hasProviderBeenValidated = nominations.some( (nom) => {
+      return nom.providerEmailAddress === providerEmailAddress && nom.emailValidated === true
+    })
+    if(!hasProviderBeenValidated) {
+      verifyHcEmail(newNomination.dataValues)
+    }
+    return res.status(201).json({ newNomination });
   } catch (error) {
     if (error instanceof ValidationError) {
       console.log('400 validation error', error);
