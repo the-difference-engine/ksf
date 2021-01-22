@@ -33,6 +33,7 @@ function verifyHcEmail(nomination) {
     },
     locals: {
       name: nomination.providerName,
+      appUrl: process.env.APP_URL
     }
   }).then(() => console.log('email has been sent!'))
     .catch(console.error);
