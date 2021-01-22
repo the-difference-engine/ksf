@@ -57,8 +57,9 @@ const updateNomination = async (req, res) => {
   try {
     const nomination = await db.Nomination.update(
       { status: req.body.status },
-      { where: { id }, returning: true }
-    );
+      { where: {id: "million"}, returning: true }
+    ).catch ((err)=> {return res.status(400)});
+
     const updatedNom = nomination[1][0].dataValues
     const updatedStatus = nomination[1][0].dataValues.status
     //updated nom is being captured under updatedNom, can continue using additional conditional to use other email functions,
