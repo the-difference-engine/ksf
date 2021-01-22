@@ -1,6 +1,7 @@
 const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
+const { verifyHcEmail } = require('../helper/mailer')
 
 const getNominationById = async (req, res) => {
   try {
@@ -37,38 +38,18 @@ const findAllNominataions = async (req, res) => {
   }
 };
 
-// separate function to get email providers id to check if there is already this email in the db
-const getNominationByProviderEmail = async (req, res) => {
-  try {
-    const { providerEmailAddress } = req.params;
-
-    if (!providerEmailAddress ) {
-      return res.status(400).send('Provider Email Address is not found');
-    }
-
-    const nomination = await db.Nomination.findOne(providerEmailAddress);
-
-    if (nomination) {
-      return res.status(200).json({ nomination });
-    }
-    return res
-      .status(404)
-      .send('Nomination with the specified ID does not exist!');
-  } catch (error) {
-    console.error('500 - something is not right', error);
-    return res.status(500).send(error.message);
-  }
-};
-
 const createNomination = async (req, res) => {
   try {
-    // check if email address is in the db already, and if it is, then nomination.emailValidated == true
-    const nomination = await db.Nomination.create(req.body);
-    // if false or email address is not in database, then send verification email
-    if(nomination.emailValidated == false) {
-
+    const { providerEmailAddress } = req.body;
+    const newNomination = await db.Nomination.create(req.body);
+    const nominations = await db.Nomination.findAll();
+    const hasProviderBeenValidated = nominations.some( (nom) => {
+      return nom.providerEmailAddress === providerEmailAddress && nom.emailValidated === true
+    })
+    if(!hasProviderBeenValidated) {
+      verifyHcEmail(newNomination.dataValues)
     }
-    return res.status(201).json({ nomination });
+    return res.status(201).json({ newNomination });
   } catch (error) {
     if (error instanceof ValidationError) {
       console.log('400 validation error', error);
@@ -84,7 +65,7 @@ const updateNomination = async (req, res) => {
   try {
     const nomination = await db.Nomination.update(
       { status: req.body.status },
-      { where: { id } }
+      { where: { id }, returning: true }
     );
     return res.status(200).json(nomination);
   } catch (error) {
