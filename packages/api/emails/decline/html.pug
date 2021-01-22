@@ -1,12 +1,16 @@
 div.main
-  img(src=`${process.env.APP_URL}/email/header.jpg` alt='header' style='width:100%; height:auto;')
+  img(src= "#{process.env.APP_URL}/email/header.jpg" alt='header' style='width:100%; height:auto;')
   //- image doesn't work when email actually gets send out only works in preview.
   //- img.ui.mini.rounded.image(src=./header.jpg)
 
   p Hi #{name},
 
-  p We regret to inform you that your application for #{patienName} were not accepted for a Keep Swimming Foundation grant this quarter. Due to our limited funds, we are unable to provide financial relief to every family who applies. While this is not the result you desired, we do hope you suggest our services to families in need going
-  p forward. As we grow, it is our goal to increase the number of families we help each quarter. If your family has remained in the hospital since you began the prior application process, you may be eligible to apply for our next round of grants if they continue to meet our qualifications. Please Note: The online application must be submitted again and some documents may be requested again.
+  p We regret to inform you that your application for #{patientName} were not accepted for a Keep Swimming Foundation grant this quarter.
+  p Due to our limited funds, we are unable to provide financial relief to every family who applies. 
+  p While this is not the result you desired, we do hope you suggest our services to families in need going forward. 
+  p As we grow, it is our goal to increase the number of families we help each quarter. 
+  p If your family has remained in the hospital since you began the prior application process, you may be eligible to apply for our next round of grants if they continue to meet our qualifications. 
+  p Please Note: The online application must be submitted again and some documents may be requested again.
 
   p We send our love to your family and wish you all good health.
 
@@ -14,9 +18,9 @@ div.main
   p Sincerely,
   p Keep Swimming Foundation
 
-  p Hola,
+  p Hola #{name},
 
-  p Lamentamos informarle que no fue aceptado para una beca de la Fundación Keep Swimming este trimestre. Debido a nuestros fondos limitados, no podemos proporcionar ayuda financiera a todas las
+  p Lamentamos informarle que no fue aceptado para #{patientName} una beca de la Fundación Keep Swimming este trimestre. Debido a nuestros fondos limitados, no podemos proporcionar ayuda financiera a todas las
   p familias que lo soliciten. Si bien este no es el resultado que deseaba, esperamos que sugiera nuestros servicios a las familias
   p necesitadas en el futuro. A medida que crecemos, nuestro objetivo es aumentar la cantidad de familias que ayudamos cada trimestre.
   p Si su familia ha permanecido en el hospital desde que comenzó el proceso de solicitud anterior, pueden ser elegibles para solicitar nuestra próxima ronda de subvenciones si continúa cumpliendo con
