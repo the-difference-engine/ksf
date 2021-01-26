@@ -1,3 +1,4 @@
+import style from './style.css'
 import React from 'react';
 const states = require('us-state-codes');
 
@@ -23,7 +24,7 @@ const NominationBanner = ({ nomination }) => {
             </div>
           </div>
 
-          <div className="row banner-bottom">
+          <div className="row">
             <div className="column hp-name">
               <p className="secondary-dark">HP Name</p>
               <span><h2 className="body-font"><strong>{nomination.providerName}</strong></h2></span>

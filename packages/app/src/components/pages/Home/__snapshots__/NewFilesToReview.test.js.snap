@@ -72,8 +72,12 @@ Object {
             <td />
           </tr>
           <tr>
-            <td>
-              No new nominations.
+            <td
+              class="add-padding-left new-files-title"
+            >
+              <h1>
+                No new nominations.
+              </h1>
             </td>
           </tr>
         </tbody>
@@ -148,8 +152,12 @@ Object {
           <td />
         </tr>
         <tr>
-          <td>
-            No new nominations.
+          <td
+            class="add-padding-left new-files-title"
+          >
+            <h1>
+              No new nominations.
+            </h1>
           </td>
         </tr>
       </tbody>
