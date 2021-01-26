@@ -66,14 +66,15 @@ const updateNomination = async (req, res) => {
   try {
     const nomination = await db.Nomination.update(
       { status: req.body.status },
-      { where: { id }, returning: true }
-    );
+      { where: {id: "million"}, returning: true }
+    ).catch ((err)=> {return res.status(400)});
+
     const updatedNom = nomination[1][0].dataValues
     const updatedStatus = nomination[1][0].dataValues.status
     //updated nom is being captured under updatedNom, can continue using additional conditional to use other email functions,
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
-    if(updatedStatus === 'Decline') {
+    if (updatedNom.status === 'Decline') {
       sendDeclineEmail(updatedNom)
     }
     return res.status(200).json(nomination);

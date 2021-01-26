@@ -4,7 +4,8 @@ require('dotenv').config();
 const routes = require('./routes');
 const cors = require('cors');
 const app = express();
-
+const gSheetToDB = require('./helper/nominationGsheetToDB')
+gSheetToDB()
 
 app.use(cors());
 app.use(bodyParser.json());
