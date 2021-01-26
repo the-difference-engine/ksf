@@ -39,11 +39,12 @@ function sendDeclineEmail(nomination) {
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
       // to: 'sophia@thedifferenceengine.co'
-      to: `${nomination.providerEmailAddress}`,
+      to: nomination.providerEmailAddress,
     },
     locals: {
-      name: `${nomination.providerName}`,
-      patientName: `${nomination.patientName}`,
+      name: nomination.providerName,
+      patientName: nomination.patientName,
+      appUrl: process.env.APP_URL,
     }
   }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
 }
