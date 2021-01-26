@@ -15,7 +15,6 @@
   color: var(--brand);
   display: flex;
   align-items: center;
-  padding-bottom: 3rem;
 }
 
 .search-form {
