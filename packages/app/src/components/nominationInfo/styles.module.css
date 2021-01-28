@@ -45,6 +45,7 @@
   }
 
   .layout > .main:first-child {
+    /* grid-row: 1 / span 3; */
     grid-row: 1 / span 3;
   }
 

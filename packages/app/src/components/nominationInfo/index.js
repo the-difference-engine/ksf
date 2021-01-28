@@ -4,11 +4,20 @@ import ApplicationDetail from "./applicationDetail";
 import styles from "./styles.module.css";
 
 
+
+
+
+
 function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-  console.log('activeNomination ',activeNomination)
+  
+
+
+
+  const hospitalAddress = activeNomination.hospitalCity+', '+activeNomination.hospitalState+', '+activeNomination.hospitalZipCode
+
   const fields = [
     {
       label: "Name",
@@ -27,16 +36,20 @@ function NominationInfo() {
         value: activeNomination.providerTitle
     },
     {
-      label: "Email Validated",
-      value: activeNomination.emailValidated
+      label: "Name of Hospital",
+      value: activeNomination.hospitalName
     },
     {
-      label: "Public Email Domain",
-      value: activeNomination.publicEmailDomain
+      label: "Hospital URL",
+      value: activeNomination.hospitalURL
     },
     {
-      label: "Patient Diagnosis",
-      value: activeNomination.patientDiagnosis
+      label: "Hospital Address",
+      value: hospitalAddress
+    },
+    {
+      label: "How did you hear about KSF?",
+      value: ""
     }];
 
     const familyinfo = [
