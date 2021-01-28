@@ -5,10 +5,6 @@ import dummyData from './dummyData';
 
 test("renders prop name patientInfo", () => {
 
-  const diffDays = Math.round(Math.abs((dummyData.admissionDate
-    - dummyData.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
-
-
 
   const patientInfo = [
     {
@@ -29,14 +25,14 @@ test("renders prop name patientInfo", () => {
     },
     {
       label: "Hospitalized for at least 21 days?",
-      value: diffDays
+      value: "yes"
     },
     {
       label: "Diagnosis/case information",
       value: dummyData.patientDiagnosis
     },
   ];
-  // const { getByText } = render(<ApplicationDetail fields={fields} />);
+
   const { getByText } = render(<ApplicationDetail fields={patientInfo} />);
   const reg = new RegExp(dummyData.patientName, 'i')
   const patientName = getByText(reg);

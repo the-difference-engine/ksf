@@ -13,7 +13,6 @@ function NominationInfo() {
      - activeNomination.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
 
 
-  console.log('activeNomination ',activeNomination)
   const fields = [
     {
       label: "Name",
