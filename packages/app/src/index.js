@@ -18,10 +18,12 @@ ReactDOM.render(
         <NominationsDataProvider>
           <SearchResultDataProvider>
             <ActiveNominationProvider>
-              <Route path={['/', '/home']} component={Home} />
               <Route exact path={'/login'} component={Login} />
               <Route exact path={'/searchresults'} component={SearchResults} />
-              <Route path="/nomination/:id" exact component={NominationsPage} />
+              <Route exact path="/nomination/:id" component={NominationsPage} />
+              <Route exact path={['/', '/home']} component={Home} />
+              {/* <Route path={'*'} component={Home} /> */}
+              {/* redirect nonavailable urls to home component */}
             </ActiveNominationProvider>
           </SearchResultDataProvider>
         </NominationsDataProvider>

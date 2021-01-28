@@ -12,7 +12,6 @@ function NominationInfo() {
   const diffDays = Math.round(Math.abs((activeNomination.admissionDate
      - activeNomination.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
 
-
   const fields = [
     {
       label: "Name",
@@ -76,6 +75,7 @@ function NominationInfo() {
       {
         label: "Discharge Date",
         value: activeNomination.dischargeDate
+
       },
       {
         label: "Hospitalized for at least 21 days?",

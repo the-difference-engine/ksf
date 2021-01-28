@@ -17,7 +17,6 @@ const SearchBar = () => {
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
-    console.log('NominationsData ', NominationsData)
     if(NominationsData) {
       filteredNoms = NominationsData.filter((nomination) => {
         return [
@@ -27,12 +26,12 @@ const SearchBar = () => {
           formatSearch(nomination.representativeName),
         ].some((nom) => nom.includes(searchTerm));
       });
-    } else 
-    setSearchResultData(filteredNoms);
-
+      setSearchResultData(filteredNoms);
+    } else {
     filteredNoms.length < 1
       ? setShowErrorMessage(true)
       : setShowErrorMessage(false);
+    }
   }
 
   function handleInputChange(e) {
@@ -65,7 +64,7 @@ const SearchBar = () => {
             <div className="search-header-container row">
               <img className="ksf-logo " src="/ksflogo.png" alt="other" />
               <div className="comand-center-header column">
-                <strong>Comand Center</strong>
+                <strong>Command Center</strong>
               </div>
             </div>
           </div>

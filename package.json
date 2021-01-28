@@ -12,5 +12,7 @@
   "devDependencies": {
     "lerna": "^3.22.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "nodemailer": "^6.4.17"
+  }
 }

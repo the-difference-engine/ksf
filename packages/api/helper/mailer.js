@@ -1,45 +1,44 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
+const emailTemplate = require('email-templates');
+const previewEmail = require('preview-email');
+const path = require('path');
 
-module.exports = {
-  sendVerification: (nomination) => {
-    const transport = {
-      port: 587,
-      secure: false,
-      requireTLS: true,
-      service: 'gmail',
-      host: 'smtp.gmail.com',
-      auth: {
-        user: process.env.MAILER_USER,
-        pass: process.env.MAILER_PASS,
-      },
-    };
-
-    const transporter = nodemailer.createTransport(smtpTransport(transport));
-
-    transporter.verify((error, success) => {
-      if (error) {
-        console.log(error);
-        console.log('transporter is not working');
-      } else {
-        console.log('All works fine, congratz!');
-      }
-    });
-
-    let mailOptions = {
-      from: 'formmaster@keepswimmingfoundation.org',
-      to: nomination.providerEmailAddress,
-      subject: 'test',
-      text: `Please verify ${nomination.verificationCode}`,
-    };
-
-    transporter.sendMail(mailOptions, (err, data) => {
-      if (err) {
-        console.log(err);
-        console.log('there was an error, email did not send');
-      } else {
-        console.log('email sent!');
-      }
-    });
+const transport = {
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  auth: {
+    user: process.env.MAILER_USER,
+    pass: process.env.MAILER_PASS,
   },
 };
+
+const transporter = nodemailer.createTransport(smtpTransport(transport));
+
+const email = new emailTemplate({
+  transport: transporter,
+  send: true,
+  preview: true,
+});
+
+function verifyHcEmail(nomination) {
+  email.send({
+    template: 'verifyHcEmail',
+    message: {
+      from: 'formmaster@keepswimmingfoundation.org',
+      to: nomination.providerEmailAddress,
+    },
+    locals: {
+      name: nomination.providerName,
+      appUrl: process.env.APP_URL
+    }
+  }).then(() => console.log('email has been sent!'))
+    .catch(console.error);
+}
+
+module.exports = {
+  verifyHcEmail
+}
