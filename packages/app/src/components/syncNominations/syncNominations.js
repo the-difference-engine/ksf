@@ -1,0 +1,1 @@
+<button onClick={getRawNominationData}>Sync Nomination</button> 
