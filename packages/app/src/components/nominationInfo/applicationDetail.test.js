@@ -3,38 +3,38 @@ import { render } from "@testing-library/react";
 import ApplicationDetail from './applicationDetail';
 import dummyData from './dummyData';
 
-test("renders prop name providerName", () => {
-  const fields = [
+test("renders prop name patientInfo", () => {
+
+
+  const patientInfo = [
     {
       label: "Name",
-      value: dummyData.providerName
+      value: dummyData.patientName
     },
     {
-      label: "Email Address",
-      value: dummyData.providerEmailAddress
+      label: "Patient Age",
+      value: dummyData.patientAge
     },
     {
-      label: "Phone Number",
-      value: dummyData.providerPhoneNumber
+      label: "Admission Date",
+      value: dummyData.admissionDate
     },
     {
-        label: "Title",
-        value: dummyData.providerTitle
+      label: "Discharge Date",
+      value: dummyData.dischargeDate
     },
     {
-      label: "Email Validated",
-      value: dummyData.emailValidated
+      label: "Hospitalized for at least 21 days?",
+      value: "yes"
     },
     {
-      label: "Public Email Domain",
-      value: dummyData.publicEmailDomain
-    },
-    {
-      label: "Patient Diagnosis",
+      label: "Diagnosis/case information",
       value: dummyData.patientDiagnosis
-    }];
-  const { getByText } = render(<ApplicationDetail fields={fields} />);
-  const reg = new RegExp(dummyData.providerName, 'i')
-  const providerName = getByText(reg);
-  expect(providerName).toBeInTheDocument();
+    },
+  ];
+
+  const { getByText } = render(<ApplicationDetail fields={patientInfo} />);
+  const reg = new RegExp(dummyData.patientName, 'i')
+  const patientName = getByText(reg);
+  expect(patientName).toBeInTheDocument();
 });
