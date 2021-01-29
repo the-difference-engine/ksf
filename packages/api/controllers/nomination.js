@@ -86,11 +86,13 @@ const updateNomination = async (req, res) => {
   }
 };
 
-const syncNomination = () => {
-  try { gsheetToDB() 
-  return res.status(200)
+const syncNominations = async (req, res) => {
+  try { gsheetToDB()
+    console.log('nominations synced successfully')
+  return res.status(200).json({ 'status': 'ok' })
 } catch (error){
   console.log('error', error)
+  return res.status(400).json({ error: error.message });
   }
 }
 
@@ -99,6 +101,6 @@ module.exports = {
   findAllNominataions,
   createNomination,
   updateNomination,
-  syncNomination
+  syncNominations,
 };
 
