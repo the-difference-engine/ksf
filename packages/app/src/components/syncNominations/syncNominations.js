@@ -1,6 +1,7 @@
 import React from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI';
-import styles from './styles.css'
+import styles from './styles.css';
+import NominationsDataProvider from '../../utils/context/NominationsContext'
 
 const SyncNominations = () => {
 
