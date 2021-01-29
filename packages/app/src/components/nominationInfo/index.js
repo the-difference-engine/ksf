@@ -58,6 +58,10 @@ function NominationInfo() {
       {
         label: "Relationship",
         value: activeNomination.representativeRelationship
+      },
+      {
+        label: "Request to communicate in Spanish?",
+        value: ""
       }];
     const patientInfo = [
       {
