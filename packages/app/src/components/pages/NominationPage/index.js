@@ -21,7 +21,6 @@ const NominationPage = ({
 
   useEffect(() => {
     if (NominationsData) {
-      console.log(NominationsData)
       NominationsData.forEach((nomination) => {
         if (nomination.id === id) {
           return setActiveNomination(nomination);
