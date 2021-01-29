@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ApplicationDetail from "./applicationDetail";
+import HealthProviderDetail from "./healthProviderDetail";
 import styles from "./styles.module.css";
 
 
@@ -20,7 +21,7 @@ function NominationInfo() {
 
   const fields = [
     {
-      label: "Name",
+      label: "Provider Name",
       value: activeNomination.providerName
     },
     {
@@ -95,7 +96,8 @@ function NominationInfo() {
         <div className={styles.layout}>
             <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
-            <ApplicationDetail fields={fields} gridContent={true} title="Health Provider Information" />
+            {/* <ApplicationDetail fields={fields} gridContent={true} title="Health Provider Information" /> */}
+            <HealthProviderDetail fields={fields} gridContent={true} title="Health Provider Information" />
         </div>
       );
     }
