@@ -9,7 +9,6 @@ library.add(fab, faChevronCircleDown, faChevronCircleUp, faFileImage, faEllipsis
 
 const Home = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
-
   return (
     <>
       <div>

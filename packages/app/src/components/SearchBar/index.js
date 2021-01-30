@@ -70,7 +70,7 @@ const SearchBar = () => {
             </div>
           </div>
           <div className="form-container column column-50">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="search-form">
               <input
                 className="search-input-class"
                 type="text"
