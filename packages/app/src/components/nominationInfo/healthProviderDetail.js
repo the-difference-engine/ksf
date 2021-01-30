@@ -36,10 +36,7 @@ function HealthProviderDetail(props) {
 
   const handleSubmit =  (val) => {
 
-    if(!val) {
-        return;
-
-    } else {
+    if(val) {
         findSearchResults(val);
     }
   }
