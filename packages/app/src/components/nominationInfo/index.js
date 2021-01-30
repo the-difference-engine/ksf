@@ -13,11 +13,17 @@ function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
+
   
 
 
 
   const hospitalAddress = activeNomination.hospitalCity+', '+activeNomination.hospitalState+', '+activeNomination.hospitalZipCode
+
+
+  const diffDays = Math.round(Math.abs((activeNomination.admissionDate
+     - activeNomination.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
+
 
   const fields = [
     {
@@ -76,8 +82,8 @@ function NominationInfo() {
         value: activeNomination.patientName
       },
       {
-        label: "",
-        value: ""
+        label: "Patient Age",
+        value: activeNomination.patientAge
       },
       {
         label: "Admission Date",
@@ -86,6 +92,11 @@ function NominationInfo() {
       {
         label: "Discharge Date",
         value: activeNomination.dischargeDate
+
+      },
+      {
+        label: "Hospitalized for at least 21 days?",
+        value: diffDays
       },
       {
         label: "Diagnosis/case information",

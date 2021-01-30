@@ -12,7 +12,11 @@
 }
 
 .search-header-container {
-  color: #128b3e;
+  color: var(--brand);
   display: flex;
   align-items: center;
+}
+
+.search-form {
+  margin-bottom: 0.5rem;
 }
