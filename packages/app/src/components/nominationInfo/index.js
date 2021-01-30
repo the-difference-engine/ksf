@@ -61,7 +61,7 @@ function NominationInfo() {
       },
       {
         label: "Request to communicate in Spanish?",
-        value: ""
+        value: "No"
       }];
     const patientInfo = [
       {
