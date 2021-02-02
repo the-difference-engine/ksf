@@ -5,6 +5,7 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faChevronCircleDown, faChevronCircleUp, faFileImage, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+import ApplicationViewByStages from './ApplicationViewByStages';
 library.add(fab, faChevronCircleDown, faChevronCircleUp, faFileImage, faEllipsisV)
 
 const Home = () => {
@@ -17,6 +18,9 @@ const Home = () => {
       </div>
       <div>
         <NewFilesToReview />
+      </div>
+      <div>
+        <ApplicationViewByStages />
       </div>
     </>
   );
