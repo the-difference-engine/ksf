@@ -3,11 +3,6 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from "./styles.css";
-//create a new method that when triggered gets getRawNominations
-//under bttn div only shows when value
-//ajax request back 
-//send back to main component ~ show in new files to review
- 
 
 const NewFilesToReview = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
@@ -21,7 +16,6 @@ const NewFilesToReview = () => {
   const conditionalNominationRender = () => {
     return showAll ? receivedNominations : receivedNominations.slice(0,3)
   }
-
 
 
   return (
