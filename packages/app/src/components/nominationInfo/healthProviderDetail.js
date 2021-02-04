@@ -33,7 +33,7 @@ function HealthProviderDetail(props) {
   }
 
 
-
+  
   const handleSubmit =  (val) => {
 
     if (val) {
