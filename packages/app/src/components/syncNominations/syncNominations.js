@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import styles from './styles.css';
-import { findAllNominations } from '../../utils/context/NominationsContext'
 
 const SyncNominations = () => {
   const [message, setMessage] = useState('')
-  // const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
 
   const handleClick = () => {
     getSyncNom()
   }
-
-  // useEffect(() => {
-
-  // })
 
   function removeMessage() {
     setTimeout(() => {
@@ -26,7 +20,8 @@ const SyncNominations = () => {
     .then((res) => {
       if (res.status === 200) {
         setMessage('Nominations successfully synced')
-        removeMessage()
+        // do we need to distinguish whether there's new data coming in or not?
+        window.location.reload()
       } else {
         setMessage('Error occurred while syncing')
         removeMessage()
