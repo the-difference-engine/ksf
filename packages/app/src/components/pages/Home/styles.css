@@ -29,7 +29,6 @@
 .add-padding-left {
   padding-left: 2rem !important;
   /* using important to override inline styles rendered by 3rd party component Milligram */
-  /* color: #128B3E; */
 }
 
 .new-files-title {
