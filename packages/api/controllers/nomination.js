@@ -1,6 +1,7 @@
 const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
+const { sendDeclineEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
 
 const getNominationById = async (req, res) => {
@@ -63,10 +64,20 @@ const createNomination = async (req, res) => {
 const updateNomination = async (req, res) => {
   const { id } = req.params;
   try {
-    const nomination = await db.Nomination.update(
-      { status: req.body.status },
-      { where: { id }, returning: true }
-    );
+    const nomination = await db.Nomination.findOne({
+      where: { id }
+    })
+    nomination.update(
+      { status: req.body.status }
+    ).catch ((err)=> {
+      console.log('Nomination Not Found', err)
+      return res.status(400)});
+    //can continue using additional conditional to use other email functions,
+    //depending on status of application
+    //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
+    if (nomination.changed('status') && nomination.status === 'Decline') {
+      sendDeclineEmail(updatedNom)
+    }
     return res.status(200).json(nomination);
   } catch (error) {
     console.log('400 Update Bad Request', error);
