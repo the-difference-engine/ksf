@@ -17,6 +17,7 @@ const NewFilesToReview = () => {
     return showAll ? receivedNominations : receivedNominations.slice(0,3)
   }
 
+
   return (
     <table className="new-files-table">
       <thead>

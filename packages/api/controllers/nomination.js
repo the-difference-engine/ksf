@@ -3,6 +3,7 @@ const { ValidationError } = require('sequelize');
 const db = require('../models');
 const { sendDeclineEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
+const gsheetToDB = require('../helper/nominationGsheetToDB')
 
 const getNominationById = async (req, res) => {
   try {
@@ -84,9 +85,22 @@ const updateNomination = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+const syncNominations = async (req, res) => {
+  try { gsheetToDB()
+    console.log('nominations synced successfully')
+  return res.status(200).json({ 'status': 'ok' })
+} catch (error){
+  console.log('error', error)
+  return res.status(400).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getNominationById,
   findAllNominataions,
   createNomination,
   updateNomination,
+  syncNominations,
 };
+

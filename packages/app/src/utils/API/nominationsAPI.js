@@ -21,6 +21,9 @@ const nominationsAPI = {
       status: value
     });
   },
+  syncNominations: function () {
+    return axios.get(`${cleanURL(API_URL)}/api/syncnominations`);
+  },
 };
 
 export default nominationsAPI;
