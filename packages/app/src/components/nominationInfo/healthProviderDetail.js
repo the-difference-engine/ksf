@@ -5,7 +5,6 @@ import { SearchResultDataContext } from '../../utils/context/SearchResultsContex
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 
 
-
 function HealthProviderDetail(props) {
 
   const [SearchResultData, setSearchResultData] = useContext(
@@ -15,7 +14,6 @@ function HealthProviderDetail(props) {
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
-
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
@@ -33,18 +31,15 @@ function HealthProviderDetail(props) {
   }
 
 
-  
   const handleSubmit =  (val) => {
-
-    if (val) {
-        findSearchResults(val);
+      if (val) {
+          findSearchResults(val);
+      }
     }
-  }
 
     const Switch = SearchResultData.length < 1 ? ( "/" ) : ( "/searchresults" );
 
       return (
-        <>
         <div className={styles.main}>
           <div className={styles.header}>
           <label className={styles.bold}>{props.title}</label>
@@ -65,11 +60,7 @@ function HealthProviderDetail(props) {
             }
           </div>
         </div>
-        </>
       );
     }
   
   export default HealthProviderDetail;
-
-
-

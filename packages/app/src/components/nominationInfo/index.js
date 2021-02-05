@@ -6,23 +6,18 @@ import styles from "./styles.module.css";
 
 
 
-
-
-
 function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
 
   
-
-
-
-  const hospitalAddress = activeNomination.hospitalCity+', '+activeNomination.hospitalState+', '+activeNomination.hospitalZipCode
+  const { hospitalCity, hospitalState, hospitalZipCode } = activeNomination;
+  const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
 
   const diffDays = Math.round(Math.abs((activeNomination.admissionDate
-     - activeNomination.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
+        - activeNomination.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
 
 
   const fields = [
