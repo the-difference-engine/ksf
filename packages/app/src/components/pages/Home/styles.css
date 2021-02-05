@@ -1,4 +1,4 @@
-/* @import "../../../App.css" */
+@import "../../../App.css";
 
 .new-files-container {
   background-color: white;
@@ -13,6 +13,7 @@
 
 .home-new-files-headers {
   background-color: var(--light-background);
+  flex-grow: 1;
 }
 
 .new-files-see-more {
@@ -49,4 +50,34 @@
 
 .detail-font-size {
   font-size: 1rem;
+}
+
+.green * {
+  color: #128B3E !important;
+  font-weight: bold;
+}
+
+.stage-dropdown {
+  margin-bottom: 0px;
+  margin-left: 5px;
+  width: auto;
+}
+
+.stage-dropdown:focus {
+  border-color: #128B3E;
+  /* had to update the url to change from purple using path fill, because milligram hardcodes the color into the svg image */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23128B3E" d="M0,0l6,8l6-8"/></svg>');
+  width: auto;
+}
+
+.landing-table > td {
+  width: 250px;
+}
+
+.landing-table > td:first-child {
+  width: 350px;
+}
+
+.landing-table > td:last-child {
+  width: 100px;
 }
