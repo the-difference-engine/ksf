@@ -33,7 +33,7 @@ const NominationPage = ({
   }, [NominationsData]);
   return (
     <>
-    {activeNomination.length > 0
+    {activeNomination
       ?
     <div className="nomination-show-page">
       <NominationBanner nomination={activeNomination} />
