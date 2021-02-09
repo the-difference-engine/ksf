@@ -1,0 +1,9 @@
+.text__underline {
+  text-decoration: underline;
+}
+.text__bold {
+  font-weight: bold;
+}
+.text__color_blue {
+  color: blue;
+}

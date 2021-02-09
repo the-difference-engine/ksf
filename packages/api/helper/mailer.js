@@ -64,7 +64,22 @@ function verifyHcEmail(nomination) {
     .catch(console.error);
 }
 
+function sendHIPAAEmail(nomination) {
+  email.send({
+    template: 'hipaa',
+    message: {
+      from: 'Bill <bill@keepswimmingfoundation.org>',
+      to: nomination.representativeEmailAddress,
+    },
+    locals: {
+      name: nomination.patientName,
+      appUrl: process.env.APP_URL,
+    }
+  }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
+}
+
 module.exports = {
   sendDeclineEmail,
-  verifyHcEmail
+  verifyHcEmail,
+  sendHIPAAEmail
 }
