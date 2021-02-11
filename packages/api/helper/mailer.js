@@ -68,8 +68,9 @@ function sendHIPAAEmail(nomination) {
   email.send({
     template: 'hipaa',
     message: {
-      from: 'Bill <bill@keepswimmingfoundation.org>',
-      to: nomination.representativeEmailAddress,
+      from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+      replyTo: 'info@keepswimmingfoundation.org',
+      to: nomination.representativeEmailAddress,   // -> double check this is the correct email we should be using.
     },
     locals: {
       name: nomination.patientName,
