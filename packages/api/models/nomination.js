@@ -129,6 +129,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
+      representativeSpanishRequested: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
+      referralOrigination: {
+        type: DataTypes.TEXT,
+      },
     },
     {
       hooks: {
