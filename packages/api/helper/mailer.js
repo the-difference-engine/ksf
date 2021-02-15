@@ -67,12 +67,12 @@ function verifyHcEmail(nomination) {
 function sendHIPAAEmail(nomination) {
   const todaysDate = new Date()
   const currentYear = new Date().getFullYear();
-  const firstQuarterStart = new Date(currentYear, 0, 01)
-  const firstQuarterEnd = new Date(currentYear, 02, 31)
-  const secondQuarterStart = new Date(currentYear, 03, 01)
-  const secondQuarterEnd = new Date(currentYear, 05, 30)
-  const thirdQuarterStart = new Date(currentYear, 06, 01)
-  const thirdQuarterEnd = new Date(currentYear, 08, 30)
+  const firstQuarterStart = new Date(currentYear, '00', '01')
+  const firstQuarterEnd = new Date(currentYear, '02', '31')
+  const secondQuarterStart = new Date(currentYear, '03', '01')
+  const secondQuarterEnd = new Date(currentYear, '05', '30')
+  const thirdQuarterStart = new Date(currentYear, '06', '01')
+  const thirdQuarterEnd = new Date(currentYear, '08', '30')
 
   const targetQuarter = (todaysDate > firstQuarterStart && todaysDate < firstQuarterEnd) ? 1 : 
       (todaysDate > secondQuarterStart && todaysDate < secondQuarterEnd) ? 2 : 
