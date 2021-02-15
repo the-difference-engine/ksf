@@ -4,6 +4,13 @@
 .text__bold {
   font-weight: bold;
 }
-.text__color_blue {
-  color: blue;
+.text__color_green {
+  color: green;
+}
+.main {
+  max-width:600px;
+  margin: 0 auto;
+}
+.mb3 {
+margin-bottom: 3rem;
 }
