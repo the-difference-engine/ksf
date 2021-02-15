@@ -1,5 +1,4 @@
 - const quarters = ['March 31st', 'June 30th', 'September 30th', 'December 31st']
-- const target = 2
 
 //- head
 //-   style
@@ -11,8 +10,8 @@ style(type="text/css").
   .text__bold {
     font-weight: bold;
   }
-  .text__color_blue {
-    color: blue;
+  .text__color_green {
+    color: green;
   }
   .main {
     max-width:600px;
@@ -25,7 +24,7 @@ style(type="text/css").
 div.main
   img(src=`${appURL}/email/header.jpg` alt='header' style='width:100%; height:auto; margin-bottom: 1rem;')
 
-  p  Hello #{name}
+  p  Hello #{name},
   p
     | A member of your medical team has recently nominated your family for a Keep Swimming Foundation
     | grant this quarter. If you are unaware of Keep Swimming Foundation and this nomination, please speak
@@ -62,14 +61,16 @@ div.main
   p
     | Keep Swimming Foundation selects recipients on a quarterly basis. In 2020, application deadlines will be:
 
+
   p
     each quarter,index in quarters
       span.text__bold Quarter #{index+1}: 
-      if target === index+1
-        span.text__color_blue.text__bold #{quarter} - Current Quarter and your deadline
+      if targetQuarter === index+1
+        span.text__color_green.text__bold #{quarter} - Current Quarter and your deadline
       else
         span #{quarter}
       br
+
   p
     | You will be asked to provide additional information, so please make sure you act as soon as possible so
     | that you meet our provided deadlines. To give every nominee an equal chance, all deadlines are firm and
