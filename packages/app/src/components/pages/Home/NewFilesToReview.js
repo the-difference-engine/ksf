@@ -3,11 +3,13 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from "./styles.css";
+import useSort from './useSort'
 
 const NewFilesToReview = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
   const [showAll, setShowAll] = useState(false);
   const receivedNominations = NominationsData ? NominationsData.filter(nominations => nominations.status === "received") : []
+  const { nominations, requestSort, sortConfig } = useSort(NominationsData)
 
   const handleClick = () => {
     setShowAll(!showAll)
@@ -17,6 +19,16 @@ const NewFilesToReview = () => {
     return showAll ? receivedNominations : receivedNominations.slice(0,3)
   }
 
+  const sortedNominationRender = () => {
+    return nominations && showAll ? nominations : nominations.slice(0,3)
+  }
+
+  const createClassName = (columnName) => {
+    if(!sortConfig) {
+      return
+    }
+    return sortConfig.key === columnName ? sortConfig.direction : null;
+  }
 
   return (
     <table className="new-files-table">
@@ -39,22 +51,63 @@ const NewFilesToReview = () => {
       </thead>
       <tbody>
         <tr className="home-new-files-headers">
-          <td className="add-padding-left"><h2><strong>Application Name</strong></h2></td>
-          <td><h2><strong>HP Name</strong></h2></td>
-          <td><h2><strong>Family Member Name</strong></h2></td>
-          <td><h2><strong>Received Date</strong></h2></td>
-          <td><h2><strong>Stage</strong></h2></td>
+          <td className="add-padding-left">
+            <h2
+              onClick={() => requestSort('nominationName')}
+              className={createClassName('nominationName')}
+            >
+              <strong>Application Name</strong>
+            </h2>
+          </td>
+          <td>
+            <h2
+              onClick={() => requestSort('providerName')}
+              className={createClassName('providerName')}
+            >
+              <strong>HP Name</strong>
+            </h2>
+          </td>
+          <td>
+            <h2
+              onClick={() => requestSort('representativeName')}
+              className={createClassName('representativeName')}
+            >
+              <strong>Family Member Name</strong>
+            </h2>
+          </td>
+          <td>
+            <h2
+              onClick={() => requestSort('dateReceived')}
+              className={createClassName('dateReceived')}
+            >
+              <strong>Received Date</strong>
+            </h2>
+          </td>
+          <td>
+            <h2
+              onClick={() => requestSort('stage')}
+              className={createClassName('stage')}
+            >
+              <strong>Stage</strong>
+            </h2>
+          </td>
           <td></td>
         </tr>
-          {NominationsData
+          {NominationsData && !nominations
             ?
               conditionalNominationRender().map(nomination =>
                 <NewNomination nomination={nomination} key={nomination.id} />
               )
             :
-              <tr>
-                <td className="add-padding-left new-files-title"><h1>No new nominations.</h1></td>
-              </tr>
+            nominations
+            ?
+              sortedNominationRender().map(nomination =>
+                <NewNomination nomination={nomination} key={nomination.id} />
+              )
+            :
+            <tr>
+              <td className="add-padding-left new-files-title"><h1>No new nominations.</h1></td>
+            </tr>
           }
         </tbody>
     </table>
