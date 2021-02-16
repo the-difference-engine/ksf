@@ -54,7 +54,7 @@ const NewFilesToReview = () => {
       <tbody>
         <tr className="home-new-files-headers">
           <td className="add-padding-left">
-            <h2 onClick={() => requestSort('nominationName')}>
+            <h2 onClick={() => requestSort('nominationName')} style={{cursor: 'pointer'}}>
               <strong>
                 Application Name
                 {renderSortArrow('nominationName')}
@@ -62,23 +62,23 @@ const NewFilesToReview = () => {
             </h2>
           </td>
           <td>
-            <h2 onClick={() => requestSort('providerName')}>
+            <h2 onClick={() => requestSort('providerName')} style={{cursor: 'pointer'}}>
               <strong>HP Name {renderSortArrow('providerName')}</strong>
             </h2>
           </td>
           <td>
-            <h2 onClick={() => requestSort('representativeName')}>
+            <h2 onClick={() => requestSort('representativeName')} style={{cursor: 'pointer'}}>
               <strong>Family Member Name {renderSortArrow('representativeName')}</strong>
             </h2>
           </td>
           <td>
-            <h2 onClick={() => requestSort('dateReceived')}>
+            <h2 onClick={() => requestSort('dateReceived')} style={{cursor: 'pointer'}}>
               <strong>Received Date {renderSortArrow('dateReceived')}</strong>
             </h2>
           </td>
           <td>
-            <h2 onClick={() => requestSort('stage')}>
-              <strong>Stage {renderSortArrow('stage')}</strong>
+            <h2>
+              <strong>Stage</strong>
             </h2>
           </td>
           <td></td>
@@ -96,7 +96,9 @@ const NewFilesToReview = () => {
               )
             :
             <tr>
-              <td className="add-padding-left new-files-title"><h1>No new nominations.</h1></td>
+              <td className="add-padding-left new-files-title">
+                <h1>No new nominations.</h1>
+              </td>
             </tr>
           }
         </tbody>
