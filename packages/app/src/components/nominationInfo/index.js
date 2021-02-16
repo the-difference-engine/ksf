@@ -9,8 +9,18 @@ function NominationInfo() {
     ActiveNominationContext
   );
 
-  const diffDays = Math.round(Math.abs((activeNomination.admissionDate
-     - activeNomination.dischargeDate) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
+  const { admissionDate } = activeNomination;
+
+  const year = admissionDate !== undefined ?  (admissionDate.toString().split("T")[0].split("-")[0]) : null;
+  const month = admissionDate !== undefined ?  (admissionDate.toString().split("T")[0].split("-")[1]) : null;
+  const day = admissionDate !== undefined ?  (admissionDate.toString().split("T")[0].split("-")[2]) : null;
+
+  const properDateFormate = `${month}/${day}/${year}`
+  
+  const dischargeDateObject = new Date(activeNomination.dischargeDate);
+  const admissionDateObject = new Date(properDateFormate);
+  const diffDays = Math.round(Math.abs((admissionDateObject
+     - dischargeDateObject) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
 
   const fields = [
     {
@@ -70,7 +80,7 @@ function NominationInfo() {
       },
       {
         label: "Admission Date",
-        value: activeNomination.admissionDate
+        value: properDateFormate 
       },
       {
         label: "Discharge Date",
