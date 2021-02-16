@@ -23,11 +23,13 @@ const NewFilesToReview = () => {
     return nominations && showAll ? nominations : nominations.slice(0,3)
   }
 
-  const createClassName = (columnName) => {
-    if(!sortConfig) {
+  const renderSortArrow = (columnName) => {
+    if (!sortConfig) {
       return
     }
-    return sortConfig.key === columnName ? sortConfig.direction : null;
+    return sortConfig.key === columnName ?
+      <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? "arrow-down" : "arrow-up"} />
+      : null
   }
 
   return (
@@ -52,43 +54,31 @@ const NewFilesToReview = () => {
       <tbody>
         <tr className="home-new-files-headers">
           <td className="add-padding-left">
-            <h2
-              onClick={() => requestSort('nominationName')}
-              className={createClassName('nominationName')}
-            >
-              <strong>Application Name</strong>
+            <h2 onClick={() => requestSort('nominationName')}>
+              <strong>
+                Application Name
+                {renderSortArrow('nominationName')}
+              </strong>
             </h2>
           </td>
           <td>
-            <h2
-              onClick={() => requestSort('providerName')}
-              className={createClassName('providerName')}
-            >
-              <strong>HP Name</strong>
+            <h2 onClick={() => requestSort('providerName')}>
+              <strong>HP Name {renderSortArrow('providerName')}</strong>
             </h2>
           </td>
           <td>
-            <h2
-              onClick={() => requestSort('representativeName')}
-              className={createClassName('representativeName')}
-            >
-              <strong>Family Member Name</strong>
+            <h2 onClick={() => requestSort('representativeName')}>
+              <strong>Family Member Name {renderSortArrow('representativeName')}</strong>
             </h2>
           </td>
           <td>
-            <h2
-              onClick={() => requestSort('dateReceived')}
-              className={createClassName('dateReceived')}
-            >
-              <strong>Received Date</strong>
+            <h2 onClick={() => requestSort('dateReceived')}>
+              <strong>Received Date {renderSortArrow('dateReceived')}</strong>
             </h2>
           </td>
           <td>
-            <h2
-              onClick={() => requestSort('stage')}
-              className={createClassName('stage')}
-            >
-              <strong>Stage</strong>
+            <h2 onClick={() => requestSort('stage')}>
+              <strong>Stage {renderSortArrow('stage')}</strong>
             </h2>
           </td>
           <td></td>
