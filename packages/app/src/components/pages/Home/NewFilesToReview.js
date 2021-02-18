@@ -9,7 +9,7 @@ const NewFilesToReview = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
   const [showAll, setShowAll] = useState(false);
   const receivedNominations = NominationsData ? NominationsData.filter(nominations => nominations.status === "received") : []
-  const { nominations, requestSort, sortConfig } = useSort(NominationsData)
+  const { sortedNoms, requestSort, sortConfig } = useSort()
 
   const handleClick = () => {
     setShowAll(!showAll)
@@ -20,7 +20,7 @@ const NewFilesToReview = () => {
   }
 
   const sortedNominationRender = () => {
-    return nominations && showAll ? nominations : nominations.slice(0,3)
+    return sortedNoms && showAll ? sortedNoms : sortedNoms.slice(0,3)
   }
 
   const renderSortArrow = (columnName) => {
@@ -57,8 +57,8 @@ const NewFilesToReview = () => {
             <h2 onClick={() => requestSort('nominationName')} style={{cursor: 'pointer'}}>
               <strong>
                 Application Name
-                {renderSortArrow('nominationName')}
               </strong>
+                {renderSortArrow('nominationName')}
             </h2>
           </td>
           <td>
@@ -83,13 +83,13 @@ const NewFilesToReview = () => {
           </td>
           <td></td>
         </tr>
-          {NominationsData && !nominations
+          {NominationsData && !sortedNoms
             ?
               conditionalNominationRender().map(nomination =>
                 <NewNomination nomination={nomination} key={nomination.id} />
               )
             :
-            nominations
+            sortedNoms
             ?
               sortedNominationRender().map(nomination =>
                 <NewNomination nomination={nomination} key={nomination.id} />
