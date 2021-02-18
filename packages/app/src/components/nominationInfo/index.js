@@ -11,7 +11,7 @@ function NominationInfo() {
 
   const { admissionDate } = activeNomination;
 
-  const dateArr = admissionDate !== undefined || null ?  (admissionDate.toString().split("T")[0].split("-")) : [];
+  const dateArr = admissionDate ?  (admissionDate.toString().split("T")[0].split("-")) : [];
 
   const properDateFormat = `${dateArr[1]}/${dateArr[2]}/${dateArr[0]}`
   
