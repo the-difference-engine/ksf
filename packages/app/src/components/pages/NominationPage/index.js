@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ActiveNominationContext } from '../../../utils/context/ActiveNominationContext';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import NominationBanner from '../../nominationBanner/nominationBanner';
@@ -17,6 +17,7 @@ const NominationPage = ({
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
+  const [error, setError] = useState()
 
   useEffect(() => {
     if (NominationsData) {
@@ -24,15 +25,25 @@ const NominationPage = ({
         if (nomination.id === id) {
           return setActiveNomination(nomination);
         }
+        else {
+          return setError('Nomination does not exist')
+        }
       });
     }
   }, [NominationsData]);
   return (
+    <>
+    {activeNomination
+      ?
     <div className="nomination-show-page">
       <NominationBanner nomination={activeNomination} />
       <ApplicationStages />
       <NominationInfo />
     </div>
+      :
+    <div>{error}</div>
+    }
+    </>
   );
 };
 
