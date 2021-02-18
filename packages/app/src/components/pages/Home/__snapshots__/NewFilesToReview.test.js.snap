@@ -35,30 +35,38 @@ Object {
             <td
               class="add-padding-left"
             >
-              <h2>
+              <h2
+                style="cursor: pointer;"
+              >
                 <strong>
-                  Application Name
+                  Application Name 
                 </strong>
               </h2>
             </td>
             <td>
-              <h2>
+              <h2
+                style="cursor: pointer;"
+              >
                 <strong>
-                  HP Name
+                  HP Name 
                 </strong>
               </h2>
             </td>
             <td>
-              <h2>
+              <h2
+                style="cursor: pointer;"
+              >
                 <strong>
-                  Family Member Name
+                  Family Member Name 
                 </strong>
               </h2>
             </td>
             <td>
-              <h2>
+              <h2
+                style="cursor: pointer;"
+              >
                 <strong>
-                  Received Date
+                  Received Date 
                 </strong>
               </h2>
             </td>
@@ -115,30 +123,38 @@ Object {
           <td
             class="add-padding-left"
           >
-            <h2>
+            <h2
+              style="cursor: pointer;"
+            >
               <strong>
-                Application Name
+                Application Name 
               </strong>
             </h2>
           </td>
           <td>
-            <h2>
+            <h2
+              style="cursor: pointer;"
+            >
               <strong>
-                HP Name
+                HP Name 
               </strong>
             </h2>
           </td>
           <td>
-            <h2>
+            <h2
+              style="cursor: pointer;"
+            >
               <strong>
-                Family Member Name
+                Family Member Name 
               </strong>
             </h2>
           </td>
           <td>
-            <h2>
+            <h2
+              style="cursor: pointer;"
+            >
               <strong>
-                Received Date
+                Received Date 
               </strong>
             </h2>
           </td>
