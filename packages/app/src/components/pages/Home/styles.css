@@ -1,5 +1,3 @@
-@import "../../../App.css";
-
 .new-files-container {
   background-color: white;
 }
@@ -29,6 +27,10 @@
 .add-padding-left {
   padding-left: 2rem !important;
   /* using important to override inline styles rendered by 3rd party component Milligram */
+}
+
+.svg-inline--fa.fa-w-14 {
+  width: 1.875em;
 }
 
 .new-files-title {

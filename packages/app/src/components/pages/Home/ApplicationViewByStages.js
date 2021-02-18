@@ -3,18 +3,34 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from "./styles.css";
+import useSort from './useSort'
 
 const ApplicationViewByStages = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
   const [currentlyViewing, setCurrentlyViewing] = useState("Ready for Board Review");
+  const { sortedNoms, requestSort, sortConfig } = useSort()
+  console.log(currentlyViewing)
 
   const conditionalNominationRender = () => {
     return NominationsData.filter(nominations => nominations.status === currentlyViewing)
   }
-  
+
   function renderOptionList() {
     const statuses = ["Awaiting HIPAA", "HIPAA Verified", "Document Review", "Ready for Board Review"]
     return statuses.map( status => <option selected={status === currentlyViewing} value={status}>{status}</option> )
+  }
+
+  const sortedNominationRender = () => {
+    return sortedNoms ? sortedNoms.filter(nominations => nominations.status === currentlyViewing) : null
+  }
+
+  const renderSortArrow = (columnName) => {
+    if (!sortConfig) {
+      return
+    }
+    return sortConfig.key === columnName ?
+      <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? "arrow-down" : "arrow-up"} />
+      : null
   }
 
   return (
@@ -31,22 +47,48 @@ const ApplicationViewByStages = () => {
       </thead>
       <tbody>
         <tr className="home-new-files-headers">
-          <td className="add-padding-left"><h2><strong>Application Name</strong></h2></td>
-          <td><h2><strong>HP Name</strong></h2></td>
-          <td><h2><strong>Family Member Name</strong></h2></td>
-          <td><h2><strong>Received Date</strong></h2></td>
-          <td><h2><strong>Stage</strong></h2></td>
+          <td className="add-padding-left">
+            <h2 onClick={() => requestSort('nominationName')} style={{cursor: 'pointer'}}>
+              <strong>Application Name {renderSortArrow('nominationName')}</strong>
+            </h2>
+          </td>
+          <td>
+            <h2 onClick={() => requestSort('providerName')} style={{cursor: 'pointer'}}>
+              <strong>HP Name {renderSortArrow('providerName')}</strong>
+            </h2>
+          </td>
+          <td>
+            <h2 onClick={() => requestSort('representativeName')} style={{cursor: 'pointer'}}>
+              <strong>Family Member Name {renderSortArrow('representativeName')}</strong>
+            </h2>
+          </td>
+          <td>
+            <h2 onClick={() => requestSort('dateReceived')} style={{cursor: 'pointer'}}>
+              <strong>Received Date {renderSortArrow('dateReceived')}</strong>
+            </h2>
+          </td>
+          <td>
+            <h2>
+              <strong>Stage</strong>
+            </h2>
+          </td>
           <td></td>
         </tr>
-          {NominationsData && conditionalNominationRender().length !== 0
+          {NominationsData && conditionalNominationRender().length !== 0 && !sortedNoms
             ?
             conditionalNominationRender().map(nomination =>
               <NewNomination nomination={nomination} key={nomination.id} />
               )
-              :
-              <tr>
-                <td className="add-padding-left new-files-title"><h1>No nominations in {currentlyViewing}.</h1></td>
-              </tr>
+            :
+            sortedNoms
+            ?
+            sortedNominationRender().map(nomination =>
+              <NewNomination nomination={nomination} key={nomination.id} />
+            )
+            :
+            <tr>
+              <td className="add-padding-left new-files-title"><h1>No nominations in {currentlyViewing}.</h1></td>
+            </tr>
           }
         </tbody>
     </table>

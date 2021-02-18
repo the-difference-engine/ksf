@@ -32,6 +32,14 @@ const NewFilesToReview = () => {
       : null
   }
 
+  const renderMessage = () => {
+    return (
+      <div className="add-padding-left new-files-title">
+        <h1>No new nominations.</h1>
+      </div>
+    )
+  }
+
   return (
     <table className="new-files-table">
       <thead>
@@ -55,10 +63,7 @@ const NewFilesToReview = () => {
         <tr className="home-new-files-headers">
           <td className="add-padding-left">
             <h2 onClick={() => requestSort('nominationName')} style={{cursor: 'pointer'}}>
-              <strong>
-                Application Name
-              </strong>
-                {renderSortArrow('nominationName')}
+              <strong>Application Name {renderSortArrow('nominationName')}</strong>
             </h2>
           </td>
           <td>
@@ -95,11 +100,10 @@ const NewFilesToReview = () => {
                 <NewNomination nomination={nomination} key={nomination.id} />
               )
             :
-            <tr>
-              <td className="add-padding-left new-files-title">
-                <h1>No new nominations.</h1>
-              </td>
-            </tr>
+            NominationsData.length === 0
+            ?
+            renderMessage()
+            : null
           }
         </tbody>
     </table>
