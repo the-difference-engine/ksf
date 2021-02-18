@@ -9,19 +9,17 @@ const ApplicationViewByStages = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
   const [currentlyViewing, setCurrentlyViewing] = useState("Ready for Board Review");
   const { sortedNoms, requestSort, sortConfig } = useSort()
-  console.log(currentlyViewing)
 
   const conditionalNominationRender = () => {
+    if (sortedNoms) {
+      return sortedNoms.filter(nominations => nominations.status === currentlyViewing)
+    }
     return NominationsData.filter(nominations => nominations.status === currentlyViewing)
   }
 
   function renderOptionList() {
     const statuses = ["Awaiting HIPAA", "HIPAA Verified", "Document Review", "Ready for Board Review"]
     return statuses.map( status => <option selected={status === currentlyViewing} value={status}>{status}</option> )
-  }
-
-  const sortedNominationRender = () => {
-    return sortedNoms ? sortedNoms.filter(nominations => nominations.status === currentlyViewing) : null
   }
 
   const renderSortArrow = (columnName) => {
@@ -39,7 +37,7 @@ const ApplicationViewByStages = () => {
         <tr>
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
-            <select onChange={e => setCurrentlyViewing(e.target.value)} className="stage-dropdown">
+            <select onChange={e => setCurrentlyViewing(e.currentTarget.value)} className="stage-dropdown">
               {renderOptionList()}
             </select>
           </td>
@@ -74,17 +72,11 @@ const ApplicationViewByStages = () => {
           </td>
           <td></td>
         </tr>
-          {NominationsData && conditionalNominationRender().length !== 0 && !sortedNoms
+          {NominationsData && conditionalNominationRender().length !== 0 || sortedNoms && conditionalNominationRender().length !== 0
             ?
             conditionalNominationRender().map(nomination =>
               <NewNomination nomination={nomination} key={nomination.id} />
               )
-            :
-            sortedNoms
-            ?
-            sortedNominationRender().map(nomination =>
-              <NewNomination nomination={nomination} key={nomination.id} />
-            )
             :
             <tr>
               <td className="add-padding-left new-files-title"><h1>No nominations in {currentlyViewing}.</h1></td>

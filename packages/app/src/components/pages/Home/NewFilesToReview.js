@@ -10,17 +10,26 @@ const NewFilesToReview = () => {
   const [showAll, setShowAll] = useState(false);
   const receivedNominations = NominationsData ? NominationsData.filter(nominations => nominations.status === "received") : []
   const { sortedNoms, requestSort, sortConfig } = useSort()
+  const sortedNominations = sortedNoms ? sortedNoms.filter(nominations => nominations.status === "received") : []
 
   const handleClick = () => {
     setShowAll(!showAll)
   }
 
   const conditionalNominationRender = () => {
-    return showAll ? receivedNominations : receivedNominations.slice(0,3)
-  }
-
-  const sortedNominationRender = () => {
-    return sortedNoms && showAll ? sortedNoms : sortedNoms.slice(0,3)
+    if (sortedNoms && showAll) {
+      return sortedNominations
+    }
+    if (sortedNoms && !showAll) {
+      return sortedNominations.slice(0,3)
+    }
+    if (!sortedNoms && showAll) {
+      return receivedNominations
+    }
+    if (!sortedNoms && !showAll) {
+      return receivedNominations.slice(0,3)
+    }
+    // return showAll && receivedNominations || showAll && sortedNominations ? receivedNominations || sortedNominations : receivedNominations.slice(0,3) || sortedNominations.slice(0,3)
   }
 
   const renderSortArrow = (columnName) => {
@@ -30,14 +39,6 @@ const NewFilesToReview = () => {
     return sortConfig.key === columnName ?
       <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? "arrow-down" : "arrow-up"} />
       : null
-  }
-
-  const renderMessage = () => {
-    return (
-      <div className="add-padding-left new-files-title">
-        <h1>No new nominations.</h1>
-      </div>
-    )
   }
 
   return (
@@ -88,22 +89,17 @@ const NewFilesToReview = () => {
           </td>
           <td></td>
         </tr>
-          {NominationsData && !sortedNoms
+          {NominationsData
             ?
               conditionalNominationRender().map(nomination =>
                 <NewNomination nomination={nomination} key={nomination.id} />
               )
             :
-            sortedNoms
-            ?
-              sortedNominationRender().map(nomination =>
-                <NewNomination nomination={nomination} key={nomination.id} />
-              )
-            :
-            NominationsData.length === 0
-            ?
-            renderMessage()
-            : null
+            <tr>
+              <td className="add-padding-left new-files-title">
+                <h1>No new nominations.</h1>
+              </td>
+            </tr>
           }
         </tbody>
     </table>
