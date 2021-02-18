@@ -10,6 +10,7 @@ router.get('/api/nominations/:id', nominationController.getNominationById);
 router.get('/api/nominations', nominationController.findAllNominataions);
 router.post('/api/nominations', nominationController.createNomination);
 router.put('/api/nominations/:id', nominationController.updateNomination);
+router.get('/api/syncnominations', nominationController.syncNominations);
 
 // user endpoints
 router.get('/api/user/:id', userController.getUserById);
