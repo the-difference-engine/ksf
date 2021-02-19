@@ -54,7 +54,7 @@ a:hover {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none; 
+  user-select: none;
   transition: background-color 0.2s ease;
 }
 
@@ -68,7 +68,7 @@ a:hover {
   height: 0;
   border-top: 19px solid transparent;
   border-bottom: 17px solid transparent;
-  border-left: 17px solid rgb(216, 222, 233);	
+  border-left: 17px solid rgb(216, 222, 233);
   z-index: 2;
   transition: border-color 0.2s ease;
 }
@@ -84,7 +84,7 @@ a:hover {
 .arrow-steps .step:before {
   right: auto;
   left: 0;
-  border-left: 17px solid #fff;	
+  border-left: 17px solid #fff;
   z-index: 0;
 }
 
@@ -133,7 +133,7 @@ a:hover {
 }
 
 .arrow-steps .step.current:after {
-  border-left: 17px solid #128B3E;	
+  border-left: 17px solid #128B3E;
 }
 
 .arrow-steps .step.complete {
@@ -142,7 +142,7 @@ a:hover {
 }
 
 .arrow-steps .step.complete:after {
-  border-left: 17px solid rgb(178, 178, 178);	
+  border-left: 17px solid rgb(178, 178, 178);
 }
 
 .arrow-steps .step.current:last-child:after {
@@ -161,7 +161,9 @@ a:hover {
   font-weight: bold;
   padding: 10px;
   text-align: center;
-  width: 15%;
+  /* width: 15%; */
+  width: auto;
+  min-height: 15%;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   border-top-left-radius: 25px;
