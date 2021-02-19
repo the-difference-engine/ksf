@@ -73,9 +73,27 @@ const updateNomination = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+const emailVerifiction = async (req, res) => {
+  try {
+    const { nomination: { id } } = jwt.verify(req.params.token, process.env.JWT_SECRET);
+    await db.Nomination.update(
+      { emailValidated: true },
+      { where: { id } }
+    );
+    // -> Update nomination status. Check what were updating
+  } catch (error) {
+    console.log('400 validation error', error);
+    return res.status(400).json({ error: error.message });
+  }
+
+  return res.redirect(`${process.env.APP_URL}/someplace`) // where? -> check with product-team
+}
+
 module.exports = {
   getNominationById,
   findAllNominataions,
   createNomination,
   updateNomination,
+  emailVerifiction
 };
