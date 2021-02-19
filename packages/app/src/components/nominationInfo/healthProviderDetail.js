@@ -1,39 +1,42 @@
 import React, { useContext } from 'react';
 import styles from "./styles.module.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 
 
 function HealthProviderDetail(props) {
+      
+    const [SearchResultData, setSearchResultData] = useContext(
+      SearchResultDataContext
+      );
+      
+    const [NominationsData, setNominationsData] = useContext(
+      NominationsDataContext
+      );
+        
+    const findSearchResults = (searchTerm) => {
+          let filteredNoms = []
+          if(NominationsData && searchTerm !== undefined) {
+            filteredNoms = NominationsData.filter((nomination) => {
+              return [
+                nomination.providerName,
+                nomination.patientName,
+                nomination.nominationName,
+                nomination.representativeName,
+              ].some((nom) => nom.includes(searchTerm));
+            });
+            setSearchResultData(filteredNoms);
+          } 
+        }
 
-  const [SearchResultData, setSearchResultData] = useContext(
-    SearchResultDataContext
-  );
-
-  const [NominationsData, setNominationsData] = useContext(
-    NominationsDataContext
-  );
-
-  function findSearchResults(searchTerm) {
-    let filteredNoms = []
-    if(NominationsData && searchTerm !== undefined) {
-      filteredNoms = NominationsData.filter((nomination) => {
-        return [
-          nomination.providerName,
-          nomination.patientName,
-          nomination.nominationName,
-          nomination.representativeName,
-        ].some((nom) => nom.includes(searchTerm));
-      });
-      setSearchResultData(filteredNoms);
-    } 
-  }
-
-
-  const handleSubmit =  (val) => {
+    const { id } = useParams();
+        
+    const handleSubmit =  (val) => {
       if (val) {
-          findSearchResults(val);
+        findSearchResults(val);
+        window.open(`/nomination/${id}`, '_blank', 'noopener,noreferrer');
+        return <Link to={`${process.env.APP_URL}/searchresults`} target="_blank" />
       }
     }
 
