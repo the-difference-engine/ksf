@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
@@ -13,7 +13,7 @@ const SearchBar = () => {
     NominationsDataContext
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-
+  const [startEmpty, setStartEmpty] = useState(true);
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
@@ -45,6 +45,7 @@ const SearchBar = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setStartEmpty(false)
     if (!searchTerm) {
       return;
     } else {
@@ -54,6 +55,18 @@ const SearchBar = () => {
 
   function formatSearch(str) {
     return str.toLowerCase().replace(/ /g, '');
+  }
+
+  function searchResultRedirect() {
+    if (!startEmpty) {
+      if (SearchResultData.length === 1) {
+        return <Redirect to={`/nomination/${SearchResultData[0].id}`} />
+      } else if (SearchResultData.length > 1) {
+        return <Redirect to="/searchresults" />
+      } else {
+        return null
+      }
+    }
   }
 
   return (
@@ -86,11 +99,7 @@ const SearchBar = () => {
           {showErrorMessage ? <>Application Not Found</> : null}
         </div>
       </div>
-      {SearchResultData.length === 1 ? (
-        <Redirect to={`/nomination/${SearchResultData[0].id}`} />
-      ) : SearchResultData.length > 1 ? (
-        <Redirect to="/searchresults" />
-      ) : null}
+      {searchResultRedirect()}
     </>
   );
 };

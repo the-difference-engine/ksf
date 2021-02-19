@@ -30,17 +30,18 @@ const NominationPage = ({
         }
       });
     }
-  }, [NominationsData]);
+  });
+
   return (
     <>
     {activeNomination
       ?
-    <div className="nomination-show-page">
-      <SearchBar />
-      <NominationBanner nomination={activeNomination} />
-      <ApplicationStages />
-      <NominationInfo />
-    </div>
+      <div className="nomination-show-page">
+        <SearchBar />
+        <NominationBanner nomination={activeNomination} />
+        <ApplicationStages />
+        <NominationInfo />
+      </div>
       :
     <div>{error}</div>
     }

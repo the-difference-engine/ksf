@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
@@ -7,6 +7,7 @@ const SearchResultsCard = () => {
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
+
   return (
     <>
       <section className="search-result-card">
@@ -25,18 +26,18 @@ const SearchResultsCard = () => {
             </tr>
             {SearchResultData
               ? SearchResultData.map((result) => (
-                  <tr key={result.id}>
+                  <tr key={result.id} >
                     <td>
-                      <Link to={`/nomination/${result.id}`}>
+                    <Link to={`/nomination/${result.id}`}>
                         {result.nominationName}
-                      </Link>
+                    </Link>
                     </td>
                     <td>{result.providerName}</td>
                     <td>{result.patientName}</td>
                     <td>{result.dateReceived}</td>
                   </tr>
                 ))
-              : null}
+              : null }
           </tbody>
         </table>
       </section>
