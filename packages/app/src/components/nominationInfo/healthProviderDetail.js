@@ -52,13 +52,13 @@ function HealthProviderDetail(props) {
             {
               props.fields.map((obj, index) =>  obj.label === "Provider Name" ? (
                 <div key={index} className={obj.label === "" ? styles.mobileHide: ""}>
-                      <label>{obj.label}</label>
+                      <label className={styles.label}>{obj.label}</label>
                         <Link to={Switch} onClick={() => handleSubmit(obj.value)}  key={index}>
-                          <span>{String(obj.value)}</span>
+                          <span className={styles.value}>{String(obj.value)}</span>
                         </Link></div>) 
                       : (<div key={index} className={obj.label === "" ? styles.mobileHide: ""}>
-                            <label>{obj.label}</label>
-                            <span>{String(obj.value)}</span>
+                            <label className={styles.label}>{obj.label}</label>
+                            <span className={styles.value}>{String(obj.value)}</span>
                         </div>))
             }
           </div>
