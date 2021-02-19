@@ -48,6 +48,10 @@
   letter-spacing: normal !important;
 }
 
+.remove-left-padding {
+  padding-left: 0px;
+}
+
 .detail-font-size {
   font-size: 1rem;
 }

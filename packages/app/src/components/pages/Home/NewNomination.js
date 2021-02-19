@@ -12,7 +12,6 @@ const NewNomination = ({nomination}) => {
         <td className="detail-font-size">{nomination.representativeName}</td>
         <td className="detail-font-size">{nomination.dateReceived}</td>
         <td className="detail-font-size">{nomination.status}</td>
-        <td className="dot-fa-ellipsis"><Link to={`/nomination/${nomination.id}`}><FontAwesomeIcon icon="ellipsis-v"/></Link></td>
       </tr>
     )
   }
