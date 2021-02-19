@@ -28,7 +28,7 @@ const SearchResultsCard = () => {
               ? SearchResultData.map((result) => (
                   <tr key={result.id} >
                     <td>
-                    <Link to={`/nomination/${result.id}`}>
+                    <Link target={"_blank"} to={`/nomination/${result.id}`}>
                         {result.nominationName}
                     </Link>
                     </td>
