@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
@@ -62,7 +62,7 @@ const SearchBar = () => {
         <section className="row">
           <div className=" column column-25">
             <div className="search-header-container row">
-              <img className="ksf-logo " src="/ksflogo.png" alt="other" />
+              <Link to="/home"><img className="ksf-logo " src="/ksflogo.png" alt="other" /></Link>
               <div className="comand-center-header column">
                 <strong>Command Center</strong>
               </div>

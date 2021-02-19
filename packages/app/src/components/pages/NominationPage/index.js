@@ -3,7 +3,7 @@ import { ActiveNominationContext } from '../../../utils/context/ActiveNomination
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
-
+import SearchBar from '../../SearchBar'
 import NominationInfo from '../../nominationInfo';
 
 const NominationPage = ({
@@ -36,6 +36,7 @@ const NominationPage = ({
     {activeNomination
       ?
     <div className="nomination-show-page">
+      <SearchBar />
       <NominationBanner nomination={activeNomination} />
       <ApplicationStages />
       <NominationInfo />
