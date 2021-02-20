@@ -93,7 +93,7 @@ const emailVerifiction = async (req, res) => {
       { emailValidated: true },
       { where: { providerEmailAddress } }
     );
-    // -> Update nomination status. Check what we're updating
+    // -> Update nomination status. Check what is being updating
     } catch (error) {
       console.log('400 validation error', error);
       return res.status(400).json({ error: error.message });
