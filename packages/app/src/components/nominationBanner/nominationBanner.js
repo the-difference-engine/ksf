@@ -7,6 +7,8 @@ const NominationBanner = ({ nomination }) => {
   const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : ''
   const state = states.getStateCodeByStateName(nomination.hospitalState)
   const nominationName = `${lastName}-${state}`
+  const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
+
 
   return (
     <div className="nomination-banner-container">
@@ -39,7 +41,7 @@ const NominationBanner = ({ nomination }) => {
             </div>
             <div className="column amount">
                <p className="secondary-dark">Grant Amount Requested</p>
-              <span><h2 className="body-font"><strong>${nomination.amountRequestedCents}</strong></h2></span>
+              <span><h2 className="body-font"><strong>{formattedAmount ? `$${formattedAmount}` : ''}</strong></h2></span>
             </div>
           </div>
         </div>

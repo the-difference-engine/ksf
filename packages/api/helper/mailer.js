@@ -19,15 +19,40 @@ const transport = {
 
 const transporter = nodemailer.createTransport(smtpTransport(transport));
 
+transporter.verify((error, success) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('All works fine, congratz!');
+  }
+});
+
 const email = new emailTemplate({
   transport: transporter,
   send: true,
+  //send status will eventually need to be updated to true
   preview: true,
 });
 
+function sendDeclineEmail(nomination) {
+  email.send({
+    template: 'decline',
+    message: {
+      from: 'Bill <bill@keepswimmingfoundation.org>',
+      // to: 'sophia@thedifferenceengine.co'
+      to: nomination.providerEmailAddress,
+    },
+    locals: {
+      name: nomination.providerName,
+      patientName: nomination.patientName,
+      appUrl: process.env.APP_URL,
+    }
+  }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
+}
+
 function verifyHcEmail(nomination) {
-  const email = String(nomination.providerEmailAddress);
-  const emailToken = generateToken(email);
+    const email = String(nomination.providerEmailAddress);
+    const emailToken = generateToken(email);
   email.send({
     template: 'verifyHcEmail',
     message: {
@@ -43,5 +68,6 @@ function verifyHcEmail(nomination) {
 }
 
 module.exports = {
+  sendDeclineEmail,
   verifyHcEmail
 }

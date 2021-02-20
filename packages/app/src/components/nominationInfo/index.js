@@ -8,7 +8,19 @@ function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-  console.log('activeNomination ',activeNomination)
+
+  const { admissionDate } = activeNomination;
+
+  const dateArr = admissionDate ?  (admissionDate.toString().split("T")[0].split("-")) : [];
+
+  const properDateFormat = `${dateArr[1]}/${dateArr[2]}/${dateArr[0]}`
+  
+  const dischargeDateObject = new Date(activeNomination.dischargeDate);
+  const admissionDateObject = new Date(properDateFormat);
+  const diffDays = Math.round(Math.abs((admissionDateObject
+     - dischargeDateObject) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
+
+
   const fields = [
     {
       label: "Name",
@@ -55,6 +67,10 @@ function NominationInfo() {
       {
         label: "Relationship",
         value: activeNomination.representativeRelationship
+      },
+      {
+        label: "Request to communicate in Spanish?",
+        value: "No"
       }];
     const patientInfo = [
       {
@@ -62,16 +78,21 @@ function NominationInfo() {
         value: activeNomination.patientName
       },
       {
-        label: "",
-        value: ""
+        label: "Patient Age",
+        value: activeNomination.patientAge
       },
       {
         label: "Admission Date",
-        value: activeNomination.admissionDate
+        value: properDateFormat 
       },
       {
         label: "Discharge Date",
         value: activeNomination.dischargeDate
+
+      },
+      {
+        label: "Hospitalized for at least 21 days?",
+        value: diffDays
       },
       {
         label: "Diagnosis/case information",

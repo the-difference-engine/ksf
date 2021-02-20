@@ -4,19 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from "./styles.css";
 
-const NewFilesToReview = () => {
+const ApplicationViewByStages = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
-  const [showAll, setShowAll] = useState(false);
-  const receivedNominations = NominationsData ? NominationsData.filter(nominations => nominations.status === "received") : []
-
-  const handleClick = () => {
-    setShowAll(!showAll)
-  }
+  const [currentlyViewing, setCurrentlyViewing] = useState("Ready for Board Review");
 
   const conditionalNominationRender = () => {
-    return showAll ? receivedNominations : receivedNominations.slice(0,3)
+    return NominationsData.filter(nominations => nominations.status === currentlyViewing)
   }
 
+  function renderOptionList() {
+    const statuses = ["Awaiting HIPAA", "HIPAA Verified", "Document Review", "Ready for Board Review"]
+    return statuses.map( (status, index) => <option key={index} selected={status === currentlyViewing} value={status}>{status}</option> )
+  }
 
   return (
     <table className="new-files-table">
@@ -24,16 +23,9 @@ const NewFilesToReview = () => {
         <tr>
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
-            <h1>New Files To Review</h1>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td className="new-files-see-more">
-            <div onClick={handleClick}>
-              <FontAwesomeIcon icon={showAll ? "chevron-circle-up" : "chevron-circle-down"} />
-            </div>
+            <select onChange={e => setCurrentlyViewing(e.target.value)} className="stage-dropdown">
+              {renderOptionList()}
+            </select>
           </td>
         </tr>
       </thead>
@@ -46,14 +38,14 @@ const NewFilesToReview = () => {
           <td><h2><strong>Stage</strong></h2></td>
           <td></td>
         </tr>
-          {NominationsData
+          {NominationsData && conditionalNominationRender().length !== 0
             ?
-              conditionalNominationRender().map(nomination =>
-                <NewNomination nomination={nomination} key={nomination.id} />
+            conditionalNominationRender().map(nomination =>
+              <NewNomination nomination={nomination} key={nomination.id} />
               )
-            :
+              :
               <tr>
-                <td className="add-padding-left new-files-title"><h1>No new nominations.</h1></td>
+                <td className="add-padding-left new-files-title"><h1>No nominations in {currentlyViewing}.</h1></td>
               </tr>
           }
         </tbody>
@@ -61,4 +53,4 @@ const NewFilesToReview = () => {
   );
 };
 
-export default NewFilesToReview;
+export default ApplicationViewByStages;
