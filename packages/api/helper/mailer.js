@@ -26,8 +26,8 @@ const email = new emailTemplate({
 });
 
 function verifyHcEmail(nomination) {
-  const id = nomination._id;
-  const emailToken = generateToken(id);
+  const email = String(nomination.providerEmailAddress);
+  const emailToken = generateToken(email);
   email.send({
     template: 'verifyHcEmail',
     message: {
