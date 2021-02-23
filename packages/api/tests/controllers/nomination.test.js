@@ -73,7 +73,9 @@ describe('Create Nomination Endpoint', () => {
     expect(res.statusCode).toBe(400);
   });
   it('return 201 when nomination is created', async () => {
-    const res = await request(app).post('/api/nominations').send(nominationData);
+    const res = await request(app)
+      .post('/api/nominations')
+      .send(nominationData);
     expect(res.statusCode).toBe(201);
   });
 });

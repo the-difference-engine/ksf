@@ -35,40 +35,46 @@ const email = new emailTemplate({
 });
 
 function sendDeclineEmail(nomination) {
-  email.send({
-    template: 'decline',
-    message: {
-      from: 'Bill <bill@keepswimmingfoundation.org>',
-      // to: 'sophia@thedifferenceengine.co'
-      to: nomination.providerEmailAddress,
-    },
-    locals: {
-      name: nomination.providerName,
-      patientName: nomination.patientName,
-      appUrl: process.env.APP_URL,
-    }
-  }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
+  email
+    .send(
+      {
+        template: 'decline',
+        message: {
+          from: 'Bill <bill@keepswimmingfoundation.org>',
+          // to: 'sophia@thedifferenceengine.co'
+          to: nomination.providerEmailAddress,
+        },
+        locals: {
+          name: nomination.providerName,
+          patientName: nomination.patientName,
+          appUrl: process.env.APP_URL,
+        },
+      }.catch((err) => console.log(err))
+    )
+    .then(() => console.log('email has been sent!'));
 }
 
 function verifyHcEmail(nomination) {
   const id = String(nomination.id);
   const TokenId = generateToken(id);
-  email.send({
-    template: 'verifyHcEmail',
-    message: {
-      from: 'formmaster@keepswimmingfoundation.org',
-      to: nomination.providerEmailAddress,
-    },
-    locals: {
-      name: nomination.providerName,
-      appUrl: process.env.APP_URL,
-      urlLink: `${process.env.APP_URL}/confirmation/${TokenId}`
-    }
-  }).then(() => console.log('email has been sent!'))
+  email
+    .send({
+      template: 'verifyHcEmail',
+      message: {
+        from: 'formmaster@keepswimmingfoundation.org',
+        to: nomination.providerEmailAddress,
+      },
+      locals: {
+        name: nomination.providerName,
+        appUrl: process.env.APP_URL,
+        urlLink: `${process.env.APP_URL}/confirmation/${TokenId}`,
+      },
+    })
+    .then(() => console.log('email has been sent!'))
     .catch(console.error);
 }
 
 module.exports = {
   sendDeclineEmail,
-  verifyHcEmail
-}
+  verifyHcEmail,
+};
