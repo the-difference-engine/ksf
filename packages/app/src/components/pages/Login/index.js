@@ -4,7 +4,7 @@ import './style.css';
 
 const Login = () => {
   return (
-    <div>
+    <div className='login-page'>
       <div className="login-logo">
         <img src="ksflogo.png" alt="login-logo" />
       </div>
