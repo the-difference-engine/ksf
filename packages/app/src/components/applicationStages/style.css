@@ -161,9 +161,8 @@ a:hover {
   font-weight: bold;
   padding: 10px;
   text-align: center;
-  /* width: 15%; */
-  width: auto;
-  min-height: 15%;
+  min-width: auto;
+  max-height: 100%;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   border-top-left-radius: 25px;
@@ -174,4 +173,10 @@ a:hover {
 
 .next span {
   margin-right: 1rem;
+}
+
+.next-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
 }

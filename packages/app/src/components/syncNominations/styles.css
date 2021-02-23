@@ -5,6 +5,7 @@
   margin-left: 1rem;
 }
 
-h2 {
-  padding-left: 2rem !important
+.sync-message {
+ letter-spacing: normal !important;
+ padding-left: 2rem;
 }
