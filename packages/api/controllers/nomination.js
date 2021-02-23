@@ -86,6 +86,20 @@ const updateNomination = async (req, res) => {
   }
 };
 
+const emailVerifiction = async (req, res) => {
+  try {
+    const { nomination: { id } } = jwt.verify(req.params.token, process.env.JWT_SECRET);
+    await db.Nomination.update(
+      { emailValidated: true },
+      { where: { id } }
+    );
+    } catch (error) {
+      console.log('400 validation error', error);
+      return res.status(400).json({ error: error.message });
+    }
+    return res.redirect('https://www.keepswimmingfoundation.org/')
+  };
+
 const syncNominations = async (req, res) => {
   try { gsheetToDB()
     console.log('nominations synced successfully')
@@ -101,6 +115,7 @@ module.exports = {
   findAllNominataions,
   createNomination,
   updateNomination,
+  emailVerifiction,
   syncNominations,
 };
 
