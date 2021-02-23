@@ -6,4 +6,4 @@ const generateToken = ( uniqueIdentifier ) => {
         { expiresIn: '1d'})
 };
 
-export default generateToken;
+module.exports = {generateToken};

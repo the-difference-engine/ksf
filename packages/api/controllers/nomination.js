@@ -88,17 +88,15 @@ const updateNomination = async (req, res) => {
 
 const emailVerifiction = async (req, res) => {
   try {
-    const { nomination: { providerEmailAddress } } = jwt.verify(req.params.token, process.env.JWT_SECRET);
+    const { nomination: { id } } = jwt.verify(req.params.token, process.env.JWT_SECRET);
     await db.Nomination.update(
       { emailValidated: true },
-      { where: { providerEmailAddress } }
+      { where: { id } }
     );
-    // -> Update nomination status. Check what is being updating
     } catch (error) {
       console.log('400 validation error', error);
       return res.status(400).json({ error: error.message });
     }
-  
     return res.redirect('https://www.keepswimmingfoundation.org/')
   };
 
