@@ -11,14 +11,10 @@ function NominationInfo() {
     ActiveNominationContext
   );
 
-
   
-  const { hospitalCity, hospitalState, hospitalZipCode } = activeNomination;
+  const { hospitalCity, hospitalState, hospitalZipCode, admissionDate } = activeNomination;
   const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
-
-
-  const { admissionDate } = activeNomination;
 
   const dateArr = admissionDate ?  (admissionDate.toString().split("T")[0].split("-")) : [];
 
