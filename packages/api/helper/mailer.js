@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
+const { generateToken } = require('./generateToken');
 const previewEmail = require('preview-email');
 const path = require('path');
 
@@ -50,6 +51,8 @@ function sendDeclineEmail(nomination) {
 }
 
 function verifyHcEmail(nomination) {
+  const id = String(nomination.id);
+  const TokenId = generateToken(id);
   email.send({
     template: 'verifyHcEmail',
     message: {
@@ -58,7 +61,8 @@ function verifyHcEmail(nomination) {
     },
     locals: {
       name: nomination.providerName,
-      appUrl: process.env.APP_URL
+      appUrl: process.env.APP_URL,
+      urlLink: `${process.env.APP_URL}/confirmation/${TokenId}`
     }
   }).then(() => console.log('email has been sent!'))
     .catch(console.error);

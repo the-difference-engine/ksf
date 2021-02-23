@@ -8,6 +8,7 @@ const router = Router();
 // nomintation endpoints
 router.get('/api/nominations/:id', nominationController.getNominationById);
 router.get('/api/nominations', nominationController.findAllNominataions);
+router.get('/api/confirmation/:token', nominationController.emailVerifiction);
 router.post('/api/nominations', nominationController.createNomination);
 router.put('/api/nominations/:id', nominationController.updateNomination);
 router.get('/api/syncnominations', nominationController.syncNominations);
