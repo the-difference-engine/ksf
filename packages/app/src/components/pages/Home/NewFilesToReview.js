@@ -29,7 +29,6 @@ const NewFilesToReview = () => {
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
           <td className="new-files-see-more">
             <div onClick={handleClick}>
               <FontAwesomeIcon icon={showAll ? "chevron-circle-up" : "chevron-circle-down"} />
@@ -44,7 +43,6 @@ const NewFilesToReview = () => {
           <td><h2><strong>Family Member Name</strong></h2></td>
           <td><h2><strong>Received Date</strong></h2></td>
           <td><h2><strong>Stage</strong></h2></td>
-          <td></td>
         </tr>
           {NominationsData
             ?
