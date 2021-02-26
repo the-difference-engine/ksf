@@ -20,7 +20,6 @@ Object {
             <td />
             <td />
             <td />
-            <td />
             <td
               class="new-files-see-more"
             >
@@ -69,7 +68,6 @@ Object {
                 </strong>
               </h2>
             </td>
-            <td />
           </tr>
           <tr>
             <td
@@ -97,7 +95,6 @@ Object {
               New Files To Review
             </h1>
           </td>
-          <td />
           <td />
           <td />
           <td />
@@ -149,7 +146,6 @@ Object {
               </strong>
             </h2>
           </td>
-          <td />
         </tr>
         <tr>
           <td

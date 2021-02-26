@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
+import style from '../style.css'
 
 class GoogleBtn extends Component {
   state = {
@@ -53,7 +55,8 @@ class GoogleBtn extends Component {
             responseType="code,token"
           />
         )}
-        {this.state.accessToken ? <h5>You have successfully logged in!</h5> : null}
+        {this.state.accessToken
+          ? <Redirect to='/' /> : null}
       </div>
     );
   }
