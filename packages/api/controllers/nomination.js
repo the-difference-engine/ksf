@@ -2,8 +2,10 @@ const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
 const { sendDeclineEmail } = require('../helper/mailer')
+const { sendSurveyEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB')
+// above are dependencies that have been exported from other files.
 
 const getNominationById = async (req, res) => {
   try {
@@ -78,6 +80,14 @@ const updateNomination = async (req, res) => {
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status') && nomination.status === 'Decline') {
       sendDeclineEmail(updatedNom)
+    }
+    // if nomination state is 'Document Review' then call the sendSurveyEmail
+    if (nomination.changed('status') && nomination.status === 'Document Review') {
+      console.log('nomination type bellow *********************************************');
+      console.log('*********************************************');
+      // nomination state is updated no need to redefine variable, updatedNon is unnecessary.
+      nomination.status = 'Received'; // remove, this just resets nomination status so i dont have to remigrate.
+      sendSurveyEmail(nomination)
     }
     return res.status(200).json(nomination);
   } catch (error) {

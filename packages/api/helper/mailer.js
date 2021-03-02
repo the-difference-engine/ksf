@@ -49,6 +49,25 @@ function sendDeclineEmail(nomination) {
   }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
 }
 
+function sendSurveyEmail(nomination) {
+  console.log('Line 53ish in mailer.js**************************************************************');
+  // console.log(nomination);
+  email.send({
+    template: 'survey',
+    message: {
+      from: 'Bill <bill@keepswimmingfoundation.org>',
+      to: 'mark@thedifferenceengine.io'
+      // to: nomination.providerEmailAddress,
+    },
+    locals: {
+      name: nomination.providerName,
+      patientName: nomination.patientName,
+      appUrl: process.env.APP_URL,
+    }
+  }).catch((err) => console.log(err))
+  .then(() => console.log('email has been sent!'));
+}
+
 function verifyHcEmail(nomination) {
   email.send({
     template: 'verifyHcEmail',
@@ -61,10 +80,11 @@ function verifyHcEmail(nomination) {
       appUrl: process.env.APP_URL
     }
   }).then(() => console.log('email has been sent!'))
-    .catch(console.error);
+    .catch(console.error,console.log());
 }
 
 module.exports = {
   sendDeclineEmail,
+  sendSurveyEmail,
   verifyHcEmail
 }
