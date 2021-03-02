@@ -121,7 +121,7 @@ If you navigate to `http://localhost:3000/` you should see the home page!
 ```
   cd packages
   cd api
-  touch .ENV
+  touch .env
 ```
 
 - Add your OAuth tokens, SSH keys, API credentials, and other secrets here they will be ignored by git.
