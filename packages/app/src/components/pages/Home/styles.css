@@ -8,7 +8,6 @@
   background-color: white;
   border-radius: 1rem;
   margin: 1rem;
-  width: -webkit-fill-available;
 }
 
 .home-new-files-headers {
@@ -18,7 +17,7 @@
 
 .new-files-see-more {
   text-align: end;
-  padding-right: 2rem !important;
+  padding-right: 4rem !important;
   /* using important to override inline styles rendered by 3rd party component Milligram */
 }
 
@@ -79,5 +78,6 @@
 }
 
 .landing-table > td:last-child {
-  width: 100px;
+  width: 185px;
 }
+
