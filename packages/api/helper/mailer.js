@@ -41,7 +41,7 @@ function sendDeclineEmail(nomination) {
     template: 'decline',
     message: {
       from: adminEmail,
-      to: nomination.providerEmailAddress,
+      to: nomination.providerEmailAddress
     },
     locals: {
       name: nomination.providerName,
@@ -74,7 +74,8 @@ function verifyHcEmail(nomination) {
     template: 'verifyHcEmail',
     message: {
       from: 'formmaster@keepswimmingfoundation.org',
-      to: nomination.providerEmailAddress,
+      // to: nomination.providerEmailAddress,
+      to: 'abraham@thedifferenceengine.io'
     },
     locals: {
       name: nomination.providerName,
