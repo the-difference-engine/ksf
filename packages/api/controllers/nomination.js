@@ -81,12 +81,11 @@ const updateNomination = async (req, res) => {
     if (nomination.changed('status') && nomination.status === 'Decline') {
       sendDeclineEmail(updatedNom)
     }
+    
     // if nomination state is 'Document Review' then call the sendSurveyEmail
     if (nomination.changed('status') && nomination.status === 'Document Review') {
-      console.log('nomination type bellow *********************************************');
-      console.log('*********************************************');
       // nomination state is updated no need to redefine variable, updatedNon is unnecessary.
-      nomination.status = 'Received'; // remove, this just resets nomination status so i dont have to remigrate.
+      nomination.status = 'Received' // delete this, do not use this line in production, this will recycle the nomination
       sendSurveyEmail(nomination)
     }
     return res.status(200).json(nomination);

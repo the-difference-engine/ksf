@@ -13,8 +13,13 @@
     "lerna": "^3.22.1"
   },
   "dependencies": {
+<<<<<<< HEAD
     "dotenv": "^8.2.0",
     "nodemailer": "^6.4.17",
     "sequelize-cli": "^6.2.0"
+=======
+    "nodemailer": "^6.4.17",
+    "pug": "^3.0.2"
+>>>>>>> 660c5ae91b50be634e424c99223d053611517caf
   }
 }
