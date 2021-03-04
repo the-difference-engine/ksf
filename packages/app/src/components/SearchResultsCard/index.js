@@ -19,15 +19,15 @@ const SearchResultsCard = () => {
           </thead>
           <tbody>
             <tr>
-              <td>Application Name</td>
-              <td>Provider's Name</td>
-              <td>Patient Name</td>
-              <td>Recieved Date </td>
+              <td><h1><strong>Application Name</strong></h1></td>
+              <td><h1><strong>Provider's Name</strong></h1></td>
+              <td><h1><strong>Patient Name</strong></h1></td>
+              <td><h1><strong>Recieved Date</strong></h1></td>
             </tr>
             {SearchResultData
               ? SearchResultData.map((result) => (
                   <tr key={result.id} >
-                    <td>
+                    <td className="nom-name">
                     <Link target={"_blank"} to={`/nomination/${result.id}`}>
                         {result.nominationName}
                     </Link>
