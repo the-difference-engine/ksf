@@ -4,6 +4,7 @@ import ApplicationDetail from "./applicationDetail";
 import styles from "./styles.module.css";
 
 
+
 function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext

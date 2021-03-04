@@ -13,6 +13,7 @@
     "lerna": "^3.22.1"
   },
   "dependencies": {
-    "nodemailer": "^6.4.17"
+    "nodemailer": "^6.4.17",
+    "pug": "^3.0.2"
   }
 }

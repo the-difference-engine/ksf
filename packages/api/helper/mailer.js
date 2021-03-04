@@ -4,6 +4,9 @@ const emailTemplate = require('email-templates');
 const previewEmail = require('preview-email');
 const path = require('path');
 
+
+
+
 const transport = {
   port: 587,
   secure: false,
@@ -38,7 +41,7 @@ function sendDeclineEmail(nomination) {
     template: 'decline',
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
-      // to: 'sophia@thedifferenceengine.co'
+      // to: 'mark@thedifferenceengine.com'
       to: nomination.providerEmailAddress,
     },
     locals: {
@@ -46,23 +49,22 @@ function sendDeclineEmail(nomination) {
       patientName: nomination.patientName,
       appUrl: process.env.APP_URL,
     }
-  }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
+  }).catch((err) => console.log(err)).then(() => console.log('email has been sent!'));
 }
 
 function sendSurveyEmail(nomination) {
-  console.log('Line 53ish in mailer.js**************************************************************');
-  // console.log(nomination);
   email.send({
     template: 'survey',
+    attachments: './survey/header.jpg',
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
-      to: 'mark@thedifferenceengine.io'
       // to: nomination.providerEmailAddress,
+      to: 'mark@thedifferenceengine.io'
     },
     locals: {
       name: nomination.providerName,
       patientName: nomination.patientName,
-      appUrl: process.env.APP_URL,
+      appUrl: `${process.env.APP_URL}`,
     }
   }).catch((err) => console.log(err))
   .then(() => console.log('email has been sent!'));
