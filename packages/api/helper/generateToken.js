@@ -6,4 +6,6 @@ const generateToken = (uniqueIdentifier) => {
   });
 };
 
-export default generateToken;
+module.exports = {
+  generateToken,
+};
