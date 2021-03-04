@@ -2,6 +2,10 @@
   padding: 3rem;
 }
 
+.search-result-table h1 {
+  letter-spacing: normal;
+}
+
 .search-result-table {
   padding: 1rem;
   border-radius: 1rem;
@@ -9,6 +13,6 @@
   background-color: white;
 }
 
-.nom-name {
-  color: (--brand);
+.nom-name a {
+  color: var(--brand);
 }
