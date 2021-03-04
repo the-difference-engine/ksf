@@ -10,29 +10,22 @@ Create a command center for receiving and managing the grant nomination process 
 
 The back end application is using the PERN Stack (Postgres, Express React, Node). The back end application is using [Express](https://expressjs.com/) Framework. The frontend application is using the [React](https://reactjs.org/) framework and several other third party libraries, bootstrapped via the [create-react-app](https://github.com/facebook/create-react-app) tool. [Postgres](https://www.postgresql.org/) is the database for the application.
 
-## Getting Started With The App
+## Getting Started
 
-- Install homebrew
+In order to work with the KSF app, you will need to install the following:
 
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+* NodeJS
+* PostgreSQL
 
-- Install Node & NPM
+### Installing NodeJS
 
-        brew install node@12
+Install a version of NodeJS that starts with `14.16` (e.g. `14.16.0`).
 
-NOTE: use LTS, NOT current. If you already have a different version of node installed, you can use https://github.com/nvm-sh/nvm to switch back and forth. Do `nvm use` to switch.
+You should be able to find installation instructions for your particular platform here:
 
-- Install Lerna globally
+https://nodejs.org/en/download/package-manager/
 
-        npm i -g lerna
-
-- Clone and go into the application
-
-        git clone https://github.com/the-difference-engine/ksf.git
-        cd ksf
-
-
-### Postgress
+### Installing Postgress
 
 Postgres is our database. You will need to have Postgres installed on your computer to persist data and run the application.
 
