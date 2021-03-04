@@ -22,7 +22,7 @@ const SearchResultsCard = () => {
               <td><h1><strong>Application Name</strong></h1></td>
               <td><h1><strong>Provider's Name</strong></h1></td>
               <td><h1><strong>Patient Name</strong></h1></td>
-              <td><h1><strong>Recieved Date</strong></h1></td>
+              <td><h1><strong>Received Date</strong></h1></td>
             </tr>
             { SearchResultData && SearchResultData.map((result) => (
               <tr key={result.id} >
