@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
-const generateToken = require('./generateToken');
+const { generateToken } = require('./generateToken');
 const previewEmail = require('preview-email');
 const path = require('path');
 
@@ -55,8 +55,8 @@ function sendDeclineEmail(nomination) {
 }
 
 function verifyHcEmail(nomination) {
-  const email = String(nomination.providerEmailAddress);
-  const emailToken = generateToken(email);
+  const emailAddress = String(nomination.providerEmailAddress);
+  const emailToken = generateToken(emailAddress);
   email
     .send({
       template: 'verifyHcEmail',
