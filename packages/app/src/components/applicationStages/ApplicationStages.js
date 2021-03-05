@@ -79,9 +79,9 @@ const ApplicationStages = () => {
     <>
       <div className="nomination-bar-wrapper">
         <div className="wrapper">
-          {currentStatus ? (
+          {currentStatus && (
             <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>
-          ) : null}
+          )}
           <div className="next-wrapper">
           <div
             className="next"

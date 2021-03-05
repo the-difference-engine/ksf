@@ -47,7 +47,7 @@ a:hover {
   cursor: default;
   margin: 0 3px;
   padding: 10px 10px 10px 30px;
-  min-width: 180px;
+  min-width: 150px;
   float: left;
   position: relative;
   background-color: rgb(216, 222, 233);
@@ -161,8 +161,6 @@ a:hover {
   font-weight: bold;
   padding: 10px;
   text-align: center;
-  min-width: auto;
-  max-height: 100%;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   border-top-left-radius: 25px;
@@ -179,4 +177,5 @@ a:hover {
   display: flex;
   justify-content: space-between;
   width: 300px;
+  height: max-content;
 }

@@ -10,8 +10,8 @@ function ApplicationDetail(props) {
           <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
             {
               props.fields.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide: ""}>
-                <label>{obj.label}</label>
-                <span>{String(obj.value)}</span>
+                <label   className={styles.label}>{obj.label}</label>
+                <span  className={styles.value}>{String(obj.value)}</span>
               </div>))
             }
           </div>
