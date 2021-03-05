@@ -2,9 +2,17 @@
   padding: 3rem;
 }
 
+.search-result-table h1 {
+  letter-spacing: normal;
+}
+
 .search-result-table {
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0px 5px 10px 0px;
   background-color: white;
+}
+
+.nom-name a {
+  color: var(--brand);
 }

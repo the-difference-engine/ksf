@@ -52,7 +52,6 @@ const NewFilesToReview = () => {
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
           <td className="new-files-see-more">
             <div onClick={handleClick}>
               <FontAwesomeIcon icon={showAll ? "chevron-circle-up" : "chevron-circle-down"} />

@@ -1,6 +1,10 @@
-@import "../../../App.css";
-
 /*LOGIN GOOGLE BUTTON*/
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .google-button {
   text-align: center;
 }
@@ -12,6 +16,6 @@
 
 .login-logo {
   max-width: 25%;
-  margin: 30% auto;
-  margin-bottom: 5%;
+  margin-top: 10%;
+  margin-bottom: 2%;
 }
