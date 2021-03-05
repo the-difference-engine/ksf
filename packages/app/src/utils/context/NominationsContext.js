@@ -41,3 +41,5 @@ export const NominationsDataProvider = (props) => {
     </NominationsDataContext.Provider>
   );
 };
+
+// export default { findAllNominations }
