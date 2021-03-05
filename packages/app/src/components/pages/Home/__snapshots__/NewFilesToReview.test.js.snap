@@ -76,6 +76,7 @@ Object {
                 </strong>
               </h2>
             </td>
+            <td />
           </tr>
           <tr>
             <td
@@ -162,6 +163,7 @@ Object {
               </strong>
             </h2>
           </td>
+          <td />
         </tr>
         <tr>
           <td
