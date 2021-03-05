@@ -1,20 +1,62 @@
 doctype html
 html
     //- added
-    block styles 
-        link(rel="stylesheet" type="text/css" href=`${appUrl}/email/survey.css`)
+    head
+        style(type='text/css').
+            body {
+                margin: 0;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                    sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                background: white;
+                }
+
+            p {
+                font-size: 0.875rem;
+                margin-bottom: 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                color: #6D7278;
+                text-align: center;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                color: #128B3E;
+            }
+
+            td {
+                border: none;
+                padding: 1.5rem 2rem;
+            }
 
     body
         img(src= `${appUrl}/email/header.jpg` alt='header' style='width:100%; height:auto;')
 
         h1 FINAL STEP: SUPPORTING SURVEY
         
+
         p Hi #{name},
         
         p If you are receiving this message, both your online application and HIPAA Authorization Form have been processed in our system and we are interested in learning more about your family’s current medical circumstance.
-        p This is the final step of the nomination process in which the patient’s family is involved. All future communications will occur between Keep Swimming Foundation and the member of your medical staff who nominated your family. The final decision regarding the families who will be provided grants will be announced in April 2021.
-        p Below you will find a link to Keep Swimming Foundation’s Supporting Survey. In order to be considered for a Keep Swimming Foundation grant, we need either the patient or a member of their Immediate Family to complete our Supporting Survey and submit it to Keep Swimming Foundation by the deadline, which is provided below. In addition, your nominating healthcare provider (social worker, nurse, physician) must sign off on your completed submission.
-        p Please Note: If you do not have the appropriate technology (scanner, computer, printer, etc.) to complete this submission, your hospital's social worker may be able to assist you.
+        p 
+            | This is the final step of the nomination process in which the patient’s family is involved. All future communications will occur between Keep Swimming Foundation and the member of your medical staff who nominated your family. The final decision regarding the families who will be provided grants will be 
+            strong announced in April 2020.
+        p 
+            | Below you will find a link to Keep Swimming Foundation’s Supporting Survey. In order to be considered for a Keep Swimming Foundation grant, we need either the patient or a member of their Immediate Family to complete our Supporting Survey and submit it to Keep Swimming Foundation by the deadline, which is provided below. 
+            strong In addition, your nominating healthcare provider (social worker, nurse, physician) must sign off on your completed submission.
+        p 
+            strong Please Note: 
+            | If you do not have the appropriate technology (scanner, computer, printer, etc. to complete this submission, your hospital's social worker may be able to assist you.
         p While the survey is designed to be very simple, if you have any questions about our Supporting Survey, please do not hesitate to send us your questions via email at: info@keepswimmingfoundation.org. 
         p The below link will take you to a Dropbox file. Simply click the "Download" box on the top right and then select "Direct Download" to complete the document on your computer.
         p We look forward to finalizing this nomination process with you. Thank you for your time.
@@ -23,10 +65,12 @@ html
 
         p -Keep Swimming Foundation
 
+
         h3 DEADLINE:
 
-        p Deadline: Tuesday, March 31, 2020 at 11:59 PM CT 
-        p (All Supporting Surveys submitted after this time will not be considered).The completion of this Supporting Survey does not guarantee the nominated individual family a Keep Swimming Foundation grant. 
+        p 
+            strong Deadline: Tuesday, March 31, 2020 at 11:59 PM CT 
+            | (All Supporting Surveys submitted after this time will not be considered). The  completion of this Supporting Survey does not guarantee the nominated individual family a Keep Swimming Foundation grant. 
         
         h2 DOWNLOAD THE SUPPORTING SURVEY
         
@@ -42,7 +86,7 @@ html
         
         h6 THIS IS A TEST EMAIL ONLY. 
         
-        p This email was sent by the author for the sole purpose of testing a draft message. If you believe you have received the message in error, please contact the author by replying to this message. Constant Contact takes reports of abuse very seriously. If you wish to report abuse, please forward this message to abuse@constantcontact.com
+        p This email was sent by the author for the sole purpose of testing a draft message. If you believe you have received the message in error, please contact the author by replying to this message. Constant Contact takes reports of abuse very seriously. If you wish to report abuse, please forward this message to abuse@constantcontact.com.
         
         //- p Hola #{name},
         //- p Lamentamos informarle que no fue aceptado para #{patientName} una becadela Fundación Keep Swimming este trimestre. Debido a nuestros fondoslimitados, nopodemos proporcionar ayuda financiera a todas las

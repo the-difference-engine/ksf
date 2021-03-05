@@ -41,7 +41,6 @@ function sendDeclineEmail(nomination) {
     template: 'decline',
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
-      // to: 'mark@thedifferenceengine.com'
       to: nomination.providerEmailAddress,
     },
     locals: {
@@ -58,8 +57,8 @@ function sendSurveyEmail(nomination) {
     attachments: './survey/header.jpg',
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
-      // to: nomination.providerEmailAddress,
-      to: 'mark@thedifferenceengine.io'
+      //to: nomination.providerEmailAddress,
+      to: 'jon@thedifferenceengine.io'
     },
     locals: {
       name: nomination.providerName,
