@@ -11,10 +11,10 @@ const ApplicationViewByStages = () => {
   const conditionalNominationRender = () => {
     return NominationsData.filter(nominations => nominations.status === currentlyViewing)
   }
-  
+
   function renderOptionList() {
     const statuses = ["Awaiting HIPAA", "HIPAA Verified", "Document Review", "Ready for Board Review"]
-    return statuses.map( status => <option selected={status === currentlyViewing} value={status}>{status}</option> )
+    return statuses.map( (status, index) => <option key={index} selected={status === currentlyViewing} value={status}>{status}</option> )
   }
 
   return (
@@ -36,7 +36,6 @@ const ApplicationViewByStages = () => {
           <td><h2><strong>Family Member Name</strong></h2></td>
           <td><h2><strong>Received Date</strong></h2></td>
           <td><h2><strong>Stage</strong></h2></td>
-          <td></td>
         </tr>
           {NominationsData && conditionalNominationRender().length !== 0
             ?

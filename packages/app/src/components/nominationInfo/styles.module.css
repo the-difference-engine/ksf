@@ -65,4 +65,12 @@
     display: block;
   }
 
+  .value {
+    font-weight: bold;
+  }
+  
+  .label {
+    font-weight: normal;
+  }
+
 }

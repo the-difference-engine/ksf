@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
@@ -7,6 +7,7 @@ const SearchResultsCard = () => {
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
+
   return (
     <>
       <section className="search-result-card">
@@ -18,25 +19,24 @@ const SearchResultsCard = () => {
           </thead>
           <tbody>
             <tr>
-              <td>Application Name</td>
-              <td>Provider's Name</td>
-              <td>Patient Name</td>
-              <td>Recieved Date </td>
+              <td><h1><strong>Application Name</strong></h1></td>
+              <td><h1><strong>Provider's Name</strong></h1></td>
+              <td><h1><strong>Patient Name</strong></h1></td>
+              <td><h1><strong>Received Date</strong></h1></td>
             </tr>
-            {SearchResultData
-              ? SearchResultData.map((result) => (
-                  <tr key={result.id}>
-                    <td>
-                      <Link to={`/nomination/${result.id}`}>
-                        {result.nominationName}
-                      </Link>
-                    </td>
-                    <td>{result.providerName}</td>
-                    <td>{result.patientName}</td>
-                    <td>{result.dateReceived}</td>
-                  </tr>
-                ))
-              : null}
+            { SearchResultData && SearchResultData.map((result) => (
+              <tr key={result.id} >
+                <td className="nom-name">
+                <Link target={"_blank"} to={`/nomination/${result.id}`}>
+                    {result.nominationName}
+                </Link>
+                </td>
+                <td>{result.providerName}</td>
+                <td>{result.patientName}</td>
+                <td>{result.dateReceived}</td>
+              </tr>
+              )
+            )}
           </tbody>
         </table>
       </section>

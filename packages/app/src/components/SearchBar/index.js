@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
@@ -9,11 +9,12 @@ const SearchBar = () => {
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
+  
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-
+  const [startEmpty, setStartEmpty] = useState(true);
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
@@ -45,6 +46,7 @@ const SearchBar = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setStartEmpty(false)
     if (!searchTerm) {
       return;
     } else {
@@ -56,13 +58,25 @@ const SearchBar = () => {
     return str.toLowerCase().replace(/ /g, '');
   }
 
+  function searchResultRedirect() {
+    if (!startEmpty) {
+      if (SearchResultData.length === 1) {
+        return <Redirect to={`/nomination/${SearchResultData[0].id}`} />
+      } else if (SearchResultData.length > 1) {
+        return <Redirect to="/searchresults" />
+      } else {
+        return null
+      }
+    }
+  }
+
   return (
     <>
       <div className="search-bar-wrapper">
         <section className="row">
           <div className=" column column-25">
             <div className="search-header-container row">
-              <img className="ksf-logo " src="/ksflogo.png" alt="other" />
+              <Link to="/home"><img className="ksf-logo " src="/ksflogo.png" alt="other" /></Link>
               <div className="comand-center-header column">
                 <strong>Command Center</strong>
               </div>
@@ -86,11 +100,7 @@ const SearchBar = () => {
           {showErrorMessage ? <>Application Not Found</> : null}
         </div>
       </div>
-      {SearchResultData.length === 1 ? (
-        <Redirect to={`/nomination/${SearchResultData[0].id}`} />
-      ) : SearchResultData.length > 1 ? (
-        <Redirect to="/searchresults" />
-      ) : null}
+      {searchResultRedirect()}
     </>
   );
 };

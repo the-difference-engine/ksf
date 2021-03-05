@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import styles from './styles.css';
 
@@ -33,11 +33,10 @@ const SyncNominations = () => {
     <>
       <button onClick={handleClick} className='sync-noms'>Sync Nominations</button>
       {
-        message ?
+        message &&
         <div>
-          <h2>{message}</h2>
+          <h2 className='sync-message'>{message}</h2>
         </div>
-        : null
       }
     </>
 
