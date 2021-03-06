@@ -57,8 +57,8 @@ function sendSurveyEmail(nomination) {
     attachments: './survey/header.jpg',
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
-      //to: nomination.providerEmailAddress,
-      to: 'mark@thedifferenceengine.io'
+      to: nomination.providerEmailAddress
+      // to: 'mark@thedifferenceengine.io'
     },
     locals: {
       name: nomination.providerName,
