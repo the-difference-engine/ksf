@@ -58,11 +58,12 @@ function sendSurveyEmail(nomination) {
     message: {
       from: 'Bill <bill@keepswimmingfoundation.org>',
       //to: nomination.providerEmailAddress,
-      to: 'jon@thedifferenceengine.io'
+      to: 'mark@thedifferenceengine.io'
     },
     locals: {
       name: nomination.providerName,
       patientName: nomination.patientName,
+      email: nomination.providerEmailAddress,
       appUrl: `${process.env.APP_URL}`,
     }
   }).catch((err) => console.log(err))

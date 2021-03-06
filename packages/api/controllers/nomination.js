@@ -5,7 +5,7 @@ const { sendDeclineEmail } = require('../helper/mailer')
 const { sendSurveyEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB')
-// above are dependencies that have been exported from other files.
+
 
 const getNominationById = async (req, res) => {
   try {
@@ -79,13 +79,12 @@ const updateNomination = async (req, res) => {
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status') && nomination.status === 'Decline') {
-      sendDeclineEmail(updatedNom)
+      sendDeclineEmail(nomination)
     }
     
     // if nomination state is 'Document Review' then call the sendSurveyEmail
     if (nomination.changed('status') && nomination.status === 'Document Review') {
-      // nomination state is updated no need to redefine variable, updatedNon is unnecessary.
-      nomination.status = 'Received' // delete this, do not use this line in production, this will recycle the nomination
+      // nomination state is updated no need to redefine variable.
       sendSurveyEmail(nomination)
     }
     return res.status(200).json(nomination);
