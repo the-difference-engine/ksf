@@ -13,6 +13,7 @@ const nominationData = {
   hospitalCity: 'Gotham',
   hospitalState: 'New Jersey',
   hospitalZipCode: '07320',
+  emailValidated: true,
   representativeName: 'Alfred Pennyworth',
   representativeEmailAddress: 'abeagle@dc.com',
   representativePhoneNumber: '222-222-2222',
@@ -77,6 +78,7 @@ describe('Create Nomination Endpoint', () => {
       .post('/api/nominations')
       .send(nominationData);
     console.log('HELLO!');
+    console.log(nominationData);
     console.log(JSON.stringify(res));
     expect(res.statusCode).toBe(201);
   });
