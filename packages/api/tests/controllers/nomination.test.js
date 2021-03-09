@@ -77,9 +77,6 @@ describe('Create Nomination Endpoint', () => {
     const res = await request(app)
       .post('/api/nominations')
       .send(nominationData);
-    console.log('HELLO!');
-    console.log(nominationData);
-    console.log(JSON.stringify(res));
     expect(res.statusCode).toBe(201);
   });
 });
