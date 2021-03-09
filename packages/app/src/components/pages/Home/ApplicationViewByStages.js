@@ -14,7 +14,7 @@ const ApplicationViewByStages = () => {
     if (sortedNoms) {
       return sortedNoms.filter(nominations => nominations.status === currentlyViewing)
     }
-    return NominationsData.filter(nominations => nominations.status === currentlyViewing)
+    // return NominationsData.filter(nominations => nominations.status === currentlyViewing)
   }
 
   function renderOptionList() {
@@ -23,12 +23,18 @@ const ApplicationViewByStages = () => {
   }
 
   const renderSortArrow = (columnName) => {
-    if (!sortConfig) {
-      return
-    }
-    return sortConfig.key === columnName ?
-      <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? "arrow-down" : "arrow-up"} />
-      : null
+    return (
+      (sortConfig && sortConfig.key === columnName) &&
+      <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />
+    )
+  }
+
+  const renderSortableCell = (key, label) => {
+    return (
+      <h2 onClick={() => requestSort(key)} className="sortable-column">
+        <strong>{label}</strong><>{renderSortArrow(key)}</>
+      </h2>
+    )
   }
 
   return (
@@ -45,34 +51,14 @@ const ApplicationViewByStages = () => {
       </thead>
       <tbody>
         <tr className="home-new-files-headers">
-          <td className="add-padding-left">
-            <h2 onClick={() => requestSort('nominationName')} style={{cursor: 'pointer'}}>
-              <strong>Application Name {renderSortArrow('nominationName')}</strong>
-            </h2>
-          </td>
-          <td>
-            <h2 onClick={() => requestSort('providerName')} style={{cursor: 'pointer'}}>
-              <strong>HP Name {renderSortArrow('providerName')}</strong>
-            </h2>
-          </td>
-          <td>
-            <h2 onClick={() => requestSort('representativeName')} style={{cursor: 'pointer'}}>
-              <strong>Family Member Name {renderSortArrow('representativeName')}</strong>
-            </h2>
-          </td>
-          <td>
-            <h2 onClick={() => requestSort('dateReceived')} style={{cursor: 'pointer'}}>
-              <strong>Received Date {renderSortArrow('dateReceived')}</strong>
-            </h2>
-          </td>
-          <td>
-            <h2>
-              <strong>Stage</strong>
-            </h2>
-          </td>
+        <td className="add-padding-left"> {renderSortableCell('nominationName', 'Application Name')} </td>
+          <td> {renderSortableCell('providerName', 'HP Name')} </td>
+          <td> {renderSortableCell('representativeName', 'Family Member Name')} </td>
+          <td> {renderSortableCell('dateReceived', 'Received Date')} </td>
+          <td><h2><strong>Stage</strong></h2></td>
           <td></td>
         </tr>
-          {NominationsData && conditionalNominationRender().length !== 0 || sortedNoms && conditionalNominationRender().length !== 0
+          {conditionalNominationRender().length !== 0 && (NominationsData || sortedNoms)
             ?
             conditionalNominationRender().map(nomination =>
               <NewNomination nomination={nomination} key={nomination.id} />
