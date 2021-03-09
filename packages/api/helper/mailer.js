@@ -3,7 +3,7 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
 const previewEmail = require('preview-email');
 const path = require('path');
-
+const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 
 
 
@@ -40,7 +40,7 @@ function sendDeclineEmail(nomination) {
   email.send({
     template: 'decline',
     message: {
-      from: 'Bill <bill@keepswimmingfoundation.org>',
+      from: adminEmail,
       to: nomination.providerEmailAddress,
     },
     locals: {
@@ -56,7 +56,7 @@ function sendSurveyEmail(nomination) {
     template: 'survey',
     attachments: './survey/header.jpg',
     message: {
-      from: 'Bill <bill@keepswimmingfoundation.org>',
+      from: adminEmail,
       to: nomination.providerEmailAddress
       // to: 'mark@thedifferenceengine.io'
     },
