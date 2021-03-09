@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ApplicationDetail from "./applicationDetail";
+import HealthProviderDetail from "./healthProviderDetail";
 import styles from "./styles.module.css";
 
 
@@ -10,7 +11,10 @@ function NominationInfo() {
     ActiveNominationContext
   );
 
-  const { admissionDate } = activeNomination;
+  
+  const { hospitalCity, hospitalState, hospitalZipCode, admissionDate } = activeNomination;
+  const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
+
 
   const dateArr = admissionDate ?  (admissionDate.toString().split("T")[0].split("-")) : [];
 
@@ -22,9 +26,10 @@ function NominationInfo() {
      - dischargeDateObject) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
 
 
+
   const fields = [
     {
-      label: "Name",
+      label: "Provider Name",
       value: activeNomination.providerName
     },
     {
@@ -40,16 +45,20 @@ function NominationInfo() {
         value: activeNomination.providerTitle
     },
     {
-      label: "Email Validated",
-      value: activeNomination.emailValidated
+      label: "Name of Hospital",
+      value: activeNomination.hospitalName
     },
     {
-      label: "Public Email Domain",
-      value: activeNomination.publicEmailDomain
+      label: "Hospital URL",
+      value: activeNomination.hospitalURL
     },
     {
-      label: "Patient Diagnosis",
-      value: activeNomination.patientDiagnosis
+      label: "Hospital Address",
+      value: hospitalAddress
+    },
+    {
+      label: "How did you hear about KSF?",
+      value: ""
     }];
 
     const familyinfo = [
@@ -104,7 +113,7 @@ function NominationInfo() {
         <div className={styles.layout}>
             <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
-            <ApplicationDetail fields={fields} gridContent={true} title="Health Provider Information" />
+            <HealthProviderDetail fields={fields} gridContent={true} title="Health Provider Information" />
         </div>
       );
     }
