@@ -1,0 +1,21 @@
+.setting-container {
+    height: 100%;
+    background: var(--light-background);
+}
+
+.setting-header {
+    background-color: #fff;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px solid var(--light-background);
+
+}
+
+.setting-header > h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+}

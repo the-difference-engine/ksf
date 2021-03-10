@@ -1,9 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SettingsModal from 'react-modal';
+import Settings from '../Settings/Settings';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './style.css';
+
+SettingsModal.setAppElement('#root');
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
@@ -16,6 +20,7 @@ const SearchBar = () => {
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [startEmpty, setStartEmpty] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
@@ -71,8 +76,25 @@ const SearchBar = () => {
     }
   }
 
+  function closeModal() {
+    setModalIsOpen(false);
+  }
+
   return (
     <>
+      <SettingsModal 
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className="modal"
+        overlayClassName="modal-overlay"
+      >
+        <Settings/>
+        <FontAwesomeIcon 
+              onClick={closeModal}
+              icon="times"
+              className="times-icon"
+              size="3x"/>
+      </SettingsModal>
       <div className="search-bar-wrapper">
         <div className="search-header-container">
             <Link to="/home"><img className="ksf-logo " src="/ksflogo.png" alt="other" /></Link>
@@ -94,7 +116,11 @@ const SearchBar = () => {
             </form>
           </div>
           <div className="cog-container">
-            <FontAwesomeIcon icon="cog" className="cog-icon" size="3x"/>
+            <FontAwesomeIcon 
+              onClick={() => setModalIsOpen(true)}
+              icon="cog"
+              className="cog-icon"
+              size="3x"/>
           </div>
         <div data-id="error-message">
           {showErrorMessage ? <>Application Not Found</> : null}

@@ -5,9 +5,9 @@ import SyncNominations from '../../syncNominations/syncNominations'
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faChevronCircleDown, faChevronCircleUp, faFileImage, faEllipsisV, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faChevronCircleDown, faChevronCircleUp, faFileImage, faEllipsisV, faCog, faTimes } from '@fortawesome/free-solid-svg-icons'
 import ApplicationViewByStages from './ApplicationViewByStages';
-library.add(fab, faChevronCircleDown, faChevronCircleUp, faFileImage, faEllipsisV, faCog)
+library.add(fab, faChevronCircleDown, faChevronCircleUp, faFileImage, faEllipsisV, faCog, faTimes)
 
 const Home = () => {
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
