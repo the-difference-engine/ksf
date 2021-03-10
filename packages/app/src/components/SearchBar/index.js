@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './style.css';
 
 const SearchBar = () => {
@@ -73,16 +74,13 @@ const SearchBar = () => {
   return (
     <>
       <div className="search-bar-wrapper">
-        <section className="row">
-          <div className=" column column-25">
-            <div className="search-header-container row">
-              <Link to="/home"><img className="ksf-logo " src="/ksflogo.png" alt="other" /></Link>
-              <div className="comand-center-header column">
-                <strong>Command Center</strong>
-              </div>
+        <div className="search-header-container">
+            <Link to="/home"><img className="ksf-logo " src="/ksflogo.png" alt="other" /></Link>
+            <div className="command-center-header">
+            <strong>Command Center</strong>
             </div>
-          </div>
-          <div className="form-container column column-50">
+        </div>
+          <div className="form-container">
             <form onSubmit={handleSubmit} className="search-form">
               <input
                 className="search-input-class"
@@ -95,7 +93,9 @@ const SearchBar = () => {
               />
             </form>
           </div>
-        </section>
+          <div className="cog-container">
+            <FontAwesomeIcon icon="cog" className="cog-icon" size="3x"/>
+          </div>
         <div data-id="error-message">
           {showErrorMessage ? <>Application Not Found</> : null}
         </div>
