@@ -34,40 +34,48 @@ Object {
             <td
               class="add-padding-left"
             >
+               
               <h2
-                style="cursor: pointer;"
+                class="sortable-column"
               >
                 <strong>
-                  Application Name 
+                  Application Name
                 </strong>
               </h2>
+               
             </td>
             <td>
+               
               <h2
-                style="cursor: pointer;"
+                class="sortable-column"
               >
                 <strong>
-                  HP Name 
+                  HP Name
                 </strong>
               </h2>
+               
             </td>
             <td>
+               
               <h2
-                style="cursor: pointer;"
+                class="sortable-column"
               >
                 <strong>
-                  Family Member Name 
+                  Family Member Name
                 </strong>
               </h2>
+               
             </td>
             <td>
+               
               <h2
-                style="cursor: pointer;"
+                class="sortable-column"
               >
                 <strong>
-                  Received Date 
+                  Received Date
                 </strong>
               </h2>
+               
             </td>
             <td>
               <h2>
@@ -75,16 +83,6 @@ Object {
                   Stage
                 </strong>
               </h2>
-            </td>
-            <td />
-          </tr>
-          <tr>
-            <td
-              class="add-padding-left new-files-title"
-            >
-              <h1>
-                No new nominations.
-              </h1>
             </td>
           </tr>
         </tbody>
@@ -121,40 +119,48 @@ Object {
           <td
             class="add-padding-left"
           >
+             
             <h2
-              style="cursor: pointer;"
+              class="sortable-column"
             >
               <strong>
-                Application Name 
+                Application Name
               </strong>
             </h2>
+             
           </td>
           <td>
+             
             <h2
-              style="cursor: pointer;"
+              class="sortable-column"
             >
               <strong>
-                HP Name 
+                HP Name
               </strong>
             </h2>
+             
           </td>
           <td>
+             
             <h2
-              style="cursor: pointer;"
+              class="sortable-column"
             >
               <strong>
-                Family Member Name 
+                Family Member Name
               </strong>
             </h2>
+             
           </td>
           <td>
+             
             <h2
-              style="cursor: pointer;"
+              class="sortable-column"
             >
               <strong>
-                Received Date 
+                Received Date
               </strong>
             </h2>
+             
           </td>
           <td>
             <h2>
@@ -162,16 +168,6 @@ Object {
                 Stage
               </strong>
             </h2>
-          </td>
-          <td />
-        </tr>
-        <tr>
-          <td
-            class="add-padding-left new-files-title"
-          >
-            <h1>
-              No new nominations.
-            </h1>
           </td>
         </tr>
       </tbody>
