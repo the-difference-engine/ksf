@@ -16,6 +16,11 @@ module.exports = {
       dateReceived: {
         type: Sequelize.DATE,
       },
+      // HIPAAVerified: {
+      //   allowNull: false,
+      //   type: DataTypes.STRING,
+      //   defaultValue: 'false',
+      // },
       providerFirstName: {
         type: Sequelize.STRING,
       },
