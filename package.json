@@ -1,18 +1,12 @@
 {
-  "name": "ks",
+  "name": "ksf",
   "private": true,
-  "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean",
-    "build-ts": "lerna run build-ts",
-    "lint": "lerna run lint",
-    "postinstall": "npm run bootstrap && npm run build-ts",
-    "test": "lerna run test"
+  "engineStrict": true,
+  "engines": {
+    "node": ">= 14.16.0 <15"
   },
-  "devDependencies": {
-    "lerna": "^3.22.1"
-  },
-  "dependencies": {
-    "nodemailer": "^6.4.17"
-  }
+  "workspaces": [
+    "client",
+    "server"
+  ]
 }

@@ -1,11 +1,9 @@
-
-packages/api/node_modules
-packages/app/node_modules
-lerna-debug.log
+/node_modules
+/server/node_modules
+/client/node_modules
 
 # dotenv environment variables file
 *.env
 .env.test
 *.DS_Store
-/node_modules
 /.vscode
