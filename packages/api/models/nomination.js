@@ -42,6 +42,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.DATE,
       },
+      HIPAAVerified: {
+        allowNull:false,
+        type: DataTypes.STRING,
+        defaultValue: 'false',
+      },
       providerName: {
         allowNull: false,
         type: DataTypes.STRING,

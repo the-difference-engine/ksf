@@ -81,6 +81,12 @@ const updateNomination = async (req, res) => {
     if (nomination.changed('status') && nomination.status === 'Decline') {
       sendDeclineEmail(updatedNom);
     }
+    if (nomination.changed('status') && nomination.status === 'HIPAA Verified') {
+       nomination.update({ HIPAAVerified: req.body.HIPAAVerified }).catch((err) => {
+         console.log('Nomination Not Found', err);
+         return res.HIPAAVerified(400);
+       })
+    }
     return res.status(200).json(nomination);
   } catch (error) {
     console.log('400 Update Bad Request', error);

@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
-const { generateToken } = require('./generateToken');
+const { generateToken } = require('./generateToken.js');
 const previewEmail = require('preview-email');
 const path = require('path');
 
