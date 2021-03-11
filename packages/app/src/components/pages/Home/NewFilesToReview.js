@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react';
-import { NominationsDataContext } from '../../../utils/context/NominationsContext';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from "./styles.css";
@@ -33,7 +32,8 @@ const NewFilesToReview = () => {
   const renderSortableCell = (key, label) => {
     return (
       <h2 onClick={() => requestSort(key)} className="sortable-column">
-        <strong>{label}</strong><>{renderSortArrow(key)}</>
+        <strong>{label}</strong>
+        <>{renderSortArrow(key)}</>
       </h2>
     )
   }
@@ -63,7 +63,6 @@ const NewFilesToReview = () => {
           <td> {renderSortableCell('representativeName', 'Family Member Name')} </td>
           <td> {renderSortableCell('dateReceived', 'Received Date')} </td>
           <td><h2><strong>Stage</strong></h2></td>
-          <td></td>
         </tr>
           {sortedNominations
             ?

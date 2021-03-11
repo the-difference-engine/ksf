@@ -5,91 +5,55 @@ const useSort = () => {
   const [sortConfig, setSortConfig] = useState({key: 'dateReceived', direction: 'ascending'})
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
 
-  console.log(NominationsData)
+  const sortNominationsByName = (nomsToSort) => {
+    nomsToSort.sort((a, b) => {
+      let aFirstLetter = a[sortConfig.key].toUpperCase().slice(0)
+      let bFirstLetter = b[sortConfig.key].toUpperCase().slice(0)
 
-// the data is coming from backend, through model, where the date is using sequelize datatype Date, does it mean it has already sifted and converted irregular date entries?
-  const convertDate = (str) => {
-    const dateArr = str.split('/')
-    const year = dateArr[2]
-    const month = dateArr[0].length === 1 ? `0${dateArr[0]}` : dateArr[0]
-    const day = dateArr[1].length === 1 ? `0${dateArr[1]}` : dateArr[1]
+      if (aFirstLetter < bFirstLetter) {
+        return sortConfig.direction === 'ascending' ? -1 : 1
+      }
 
-    return year + month + day
+      if (aFirstLetter > bFirstLetter) {
+        return sortConfig.direction === 'ascending' ? 1 : -1
+      }
+
+      return 0
+    })
+    return nomsToSort
+  }
+
+  const sortNominationsByDate = (nomsToSort) => {
+    nomsToSort.sort((a, b) => {
+      let aDate = new Date(a[sortConfig.key])
+      let bDate = new Date(b[sortConfig.key])
+
+      if (aDate > bDate) {
+        return sortConfig.direction === 'ascending' ? -1 : 1
+      }
+
+      if (aDate < bDate) {
+        return sortConfig.direction === 'ascending' ? 1 : -1
+      }
+
+      return 0
+    })
+    return nomsToSort
   }
 
   const sortedNoms = useMemo(() => {
     let sortableNoms = NominationsData ? [...NominationsData] : []
 
-    if(sortConfig !== null) {
-      sortableNoms.sort((a, b) => {
-        if(sortConfig.key.includes('Name')) {
-          let aLastName = a[sortConfig.key].toUpperCase().split(' ').slice(-1)
-          let bLastName = b[sortConfig.key].toUpperCase().split(' ').slice(-1)
-          if (aLastName < bLastName) {
-            return sortConfig.direction === 'ascending' ? -1 : 1
-          }
-          if (aLastName > bLastName) {
-            return sortConfig.direction === 'ascending' ? 1 : -1
-          }
-        }
-        if (sortConfig.key === 'dateReceived') {
-          // let aDate = convertDate(a[sortConfig.key])
-          // let bDate = convertDate(b[sortConfig.key])
-          let aDate = new Date(a[sortConfig.key])
-          let bDate = new Date(b[sortConfig.key])
-          if(aDate > bDate) {
-            return sortConfig.direction === 'ascending' ? -1 : 1
-          }
-          if(aDate < bDate) {
-            return sortConfig.direction === 'ascending' ? 1 : -1
-          }
-        }
-        return 0
-      })
+    if (sortConfig && sortConfig.key.includes('Name')) {
+      sortNominationsByName(sortableNoms)
     }
+
+    if (sortConfig && sortConfig.key === 'dateReceived') {
+      sortNominationsByDate(sortableNoms)
+    }
+
     return sortableNoms
   }, [NominationsData, sortConfig])
-
-  // const sortNominationsByName = (sortableNoms) => {
-  //   sortableNoms.sort((a, b) => {
-  //     let aLastName = a[sortConfig.key].toUpperCase().split(' ').slice(-1)
-  //     let bLastName = b[sortConfig.key].toUpperCase().split(' ').slice(-1)
-  //     if (aLastName < bLastName) {
-  //       return sortConfig.direction === 'ascending' ? -1 : 1
-  //     }
-  //     if (aLastName > bLastName) {
-  //       return sortConfig.direction === 'ascending' ? 1 : -1
-  //     }
-  //     return 0
-  //   })
-  //   return sortableNoms
-  // }
-
-  // const sortNominationsByDate = (sortableNoms) => {
-  //   sortableNoms.sort((a, b) => {
-  //     let aDate = convertDate(a[sortConfig.key])
-  //     let bDate = convertDate(b[sortConfig.key])
-  //     if(aDate > bDate) {
-  //       return sortConfig.direction === 'ascending' ? -1 : 1
-  //     }
-  //     if(aDate < bDate) {
-  //       return sortConfig.direction === 'ascending' ? 1 : -1
-  //     }
-  //     return 0
-  //   })
-  //   return sortableNoms
-  // }
-
-  // const sortedNoms = useMemo(() => {
-  //   let sortableNoms = NominationsData ? [...NominationsData] : []
-
-  //   if(sortConfig && sortConfig.key.includes('Name')) {
-  //     sortNominationsByName(sortableNoms)
-  //   }
-  //   if(sortConfig && sortConfig.key === 'dateReceived') {
-  //     sortNominationsByDate(sortableNoms)
-  //   }
-  // }, [NominationsData, sortConfig])
 
   const requestSort = (key) => {
     let direction = 'ascending'

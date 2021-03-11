@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { NominationsDataContext } from '../../../utils/context/NominationsContext';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from "./styles.css";
 import useSort from './useSort'
 
 const ApplicationViewByStages = () => {
-  const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
   const [currentlyViewing, setCurrentlyViewing] = useState("Ready for Board Review");
   const { sortedNoms, requestSort, sortConfig } = useSort()
 
@@ -14,7 +12,6 @@ const ApplicationViewByStages = () => {
     if (sortedNoms) {
       return sortedNoms.filter(nominations => nominations.status === currentlyViewing)
     }
-    // return NominationsData.filter(nominations => nominations.status === currentlyViewing)
   }
 
   function renderOptionList() {
@@ -58,7 +55,7 @@ const ApplicationViewByStages = () => {
           <td><h2><strong>Stage</strong></h2></td>
           <td></td>
         </tr>
-          {conditionalNominationRender().length !== 0 && (NominationsData || sortedNoms)
+          {conditionalNominationRender().length !== 0 && sortedNoms
             ?
             conditionalNominationRender().map(nomination =>
               <NewNomination nomination={nomination} key={nomination.id} />
