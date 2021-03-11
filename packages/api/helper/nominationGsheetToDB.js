@@ -7,6 +7,7 @@ module.exports = function gsheetToDB() {
     process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
     null,
     // process.env.GOOGLE_SHEETS_PRIVATE_KEY,
+    // JSON parsing is needed for deployment, local running should remove JSON parsing
     JSON.parse(process.env.GOOGLE_SHEETS_PRIVATE_KEY),
     ['https://www.googleapis.com/auth/spreadsheets']
   );
