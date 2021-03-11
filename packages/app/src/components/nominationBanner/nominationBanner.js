@@ -22,7 +22,7 @@ const NominationBanner = ({ nomination }) => {
           <div className="row banner-top">
             <div className="column name">
               <p>Application</p>
-              <span><h1><strong>{nominationName}</strong></h1></span>
+              <span><h1 className="nom-name"><strong>{nominationName}</strong></h1></span>
             </div>
           </div>
 
