@@ -4,9 +4,7 @@ import { SearchResultDataContext } from '../../utils/context/SearchResultsContex
 import './style.css';
 
 const SearchResultsCard = () => {
-  const [SearchResultData, setSearchResultData] = useContext(
-    SearchResultDataContext
-  );
+  const [SearchResultData, setSearchResultData] = useContext(SearchResultDataContext);
   return (
     <>
       <section className="search-result-card">
@@ -27,9 +25,7 @@ const SearchResultsCard = () => {
               ? SearchResultData.map((result) => (
                   <tr key={result.id}>
                     <td>
-                      <Link to={`/nomination/${result.id}`}>
-                        {result.nominationName}
-                      </Link>
+                      <Link to={`/nomination/${result.id}`}>{result.nominationName}</Link>
                     </td>
                     <td>{result.providerName}</td>
                     <td>{result.patientName}</td>

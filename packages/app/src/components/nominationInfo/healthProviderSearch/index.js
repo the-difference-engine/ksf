@@ -1,14 +1,36 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { SearchResultDataContext } from '../../../utils/context/SearchResultsContext';
-import './style.css'; // ----->>> add styling
+import { NominationsDataContext } from '../../../utils/context/NominationsContext';
+import styles from './styles.module.css';
+import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
 
 const SearchHealthProvider = () => {
-  //   const [SearchResultData, setSearchResultData] = useContext(
-  //     SearchResultDataContext
-  //   );
-
   const [SearchHealthcareProvider, setSearchHealthcareProvider] = useContext(SearchResultDataContext);
+  const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
+
+  const findSearchResults = (searchTerm) => {
+    let filteredNoms = [];
+    if (NominationsData && searchTerm !== undefined) {
+      filteredNoms = NominationsData.filter((nomination) => {
+        return [
+          nomination.providerName,
+          nomination.patientName,
+          nomination.nominationName,
+          nomination.representativeName,
+        ].some((nom) => nom.includes(searchTerm));
+      });
+      setSearchHealthcareProvider(filteredNoms);
+    }
+  };
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    setTimeout(function () {
+      findSearchResults(id);
+    }, 1000);
+  }, [findSearchResults]);
 
   return (
     <>
@@ -16,11 +38,11 @@ const SearchHealthProvider = () => {
         <table className="search-result-table">
           <thead>
             <tr>
-              <th>Search Results</th>
+              <th>Health Provider Search Results</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr className={styles.bold}>
               <td>Application Name</td>
               <td>Provider's Name</td>
               <td>Patient Name</td>
