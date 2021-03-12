@@ -20,7 +20,6 @@ Object {
             <td />
             <td />
             <td />
-            <td />
             <td
               class="new-files-see-more"
             >
@@ -35,32 +34,48 @@ Object {
             <td
               class="add-padding-left"
             >
-              <h2>
+               
+              <h2
+                class="sortable-column"
+              >
                 <strong>
                   Application Name
                 </strong>
               </h2>
+               
             </td>
             <td>
-              <h2>
+               
+              <h2
+                class="sortable-column"
+              >
                 <strong>
                   HP Name
                 </strong>
               </h2>
+               
             </td>
             <td>
-              <h2>
+               
+              <h2
+                class="sortable-column"
+              >
                 <strong>
                   Family Member Name
                 </strong>
               </h2>
+               
             </td>
             <td>
-              <h2>
+               
+              <h2
+                class="sortable-column"
+              >
                 <strong>
                   Received Date
                 </strong>
               </h2>
+               
             </td>
             <td>
               <h2>
@@ -68,16 +83,6 @@ Object {
                   Stage
                 </strong>
               </h2>
-            </td>
-            <td />
-          </tr>
-          <tr>
-            <td
-              class="add-padding-left new-files-title"
-            >
-              <h1>
-                No new nominations.
-              </h1>
             </td>
           </tr>
         </tbody>
@@ -100,7 +105,6 @@ Object {
           <td />
           <td />
           <td />
-          <td />
           <td
             class="new-files-see-more"
           >
@@ -115,32 +119,48 @@ Object {
           <td
             class="add-padding-left"
           >
-            <h2>
+             
+            <h2
+              class="sortable-column"
+            >
               <strong>
                 Application Name
               </strong>
             </h2>
+             
           </td>
           <td>
-            <h2>
+             
+            <h2
+              class="sortable-column"
+            >
               <strong>
                 HP Name
               </strong>
             </h2>
+             
           </td>
           <td>
-            <h2>
+             
+            <h2
+              class="sortable-column"
+            >
               <strong>
                 Family Member Name
               </strong>
             </h2>
+             
           </td>
           <td>
-            <h2>
+             
+            <h2
+              class="sortable-column"
+            >
               <strong>
                 Received Date
               </strong>
             </h2>
+             
           </td>
           <td>
             <h2>
@@ -148,16 +168,6 @@ Object {
                 Stage
               </strong>
             </h2>
-          </td>
-          <td />
-        </tr>
-        <tr>
-          <td
-            class="add-padding-left new-files-title"
-          >
-            <h1>
-              No new nominations.
-            </h1>
           </td>
         </tr>
       </tbody>

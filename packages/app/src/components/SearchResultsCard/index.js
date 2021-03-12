@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
@@ -16,10 +16,10 @@ const SearchResultsCard = () => {
           </thead>
           <tbody>
             <tr>
-              <td>Application Name</td>
-              <td>Provider's Name</td>
-              <td>Patient Name</td>
-              <td>Recieved Date </td>
+              <td><h1><strong>Application Name</strong></h1></td>
+              <td><h1><strong>Provider's Name</strong></h1></td>
+              <td><h1><strong>Patient Name</strong></h1></td>
+              <td><h1><strong>Received Date</strong></h1></td>
             </tr>
             {SearchResultData
               ? SearchResultData.map((result) => (
