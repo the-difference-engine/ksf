@@ -35,13 +35,18 @@ const ApplicationViewByStages = () => {
     )
   }
 
+  const handleViewStageChange = (evt) => {
+    setCurrentlyViewing(evt.currentTarget.value)
+    requestSort('dateReceived')
+  }
+
   return (
     <table className="new-files-table">
       <thead>
         <tr>
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
-            <select onChange={e => setCurrentlyViewing(e.currentTarget.value)} className="stage-dropdown">
+            <select onChange={e => handleViewStageChange(e)} className="stage-dropdown">
               {renderOptionList()}
             </select>
           </td>
