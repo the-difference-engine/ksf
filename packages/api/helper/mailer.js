@@ -74,7 +74,37 @@ function verifyHcEmail(nomination) {
     .catch(console.error);
 }
 
+function sendHIPAAEmail(nomination) {
+  const todaysDate = new Date()
+  const currentYear = new Date().getFullYear();
+  const firstQuarterStart = new Date(currentYear, '00', '01')
+  const firstQuarterEnd = new Date(currentYear, '02', '31')
+  const secondQuarterStart = new Date(currentYear, '03', '01')
+  const secondQuarterEnd = new Date(currentYear, '05', '30')
+  const thirdQuarterStart = new Date(currentYear, '06', '01')
+  const thirdQuarterEnd = new Date(currentYear, '08', '30')
+
+  const targetQuarter = (todaysDate > firstQuarterStart && todaysDate < firstQuarterEnd) ? 1 : 
+      (todaysDate > secondQuarterStart && todaysDate < secondQuarterEnd) ? 2 : 
+      (todaysDate > thirdQuarterStart && todaysDate < thirdQuarterEnd) ? 3 : 4;
+  
+  email.send({
+    template: 'hipaa',
+    message: {
+      from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+      replyTo: 'info@keepswimmingfoundation.org',
+      to: nomination.representativeEmailAddress, 
+    },
+    locals: {
+      name: nomination.patientName,
+      appUrl: process.env.APP_URL,
+      targetQuarter
+    }
+  }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
+}
+
 module.exports = {
   sendDeclineEmail,
   verifyHcEmail,
-};
+  sendHIPAAEmail
+}
