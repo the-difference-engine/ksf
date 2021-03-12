@@ -57,7 +57,7 @@ const ApplicationViewByStages = () => {
           <td className="add-padding-left"> {renderSortableCell('nominationName', 'Application Name')} </td>
           <td> {renderSortableCell('providerName', 'HP Name')} </td>
           <td> {renderSortableCell('representativeName', 'Family Member Name')} </td>
-          <td> {renderSortableCell('dateReceived', 'Received Date')} </td>
+          <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
           <td><h2><strong>Stage</strong></h2></td>
         </tr>
           {conditionalNominationRender().length !== 0 && sortedNoms
