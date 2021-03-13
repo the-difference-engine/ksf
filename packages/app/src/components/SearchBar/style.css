@@ -36,6 +36,10 @@
   grid-column: 2 / 4;
 }
 
+.form-container input:focus {
+  border-color: var(--brand);
+}
+
 .cog-container {
   justify-self: flex-end;
 }
