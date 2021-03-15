@@ -18,9 +18,9 @@ router.post('/api/user', userController.create);
 
 // grant cycle endpoints
 router.get('/api/grantcycles', grantCycleController.findAll);
-router.get('/api/grantcycle/findactive', grantCycleController.findActive);
-router.get('/api/grantcycle/findbyname/:name', grantCycleController.findByName);
-router.post('/api/grantcycle', grantCycleController.create);
-router.put('/api/grantcycle/:id', grantCycleController.update);
+router.get('/api/grantcycles/findactive', grantCycleController.findActive);
+router.get('/api/grantcycles/findbyname/:name', grantCycleController.findByName);
+router.post('/api/grantcycles', grantCycleController.create);
+router.put('/api/grantcycles/:id', grantCycleController.update);
 
 module.exports = router;
