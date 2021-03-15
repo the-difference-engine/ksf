@@ -1,4 +1,4 @@
-const { ValidationError } = require('sequelize');
+const { Op, ValidationError } = require('sequelize');
 const db = require('../models');
 
 const create = async (req, res) => {
@@ -48,8 +48,23 @@ const update = async (req, res) => {
 
 const findAll = async (req, res) => {
   try {
-    const grants = await db.GrantCycle.findAll();
+    const grants = await db.GrantCycle.findAll({ order: [['openedOn', 'DESC']], raw: true });
     if (grants.length) {
+      const result = await Promise.all(grants.map(async (g) => {
+        try {
+          const count = await db.Nomination.count({ 
+            where: {
+              dateReceived: {
+                [Op.between]: [g.openedOn, g.closedOn]
+              }
+            }
+          });
+          g.count = count;
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }));
       return res.status(200).json(grants);
     }
     return res.status(404).send('No grants found');
