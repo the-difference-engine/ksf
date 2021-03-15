@@ -65,7 +65,18 @@
     background-color: #fff;
     color: var(--brand);
     border-color: var(--brand);
-    margin-bottom: 5rem;
+}
+
+.settings-main button[disabled]:hover {
+    background-color: white;
+    border-color: var(--brand);
+    color: var(--brand);
+}
+
+.settings-main button:hover {
+    background-color: var(--brand);
+    border-color: white;
+    color: white;
 }
 
 .settings-input  input:focus {
@@ -83,6 +94,8 @@
 
 .settings-table {
     width: 90%;
+    /* table-layout: fixed; */
+    
 }
 
 .settings-tbody tr:hover {
@@ -107,3 +120,27 @@
     padding-left: 2rem;
 }
 
+.settings-form{
+    white-space: nowrap;
+}
+
+.settings-form-errors {
+    margin-bottom: 3rem;
+    min-height: 25px;
+    color: red;
+}
+
+.settings-table tbody {
+    display: block;
+    overflow-y: scroll;
+    width: 100%;
+    height: 250px;
+}
+
+.settings-table thead tr {
+    display: block;
+}
+
+.settings-table th, .settings-table td {
+    width: 300px;
+}
