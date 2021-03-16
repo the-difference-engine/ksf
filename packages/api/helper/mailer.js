@@ -58,7 +58,6 @@ function sendSurveyEmail(nomination) {
     message: {
       from: adminEmail,
       to: nomination.providerEmailAddress
-      // to: 'mark@thedifferenceengine.io'
     },
     locals: {
       name: nomination.providerName,
@@ -82,7 +81,7 @@ function verifyHcEmail(nomination) {
       appUrl: process.env.APP_URL
     }
   }).then(() => console.log('email has been sent!'))
-    .catch(console.error,console.log());
+    .catch(console.error);
 }
 
 function sendHIPAAEmail(nomination) {
