@@ -1,6 +1,6 @@
 'use strict';
 
-const { Model, Sequelize, DataTypes, ValidationError } = require('sequelize');
+const { Model, Sequelize, DataTypes, ValidationError, Op } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class GrantCycle extends Model {
@@ -65,6 +65,36 @@ module.exports = (sequelize, DataTypes) => {
                 throw error;
               }
               throw new Error('something went wrong on validation');
+            }
+          }
+
+          try {
+            const result = await GrantCycle.findAll({
+              where: {
+                [Op.or]: [{
+                  openedOn: {
+                    [Op.between]: [instance.openedOn, instance.closedOn]
+                  }
+                }, {
+                  closedOn: {
+                    [Op.between]: [instance.openedOn, instance.closedOn]
+                  }
+                }, {
+                  [Op.and]: [{
+                    openedOn: {[Op.lt]: instance.openedOn},
+                    closedOn: {[Op.gt]: instance.closedOn}
+                  }]
+                }]
+              }
+            });
+            if (result.length) {
+              throw new ValidationError("Dates overlap with existing grant cycle");
+            }
+          }
+          catch (error) {
+            console.error(error);
+            if (error instanceof ValidationError) {
+              throw error;
             }
           }
           return instance;
