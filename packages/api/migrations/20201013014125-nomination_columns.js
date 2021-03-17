@@ -62,6 +62,7 @@ module.exports = {
       queryInterface.removeColumn('nominations', 'representativePhoneNumber'),
       queryInterface.removeColumn('nominations', 'providerPhoneNumber'),
       queryInterface.renameColumn('nominations', 'providerTitle', 'title'),
+      queryInterface.addColumn('nominations', 'hipaatimestamp', {type: Sequelize.STRING,}),
     ]);
   },
 };
