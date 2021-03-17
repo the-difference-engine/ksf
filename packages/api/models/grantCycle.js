@@ -71,18 +71,23 @@ module.exports = (sequelize, DataTypes) => {
           try {
             const result = await GrantCycle.findAll({
               where: {
-                [Op.or]: [{
-                  openedOn: {
-                    [Op.between]: [instance.openedOn, instance.closedOn]
-                  }
-                }, {
-                  closedOn: {
-                    [Op.between]: [instance.openedOn, instance.closedOn]
-                  }
-                }, {
-                  [Op.and]: [{
-                    openedOn: {[Op.lt]: instance.openedOn},
-                    closedOn: {[Op.gt]: instance.closedOn}
+                [Op.and]: [{
+                  id: {
+                    [Op.not]: [instance.id]
+                  }}, {
+                  [Op.or]: [{
+                    openedOn: {
+                      [Op.between]: [instance.openedOn, instance.closedOn]
+                    }
+                  }, {
+                    closedOn: {
+                      [Op.between]: [instance.openedOn, instance.closedOn]
+                    }
+                  }, {
+                    [Op.and]: [{
+                      openedOn: {[Op.lt]: instance.openedOn},
+                      closedOn: {[Op.gt]: instance.closedOn}
+                    }]
                   }]
                 }]
               }
