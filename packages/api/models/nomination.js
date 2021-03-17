@@ -136,6 +136,10 @@ module.exports = (sequelize, DataTypes) => {
       referralOrigination: {
         type: DataTypes.TEXT,
       },
+      hipaatimestamp: {
+        allowNull: true,
+        type: DataTypes.STRING
+      },
     },
     {
       hooks: {

@@ -28,6 +28,9 @@ module.exports = {
       queryInterface.addColumn('nominations', 'providerPhoneNumber', {
         type: Sequelize.STRING,
       }),
+      queryInterface.addColumn('nominations', 'hipaatimestamp', {
+        type: Sequelize.STRING,
+      }),
       queryInterface.renameColumn('nominations', 'title', 'providerTitle'),
     ]);
   },
@@ -61,8 +64,7 @@ module.exports = {
       queryInterface.removeColumn('nominations', 'patientAge'),
       queryInterface.removeColumn('nominations', 'representativePhoneNumber'),
       queryInterface.removeColumn('nominations', 'providerPhoneNumber'),
-      queryInterface.renameColumn('nominations', 'providerTitle', 'title'),
-      queryInterface.addColumn('nominations', 'hipaatimestamp', {type: Sequelize.STRING,}),
+      queryInterface.renameColumn('nominations', 'providerTitle', 'title')
     ]);
   },
 };
