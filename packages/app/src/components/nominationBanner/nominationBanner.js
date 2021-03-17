@@ -3,7 +3,7 @@ import React from 'react';
 const states = require('us-state-codes');
 
 const NominationBanner = ({ nomination }) => {
-  const date = new Date(nomination.createdAt).toLocaleDateString()
+  const date = new Date(nomination.dateReceived).toLocaleDateString()
   const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : ''
   const state = states.getStateCodeByStateName(nomination.hospitalState)
   const nominationName = `${lastName}-${state}`
@@ -36,7 +36,7 @@ const NominationBanner = ({ nomination }) => {
               <span><h2 className="body-font"><strong>{nomination.representativeName}</strong></h2></span>
             </div>
             <div className="column created-at">
-              <p className="secondary-dark">Created Date</p>
+              <p className="secondary-dark">Submission Date</p>
               <span><h2 className="body-font"><strong>{date}</strong></h2></span>
             </div>
             <div className="column amount">

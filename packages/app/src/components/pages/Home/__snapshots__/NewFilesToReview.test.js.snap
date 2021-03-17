@@ -72,7 +72,7 @@ Object {
                 class="sortable-column"
               >
                 <strong>
-                  Received Date
+                  Submission Date
                 </strong>
               </h2>
                
@@ -157,7 +157,7 @@ Object {
               class="sortable-column"
             >
               <strong>
-                Received Date
+                Submission Date
               </strong>
             </h2>
              
