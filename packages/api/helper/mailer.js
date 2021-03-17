@@ -74,8 +74,7 @@ function verifyHcEmail(nomination) {
     template: 'verifyHcEmail',
     message: {
       from: 'formmaster@keepswimmingfoundation.org',
-      // to: nomination.providerEmailAddress,
-      to: 'abraham@thedifferenceengine.io'
+      to: nomination.providerEmailAddress,
     },
     locals: {
       name: nomination.providerName,
