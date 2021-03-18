@@ -3,7 +3,8 @@ const { ValidationError } = require('sequelize');
 const db = require('../models');
 const { sendDeclineEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
-const gsheetToDB = require('../helper/nominationGsheetToDB')
+const gsheetToDB = require('../helper/nominationGsheetToDB');
+const { createFolder } = require('../helper/googleDrive');
 
 const getNominationById = async (req, res) => {
   try {
@@ -78,6 +79,9 @@ const updateNomination = async (req, res) => {
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status') && nomination.status === 'Decline') {
       sendDeclineEmail(updatedNom)
+    }
+    if (nomination.status === "HIPAA Verified"){
+      createFolder()
     }
     return res.status(200).json(nomination);
   } catch (error) {

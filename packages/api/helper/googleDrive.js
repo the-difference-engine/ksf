@@ -8,7 +8,7 @@ const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
 
 async function createFolder() {
   var fileMetadata = {
-    'name': 'Fuck me it finally fucking worked',
+    'name': 'Test',
     'mimeType': 'application/vnd.google-apps.folder'
   };
   const auth = await authenticate({
@@ -38,4 +38,4 @@ if (module === require.main) {
   const fileName = process.argv[2];
   createFolder(fileName).catch(console.error);
 }
-module.exports = createFolder;
+module.exports = {createFolder};
