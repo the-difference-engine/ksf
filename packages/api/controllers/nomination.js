@@ -78,11 +78,10 @@ const updateNomination = async (req, res) => {
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
       if (nomination.status === 'Decline') {
-       sendDeclineEmail(updatedNom)
+        sendDeclineEmail(updatedNom)
       }
       if (nomination.status === 'HIPAA Verified') {
-        console.log(Date().toString())
-        nomination.hipaatimestamp = Date().toString()
+        nomination.hipaatimestamp = Date().toString();
         }
       }
       return res.status(200).json(nomination);
