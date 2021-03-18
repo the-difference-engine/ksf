@@ -52,14 +52,14 @@ const findAll = async (req, res) => {
     if (grants.length) {
       const result = await Promise.all(grants.map(async (g) => {
         try {
-          const count = await db.Nomination.count({ 
+          const nominations = await db.Nomination.findAll({ 
             where: {
               dateReceived: {
                 [Op.between]: [g.openedOn, g.closedOn]
               }
             }
           });
-          g.count = count;
+          g.nominations = nominations;
         }
         catch (error) {
           console.log(error);
