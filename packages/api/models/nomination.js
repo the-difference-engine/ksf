@@ -136,7 +136,7 @@ module.exports = (sequelize, DataTypes) => {
       referralOrigination: {
         type: DataTypes.TEXT,
       },
-      hipaatimestamp: {
+      hipaaTimestamp: {
         allowNull: true,
         type: DataTypes.STRING
       },

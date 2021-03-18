@@ -6,7 +6,7 @@ module.exports = function gsheetToDB() {
   const client = new google.auth.JWT(
     process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
     null,
-    // for local machine testing comment  JSON.parse(process.env.GOOGLE_SHEETS_PRIVATE_KEY), add process.env.GOOGLE_SHEETS_PRIVATE_KEY, instead.
+    // for local machine testing comment  >JSON.parse(process.env.GOOGLE_SHEETS_PRIVATE_KEY),< add >process.env.GOOGLE_SHEETS_PRIVATE_KEY,< instead.
     JSON.parse(process.env.GOOGLE_SHEETS_PRIVATE_KEY),
     ['https://www.googleapis.com/auth/spreadsheets']
   );
