@@ -33,7 +33,7 @@ const TableRow = (props) => {
                 { grantCycle.nominations.length } &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 
             </td>
-            <td><FontAwesomeIcon icon="arrow-right" onClick={() => onResultsClick(grantCycle)} size="2x" className={grantCycle.nominations.length ?"icon-table icon-right-arrow" : "icon-right-arrow-disabled" }/></td>
+            <td><FontAwesomeIcon icon="arrow-right" onClick={() => onResultsClick(grantCycle)} size="1x" className={grantCycle.nominations.length ?"icon-table icon-right-arrow" : "icon-right-arrow-disabled" }/></td>
         </tr>
     )
 
