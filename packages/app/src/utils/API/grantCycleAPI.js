@@ -18,6 +18,10 @@ const grantCycleAPI = {
 
     createGrantCycle: function(grantCycle) {
         return axios.post(apiEndpoint, grantCycle);
+    },
+
+    updateGrantCycle: function(grantCycle) {
+        return axios.put(`${apiEndpoint}/${grantCycle.id}`, grantCycle);
     }
 }
 

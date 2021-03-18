@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SettingsModal from 'react-modal';
 import Settings from '../Settings/Settings';
+import GrantCycleNomsResults from '../Settings/GrantCycleNomsResults';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
@@ -11,6 +12,8 @@ SettingsModal.setAppElement('#root');
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
+  const [showResults, setShowResults] = useState(false);
+  const [settingsResults, setSettingsResults] = useState({});
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
@@ -77,9 +80,21 @@ const SearchBar = () => {
   }
 
   function closeModal() {
+    setShowResults(false);
     setModalIsOpen(false);
   }
 
+  function handleShowingResults(grantCycle) {
+    if (grantCycle.nominations.length) {
+      setShowResults(true);
+      setSettingsResults(grantCycle);
+    }
+  }
+
+  function handleGoBack() {
+    setShowResults(false);
+  }
+  
   return (
     <>
       <SettingsModal 
@@ -88,7 +103,7 @@ const SearchBar = () => {
         className="modal"
         overlayClassName="modal-overlay"
       >
-        <Settings/>
+        {showResults ? <GrantCycleNomsResults onClick={handleGoBack} results={settingsResults}/> : <Settings onResultsClick={handleShowingResults}/>}
         <FontAwesomeIcon 
               onClick={closeModal}
               icon="times"
