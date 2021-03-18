@@ -58,11 +58,13 @@ const findAll = async (req, res) => {
                 [Op.between]: [g.openedOn, g.closedOn]
               }
             }
-          });
+          , order: [
+            ['dateReceived', 'DESC' ]
+          ]});
           g.nominations = nominations;
         }
         catch (error) {
-          console.log(error);
+          return res.status(404).send(error);
         }
       }));
       return res.status(200).json(grants);

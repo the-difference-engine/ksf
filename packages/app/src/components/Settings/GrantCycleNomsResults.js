@@ -18,7 +18,7 @@ const GrantCycleNomsResults = ({results: grantCycle, onClick}) => {
         const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
         const state = states.getStateCodeByStateName(n.hospitalState);
         return `${lastName}-${state}`;
-      };
+    };
 
     return (
         <div className="settings__container">
