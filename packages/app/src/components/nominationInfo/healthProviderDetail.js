@@ -1,23 +1,14 @@
 import React, { useContext } from 'react';
 import styles from './styles.module.css';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+
 
 function HealthProviderDetail(props) {
-  function openNewBackgroundTab(val) {
-    var a = document.createElement('a');
-    a.href = `/searchhealthprovider/${val}`;
-    var evt = document.createEvent('MouseEvents');
-    evt.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
-    a.dispatchEvent(evt);
-  }
 
   const { id } = useParams();
 
-  const handleSubmit = (val) => {
-    if (val) {
-      window.open(`/nomination/${id}`, '_blank');
-      openNewBackgroundTab(val);
-    }
+  const openWindow = () => {
+      window.open('#');
   };
 
   return (
@@ -30,16 +21,18 @@ function HealthProviderDetail(props) {
           obj.label === 'Provider Name' ? (
             <div key={index} className={obj.label === '' ? styles.mobileHide : ''}>
               <label className={styles.label}>{obj.label}</label>
-              <a>
-                <span className={styles.value} onClick={() => handleSubmit(obj.value)} key={index}>
-                  {String(obj.value)}
-                </span>
-              </a>
+              
+                <Link to={`/searchhealthprovider/${obj.value}`}>
+                  <span className={styles.value} onClick={() => openWindow()} key={index}>
+                    {obj.value}
+                  </span>
+                </Link>
+              
             </div>
           ) : (
             <div key={index} className={obj.label === '' ? styles.mobileHide : ''}>
               <label className={styles.label}>{obj.label}</label>
-              <span className={styles.value}>{String(obj.value)}</span>
+              <span className={styles.value}>{obj.value}</span>
             </div>
           )
         )}

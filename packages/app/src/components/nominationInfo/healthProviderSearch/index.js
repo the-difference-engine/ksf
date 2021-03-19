@@ -27,10 +27,8 @@ const SearchHealthProvider = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    setTimeout(function () {
       findSearchResults(id);
-    }, 1000);
-  }, [findSearchResults]);
+  }, []);
 
   return (
     <>
@@ -48,8 +46,7 @@ const SearchHealthProvider = () => {
               <td>Patient Name</td>
               <td>Recieved Date </td>
             </tr>
-            {SearchHealthcareProvider
-              ? SearchHealthcareProvider.map((result) => (
+            {SearchHealthcareProvider?.map((result) => (
                   <tr key={result.id}>
                     <td>
                       <Link to={`/nomination/${result.id}`}>{result.nominationName}</Link>
@@ -58,8 +55,7 @@ const SearchHealthProvider = () => {
                     <td>{result.patientName}</td>
                     <td>{result.dateReceived}</td>
                   </tr>
-                ))
-              : null}
+                ))}
           </tbody>
         </table>
       </section>
