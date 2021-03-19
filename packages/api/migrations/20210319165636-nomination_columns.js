@@ -28,6 +28,8 @@ module.exports = {
       queryInterface.addColumn('nominations', 'providerPhoneNumber', {
         type: Sequelize.STRING,
       }),
+      queryInterface.addColumn('nomination', 'hipaaTimestamp', {
+        type:Sequelize.STRING,}),
       queryInterface.renameColumn('nominations', 'title', 'providerTitle'),
     ]);
   },
