@@ -1,20 +1,43 @@
-import React, { useContext, useState } from 'react';
-import { NominationsDataContext } from '../../../utils/context/NominationsContext';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from "./styles.css";
+import useSort from './useSort'
 
 const ApplicationViewByStages = () => {
-  const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
   const [currentlyViewing, setCurrentlyViewing] = useState("Ready for Board Review");
+  const { sortedNoms, requestSort, sortConfig } = useSort()
 
   const conditionalNominationRender = () => {
-    return NominationsData.filter(nominations => nominations.status === currentlyViewing)
+    if (sortedNoms) {
+      return sortedNoms.filter(nominations => nominations.status === currentlyViewing)
+    }
   }
 
   function renderOptionList() {
     const statuses = ["Awaiting HIPAA", "HIPAA Verified", "Document Review", "Ready for Board Review"]
     return statuses.map( (status, index) => <option key={index} selected={status === currentlyViewing} value={status}>{status}</option> )
+  }
+
+  const renderSortArrow = (columnName) => {
+    return (
+      (sortConfig && sortConfig.key === columnName) &&
+      <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />
+    )
+  }
+
+  const renderSortableCell = (key, label) => {
+    return (
+      <h2 onClick={() => requestSort(key)} className="sortable-column">
+        <strong>{label}</strong>
+        <>{renderSortArrow(key)}</>
+      </h2>
+    )
+  }
+
+  const handleViewStageChange = (evt) => {
+    setCurrentlyViewing(evt.currentTarget.value)
+    requestSort('dateReceived')
   }
 
   return (
@@ -23,7 +46,7 @@ const ApplicationViewByStages = () => {
         <tr>
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
-            <select onChange={e => setCurrentlyViewing(e.target.value)} className="stage-dropdown">
+            <select onChange={e => handleViewStageChange(e)} className="stage-dropdown">
               {renderOptionList()}
             </select>
           </td>
@@ -31,21 +54,21 @@ const ApplicationViewByStages = () => {
       </thead>
       <tbody>
         <tr className="home-new-files-headers">
-          <td className="add-padding-left"><h2><strong>Application Name</strong></h2></td>
-          <td><h2><strong>HP Name</strong></h2></td>
-          <td><h2><strong>Family Member Name</strong></h2></td>
-          <td><h2><strong>Received Date</strong></h2></td>
+          <td className="add-padding-left"> {renderSortableCell('nominationName', 'Application Name')} </td>
+          <td> {renderSortableCell('providerName', 'HP Name')} </td>
+          <td> {renderSortableCell('representativeName', 'Family Member Name')} </td>
+          <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
           <td><h2><strong>Stage</strong></h2></td>
         </tr>
-          {NominationsData && conditionalNominationRender().length !== 0
+          {conditionalNominationRender().length !== 0 && sortedNoms
             ?
             conditionalNominationRender().map(nomination =>
               <NewNomination nomination={nomination} key={nomination.id} />
               )
-              :
-              <tr>
-                <td className="add-padding-left new-files-title"><h1>No nominations in {currentlyViewing}.</h1></td>
-              </tr>
+            :
+            <tr>
+              <td className="add-padding-left new-files-title"><h1>No nominations in {currentlyViewing}.</h1></td>
+            </tr>
           }
         </tbody>
     </table>
