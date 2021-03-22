@@ -4,3 +4,8 @@
   border-color: var(--brand);
   margin-left: 1rem;
 }
+
+.sync-message {
+ letter-spacing: normal !important;
+ padding-left: 2rem;
+}

@@ -1,0 +1,90 @@
+- const quarters = ['March 31st', 'June 30th', 'September 30th', 'December 31st']
+
+//- head
+//-   style
+//-     include hipaa.css
+style(type="text/css").
+  .text__underline {
+    text-decoration: underline;
+  }
+  .text__bold {
+    font-weight: bold;
+  }
+  .text__color_green {
+    color: green;
+  }
+  .main {
+    max-width:600px;
+    margin: 0 auto;
+  }
+  .mb3 {
+  margin-bottom: 3rem;
+  }
+
+div.main
+  img(src=`${appURL}/email/header.jpg` alt='header' style='width:100%; height:auto; margin-bottom: 1rem;')
+
+  p  Hello #{name},
+  p
+    | A member of your medical team has recently nominated your family for a Keep Swimming Foundation
+    | grant this quarter. If you are unaware of Keep Swimming Foundation and this nomination, please speak
+    | with your hospital's social worker who is assigned to your family&apos;s care plan.
+  p.mb3
+    | Before Keep Swimming Foundation can fully process your application, a signed HIPAA Authorization
+    | Form must be completed and sent to Keep Swimming Foundation as soon as possible. This form
+    | authorizes the hospital at which your loved one is treatment to provide information on the patient&apos;s
+    | hospitalization to Keep Swimming Foundation.
+  h2.text__underline.text__bold
+    | HOW TO AQUIRE A HIPAA AUTHORIZATION FORM:
+  p
+    | Every hospital has their own HIPAA Authorization Form (also known as a Release of Information Form).
+    | The best way to obtain this form is to speak with your nurse, physician or the hospital&apos;s social worker.
+  p
+    | If the patient is 18 years of age or older, they must sign the hospital&apos;s HIPAA Authorization Form.
+    | However, in some cases, if the patient is unable to sign documents, a loved one may be able to do so on
+    | their behalf. Your hospital&apos;s social worker can aid you with this.
+  p
+    | If the patient is younger than 18 years of age, a legal guardian must sign the HIPAA Authorization Form
+    | on their behalf.
+  p
+    span.text__bold Please Note: 
+    | Due to the large volume of applications that Keep Swimming Foundation receives, we will
+    | not follow-up with any nominating party regarding this step. Please understand that you are fully
+    | accountable for acquiring and submitting the completed HIPAA Authorization Form in a timely fashion. To
+    | submit a completed HIPAA Authorization Form, send the form to us as an 
+    span.text__bold unsecured attachment 
+    | at: 
+    a.text__bold(href="mailto:info@keepswimmingfoundation.org") info@keepswimmingfoundation.org
+    | . We do not accept any submissions via standard mail.
+  p
+    | If you need help with this step, please contact a social worker at your hospital.
+  p
+    | Keep Swimming Foundation selects recipients on a quarterly basis. In 2020, application deadlines will be:
+
+
+  p
+    each quarter,index in quarters
+      span.text__bold Quarter #{index+1}: 
+      if targetQuarter === index+1
+        span.text__color_green.text__bold #{quarter} - Current Quarter and your deadline
+      else
+        span #{quarter}
+      br
+
+  p
+    | You will be asked to provide additional information, so please make sure you act as soon as possible so
+    | that you meet our provided deadlines. To give every nominee an equal chance, all deadlines are firm and
+    | will not be extended.
+  p
+    | Lastly, please understand that this application process 
+    span.text__bold does not guarantee the nominated individual/family will receive a grant from Keep Swimming Foundation. 
+    | It is imperative that the
+    | nominated individual/family does not rely on these funds and that the nominated individual/family
+    | understands that they will only be contacted by Keep Swimming Foundation 
+    span.text__bold after the nearest quarterly
+    | deadline regarding the outcome of their application.
+  p
+    | We send our best to your loved one during this troubling time and we look forward to receiving your
+    | completed HIPAA Authorization Form in the near future.
+  p 
+    | -Keep Swimming Foundation

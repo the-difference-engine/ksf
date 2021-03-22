@@ -3,34 +3,34 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return Promise.all([
-      queryInterface.removeColumn('nominations', 'providerFirstName'),
-      queryInterface.removeColumn('nominations', 'providerLastName'),
-      queryInterface.removeColumn('nominations', 'relationship'),
-      queryInterface.removeColumn('nominations', 'patientFirstName'),
-      queryInterface.removeColumn('nominations', 'patientLastName'),
-      queryInterface.removeColumn('nominations', 'age'),
-      queryInterface.removeColumn('nominations', 'providerNumber'),
-      queryInterface.addColumn('nominations', 'providerName', {
-        type: Sequelize.STRING,
-      }),
-      queryInterface.addColumn('nominations', 'patientName', {
-        type: Sequelize.STRING,
-      }),
-      queryInterface.addColumn('nominations', 'representativeRelationship', {
-        type: Sequelize.STRING,
-      }),
-      queryInterface.addColumn('nominations', 'patientAge', {
-        type: Sequelize.INTEGER,
-      }),
-      queryInterface.addColumn('nominations', 'representativePhoneNumber', {
-        type: Sequelize.INTEGER,
-      }),
-      queryInterface.addColumn('nominations', 'providerPhoneNumber', {
-        type: Sequelize.STRING,
-      }),
+      // queryInterface.removeColumn('nominations', 'providerFirstName'),
+      // queryInterface.removeColumn('nominations', 'providerLastName'),
+      // queryInterface.removeColumn('nominations', 'relationship'),
+      // queryInterface.removeColumn('nominations', 'patientFirstName'),
+      // queryInterface.removeColumn('nominations', 'patientLastName'),
+      // queryInterface.removeColumn('nominations', 'age'),
+      // queryInterface.removeColumn('nominations', 'providerNumber'),
+      // queryInterface.addColumn('nominations', 'providerName', {
+      //   type: Sequelize.STRING,
+      // }),
+      // queryInterface.addColumn('nominations', 'patientName', {
+      //   type: Sequelize.STRING,
+      // }),
+      // queryInterface.addColumn('nominations', 'representativeRelationship', {
+      //   type: Sequelize.STRING,
+      // }),
+      // queryInterface.addColumn('nominations', 'patientAge', {
+      //   type: Sequelize.INTEGER,
+      // }),queryInterface.renameColumn('nominations', 'title', 'providerTitle'),
+      //   type: Sequelize.INTEGER,
+      // }),
+      // queryInterface.addColumn('nominations', 'providerPhoneNumber', {
+      //   type: Sequelize.STRING,
+      // }),
       queryInterface.addColumn('nomination', 'hipaaTimestamp', {
-        type:Sequelize.STRING,}),
-      queryInterface.renameColumn('nominations', 'title', 'providerTitle'),
+        type:Sequelize.STRING,
+      }),
+      // queryInterface.renameColumn('nominations', 'title', 'providerTitle'),
     ]);
   },
 
