@@ -91,7 +91,6 @@ const findActive = async (req, res) => {
 module.exports = {
   create,
   findAll,
-  findByName,
   update,
   findActive,
 };
