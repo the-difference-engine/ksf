@@ -7,10 +7,10 @@ const create = async (req, res) => {
     return res.status(201).json(grant);
   } catch (error) {
     if (error instanceof ValidationError) {
-      console.info('400 at POST /grantcycle', error);
+      console.info('400 at POST /grantcycles', error);
       return res.status(400).send(error.message);
     }
-    console.error('500 error at POST /grantcycle', error);
+    console.error('500 error at POST /grantcycles', error);
     return res.status(500).send('Something went wrong. Please try again');
   }
 };
@@ -38,10 +38,10 @@ const update = async (req, res) => {
     return res.status(200).send(grant);
   } catch (error) {
     if (error instanceof ValidationError) {
-      console.info('400 error at PUT /grantcycle', error);
+      console.info('400 error at PUT /grantcycles', error);
       return res.status(400).send(error.message);
     }
-    console.error('500 error at PUT /grantcycle', error);
+    console.error('500 error at PUT /grantcycles', error);
     return res.status(500).send('Something went wrong. Please try again');
   }
 };
@@ -71,22 +71,8 @@ const findAll = async (req, res) => {
     }
     return res.status(404).send('No grants found');
   } catch (error) {
-    console.error('500 error at GET /grantcycle/findall', error);
+    console.error('500 error at GET /grantcycles', error);
     return res.status(500).send('Something went wrong. Please try again');
-  }
-};
-
-const findByName = async (req, res) => {
-  const name = decodeURI(req.params.name);
-  try {
-    const grant = await db.GrantCycle.findOne({ where: { name } });
-    if (grant) {
-      return res.status(200).json(grant);
-    }
-    return res.status(404).send(`No grant cycle found with name: ${name}`);
-  } catch (error) {
-    console.error('500 error at POST /grantcycle/findbyname', error);
-    return res.status(500).send(error.message);
   }
 };
 
