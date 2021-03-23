@@ -81,7 +81,7 @@ const updateNomination = async (req, res) => {
         sendDeclineEmail(nomination)
       }
       if (nomination.status === 'HIPAA Verified') {
-        nomination.hipaaTimestamp = Date().toString();
+        nomination.hipaaTimestamp = Date();
         }
       }
       return res.status(200).json(nomination);

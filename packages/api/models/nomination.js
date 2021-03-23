@@ -138,7 +138,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       hipaaTimestamp: {
         allowNull: true,
-        type: DataTypes.STRING
+        type: DataTypes.DATE
       },
     },
     {

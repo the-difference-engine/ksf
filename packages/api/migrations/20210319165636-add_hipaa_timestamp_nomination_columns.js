@@ -4,7 +4,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return Promise.all([
       queryInterface.addColumn('nominations', 'hipaaTimestamp', {
-        type:Sequelize.STRING,
+        type:Sequelize.DATE,
       }),
     ]);
   },
