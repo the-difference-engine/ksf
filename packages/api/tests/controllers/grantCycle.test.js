@@ -79,7 +79,7 @@ describe('PUT /api/grantcycles', () => {
     }
   });
   it('returns 200 on successfully updating Active --> Inactive', (done) => {
-    const { id } = grants.secondGrant;
+    const { id } = grants.firstGrant;
     request(app)
       .put(`/api/grantcycles/${id}`)
       .send({ isActive: false })
