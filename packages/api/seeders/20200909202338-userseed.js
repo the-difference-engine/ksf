@@ -9,7 +9,7 @@ module.exports = {
           id: 'bc3cd395-226c-46be-9b80-89c5f1c944db',
           email: 'bill@email.com',
           username: 'BillsAccount',
-          password: 'asDf',
+          // password: 'asDf',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
