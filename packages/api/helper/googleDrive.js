@@ -1,41 +1,56 @@
-const fs = require('fs');
-const readline = require('readline');
 const { google } = require('googleapis');
-const drive = google.drive('v3');
-const { authenticate } = require('@google-cloud/local-auth');
-const path = require('path')
-const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+const fs = require('fs');
+var fileMetadata = {
+      'name': 'BIGTest',
+      'mimeType': 'application/vnd.google-apps.folder'
+    };
 
-async function createFolder() {
-  var fileMetadata = {
-    'name': 'Test',
-    'mimeType': 'application/vnd.google-apps.folder'
-  };
-  const auth = await authenticate({
-    keyfilePath: path.join(__dirname, '../env/credentials.json'),
-    scopes: 'https://www.googleapis.com/auth/drive.file',
+const credentials = require('../env/credentials.json');
+
+const scopes = [
+  'https://www.googleapis.com/auth/drive'
+];
+
+const auth = new google.auth.JWT(
+  credentials.client_email, null,
+  credentials.private_key, scopes
+);
+
+const drive = google.drive({ version: 'v3', auth });
+MakeaFolder()
+drive.files.list({}, (err, res) => {
+  if (err) throw err;
+  const files = res.data.files;
+
+  if (files.length) {
+    files.map((file) => {
+      
+      console.log(file);
+    });
+  } else {
+    console.log('No files found');
+    MakeaFolder()
+  }
+});
+function MakeaFolder(){drive.files.create({
+  resource: fileMetadata,
+  fields: 'id'
+}, function (err, file) {
+  if (err) {
+    // Handle error
+    console.error(err);
+  }
+})}
+
+(async function () {
+
+  let res = await drive.files.list({
+    pageSize: 20,
+    fields: 'files(name,fullFileExtension,webViewLink)',
+    orderBy: 'createdTime desc'
   });
-  google.options({ auth });
 
-  
-await drive.files.create({
-    resource: fileMetadata,
-    fields: 'id'
-  }, function (err, file) {
-    if (err) {
-      // Handle error
-      console.error(err);
-    } else {
-      console.log('Folder Id: ', "whatever");
-    }
-  });
-  console.log('Folder Id: ', "whatever");
-  return "Folder Id";
-}
 
-// if invoked directly (not tests), authenticate and run the samples
-if (module === require.main) {
-  const fileName = process.argv[2];
-  createFolder(fileName).catch(console.error);
-}
-module.exports = {createFolder};
+
+
+})()
