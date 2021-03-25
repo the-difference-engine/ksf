@@ -1,14 +1,13 @@
 const { google } = require('googleapis');
 const fs = require('fs');
-var fileMetadata = {
-      'name': 'BIGTest',
-      'mimeType': 'application/vnd.google-apps.folder'
-    };
+const parentFolderId = '1Uu04G0GGvJVaYE0S9hvc9_6lmtN5XQtQ'
 
 const credentials = require('../env/credentials.json');
 
 const scopes = [
-  'https://www.googleapis.com/auth/drive'
+  'https://www.googleapis.com/auth/drive',
+  'https://www.googleapis.com/auth/drive.appdata',
+  'https://www.googleapis.com/auth/drive.file'
 ];
 
 const auth = new google.auth.JWT(
@@ -17,22 +16,14 @@ const auth = new google.auth.JWT(
 );
 
 const drive = google.drive({ version: 'v3', auth });
-MakeaFolder()
-drive.files.list({}, (err, res) => {
-  if (err) throw err;
-  const files = res.data.files;
 
-  if (files.length) {
-    files.map((file) => {
-      
-      console.log(file);
-    });
-  } else {
-    console.log('No files found');
-    MakeaFolder()
-  }
-});
-function MakeaFolder(){drive.files.create({
+function MakeaFolder(patientName){ 
+  let fileMetadata = {
+    'name': patientName,
+    'parents': [parentFolderId],
+    'mimeType': 'application/vnd.google-apps.folder'
+  };
+  drive.files.create({
   resource: fileMetadata,
   fields: 'id'
 }, function (err, file) {
@@ -42,15 +33,17 @@ function MakeaFolder(){drive.files.create({
   }
 })}
 
-(async function () {
+// uncomment to list files
+// drive.files.list({}, (err, res) => {
+//   if (err) throw err;
+//   const files = res.data.files;
+//   if (files.length) {
+//     files.map((file) => {
+//       console.log(file);
+//     });
+//   } else {
+//     console.log('No files found');
+//   }
+// });
 
-  let res = await drive.files.list({
-    pageSize: 20,
-    fields: 'files(name,fullFileExtension,webViewLink)',
-    orderBy: 'createdTime desc'
-  });
-
-
-
-
-})()
+module.exports = {MakeaFolder}

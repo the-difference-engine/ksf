@@ -4,7 +4,7 @@ const db = require('../models');
 const { sendDeclineEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
-const { createFolder } = require('../helper/googleDrive');
+const { MakeaFolder } = require('../helper/googleDrive');
 
 const getNominationById = async (req, res) => {
   try {
@@ -81,7 +81,7 @@ const updateNomination = async (req, res) => {
       sendDeclineEmail(updatedNom)
     }
     if (nomination.status === "HIPAA Verified"){
-      createFolder()
+      MakeaFolder(nomination.patientName)
     }
     return res.status(200).json(nomination);
   } catch (error) {
