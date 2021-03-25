@@ -17,7 +17,7 @@ const auth = new google.auth.JWT(
 
 const drive = google.drive({ version: 'v3', auth });
 
-function MakeaFolder(patientName){ 
+function createFolder(patientName){ 
   let fileMetadata = {
     'name': patientName,
     'parents': [parentFolderId],
@@ -46,4 +46,4 @@ function MakeaFolder(patientName){
 //   }
 // });
 
-module.exports = {MakeaFolder}
+module.exports = {createFolder}
