@@ -4,12 +4,9 @@ const faker = require("faker");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const generateRandomNoms = () => {
-      let providerFN;
-      let providerLN;
+
       const arrayOfDictNom = []
       for(let i = 0; i <= 100; i++) {
-        providerFN = faker.name.firstName();
-        providerLN = faker.name.lastName();
         arrayOfDictNom.push({
           id: faker.random.uuid(),
           status: 'received',
