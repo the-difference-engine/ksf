@@ -4,17 +4,19 @@ const faker = require("faker");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const generateRandomNoms = () => {
-      let providerFN = faker.name.firstName();
-      let providerLN = faker.name.lastName();
+      let providerFN;
+      let providerLN;
       const arrayOfDictNom = []
       for(let i = 0; i <= 100; i++) {
-        arrayOfDictNom.append({
+        providerFN = faker.name.firstName();
+        providerLN = faker.name.lastName();
+        arrayOfDictNom.push({
           id: faker.random.uuid(),
           status: 'received',
           dateReceived: new Date(),
-          providerName: `${providerFN} ${providerLN}`,
+          providerName: `${faker.name.firstName()}${faker.name.lastName()}`,
           providerPhoneNumber: faker.phone.phoneNumber(),
-          providerEmailAddress: `${providerFN}${providerLN}@provider.com`,
+          providerEmailAddress: `${faker.name.firstName()}${faker.name.lastName()}@provider.com`,
           providerTitle: 'Dock',
           emailValidated: true,
           hospitalName: 'Northwestern',
@@ -23,28 +25,26 @@ module.exports = {
           hospitalCity: faker.address.city(),
           hospitalState: faker.address.state(),
           hospitalZipCode: faker.address.zipCode(),
-          representativeFirstName: faker.name.firstName(),
-          representativeLastName: faker.name.lastName(),
+          representativeName: `${faker.name.firstName()} ${faker.name.lastName()}`,
           representativeEmailAddress: `${providerFN}${providerLN}@representative.com`,
-          relationship: 'representative',
-          patientFirstName: faker.name.firstName(),
-          patientLastName: faker.name.lastName(),
-          age: Math.floor(Math.random() * 100),
+          representativeRelationship: 'representative',
+          patientName:`${faker.name.firstName()} ${faker.name.lastName()}`,
+          patientAge: Math.floor(Math.random() * 100),
           admissionDate: faker.date.past(),
           dischargeDate: faker.date.past(),
           patientDiagnosis: faker.lorem.sentence(),
-          amountRequestedCents: faker.finance.amount(),
-          amountGrantedCents: faker.finance.amount(),
+          amountRequestedCents: Math.floor(Math.random() * 100),
+          amountGrantedCents: Math.floor(Math.random() * 100),
           attachmentsDestination: faker.lorem.sentence(),
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-          grantCycleId: faker.random.uuid(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          grantCycleId: 'db49080a-c1d6-42e0-b0f3-7667bf4fdd1f',
         });
       }
       return arrayOfDictNom;
     }
     return queryInterface.bulkInsert(
-      'nominations', generateRandomNoms())
+      'nominations', generateRandomNoms(),{})
   },
 
   down: async (queryInterface, Sequelize) => {
