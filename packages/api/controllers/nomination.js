@@ -85,8 +85,14 @@ const updateNomination = async (req, res) => {
       }
       
       if (nomination.status === 'HIPAA Verified') {
-        nomination.hipaaTimestamp = Date();
-        sendSurveyEmail(nomination);
+        try {
+          nomination.update(
+            { hipaaTimestamp: Date() }
+          ).catch ((err)=> {
+            console.log('Nomination Not Found', err)
+            return res.status(400)});
+          }
+        finally { sendSurveyEmail(nomination); }
       }
       
       return res.status(200).json(nomination);
