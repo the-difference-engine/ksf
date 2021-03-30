@@ -54,6 +54,9 @@ html
             .f1 {
                 margin-top: 50px;
             }
+            .boldIt {
+                font-style: italic;
+            }
 
     body
         img(src= `${appUrl}/email/header.jpg` alt='header' style='width:100%; height:auto;')
@@ -62,7 +65,9 @@ html
         div(class="container")
             h1 FINAL STEP: SUPPORTING SURVEY
             
-            p Hi #{name},
+            p
+                | Hi 
+                strong.boldIt #{name},
             
             p If you are receiving this message, both your online application and HIPAA Authorization Form have been processed in our system and we are interested in learning more about your family’s current medical circumstance.
             p 
