@@ -1,11 +1,8 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
-const previewEmail = require('preview-email');
-const path = require('path');
+const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
-
-
 
 const transport = {
   port: 587,
@@ -41,12 +38,12 @@ function sendDeclineEmail(nomination) {
     template: 'decline',
     message: {
       from: adminEmail,
-      to: nomination.providerEmailAddress,
+      to: nomination.providerEmailAddress
     },
     locals: {
       name: nomination.providerName,
       patientName: nomination.patientName,
-      appUrl: process.env.APP_URL,
+      imgUrl
     }
   }).catch((err) => console.log(err)).then(() => console.log('email has been sent!'));
 }
@@ -63,13 +60,13 @@ function sendSurveyEmail(nomination) {
       name: nomination.providerName,
       patientName: nomination.patientName,
       email: nomination.providerEmailAddress,
-      appUrl: `${process.env.APP_URL}`,
+      imgUrl
     }
   }).catch((err) => console.log(err))
   .then(() => console.log('email has been sent!'));
 }
 
-function verifyHcEmail(nomination) {
+function verifyHcEmail(nomination) { 
   email.send({
     template: 'verifyHcEmail',
     message: {
@@ -78,7 +75,7 @@ function verifyHcEmail(nomination) {
     },
     locals: {
       name: nomination.providerName,
-      appUrl: process.env.APP_URL
+      imgUrl
     }
   }).then(() => console.log('email has been sent!'))
     .catch(console.error);
@@ -107,7 +104,7 @@ function sendHIPAAEmail(nomination) {
     },
     locals: {
       name: nomination.patientName,
-      appUrl: process.env.APP_URL,
+      imgUrl,
       targetQuarter
     }
   }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
