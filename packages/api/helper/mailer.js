@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
-const previewEmail = require('preview-email');
-const path = require('path');
+const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL
+const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 
 const transport = {
   port: 587,
@@ -37,19 +37,36 @@ function sendDeclineEmail(nomination) {
   email.send({
     template: 'decline',
     message: {
-      from: 'Bill <bill@keepswimmingfoundation.org>',
-      // to: 'sophia@thedifferenceengine.co'
-      to: nomination.providerEmailAddress,
+      from: adminEmail,
+      to: nomination.providerEmailAddress
     },
     locals: {
       name: nomination.providerName,
       patientName: nomination.patientName,
-      appUrl: process.env.APP_URL,
+      imgUrl
     }
-  }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
+  }).catch((err) => console.log(err)).then(() => console.log('email has been sent!'));
 }
 
-function verifyHcEmail(nomination) {
+function sendSurveyEmail(nomination) {
+  email.send({
+    template: 'survey',
+    attachments: './survey/header.jpg',
+    message: {
+      from: adminEmail,
+      to: nomination.providerEmailAddress
+    },
+    locals: {
+      name: nomination.providerName,
+      patientName: nomination.patientName,
+      email: nomination.providerEmailAddress,
+      imgUrl
+    }
+  }).catch((err) => console.log(err))
+  .then(() => console.log('email has been sent!'));
+}
+
+function verifyHcEmail(nomination) { 
   email.send({
     template: 'verifyHcEmail',
     message: {
@@ -58,7 +75,7 @@ function verifyHcEmail(nomination) {
     },
     locals: {
       name: nomination.providerName,
-      appUrl: process.env.APP_URL
+      imgUrl
     }
   }).then(() => console.log('email has been sent!'))
     .catch(console.error);
@@ -87,7 +104,7 @@ function sendHIPAAEmail(nomination) {
     },
     locals: {
       name: nomination.patientName,
-      appUrl: process.env.APP_URL,
+      imgUrl,
       targetQuarter
     }
   }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
@@ -95,6 +112,7 @@ function sendHIPAAEmail(nomination) {
 
 module.exports = {
   sendDeclineEmail,
+  sendSurveyEmail,
   verifyHcEmail,
   sendHIPAAEmail
 }
