@@ -63,7 +63,7 @@ function sendSurveyEmail(nomination) {
       name: nomination.providerName,
       patientName: nomination.patientName,
       email: nomination.providerEmailAddress,
-      appUrl: `${process.env.APP_URL}`,
+      appUrl: process.env.APP_URL,
     }
   }).catch((err) => console.log(err))
   .then(() => console.log('email has been sent!'));

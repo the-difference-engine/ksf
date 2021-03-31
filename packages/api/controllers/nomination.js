@@ -82,9 +82,7 @@ const updateNomination = async (req, res) => {
       if (nomination.status === 'Decline') {
         sendDeclineEmail(nomination)
       }
-      // if nomination state is 'Document Review' then call the sendSurveyEmail
       if (nomination.status === 'HIPAA Verified') {
-        // nomination state is updated no need to redefine variable.
         sendSurveyEmail(nomination)
       }
       return res.status(200).json(nomination);
