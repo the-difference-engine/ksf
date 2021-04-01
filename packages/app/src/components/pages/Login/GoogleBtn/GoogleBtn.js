@@ -24,6 +24,7 @@ class GoogleBtn extends Component {
       accessToken: ""
     }));
   };
+  
 
   handleLoginFailure = (response) => {
     alert("Failed to log in");

@@ -4,9 +4,8 @@ const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
 const previewEmail = require('preview-email');
 const path = require('path');
+const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
-
-
 
 const transport = {
   port: 587,
@@ -42,12 +41,12 @@ function sendDeclineEmail(nomination) {
     template: 'decline',
     message: {
       from: adminEmail,
-      to: nomination.providerEmailAddress,
+      to: nomination.providerEmailAddress
     },
     locals: {
       name: nomination.providerName,
       patientName: nomination.patientName,
-      appUrl: process.env.APP_URL,
+      imgUrl
     }
   }).catch((err) => console.log(err)).then(() => console.log('email has been sent!'));
 }
@@ -64,11 +63,12 @@ function sendSurveyEmail(nomination) {
       name: nomination.providerName,
       patientName: nomination.patientName,
       email: nomination.providerEmailAddress,
-      appUrl: `${process.env.APP_URL}`,
+      imgUrl
     }
   }).catch((err) => console.log(err))
   .then(() => console.log('email has been sent!'));
 }
+
 
 function verifyHcEmail(nomination) {
   const emailToken = generateToken(nomination._id);
@@ -94,6 +94,7 @@ function sendHIPAAEmail(nomination) {
   const monthDate = todaysDate.getMonth() + 1;
   const targetQuarter = monthDate < 4 ? 1 : monthDate > 3 && monthDate < 7 ? 2 : monthDate > 6 && monthDate < 10 ? 3 : 4;
 
+
   email
     .send(
       {
@@ -105,7 +106,7 @@ function sendHIPAAEmail(nomination) {
         },
         locals: {
           name: nomination.patientName,
-          appUrl: process.env.APP_URL,
+          imgUrl,
           targetQuarter,
         },
       }.catch((err) => console.log(err))
@@ -119,3 +120,4 @@ module.exports = {
   verifyHcEmail,
   sendHIPAAEmail,
 };
+
