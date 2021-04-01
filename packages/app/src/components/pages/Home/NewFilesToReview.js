@@ -7,7 +7,7 @@ import useSort from './useSort'
 const NewFilesToReview = () => {
   const [showAll, setShowAll] = useState(false);
   const { sortedNoms, requestSort, sortConfig } = useSort()
-  const sortedNominations = sortedNoms ? sortedNoms.filter(nominations => nominations.status === 'received') : []
+  const sortedNominations = sortedNoms ? sortedNoms.filter(nominations => nominations.status === 'Received') : []
 
   const handleClick = () => {
     setShowAll(!showAll)

@@ -16,8 +16,9 @@ module.exports = {
       for(let i = 0; i <= 100; i++) {
         arrayOfDictNom.push({
           id: faker.random.uuid(),
+          // status: 'received',
           status: status[Math.floor(Math.random()*5)],
-          dateReceived: new Date(),
+          dateReceived: `2021-04-${Math.floor(Math.random()*30)+1}T00:26:18.823Z`,
           providerName: `${faker.name.firstName()}${faker.name.lastName()}`,
           providerPhoneNumber: faker.phone.phoneNumber(),
           providerEmailAddress: `${faker.name.firstName()}${faker.name.lastName()}@provider.com`,
