@@ -18,7 +18,7 @@ module.exports = {
           id: faker.random.uuid(),
           // status: 'received',
           status: status[Math.floor(Math.random()*5)],
-          dateReceived: `2021-04-${Math.floor(Math.random()*30)+1}T00:26:18.823Z`,
+          dateReceived: faker.date.past(3, '2021-03-31'),
           providerName: `${faker.name.firstName()}${faker.name.lastName()}`,
           providerPhoneNumber: faker.phone.phoneNumber(),
           providerEmailAddress: `${faker.name.firstName()}${faker.name.lastName()}@provider.com`,
