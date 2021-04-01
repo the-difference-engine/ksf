@@ -125,3 +125,6 @@ If you navigate to `http://localhost:3000/` you should see the home page!
 ### Continuous Integration (CI)
 
 [Github Actions](https://docs.github.com/en/actions/building-and-testing-code-with-continuous-integration) is the CI provider. Node.js workflow configuration documentation found [here](https://docs.github.com/en/actions/language-and-framework-guides/using-nodejs-with-github-actions)
+
+### Working With Email Previews
+In order for your images to properly work in local and production stages, including email previews, you must add both of these lines to your api/.env file: `IMG_BASE_URL=https://ksf-stg.herokuapp.com` and `APP_URL=http://localhost:3000`. This allows for a check to take place to determine which environment the mailer is running in.
