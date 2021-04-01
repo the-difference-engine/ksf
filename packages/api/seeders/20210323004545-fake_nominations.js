@@ -6,10 +6,17 @@ module.exports = {
     const generateRandomNoms = () => {
 
       const arrayOfDictNom = []
+      const status = [
+        'Received',
+        'Awaiting HIPAA',
+        'HIPAA Verified',
+        'Document Review',
+        'Ready for Board Review',
+      ];
       for(let i = 0; i <= 100; i++) {
         arrayOfDictNom.push({
           id: faker.random.uuid(),
-          status: 'received',
+          status: status[Math.floor(Math.random()*5)],
           dateReceived: new Date(),
           providerName: `${faker.name.firstName()}${faker.name.lastName()}`,
           providerPhoneNumber: faker.phone.phoneNumber(),
@@ -23,7 +30,7 @@ module.exports = {
           hospitalState: faker.address.state(),
           hospitalZipCode: faker.address.zipCode(),
           representativeName: `${faker.name.firstName()} ${faker.name.lastName()}`,
-          representativeEmailAddress: `${providerFN}${providerLN}@representative.com`,
+          representativeEmailAddress: `${faker.name.firstName()}${faker.name.lastName()}@representative.com`,
           representativeRelationship: 'representative',
           patientName:`${faker.name.firstName()} ${faker.name.lastName()}`,
           patientAge: Math.floor(Math.random() * 100),
