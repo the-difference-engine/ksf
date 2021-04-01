@@ -45,7 +45,7 @@ const createNomination = async (req, res) => {
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
     const hasProviderBeenValidated = nominations.some((nom) => {
-      return nom.providerEmailAddress === providerEmailAddress && nom.emailValidated === true;
+      return nom.providerEmailAddress === providerEmailAddress && nom.emailValidated;
     });
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
