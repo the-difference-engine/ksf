@@ -4,6 +4,7 @@ const db = require('../models');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
+const jwt = require('jsonwebtoken');
 
 const getNominationById = async (req, res) => {
   try {
@@ -18,9 +19,7 @@ const getNominationById = async (req, res) => {
     if (nomination) {
       return res.status(200).json({ nomination });
     }
-    return res
-      .status(404)
-      .send('Nomination with the specified ID does not exist!');
+    return res.status(404).send('Nomination with the specified ID does not exist!');
   } catch (error) {
     console.error('500 - something is not right', error);
     return res.status(500).send(error.message);
@@ -46,10 +45,7 @@ const createNomination = async (req, res) => {
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
     const hasProviderBeenValidated = nominations.some((nom) => {
-      return (
-        nom.providerEmailAddress === providerEmailAddress &&
-        nom.emailValidated === true
-      );
+      return nom.providerEmailAddress === providerEmailAddress && nom.emailValidated === true;
     });
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
@@ -101,15 +97,14 @@ const syncNominations = async (req, res) => {
 
 const emailVerifiction = async (req, res) => {
   try {
-    const {
-      nomination: { id },
-    } = jwt.verify(req.params.token, process.env.JWT_SECRET);
+    const { token } = req.params;
+    const { nomination: id } = jwt.verify(token, process.env.JWT_SECRET);
     await db.Nomination.update({ emailValidated: true }, { where: { id } });
+    return res.status(200).json({ status: 'ok' });
   } catch (error) {
     console.log('400 validation error', error);
     return res.status(400).json({ error: error.message });
   }
-  return res.redirect('https://www.keepswimmingfoundation.org/');
 };
 
 module.exports = {

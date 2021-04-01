@@ -55,8 +55,7 @@ function sendDeclineEmail(nomination) {
 }
 
 function verifyHcEmail(nomination) {
-  const emailAddress = String(nomination.providerEmailAddress);
-  const emailToken = generateToken(emailAddress);
+  const emailToken = generateToken(nomination._id);
   email
     .send({
       template: 'verifyHcEmail',
@@ -76,22 +75,8 @@ function verifyHcEmail(nomination) {
 
 function sendHIPAAEmail(nomination) {
   const todaysDate = new Date();
-  const currentYear = new Date().getFullYear();
-  const firstQuarterStart = new Date(currentYear, '00', '01');
-  const firstQuarterEnd = new Date(currentYear, '02', '31');
-  const secondQuarterStart = new Date(currentYear, '03', '01');
-  const secondQuarterEnd = new Date(currentYear, '05', '30');
-  const thirdQuarterStart = new Date(currentYear, '06', '01');
-  const thirdQuarterEnd = new Date(currentYear, '08', '30');
-
-  const targetQuarter =
-    todaysDate > firstQuarterStart && todaysDate < firstQuarterEnd
-      ? 1
-      : todaysDate > secondQuarterStart && todaysDate < secondQuarterEnd
-      ? 2
-      : todaysDate > thirdQuarterStart && todaysDate < thirdQuarterEnd
-      ? 3
-      : 4;
+  const monthDate = todaysDate.getMonth() + 1;
+  const targetQuarter = monthDate < 4 ? 1 : monthDate > 3 && monthDate < 7 ? 2 : monthDate > 6 && monthDate < 10 ? 3 : 4;
 
   email
     .send(
