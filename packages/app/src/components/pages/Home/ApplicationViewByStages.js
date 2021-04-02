@@ -22,7 +22,7 @@ const ApplicationViewByStages = () => {
   const renderSortArrow = (columnName) => {
     return (
       (sortConfig && sortConfig.key === columnName) &&
-      <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />
+      <FontAwesomeIcon icon={sortConfig.direction === 'descending' ? 'arrow-down' : 'arrow-up'} />
     )
   }
 
