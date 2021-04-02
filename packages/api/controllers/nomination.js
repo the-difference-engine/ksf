@@ -112,7 +112,7 @@ const syncNominations = async (req, res) => {
 const emailVerifiction = async (req, res) => {
   try {
     const { token } = req.params;
-    const { nomination: id } = jwt.verify(token, 'sdifv8#$gjs-42_fsfja'); //process.env.JWT_SECRET
+    const { nomination: id } = jwt.verify(token, process.env.JWT_SECRET);
     await db.Nomination.update({ emailValidated: true }, { where: { id } });
     return res.status(200).json({ status: 'ok' });
   } catch (error) {

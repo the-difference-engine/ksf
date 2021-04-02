@@ -29,6 +29,8 @@ jobs:
           - 5432:5432
 
     steps:
+      env:
+          JWT_SECRET: Tm4A$V58Qu2qY&CrUbNBw%n9qWkG
     - uses: actions/checkout@v2
     - name: Use Node.js
       uses: actions/setup-node@v1
@@ -37,3 +39,5 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    
+     
