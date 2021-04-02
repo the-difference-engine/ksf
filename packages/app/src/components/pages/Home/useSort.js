@@ -56,7 +56,6 @@ const useSort = () => {
   }, [NominationsData, sortConfig])
 
   const requestSort = (key, dontDoDefault) => {
-    console.log(key)
     let direction= 'ascending'
     if (dontDoDefault !== 0 && sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending'
@@ -66,9 +65,6 @@ const useSort = () => {
     }
 
     setSortConfig({ key, direction })
-    console.log('*********************')
-    console.log(sortConfig)
-    console.log('*********************')
   }
 
   return { sortedNoms, requestSort, sortConfig }
