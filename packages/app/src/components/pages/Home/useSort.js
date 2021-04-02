@@ -28,12 +28,12 @@ const useSort = () => {
       let aDate = new Date(a[sortConfig.key])
       let bDate = new Date(b[sortConfig.key])
 
-      if (aDate > bDate) {
-        return sortConfig.direction === 'ascending' ? -1 : 1
-      }
-
       if (aDate < bDate) {
         return sortConfig.direction === 'ascending' ? 1 : -1
+      }
+
+      if (aDate > bDate) {
+        return sortConfig.direction === 'ascending' ? -1 : 1
       }
 
       return 0
@@ -55,14 +55,20 @@ const useSort = () => {
     return sortableNoms
   }, [NominationsData, sortConfig])
 
-  const requestSort = (key) => {
-    let direction = 'ascending'
-
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+  const requestSort = (key, dontDoDefault) => {
+    console.log(key)
+    let direction= 'ascending'
+    if (dontDoDefault !== 0 && sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending'
+    }
+    if (dontDoDefault === 0) {
+      direction= 'ascending'
     }
 
     setSortConfig({ key, direction })
+    console.log('*********************')
+    console.log(sortConfig)
+    console.log('*********************')
   }
 
   return { sortedNoms, requestSort, sortConfig }
