@@ -1,5 +1,4 @@
 const { google } = require('googleapis');
-const fs = require('fs');
 const parentFolderId = '1Uu04G0GGvJVaYE0S9hvc9_6lmtN5XQtQ'
 
 const credentials = require('../env/credentials.json');
@@ -17,21 +16,22 @@ const auth = new google.auth.JWT(
 
 const drive = google.drive({ version: 'v3', auth });
 
-function createFolder(patientName){ 
+function createFolder(applicationName) {
   let fileMetadata = {
-    'name': patientName,
+    'name': applicationName,
     'parents': [parentFolderId],
     'mimeType': 'application/vnd.google-apps.folder'
   };
   drive.files.create({
-  resource: fileMetadata,
-  fields: 'id'
-}, function (err, file) {
-  if (err) {
-    // Handle error
-    console.error(err);
-  }
-})}
+    resource: fileMetadata,
+    fields: 'id'
+  }, function (err, file) {
+    if (err) {
+      // Handle error
+      console.error(err);
+    }
+  })
+}
 
 // uncomment to list files
 // drive.files.list({}, (err, res) => {
@@ -46,4 +46,4 @@ function createFolder(patientName){
 //   }
 // });
 
-module.exports = {createFolder}
+module.exports = { createFolder }

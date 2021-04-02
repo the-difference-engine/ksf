@@ -5,6 +5,8 @@ const { sendDeclineEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const { createFolder } = require('../helper/googleDrive');
+const grantCycle = require('../models/grantCycle');
+const states = require('../../app/node_modules/us-state-codes/index');
 
 const getNominationById = async (req, res) => {
   try {
@@ -46,10 +48,10 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
-    const hasProviderBeenValidated = nominations.some( (nom) => {
+    const hasProviderBeenValidated = nominations.some((nom) => {
       return nom.providerEmailAddress === providerEmailAddress && nom.emailValidated === true
     })
-    if(!hasProviderBeenValidated) {
+    if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues)
     }
     return res.status(201).json({ newNomination });
@@ -71,17 +73,25 @@ const updateNomination = async (req, res) => {
     })
     nomination.update(
       { status: req.body.status }
-    ).catch ((err)=> {
+    ).catch((err) => {
       console.log('Nomination Not Found', err)
-      return res.status(400)});
+      return res.status(400)
+    });
     //can continue using additional conditional to use other email functions,
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status') && nomination.status === 'Decline') {
       sendDeclineEmail(updatedNom)
     }
-    if (nomination.status === "HIPAA Verified"){
-      createFolder(nomination.patientName)
+    if (nomination.status === "HIPAA Verified") {
+      try {
+          const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
+          const state = states.getStateCodeByStateName(nomination.hospitalState);
+          const applicationName = `${lastName}-${state}`
+          createFolder(applicationName)
+        } catch (error) {
+        return res.status(400).json({ error: error.message })
+      }
     }
     return res.status(200).json(nomination);
   } catch (error) {
@@ -91,12 +101,13 @@ const updateNomination = async (req, res) => {
 };
 
 const syncNominations = async (req, res) => {
-  try { gsheetToDB()
+  try {
+    gsheetToDB()
     console.log('nominations synced successfully')
-  return res.status(200).json({ 'status': 'ok' })
-} catch (error){
-  console.log('error', error)
-  return res.status(400).json({ error: error.message });
+    return res.status(200).json({ 'status': 'ok' })
+  } catch (error) {
+    console.log('error', error)
+    return res.status(400).json({ error: error.message });
   }
 }
 
