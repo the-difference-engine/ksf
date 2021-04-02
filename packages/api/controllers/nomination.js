@@ -79,12 +79,22 @@ const updateNomination = async (req, res) => {
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
+      
       if (nomination.status === 'Decline') {
         sendDeclineEmail(nomination)
       }
+      
       if (nomination.status === 'HIPAA Verified') {
-        sendSurveyEmail(nomination)
+        try {
+          nomination.update(
+            { hipaaTimestamp: Date() }
+          ).catch ((err)=> {
+            console.log('Nomination Not Found', err)
+            return res.status(400)});
+          }
+        finally { sendSurveyEmail(nomination); }
       }
+      
       return res.status(200).json(nomination);
     } 
   } catch (error) {

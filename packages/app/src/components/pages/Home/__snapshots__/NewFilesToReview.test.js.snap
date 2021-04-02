@@ -34,32 +34,48 @@ Object {
             <td
               class="add-padding-left"
             >
-              <h2>
+               
+              <h2
+                class="sortable-column"
+              >
                 <strong>
                   Application Name
                 </strong>
               </h2>
+               
             </td>
             <td>
-              <h2>
+               
+              <h2
+                class="sortable-column"
+              >
                 <strong>
                   HP Name
                 </strong>
               </h2>
+               
             </td>
             <td>
-              <h2>
+               
+              <h2
+                class="sortable-column"
+              >
                 <strong>
                   Family Member Name
                 </strong>
               </h2>
+               
             </td>
             <td>
-              <h2>
+               
+              <h2
+                class="sortable-column"
+              >
                 <strong>
-                  Received Date
+                  Submission Date
                 </strong>
               </h2>
+               
             </td>
             <td>
               <h2>
@@ -67,15 +83,6 @@ Object {
                   Stage
                 </strong>
               </h2>
-            </td>
-          </tr>
-          <tr>
-            <td
-              class="add-padding-left new-files-title"
-            >
-              <h1>
-                No new nominations.
-              </h1>
             </td>
           </tr>
         </tbody>
@@ -112,32 +119,48 @@ Object {
           <td
             class="add-padding-left"
           >
-            <h2>
+             
+            <h2
+              class="sortable-column"
+            >
               <strong>
                 Application Name
               </strong>
             </h2>
+             
           </td>
           <td>
-            <h2>
+             
+            <h2
+              class="sortable-column"
+            >
               <strong>
                 HP Name
               </strong>
             </h2>
+             
           </td>
           <td>
-            <h2>
+             
+            <h2
+              class="sortable-column"
+            >
               <strong>
                 Family Member Name
               </strong>
             </h2>
+             
           </td>
           <td>
-            <h2>
+             
+            <h2
+              class="sortable-column"
+            >
               <strong>
-                Received Date
+                Submission Date
               </strong>
             </h2>
+             
           </td>
           <td>
             <h2>
@@ -145,15 +168,6 @@ Object {
                 Stage
               </strong>
             </h2>
-          </td>
-        </tr>
-        <tr>
-          <td
-            class="add-padding-left new-files-title"
-          >
-            <h1>
-              No new nominations.
-            </h1>
           </td>
         </tr>
       </tbody>
