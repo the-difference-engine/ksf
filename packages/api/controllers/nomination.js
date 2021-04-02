@@ -2,11 +2,12 @@ const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
 const { sendDeclineEmail } = require('../helper/mailer')
+const { sendSurveyEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const { createFolder } = require('../helper/googleDrive');
-const grantCycle = require('../models/grantCycle');
 const states = require('../../app/node_modules/us-state-codes/index');
+
 
 const getNominationById = async (req, res) => {
   try {
@@ -80,20 +81,31 @@ const updateNomination = async (req, res) => {
     //can continue using additional conditional to use other email functions,
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
-    if (nomination.changed('status') && nomination.status === 'Decline') {
-      sendDeclineEmail(updatedNom)
-    }
-    if (nomination.status === "HIPAA Verified") {
-      try {
+    if (nomination.changed('status')) {
+      
+      if (nomination.status === 'Decline') {
+        sendDeclineEmail(nomination)
+      }
+      
+      if (nomination.status === 'HIPAA Verified') {
+        try {
           const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
           const state = states.getStateCodeByStateName(nomination.hospitalState);
           const applicationName = `${lastName}-${state}`
+
           createFolder(applicationName)
-        } catch (error) {
-        return res.status(400).json({ error: error.message })
+          
+          nomination.update(
+            { hipaaTimestamp: Date() }
+          ).catch ((err)=> {
+            console.log('Nomination Not Found', err)
+            return res.status(400)});
+          }
+        finally { sendSurveyEmail(nomination); }
       }
-    }
-    return res.status(200).json(nomination);
+      
+      return res.status(200).json(nomination);
+    } 
   } catch (error) {
     console.log('400 Update Bad Request', error);
     return res.status(400).json({ error: error.message });

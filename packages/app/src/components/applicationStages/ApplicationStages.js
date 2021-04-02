@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+// importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 
@@ -8,6 +9,7 @@ const ApplicationStages = () => {
     ActiveNominationContext
   );
   const [currentStatus, setCurrentStatus] = useState();
+  // status array is used as the param in 
   const status = [
     'Received',
     'Awaiting HIPAA',
@@ -79,9 +81,9 @@ const ApplicationStages = () => {
     <>
       <div className="nomination-bar-wrapper">
         <div className="wrapper">
-          {currentStatus ? (
+          {currentStatus && (
             <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>
-          ) : null}
+          )}
           <div className="next-wrapper">
           <div
             className="next"
