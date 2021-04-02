@@ -1,7 +1,7 @@
 const { google } = require('googleapis');
-const parentFolderId = '1Uu04G0GGvJVaYE0S9hvc9_6lmtN5XQtQ'
-
-const credentials = require('../env/credentials.json');
+const parentFolderId = process.env.APPLICATION_FOLDER_ID
+const clientEmail  = process.env.SERVICE_CLIENT_EMAIL
+const privateKey = process.env.SERVICE_PRIVATE_KEY
 
 const scopes = [
   'https://www.googleapis.com/auth/drive',
@@ -10,8 +10,8 @@ const scopes = [
 ];
 
 const auth = new google.auth.JWT(
-  credentials.client_email, null,
-  credentials.private_key, scopes
+  clientEmail, null,
+  privateKey, scopes
 );
 
 const drive = google.drive({ version: 'v3', auth });
