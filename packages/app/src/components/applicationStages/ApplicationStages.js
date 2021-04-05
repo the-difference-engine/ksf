@@ -1,12 +1,20 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+// importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 
 const ApplicationStages = () => {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
   const [currentStatus, setCurrentStatus] = useState();
-  const status = ['Received', 'Awaiting HIPAA', 'HIPAA Verified', 'Document Review', 'Ready for Board Review'];
+  // status array is used as the param in 
+  const status = [
+    'Received',
+    'Awaiting HIPAA',
+    'HIPAA Verified',
+    'Document Review',
+    'Ready for Board Review',
+  ];
 
   useEffect(() => {
     setCurrentStatus(capitalize(activeNomination.status));

@@ -2,8 +2,10 @@ const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
 const { sendDeclineEmail } = require('../helper/mailer')
+const { sendSurveyEmail } = require('../helper/mailer')
 const { verifyHcEmail } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB')
+
 
 const getNominationById = async (req, res) => {
   try {
@@ -76,10 +78,17 @@ const updateNomination = async (req, res) => {
     //can continue using additional conditional to use other email functions,
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
-    if (nomination.changed('status') && nomination.status === 'Decline') {
-      sendDeclineEmail(updatedNom)
-    }
-    return res.status(200).json(nomination);
+    if (nomination.changed('status')) {
+      if (nomination.status === 'Decline') {
+        sendDeclineEmail(nomination)
+      }
+      // if nomination state is 'Document Review' then call the sendSurveyEmail
+      if (nomination.status === 'HIPAA Verified') {
+        // nomination state is updated no need to redefine variable.
+        sendSurveyEmail(nomination)
+      }
+      return res.status(200).json(nomination);
+    } 
   } catch (error) {
     console.log('400 Update Bad Request', error);
     return res.status(400).json({ error: error.message });
