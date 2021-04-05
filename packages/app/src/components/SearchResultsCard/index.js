@@ -21,8 +21,7 @@ const SearchResultsCard = () => {
               <td><h1><strong>Patient Name</strong></h1></td>
               <td><h1><strong>Received Date</strong></h1></td>
             </tr>
-            {SearchResultData
-              ? SearchResultData.map((result) => (
+            {SearchResultData?.map((result) => (
                   <tr key={result.id}>
                     <td>
                       <Link to={`/nomination/${result.id}`}>{result.nominationName}</Link>
@@ -32,7 +31,7 @@ const SearchResultsCard = () => {
                     <td>{result.dateReceived}</td>
                   </tr>
                 ))
-              : null}
+              }
           </tbody>
         </table>
       </section>
