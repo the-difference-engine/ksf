@@ -11,7 +11,7 @@ function ApplicationDetail(props) {
         {props.fields.map((obj) => (
           <div key={obj.label} className={obj.label === '' ? styles.mobileHide : ''}>
             <label className={styles.label}>{obj.label}</label>
-            <span className={styles.value}>{String(obj.value)}</span>
+            <span className={styles.value}>{obj.value}</span>
           </div>
         ))}
       </div>
