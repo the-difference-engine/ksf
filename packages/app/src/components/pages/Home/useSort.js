@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useContext } from 'react'
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
+import { SORT_DIRECTION } from '../../enum.js';
 
 const useSort = () => {
-  const [sortConfig, setSortConfig] = useState({key: 'dateReceived', direction: 'ascending'})
+  const [sortConfig, setSortConfig] = useState({key: 'dateReceived', direction: SORT_DIRECTION.UP})
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
 
   const sortNominationsByName = (nomsToSort) => {
@@ -11,11 +12,11 @@ const useSort = () => {
       let bFirstLetter = b[sortConfig.key].toUpperCase().slice(0)
 
       if (aFirstLetter < bFirstLetter) {
-        return sortConfig.direction === 'ascending' ? -1 : 1
+        return sortConfig.direction === SORT_DIRECTION.UP ? -1 : 1
       }
 
       if (aFirstLetter > bFirstLetter) {
-        return sortConfig.direction === 'ascending' ? 1 : -1
+        return sortConfig.direction === SORT_DIRECTION.UP ? 1 : -1
       }
 
       return 0
@@ -29,11 +30,11 @@ const useSort = () => {
       let bDate = new Date(b[sortConfig.key])
 
       if (aDate < bDate) {
-        return sortConfig.direction === 'ascending' ? 1 : -1
+        return sortConfig.direction === SORT_DIRECTION.UP ? 1 : -1
       }
 
       if (aDate > bDate) {
-        return sortConfig.direction === 'ascending' ? -1 : 1
+        return sortConfig.direction === SORT_DIRECTION.UP ? -1 : 1
       }
 
       return 0
@@ -55,13 +56,14 @@ const useSort = () => {
     return sortableNoms
   }, [NominationsData, sortConfig])
 
-  const requestSort = (key, dontDoDefault) => {
-    let direction= 'ascending'
-    if (dontDoDefault !== 0 && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending'
+  const requestSort = (key, doDefault) => {
+    console.log(doDefault)
+    let direction= SORT_DIRECTION.UP
+    if (!doDefault && sortConfig.key === key && sortConfig.direction === SORT_DIRECTION.UP) {
+      direction = SORT_DIRECTION.DOWN
     }
-    if (dontDoDefault === 0) {
-      direction= 'ascending'
+    if (doDefault) {
+      direction= SORT_DIRECTION.UP
     }
 
     setSortConfig({ key, direction })
