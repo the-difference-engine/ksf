@@ -9,6 +9,9 @@ const NominationBanner = ({ nomination }) => {
   const nominationName = `${lastName}-${state}`
   const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
 
+  const formChange = () => {
+    console.log("clicked.....")
+  }
 
   return (
     <div className="nomination-banner-container">
@@ -40,13 +43,13 @@ const NominationBanner = ({ nomination }) => {
               <span><h2 className="body-font"><strong>{date}</strong></h2></span>
             </div>
             <div className="column amount">
-               <p className="secondary-dark">Grant Amount Requested</p>
+              <p className="secondary-dark">Grant Amount Requested</p>
               <span><h2 className="body-font"><strong>{formattedAmount ? `$${formattedAmount}` : ''}</strong></h2></span>
             </div>
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button" id="edit-button">Edit</button>
+          <button className="button button-outline edit-button" onClick={ () => formChange()  } id="edit-button">Edit</button>
         </div>
       </div>
     </div>
