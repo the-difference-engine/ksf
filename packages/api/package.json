@@ -20,6 +20,7 @@
     "email-templates": "^8.0.3",
     "express": "^4.17.1",
     "googleapis": "^59.0.0",
+    "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.4.14",
     "nodemailer-smtp-transport": "^2.7.4",
     "pg": "^8.3.0",
