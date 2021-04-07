@@ -1,11 +1,15 @@
 const { google } = require('googleapis');
+const parsePrivateKey = require('./parsePrivateKey');
 const rangePar = 'Sheet1';
+const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
+const privateKey = parsePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY)
+const scopes = ['https://www.googleapis.com/auth/spreadsheets']
 
 const client = new google.auth.JWT(
-  process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+  clientEmail,
   null,
-  process.env.GOOGLE_SHEETS_PRIVATE_KEY.replace(/\\n/g, '\n'),
-  ['https://www.googleapis.com/auth/spreadsheets']
+  privateKey,
+  scopes
 );
 
 client.authorize(function (err, tokens) {
