@@ -10,6 +10,7 @@ const NominationBanner = ({ nomination }) => {
   const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
 
   const formChange = () => {
+    // where should this go?
     console.log("clicked.....")
   }
 
