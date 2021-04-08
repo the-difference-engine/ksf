@@ -1,4 +1,10 @@
+'use strict';
+
 module.exports = function parsePrivateKey(privateKey) {
-    const pk = privateKey.replace(/\\n/g, '\n');
-    return pk
+    if (!privateKey || privateKey.length === 0) {
+        console.log("There is no key. Only Null")
+    } else {
+        return privateKey.replace(/\\n/g, '\n');
+    }
+    
 }
