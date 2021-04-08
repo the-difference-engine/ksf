@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 
 
 
-function NominationInfo() {
+function NominationInfo(toggleME) {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
@@ -111,8 +111,14 @@ function NominationInfo() {
     ];
       return (
         <div className={styles.layout}>
+          {
+          toggleMe ? <div><h1>input stuff here</h1></div> : <div>
             <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
+            </div>
+          }
+
+            {/* second condition to form data */}
             <HealthProviderDetail fields={fields} gridContent={true} title="Health Provider Information" />
         </div>
       );
