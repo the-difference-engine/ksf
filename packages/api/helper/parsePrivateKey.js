@@ -1,3 +1,4 @@
 module.exports = function parsePrivateKey(privateKey) {
-    return privateKey.replace(/\\n/g, '\n');
+    const pk = privateKey.replace(/\\n/g, '\n');
+    return pk
 }
