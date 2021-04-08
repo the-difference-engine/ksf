@@ -3,13 +3,15 @@ import React from 'react';
 const states = require('us-state-codes');
 
 const NominationBanner = ({ nomination }) => {
-  const date = new Date(nomination.dateReceived).toLocaleDateString()
-  const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : ''
-  const state = states.getStateCodeByStateName(nomination.hospitalState)
-  const nominationName = `${lastName}-${state}`
-  const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
-
-
+  const date = new Date(nomination.dateReceived).toLocaleDateString();
+  const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
+  const state = states.getStateCodeByStateName(nomination.hospitalState);
+  const nominationName = `${lastName}-${state}`;
+  const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : '';
+  const HippaDate = nomination.hipaaTimestamp;
+  const dateArr = HippaDate ? (HippaDate.toString().split("T")[0].split("-")) : [];
+  const properDateFormat = `${dateArr[1]}/${dateArr[2]}/${dateArr[0]}`;
+  
   return (
     <div className="nomination-banner-container">
       <div className="row">
@@ -42,6 +44,10 @@ const NominationBanner = ({ nomination }) => {
             <div className="column amount">
                <p className="secondary-dark">Grant Amount Requested</p>
               <span><h2 className="body-font"><strong>{formattedAmount ? `$${formattedAmount}` : ''}</strong></h2></span>
+            </div>
+            <div className="column hippa">
+               <p className="secondary-dark">HIPPA Date</p>
+              <span><h2 className="body-font"><strong>{properDateFormat != "undefined/undefined/undefined" ? properDateFormat : 'Awaiting HIPPA'}</strong></h2></span>
             </div>
           </div>
         </div>
