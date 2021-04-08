@@ -38,7 +38,7 @@ const ApplicationViewByStages = () => {
 
   const handleViewStageChange = (evt) => {
     setCurrentlyViewing(evt.currentTarget.value)
-    requestSort('dateReceived', SORT_DIRECTION.UP)
+    requestSort('dateReceived', true)
   }
 
   return (
