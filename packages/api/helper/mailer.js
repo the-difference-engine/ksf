@@ -70,7 +70,7 @@ function verifyHcEmail(nomination) {
   email.send({
     template: 'verifyHcEmail',
     message: {
-      from: 'formmaster@keepswimmingfoundation.org',
+      from: adminEmail,
       to: nomination.providerEmailAddress,
     },
     locals: {

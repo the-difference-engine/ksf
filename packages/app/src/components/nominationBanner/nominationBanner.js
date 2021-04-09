@@ -1,19 +1,16 @@
 import NominationInfo from '../nominationInfo';
 import style from './style.css'
-import React from 'react';
+import React, {useState} from 'react';
 const states = require('us-state-codes');
 
-const NominationBanner = ({ nomination },props) => {
+const NominationBanner = ({ nomination, clicking}) => {
   const date = new Date(nomination.dateReceived).toLocaleDateString()
   const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : ''
   const state = states.getStateCodeByStateName(nomination.hospitalState)
   const nominationName = `${lastName}-${state}`
   const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
 
-  const formChange = () => {
-    let toggleME = true
 
-  }
 
   return (
     <div className="nomination-banner-container">
@@ -51,7 +48,7 @@ const NominationBanner = ({ nomination },props) => {
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button" onClick={()=>formChange()} id="edit-button">Edit</button>
+          <button className="button button-outline edit-button" onClick={clicking} id="edit-button">Edit</button>
         </div>
       </div>
     </div>

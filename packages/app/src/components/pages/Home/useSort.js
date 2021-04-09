@@ -66,9 +66,7 @@ const useSort = () => {
     }
 
     setSortConfig({ key, direction })
-    console.log('*********************')
-    console.log(sortConfig)
-    console.log('*********************')
+
   }
 
   return { sortedNoms, requestSort, sortConfig }

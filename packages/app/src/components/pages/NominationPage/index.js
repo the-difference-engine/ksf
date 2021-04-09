@@ -7,6 +7,7 @@ import SearchBar from '../../SearchBar'
 import NominationInfo from '../../nominationInfo';
 
 const NominationPage = ({
+  
   match: {
     params: { id },
   },
@@ -18,6 +19,7 @@ const NominationPage = ({
     NominationsDataContext
   );
   const [error, setError] = useState()
+  const [hasBeenClicked, setHasBeenClicked] = useState(false);
 
   useEffect(() => {
     if (NominationsData) {
@@ -30,17 +32,19 @@ const NominationPage = ({
         }
       });
     }
-  });
-
+  },[]);
+  function handleClick(){
+    setHasBeenClicked((isclicked)=>!isclicked)
+  }
   return (
     <>
     {activeNomination
       ?
       <div className="nomination-show-page">
         <SearchBar />
-        <NominationBanner nomination={activeNomination} />
+        <NominationBanner clicking={handleClick} nomination={activeNomination} />
         <ApplicationStages />
-        <NominationInfo />
+        <NominationInfo bool={hasBeenClicked}/>
       </div>
       :
     <div>{error}</div>

@@ -6,11 +6,11 @@ import styles from "./styles.module.css";
 
 
 
-function NominationInfo(toggleME) {
+function NominationInfo({bool}) {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-
+  console.log(bool)
   
   const { hospitalCity, hospitalState, hospitalZipCode, admissionDate } = activeNomination;
   const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
@@ -112,13 +112,14 @@ function NominationInfo(toggleME) {
       return (
         <div className={styles.layout}>
           {
-          toggleMe ? <div><h1>input stuff here</h1></div> : <div>
-            <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
-            <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
+          bool ? <div><h1>input stuff here</h1></div> : <div>
+            <h1>hello</h1>
             </div>
           }
 
             {/* second condition to form data */}
+            <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
+            <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
             <HealthProviderDetail fields={fields} gridContent={true} title="Health Provider Information" />
         </div>
       );
