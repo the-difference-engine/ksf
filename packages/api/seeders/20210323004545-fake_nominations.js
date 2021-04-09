@@ -8,7 +8,7 @@ module.exports = {
       const arrayOfDictNom = []
       for(let i = 0; i <= 100; i++) {
         arrayOfDictNom.push({
-          id: faker.random.uuid(),
+          id: faker.datatype.uuid(),
           status: 'received',
           dateReceived: new Date(),
           providerName: `${faker.name.firstName()}${faker.name.lastName()}`,
@@ -23,7 +23,7 @@ module.exports = {
           hospitalState: faker.address.state(),
           hospitalZipCode: faker.address.zipCode(),
           representativeName: `${faker.name.firstName()} ${faker.name.lastName()}`,
-          representativeEmailAddress: `${providerFN}${providerLN}@representative.com`,
+          representativeEmailAddress: `${faker.name.firstName()}${faker.name.lastName()}@representative.com`,
           representativeRelationship: 'representative',
           patientName:`${faker.name.firstName()} ${faker.name.lastName()}`,
           patientAge: Math.floor(Math.random() * 100),
