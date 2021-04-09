@@ -4,8 +4,6 @@ import ApplicationDetail from "./applicationDetail";
 import HealthProviderDetail from "./healthProviderDetail";
 import styles from "./styles.module.css";
 
-
-
 function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
@@ -24,8 +22,6 @@ function NominationInfo() {
   const admissionDateObject = new Date(properDateFormat);
   const diffDays = Math.round(Math.abs((admissionDateObject
      - dischargeDateObject) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
-
-
 
   const fields = [
     {
