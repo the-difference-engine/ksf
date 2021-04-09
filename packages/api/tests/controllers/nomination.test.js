@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../server');
 const db = require('../../models');
+const { generateToken } = require('../../helper/generateToken');
 const nominationData = {
   dateReceived: '12/01/01',
   providerName: 'Hugo Strange',
@@ -13,6 +14,7 @@ const nominationData = {
   hospitalCity: 'Gotham',
   hospitalState: 'New Jersey',
   hospitalZipCode: '07320',
+  emailValidated: true,
   representativeName: 'Alfred Pennyworth',
   representativeEmailAddress: 'abeagle@dc.com',
   representativePhoneNumber: '222-222-2222',
@@ -21,6 +23,7 @@ const nominationData = {
   patientAge: '18 Years of age or older',
   amountRequestedCents: 20000,
 };
+
 describe('GET Nomination Endpoint', () => {
   let nomination;
   beforeAll(() => {
@@ -35,9 +38,7 @@ describe('GET Nomination Endpoint', () => {
     expect(res.statusCode).toBe(200);
   });
   it('return a 404 when nomination does not exist', async () => {
-    const res = await request(app).get(
-      '/api/nominations/00000000-0000-0000-0000-000000000000'
-    );
+    const res = await request(app).get('/api/nominations/00000000-0000-0000-0000-000000000000');
     expect(res.statusCode).toBe(404);
   });
   it('return a 400 when uuid is not a valid uuid', async () => {
@@ -87,15 +88,32 @@ describe('Update Nomination Endpoint', () => {
     nomination.destroy();
   });
   it('returns 400 when update fails', async () => {
-    const res = await request(app)
-      .put('/api/nominations/invalidID')
-      .send({ status: 'test' });
+    const res = await request(app).put('/api/nominations/invalidID').send({ status: 'test' });
     expect(res.statusCode).toBe(400);
   });
   it('return 201 when nomination is created', async () => {
-    const res = await request(app)
-      .put(`/api/nominations/${nomination.id}`)
-      .send({ status: 'test' });
+    const res = await request(app).put(`/api/nominations/${nomination.id}`).send({ status: 'test' });
     expect(res.statusCode).toBe(200);
+  });
+});
+
+describe('GET Email Validated Endpoint', () => {
+  let nomination;
+  beforeAll(() => {
+    nomination = db.Nomination.build(nominationData);
+    return nomination.save();
+  });
+  afterAll(() => {
+    nomination.destroy();
+  });
+  it('returns a 200 when token is valid', async () => {
+    const emailToken = generateToken(nomination.id);
+    const res = await request(app).get(`/api/confirmation/${emailToken}`);
+    expect(res.statusCode).toBe(200);
+  });
+
+  it('return a 400 when token is not valid', async () => {
+    const res = await request(app).get('/api/confirmation/00000000-0000-0000-0000');
+    expect(res.statusCode).toBe(400);
   });
 });
