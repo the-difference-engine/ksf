@@ -11,11 +11,13 @@
 
 .google-login, .google-logout {
   /* using important to override inline styles rendered by 3rd party component */
-  padding: 30px !important;
+  padding: 1px;
+  line-height: 0.8rem;
+  font-size: 10px !important;
 }
 
 .login-logo {
-  max-width: 25%;
+  max-width: 17%;
   margin-top: 10%;
   margin-bottom: 2%;
 }

@@ -1,15 +1,17 @@
 const { google } = require('googleapis');
 const db = require('../models');
+const parsePrivateKey = require('./parsePrivateKey');
 const rangePar = 'Sheet1';
+const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
+const privateKey = parsePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY)
+const scopes = ['https://www.googleapis.com/auth/spreadsheets']
 
 module.exports = function gsheetToDB() {
   const client = new google.auth.JWT(
-    process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+    clientEmail,
     null,
-    // process.env.GOOGLE_SHEETS_PRIVATE_KEY,
-    // JSON parsing is needed for deployment, local running should remove JSON parsing
-    JSON.parse(process.env.GOOGLE_SHEETS_PRIVATE_KEY),
-    ['https://www.googleapis.com/auth/spreadsheets']
+    privateKey,
+    scopes
   );
 
   client.authorize(function (err, tokens) {
