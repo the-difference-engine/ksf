@@ -82,15 +82,21 @@ const updateNomination = async (req, res) => {
         sendDeclineEmail(nomination);
       }
 
-      if (nomination.status === 'HIPAA Verified') {
+      if (nomination.status === 'Awaiting HIPAA') {
         try {
-
           const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
           const state = states.getStateCodeByStateName(nomination.hospitalState);
           const applicationName = `${lastName}-${state}`
 
           createFolder(applicationName)
-          
+        }
+        catch (err) {
+          console.error('Could not create a folder', err)
+        }
+      }
+
+      if (nomination.status === 'HIPAA Verified') {
+        try {
           nomination.update(
             { hipaaTimestamp: Date() }
           ).catch ((err)=> {
