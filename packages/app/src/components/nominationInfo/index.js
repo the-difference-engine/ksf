@@ -113,13 +113,11 @@ function NominationInfo({bool}) {
         <div className={styles.layout}>
           {
           bool ? <div><h1>input stuff here</h1></div> : <div>
-            <h1>hello</h1>
-            </div>
-          }
-
-            {/* second condition to form data */}
             <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
+            </div>
+          }
+            {/* This set of data is always displayed. */}
             <HealthProviderDetail fields={fields} gridContent={true} title="Health Provider Information" />
         </div>
       );
