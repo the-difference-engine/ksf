@@ -1,8 +1,6 @@
 import style from './style.css'
-import React, { useState, setState } from 'react';
+import React from 'react';
 const states = require('us-state-codes');
-
-const [hasBeenClicked, setHasBeenClicked] = useState(false);
 
 const NominationBanner = ({ nomination }) => {
   const date = new Date(nomination.dateReceived).toLocaleDateString()
@@ -10,16 +8,6 @@ const NominationBanner = ({ nomination }) => {
   const state = states.getStateCodeByStateName(nomination.hospitalState)
   const nominationName = `${lastName}-${state}`
   const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
-
-  function handleClick(){
-    if (hasBeenClicked === false) {
-      setHasBeenClicked = true;
-    }
-
-    if (hasBeenClicked === true) {
-      setHasBeenClicked = false;
-    }
-  }
 
   return (
     <div className="nomination-banner-container">
