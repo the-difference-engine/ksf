@@ -1,7 +1,8 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
-const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL;
+const { generateToken } = require('./generateToken');
+const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 
 const transport = {
@@ -30,7 +31,7 @@ const email = new emailTemplate({
   transport: transporter,
   send: true,
   //send status will eventually need to be updated to true
-  preview: true,
+  preview: false,
 });
 
 function sendDeclineEmail(nomination) {
@@ -66,53 +67,55 @@ function sendSurveyEmail(nomination) {
   .then(() => console.log('email has been sent!'));
 }
 
-function verifyHcEmail(nomination) { 
-  email.send({
-    template: 'verifyHcEmail',
-    message: {
-      from: adminEmail,
-      to: nomination.providerEmailAddress,
-    },
-    locals: {
-      name: nomination.providerName,
-      imgUrl
-    }
-  }).then(() => console.log('email has been sent!'))
+
+function verifyHcEmail(nomination) {
+  const emailToken = generateToken(nomination._id);
+  email
+    .send({
+      template: 'verifyHcEmail',
+      message: {
+        from: 'formmaster@keepswimmingfoundation.org',
+        to: nomination.providerEmailAddress,
+      },
+      locals: {
+        name: nomination.providerName,
+        appUrl: process.env.APP_URL,
+        urlLink: `${process.env.APP_URL}/confirmation/${emailToken}`,
+      },
+    })
+    .then(() => console.log('email has been sent!'))
     .catch(console.error);
 }
 
 function sendHIPAAEmail(nomination) {
-  const todaysDate = new Date()
-  const currentYear = new Date().getFullYear();
-  const firstQuarterStart = new Date(currentYear, '00', '01')
-  const firstQuarterEnd = new Date(currentYear, '02', '31')
-  const secondQuarterStart = new Date(currentYear, '03', '01')
-  const secondQuarterEnd = new Date(currentYear, '05', '30')
-  const thirdQuarterStart = new Date(currentYear, '06', '01')
-  const thirdQuarterEnd = new Date(currentYear, '08', '30')
+  const todaysDate = new Date();
+  const monthDate = todaysDate.getMonth() + 1;
+  const targetQuarter = monthDate < 4 ? 1 : monthDate > 3 && monthDate < 7 ? 2 : monthDate > 6 && monthDate < 10 ? 3 : 4;
 
-  const targetQuarter = (todaysDate > firstQuarterStart && todaysDate < firstQuarterEnd) ? 1 : 
-      (todaysDate > secondQuarterStart && todaysDate < secondQuarterEnd) ? 2 : 
-      (todaysDate > thirdQuarterStart && todaysDate < thirdQuarterEnd) ? 3 : 4;
-  
-  email.send({
-    template: 'hipaa',
-    message: {
-      from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-      replyTo: 'info@keepswimmingfoundation.org',
-      to: nomination.representativeEmailAddress, 
-    },
-    locals: {
-      name: nomination.patientName,
-      imgUrl,
-      targetQuarter
-    }
-  }.catch((err) => console.log(err))).then(() => console.log('email has been sent!'));
+
+  email
+    .send(
+      {
+        template: 'hipaa',
+        message: {
+          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+          replyTo: 'info@keepswimmingfoundation.org',
+          to: nomination.representativeEmailAddress,
+        },
+        locals: {
+          name: nomination.patientName,
+          imgUrl,
+          targetQuarter,
+        },
+      }.catch((err) => console.log(err))
+    )
+    .then(() => console.log('email has been sent!'));
 }
 
 module.exports = {
   sendDeclineEmail,
   sendSurveyEmail,
   verifyHcEmail,
-  sendHIPAAEmail
-}
+  sendHIPAAEmail,
+};
+
