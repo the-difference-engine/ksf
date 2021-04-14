@@ -8,6 +8,7 @@ const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
+const grantCycle = require('../models/grantCycle');
 
 const getNominationById = async (req, res) => {
   try {
@@ -99,10 +100,11 @@ const updateNomination = async (req, res) => {
         try {
           nomination.update(
             { hipaaTimestamp: Date() }
-          ).catch ((err)=> {
+          ).catch((err) => {
             console.log('Nomination Not Found', err)
-            return res.status(400)});
-          }
+            return res.status(400)
+          });
+        }
         finally { sendSurveyEmail(nomination); }
 
       }
@@ -139,6 +141,32 @@ const emailVerifiction = async (req, res) => {
   }
 };
 
+
+
+const checkApplicationStatuses = async (req, res) => {
+  //// query db for apps in awaiting hipaa and hipaa verified
+  console.log('Querying db for applications in Awaiting HIPAA and HIPAA Verified')
+  const nominations = await db.Nomination.findAll({
+    include:
+      [{
+        as: 'grant_cycles',
+        model: db.GrantCycle,
+      }]
+  })
+    .then(nominations => console.log(nominations))
+    .catch(console.error)
+
+  const grantCycles = await db.GrantCycle.findAll({
+    include:
+      [{
+        as: 'nominations',
+        model: db.Nomination
+      }]
+  })
+  .then(grantCycle => console.log(grantCycle))
+  .catch(console.error)
+}
+
 module.exports = {
   getNominationById,
   findAllNominataions,
@@ -146,4 +174,5 @@ module.exports = {
   updateNomination,
   syncNominations,
   emailVerifiction,
+  checkApplicationStatuses
 };

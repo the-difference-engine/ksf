@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "cron": "^1.8.2",
     "dotenv": "^8.2.0",
     "email-templates": "^8.0.3",
     "express": "^4.17.1",

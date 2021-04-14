@@ -31,9 +31,11 @@ transporter.verify((error, success) => {
 
 const email = new emailTemplate({
   transport: transporter,
-  send: true,
+
+  // CHANGE THESE BACK
+  send: false,
   //send status will eventually need to be updated to true
-  preview: false,
+  preview: true,
 });
 
 function sendDeclineEmail(nomination) {
@@ -66,7 +68,7 @@ function sendSurveyEmail(nomination) {
       imgUrl
     }
   }).catch((err) => console.log(err))
-  .then(() => console.log('email has been sent!'));
+    .then(() => console.log('email has been sent!'));
 }
 
 
@@ -114,10 +116,29 @@ function sendHIPAAEmail(nomination) {
     .then(() => console.log('email has been sent!'));
 }
 
+function sendReminderEmail(nomination) {
+  email.send(
+    {
+      template: 'reminder',
+      message: {
+        from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+        replyTo: 'info@keepswimmingfoundation.org',
+        to: nomination.representativeEmailAddress,
+      },
+      locals: {
+        name: nomination.patientName,
+        providerName: nomination.providerName,
+        imgUrl
+      }
+    }.catch((err) => console.log(err))
+  ).then(console.log("reminder email has been sent"))
+}
+
 module.exports = {
   sendDeclineEmail,
   sendSurveyEmail,
   verifyHcEmail,
   sendHIPAAEmail,
+  sendReminderEmail
 };
 
