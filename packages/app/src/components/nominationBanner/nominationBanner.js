@@ -6,8 +6,8 @@ const states = require('us-state-codes');
 const NominationBanner = ({ nomination, clicking}) => {
   const date = new Date(nomination.dateReceived).toLocaleDateString()
   const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : ''
-  const state = states.getStateCodeByStateName(nomination.hospitalState)
-  const nominationName = `${lastName}-${state}`
+  const geoState = states.getStateCodeByStateName(nomination.hospitalState)
+  const nominationName = `${lastName}-${geoState}`
   const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
 
 
