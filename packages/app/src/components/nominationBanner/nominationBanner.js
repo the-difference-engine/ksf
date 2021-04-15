@@ -1,6 +1,6 @@
 import NominationInfo from '../nominationInfo';
 import style from './style.css'
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 const states = require('us-state-codes');
 
 const NominationBanner = (props) => {
@@ -10,7 +10,18 @@ const NominationBanner = (props) => {
   const nominationName = `${lastName}-${geoState}`
   const formattedAmount = props.nomination.amountRequestedCents ? (props.nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
 
+  let backColor = "green";
+  let textColor = "white";
+  let toSaveOrNotToSave = "Edit"
+  console.log("*****************")
+  console.log(props.otherFields)
+  console.log("*****************")
 
+  if(props.otherFields) {
+    backColor = "green";
+    textColor = "white";
+    toSaveOrNotToSave = "Save";
+  }
 
 
   return (
@@ -49,7 +60,7 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button" onClick={props.clicking} id="edit-button">Edit</button>
+          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color:textColor }} onClick={props.fields} id="edit-button">{toSaveOrNotToSave}</button>
         </div>
       </div>
     </div>
