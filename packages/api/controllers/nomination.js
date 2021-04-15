@@ -1,4 +1,5 @@
 const { validate: uuidValidate } = require('uuid');
+const sequelize = require('sequelize')
 const { ValidationError } = require('sequelize');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer')
@@ -8,7 +9,7 @@ const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
-const grantCycle = require('../models/grantCycle');
+const Op = sequelize.Op;
 
 const getNominationById = async (req, res) => {
   try {
@@ -144,27 +145,23 @@ const emailVerifiction = async (req, res) => {
 
 
 const checkApplicationStatuses = async (req, res) => {
+  const sevenDays = 24 * 60 * 60 * 1000 * 7
+  const sevenSeconds = 1000 * 7
+
+
   //// query db for apps in awaiting hipaa and hipaa verified
   console.log('Querying db for applications in Awaiting HIPAA and HIPAA Verified')
   const nominations = await db.Nomination.findAll({
-    include:
-      [{
-        as: 'grant_cycles',
-        model: db.GrantCycle,
-      }]
+    where:
+    {
+      status: 'HIPAA Verified',
+      hipaaTimestamp: {
+        [Op.gt]: new Date(new Date() - sevenDays)
+      }
+    }
   })
     .then(nominations => console.log(nominations))
     .catch(console.error)
-
-  const grantCycles = await db.GrantCycle.findAll({
-    include:
-      [{
-        as: 'nominations',
-        model: db.Nomination
-      }]
-  })
-  .then(grantCycle => console.log(grantCycle))
-  .catch(console.error)
 }
 
 module.exports = {

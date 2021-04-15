@@ -5,7 +5,7 @@ const { checkApplicationStatuses } = require('../controllers/nomination')
 //     console.log("please work")
 // }, null, true, 'America/Chicago')
 
-let job = new CronJob('45 * * * * *', function() {
+let job = new CronJob('*/10 * * * * *', function() {
     console.log("You are running the thing!")
     checkApplicationStatuses()
 }, null, true, 'America/Chicago')
