@@ -6,11 +6,11 @@ import styles from "./styles.module.css";
 
 
 
-function NominationInfo({bool}) {
+function NominationInfo(props) {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-  console.log(bool)
+
   
   const { hospitalCity, hospitalState, hospitalZipCode, admissionDate } = activeNomination;
   const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
@@ -112,7 +112,7 @@ function NominationInfo({bool}) {
       return (
         <div className={styles.layout}>
           {
-          bool ? <div><h1>input stuff here</h1></div> : <div>
+          props.hasBeenClicked ? <div><h1>input stuff here</h1></div> : <div>
             <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
             </div>

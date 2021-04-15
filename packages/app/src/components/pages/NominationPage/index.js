@@ -20,10 +20,15 @@ const NominationPage = ({
   );
   const [error, setError] = useState()
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
-
+  console.log(activeNomination)
+  console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&")
+  
   useEffect(() => {
     if (NominationsData) {
       NominationsData.forEach((nomination) => {
+        console.log("*****************")
+        console.log(nomination)
+        console.log("*****************")
         if (nomination.id === id) {
           return setActiveNomination(nomination);
         }
@@ -32,7 +37,7 @@ const NominationPage = ({
         }
       });
     }
-  },[]);
+  });
   function handleClick(){
     setHasBeenClicked((isclicked)=>!isclicked)
   }
@@ -42,9 +47,9 @@ const NominationPage = ({
       ?
       <div className="nomination-show-page">
         <SearchBar />
-        <NominationBanner clicking={handleClick} nomination={activeNomination} />
+        <NominationBanner fields={handleClick} nomination={activeNomination} />
         <ApplicationStages />
-        <NominationInfo bool={hasBeenClicked}/>
+        <NominationInfo fields={hasBeenClicked}/>
       </div>
       :
     <div>{error}</div>

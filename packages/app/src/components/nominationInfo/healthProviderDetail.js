@@ -48,7 +48,6 @@ function HealthProviderDetail(props) {
           <label className={styles.bold}>{props.title}</label>
           </div>
           <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
-   
             {
               props.fields.map((obj, index) =>  obj.label === "Provider Name" ? (
                 <div key={index} className={obj.label === "" ? styles.mobileHide: ""}>
