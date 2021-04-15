@@ -7,14 +7,12 @@ const NominationBanner = ({ nomination }) => {
   const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
   const state = states.getStateCodeByStateName(nomination.hospitalState);
   const nominationName = `${lastName}-${state}`;
-  const formattedAmount = nomination.amountRequestedCents
-    ? nomination.amountRequestedCents.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-    : '';
-  const HippaDate = nomination.hipaaTimestamp;
-  let newDate = new Date(HippaDate);
+  const formattedAmount = nomination.amountRequestedCents ? nomination.amountRequestedCents.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : '';
+  const hippaDate = nomination.hipaaTimestamp;
+  let newDate = new Date(hippaDate);
   const time = newDate.toLocaleDateString();
   const minutes = newDate.toLocaleTimeString();
-  const finalDate = time + ' – ' + minutes;
+  const finalDate = `${time} – ${minutes}`;
 
   return (
     <div className="nomination-banner-container">
@@ -72,7 +70,7 @@ const NominationBanner = ({ nomination }) => {
               <p className="secondary-dark">HIPPA Date</p>
               <span>
                 <h2 className="body-font">
-                  <strong>{finalDate != '12/31/1969 – 6:00:00 PM' ? finalDate : 'Awaiting HIPPA'}</strong>
+                  <strong>{finalDate !== '12/31/1969 – 6:00:00 PM' ? finalDate : 'Awaiting HIPPA'}</strong>
                 </h2>
               </span>
             </div>
