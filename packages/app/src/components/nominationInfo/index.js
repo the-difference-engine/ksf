@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ApplicationDetail from "./applicationDetail";
+import ApplicationUpdateDetail from "./applicationUpdateDetail";
 import HealthProviderDetail from "./healthProviderDetail";
 import styles from "./styles.module.css";
 
@@ -112,9 +113,10 @@ function NominationInfo(props) {
       return (
         <div className={styles.layout}>
           {
-          props.hasBeenClicked ? <div><h1>input stuff here</h1></div> : <div>
-            <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
-            <ApplicationDetail fields={familyinfo} title="Family Member Information"/>
+          props.fields ? <div><ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
+          <ApplicationDetail fields={familyinfo} title="Family Member Information"/></div> : <div>
+            <ApplicationUpdateDetail fields={patientInfo} gridContent={true} title="Patient Information" />
+            <ApplicationUpdateDetail fields={familyinfo} title="Family Member Information"/>
             </div>
           }
             {/* This set of data is always displayed. */}

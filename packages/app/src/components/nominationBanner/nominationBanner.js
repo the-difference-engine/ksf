@@ -10,16 +10,16 @@ const NominationBanner = (props) => {
   const nominationName = `${lastName}-${geoState}`
   const formattedAmount = props.nomination.amountRequestedCents ? (props.nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
 
-  let backColor = "green";
-  let textColor = "white";
+  let backColor = "white";
+  let textColor = "green";
   let toSaveOrNotToSave = "Edit"
   console.log("*****************")
   console.log(props.otherFields)
   console.log("*****************")
 
   if(props.otherFields) {
-    backColor = "white";
-    textColor = "green";
+    backColor = "green";
+    textColor = "white";
     toSaveOrNotToSave = "Save";
   }
 
