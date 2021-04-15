@@ -13,16 +13,12 @@ const NominationBanner = (props) => {
   let backColor = "white";
   let textColor = "green";
   let toSaveOrNotToSave = "Edit"
-  console.log("*****************")
-  console.log(props.otherFields)
-  console.log("*****************")
 
   if(props.otherFields) {
     backColor = "green";
     textColor = "white";
     toSaveOrNotToSave = "Save";
   }
-
 
   return (
     <div className="nomination-banner-container">
