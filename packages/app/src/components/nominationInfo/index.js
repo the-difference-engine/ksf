@@ -26,8 +26,6 @@ function NominationInfo(props) {
   const diffDays = Math.round(Math.abs((admissionDateObject
      - dischargeDateObject) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
 
-
-
   const fields = [
     {
       label: "Provider Name",
