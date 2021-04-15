@@ -6,13 +6,7 @@ module.exports = {
     const generateRandomNoms = () => {
 
       const arrayOfDictNom = []
-      const status = [
-        'Received',
-        'Awaiting HIPAA',
-        'HIPAA Verified',
-        'Document Review',
-        'Ready for Board Review',
-      ];
+
       for(let i = 0; i <= 100; i++) {
         arrayOfDictNom.push({
           id: faker.datatype.uuid(),
