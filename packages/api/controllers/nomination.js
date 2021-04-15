@@ -156,7 +156,7 @@ const checkApplicationStatuses = async (req, res) => {
     {
       status: 'HIPAA Verified',
       hipaaTimestamp: {
-        [Op.gt]: new Date(new Date() - sevenDays)
+        [Op.lte]: new Date(new Date() - sevenSeconds)
       }
     }
   })
