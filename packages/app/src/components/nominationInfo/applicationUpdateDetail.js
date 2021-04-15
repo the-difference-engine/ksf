@@ -15,11 +15,11 @@ function ApplicationUpdateDetail(props) {
             props.title == "Patient Information" ? <div>
                 <form>
                 <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
-                    <div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
-                                <label className={styles.label}>{obj.label}</label>
+                    {/* <div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
+                                <label className={styles.label}>{obj.label}</label> */}
                                 {/* <input className={styles.value}>{obj.value}</input> */}
-                                <input name={obj.label}onChange={(e) => handleChange(e)} type="text" defaultValue={obj.value}/>
-                            </div>
+                                {/* <input name={obj.label}onChange={(e) => handleChange(e)} type="text" defaultValue={obj.value}/>
+                            </div> */}
                     </div>
                 </form>
             </div>
