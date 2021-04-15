@@ -18,8 +18,8 @@ const NominationBanner = (props) => {
   console.log("*****************")
 
   if(props.otherFields) {
-    backColor = "green";
-    textColor = "white";
+    backColor = "white";
+    textColor = "green";
     toSaveOrNotToSave = "Save";
   }
 
