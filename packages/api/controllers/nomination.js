@@ -10,6 +10,7 @@ const { verifyHcEmail } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
+const { sendReminderEmail } = require('../helper/mailer')
 
 const getNominationById = async (req, res) => {
   try {
@@ -98,6 +99,7 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === 'HIPAA Verified') {
+        
         try {
           nomination.update(
             { hipaaTimestamp: Date() }
@@ -160,8 +162,14 @@ const checkApplicationStatuses = async (req, res) => {
       }
     }
   })
-    .then(nominations => console.log(nominations))
-    .catch(console.error)
+    try{console.log(nominations.length)
+    for(let i = 0; i<nominations.length; i++){
+      console.log(nominations[i].patientName)
+      const nomination = nominations[i]
+      sendReminderEmail(nomination)
+    } 
+  }
+  catch{}
 }
 
 module.exports = {
