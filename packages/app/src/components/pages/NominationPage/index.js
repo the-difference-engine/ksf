@@ -43,9 +43,9 @@ const NominationPage = ({
       ?
       <div className="nomination-show-page">
         <SearchBar />
-        <NominationBanner otherFields={hasBeenClicked} fields={handleClick} nomination={activeNomination} />
+        <NominationBanner hasBeenClicked={hasBeenClicked} handleClick={handleClick} nomination={activeNomination} />
         <ApplicationStages />
-        <NominationInfo fields={hasBeenClicked}/>
+        <NominationInfo hasBeenClicked={hasBeenClicked}/>
       </div>
       :
     <div>{error}</div>

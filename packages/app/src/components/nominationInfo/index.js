@@ -26,6 +26,8 @@ function NominationInfo(props) {
   const diffDays = Math.round(Math.abs((admissionDateObject
      - dischargeDateObject) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
 
+
+
   const fields = [
     {
       label: "Provider Name",
@@ -111,14 +113,14 @@ function NominationInfo(props) {
       return (
         <div className={styles.layout}>
           {
-          props.fields ? <div><ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
-          <ApplicationDetail fields={familyinfo} title="Family Member Information"/></div> : <div>
-            <ApplicationUpdateDetail fields={patientInfo} gridContent={true} title="Patient Information" />
-            <ApplicationUpdateDetail fields={familyinfo} title="Family Member Information"/>
+          !props.hasBeenClicked ? <div><ApplicationDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
+          <ApplicationDetail propsData={familyinfo} title="Family Member Information"/></div> : <div>
+            <ApplicationUpdateDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
+            <ApplicationUpdateDetail propsData={familyinfo} title="Family Member Information"/>
             </div>
           }
             {/* This set of data is always displayed. */}
-            <HealthProviderDetail fields={fields} gridContent={true} title="Health Provider Information" />
+            <HealthProviderDetail propsData={fields} gridContent={true} title="Health Provider Information" />
         </div>
       );
     }
