@@ -9,7 +9,6 @@ const NominationBanner = ({ nomination }) => {
   const nominationName = `${lastName}-${state}`
   const formattedAmount = nomination.amountRequestedCents ? (nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
 
-
   return (
     <div className="nomination-banner-container">
       <div className="row">

@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import ApplicationDetail from './applicationDetail';
-import HealthProviderDetail from './healthProviderDetail';
-import styles from './styles.module.css';
+import ApplicationDetail from "./applicationDetail";
+import HealthProviderDetail from "./healthProviderDetail";
+import styles from "./styles.module.css";
 
 function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
@@ -14,6 +14,7 @@ function NominationInfo() {
   const properDateFormat = admissionDateObject.toLocaleDateString();
 
   const dischargeDateObject = new Date(activeNomination.dischargeDate);
+
   const diffDays = Math.round(Math.abs((admissionDateObject - dischargeDateObject) / (24 * 60 * 60 * 1000))) >= 21 ? 'Yes' : 'No'; /* <- hours*minutes*seconds*milliseconds */
 
   const newDate = new Date(dischargeDate);

@@ -2,8 +2,6 @@ const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
-const previewEmail = require('preview-email');
-const path = require('path');
 const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 
