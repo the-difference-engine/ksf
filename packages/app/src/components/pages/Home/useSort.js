@@ -66,9 +66,6 @@ const useSort = () => {
     if (!doDefault && sortConfig.key === key && sortConfig.direction === SORT_DIRECTION.UP) {
       direction = SORT_DIRECTION.DOWN;
     }
-    if (dontDoDefault === 0) {
-      direction= 'ascending'
-    }
 
     setSortConfig({ key, direction })
 
