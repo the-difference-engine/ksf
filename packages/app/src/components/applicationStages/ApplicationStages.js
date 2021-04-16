@@ -5,9 +5,7 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 
 const ApplicationStages = () => {
-  const [activeNomination, setActiveNomination] = useContext(
-    ActiveNominationContext
-  );
+  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
   const [currentStatus, setCurrentStatus] = useState();
   // status array is used as the param in 
   const status = [
@@ -66,8 +64,7 @@ const ApplicationStages = () => {
   function updateNom(currentStatus) {
     try {
       nominationsAPI.updateNomination(activeNomination.id, currentStatus);
-    }
-    catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -91,10 +88,7 @@ const ApplicationStages = () => {
           >
             <span>&#10003;</span>Mark Stage as Complete
           </div>
-          <div
-            className="next"
-            onClick={() => closeApplication(currentStatus)}
-          >
+          <div className="next" onClick={() => closeApplication(currentStatus)}>
             Close Application
           </div>
           </div>
@@ -105,4 +99,3 @@ const ApplicationStages = () => {
 };
 
 export default ApplicationStages;
-

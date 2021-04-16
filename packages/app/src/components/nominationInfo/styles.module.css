@@ -8,10 +8,10 @@
 
 .main {
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   text-align: left;
 }
-  
+
 /*********************************/
 /************ header *************/
 /*********************************/
@@ -68,9 +68,12 @@
   .value {
     font-weight: bold;
   }
-  
+
   .label {
     font-weight: normal;
   }
-
+  .title {
+    font-weight: bold;
+    font-size: large;
+  }
 }
