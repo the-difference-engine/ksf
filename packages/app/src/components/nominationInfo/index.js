@@ -62,61 +62,66 @@ function NominationInfo(props) {
     },
   ];
 
-  const familyinfo = [
-    {
-      label: 'Name',
-      value: activeNomination.representativeName,
-    },
-    {
-      label: 'Email Address',
-      value: activeNomination.representativeEmailAddress,
-    },
-    {
-      label: 'Phone Number',
-      value: activeNomination.representativePhoneNumber,
-    },
-    {
-      label: 'Relationship',
-      value: activeNomination.representativeRelationship,
-    },
-    {
-      label: 'Request to communicate in Spanish?',
-      value: 'No',
-    },
-  ];
-  const patientInfo = [
-    {
-      label: 'Name',
-      value: activeNomination.patientName,
-    },
-    {
-      label: 'Patient Age',
-      value: activeNomination.patientAge,
-    },
-    {
-      label: 'Admission Date',
-      value: properDateFormat,
-    },
-    {
-      label: 'Discharge Date',
-      value: dischargeDateStr,
-    },
-    {
-      label: 'Hospitalized for at least 21 days?',
-      value: diffDays,
-    },
-    {
-      label: 'Diagnosis/case information',
-      value: activeNomination.patientDiagnosis,
-    },
-  ];
-  return (
-    <div className={styles.layout}>
-      <ApplicationDetail fields={patientInfo} gridContent={true} title="Patient Information" />
-      <ApplicationDetail fields={familyinfo} title="Family Member Information" />
-      <HealthProviderDetail fields={fields} gridContent={true} title="Health Provider Information" />
-    </div>
-  );
-}
-
-export default NominationInfo;
+    const familyinfo = [
+      {
+        label: "Name",
+        value: activeNomination.representativeName
+      },
+      {
+        label: "Email Address",
+        value: activeNomination.representativeEmailAddress
+      },
+      {
+        label: "Phone Number",
+        value: activeNomination.representativePhoneNumber
+      },
+      {
+        label: "Relationship",
+        value: activeNomination.representativeRelationship
+      },
+      {
+        label: "Request to communicate in Spanish?",
+        value: "No"
+      }];
+    const patientInfo = [
+      {
+        label: "Name",
+        value: activeNomination.patientName
+      },
+      {
+        label: "Patient Age",
+        value: activeNomination.patientAge
+      },
+      {
+        label: "Admission Date",
+        value: properDateFormat 
+      },
+      {
+        label: "Discharge Date",
+        value: activeNomination.dischargeDate
+      },
+      {
+        label: "Hospitalized for at least 21 days?",
+        value: diffDays
+      },
+      {
+        label: "Diagnosis/case information",
+        value: activeNomination.patientDiagnosis
+      },
+    ];
+      return (
+        <div className={styles.layout}>
+          {
+          !props.hasBeenClicked ? <div><ApplicationDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
+          <ApplicationDetail propsData={familyinfo} title="Family Member Information"/></div> : <div>
+            <ApplicationUpdateDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
+            <ApplicationUpdateDetail propsData={familyinfo} title="Family Member Information"/>
+            </div>
+          }
+            {/* This set of data is always displayed. */}
+            <HealthProviderDetail propsData={fields} gridContent={true} title="Health Provider Information" />
+        </div>
+      );
+    }
+  
+  export default NominationInfo;
