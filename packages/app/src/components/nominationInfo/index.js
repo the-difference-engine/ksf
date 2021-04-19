@@ -99,7 +99,6 @@ function NominationInfo(props) {
       {
         label: "Discharge Date",
         value: activeNomination.dischargeDate
-
       },
       {
         label: "Hospitalized for at least 21 days?",
