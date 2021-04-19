@@ -12,55 +12,55 @@ function NominationInfo(props) {
     ActiveNominationContext
   );
 
-  
-  const { hospitalCity, hospitalState, hospitalZipCode, admissionDate } = activeNomination;
+  const { hospitalCity, hospitalState, hospitalZipCode, admissionDate, dischargeDate } = activeNomination;
   const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
+  const admissionDateObject = new Date(admissionDate);
+  const properDateFormat = admissionDateObject.toLocaleDateString();
 
-  const dateArr = admissionDate ?  (admissionDate.toString().split("T")[0].split("-")) : [];
-
-  const properDateFormat = `${dateArr[1]}/${dateArr[2]}/${dateArr[0]}`
-  
   const dischargeDateObject = new Date(activeNomination.dischargeDate);
-  const admissionDateObject = new Date(properDateFormat);
-  const diffDays = Math.round(Math.abs((admissionDateObject
-     - dischargeDateObject) / (24*60*60*1000))) >= 21 ? 'Yes' : 'No';  /* <- hours*minutes*seconds*milliseconds */
+
+  const diffDays = Math.round(Math.abs((admissionDateObject - dischargeDateObject) / (24 * 60 * 60 * 1000))) >= 21 ? 'Yes' : 'No'; /* <- hours*minutes*seconds*milliseconds */
+
+  const newDate = new Date(dischargeDate);
+  const dischargeDateStr = newDate.toLocaleDateString();
 
 
 
   const fields = [
     {
-      label: "Provider Name",
-      value: activeNomination.providerName
+      label: 'Provider Name',
+      value: activeNomination.providerName,
     },
     {
-      label: "Email Address",
-      value: activeNomination.providerEmailAddress
+      label: 'Email Address',
+      value: activeNomination.providerEmailAddress,
     },
     {
-      label: "Phone Number",
-      value: activeNomination.providerPhoneNumber
+      label: 'Phone Number',
+      value: activeNomination.providerPhoneNumber,
     },
     {
-        label: "Title",
-        value: activeNomination.providerTitle
+      label: 'Title',
+      value: activeNomination.providerTitle,
     },
     {
-      label: "Name of Hospital",
-      value: activeNomination.hospitalName
+      label: 'Name of Hospital',
+      value: activeNomination.hospitalName,
     },
     {
-      label: "Hospital URL",
-      value: activeNomination.hospitalURL
+      label: 'Hospital URL',
+      value: activeNomination.hospitalURL,
     },
     {
-      label: "Hospital Address",
-      value: hospitalAddress
+      label: 'Hospital Address',
+      value: hospitalAddress,
     },
     {
-      label: "How did you hear about KSF?",
-      value: ""
-    }];
+      label: 'How did you hear about KSF?',
+      value: '',
+    },
+  ];
 
     const familyinfo = [
       {

@@ -1,46 +1,15 @@
 import React, { useContext } from 'react';
-import styles from "./styles.module.css";
-import { Link, useParams } from "react-router-dom";
-import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
-import { NominationsDataContext } from '../../utils/context/NominationsContext';
+import styles from './styles.module.css';
+import { useParams, Link } from 'react-router-dom';
 
 
 function HealthProviderDetail(props) {
-      
-    const [SearchResultData, setSearchResultData] = useContext(
-      SearchResultDataContext
-      );
-      
-    const [NominationsData, setNominationsData] = useContext(
-      NominationsDataContext
-      );
-        
-    const findSearchResults = (searchTerm) => {
-          let filteredNoms = []
-          if(NominationsData && searchTerm !== undefined) {
-            filteredNoms = NominationsData.filter((nomination) => {
-              return [
-                nomination.providerName,
-                nomination.patientName,
-                nomination.nominationName,
-                nomination.representativeName,
-              ].some((nom) => nom.includes(searchTerm));
-            });
-            setSearchResultData(filteredNoms);
-          } 
-        }
 
-    const { id } = useParams();
-        
-    const handleSubmit =  (val) => {
-      if (val) {
-        findSearchResults(val);
-        window.open(`/nomination/${id}`, '_blank', 'noopener,noreferrer');
-        return <Link to={`${process.env.APP_URL}/searchresults`} target="_blank" />
-      }
-    }
+  const { id } = useParams();
 
-    const Switch = SearchResultData.length < 1 ? ( "/" ) : ( "/searchresults" );
+  const openWindow = () => {
+      window.open('#');
+  };
 
       return (
         <div className={styles.main}>

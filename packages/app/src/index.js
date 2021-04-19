@@ -7,6 +7,7 @@ import Home from './components/pages/Home/index';
 import SearchResults from './components/SearchResultsCard';
 import { NominationsDataProvider } from './utils/context/NominationsContext';
 import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
+import SearchHealthProvider from './components/nominationInfo/healthProviderSearch/index';
 import { ActiveNominationProvider } from './utils/context/ActiveNominationContext';
 import NominationsPage from './components/pages/NominationPage';
 import './App.css';
@@ -20,6 +21,7 @@ ReactDOM.render(
             <ActiveNominationProvider>
               <Route exact path={'/login'} component={Login} />
               <Route exact path={'/searchresults'} component={SearchResults} />
+              <Route exact path={'/searchhealthprovider/:id'} component={SearchHealthProvider} />
               <Route exact path="/nomination/:id" component={NominationsPage} />
               <Route exact path={['/', '/home']} component={Home} />
               {/* <Route path={'*'} component={Home} /> */}
