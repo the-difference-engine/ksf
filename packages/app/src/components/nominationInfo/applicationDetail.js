@@ -13,16 +13,10 @@ function ApplicationDetail(props) {
             <label className={styles.label}>{obj.label}</label>
             <span className={styles.value}>{obj.value}</span>
           </div>
-          <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
-            {
-              props.propsData.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide: ""}>
-                <label className={styles.label}>{obj.label}</label>
-                <span className={styles.value}>{String(obj.value)}</span>
-              </div>))
-            }
-          </div>
-        </div>
-      );
-    }
-  
-  export default ApplicationDetail;
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default ApplicationDetail;
