@@ -1,21 +1,11 @@
-style(type="text/css")
-
-div.main 
+doctype html
+html(lang="en")
+  head
+    script(type='text/javascript').
+      if (foo) bar(1 + 5)
+  body
     img(src=`${imgUrl}/email/header.jpg` alt='header' style='width:100%; height:auto; margin-bottom: 1rem;')
-
-    p Hello #{name},
-
-    p We are writing to inform you that your application with The Difference Engine is incomplete.
-    p The application is currently awaiting #{missing}.
-
-    p Please reply to this email with the missing information and/or attachments.
-
-
-// Can we add a note to the front end stating we sent a reminder email and the date we sent it instead of the original idea of putting a txt file in folders that may and or may not have been created yet?
-// If we can't split the document handling to another story can where are we storing documents if a folder has not yet been created to hold them?
-// should there be unique reminder emails for each stage?
-// Progression of app clear up
-
-
-// Storing/Making folder in Awaiting HIPAA rather than HIPAA verified?
-// Relationship between tickets #22, #65, #197
+      p Hello #{name},
+      p We are writing to inform you that your application with The Difference Engine is incomplete.
+      p The application is currently awaiting ...
+      p Please reply to this email with the missing information and/or attachments.

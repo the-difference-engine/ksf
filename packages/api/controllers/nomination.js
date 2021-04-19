@@ -7,10 +7,11 @@ const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
+const { sendReminderEmail } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
-const { sendReminderEmail } = require('../helper/mailer')
+
 
 const getNominationById = async (req, res) => {
   try {
@@ -163,13 +164,14 @@ const checkApplicationStatuses = async (req, res) => {
     }
   })
     try{console.log(nominations.length)
-    for(let i = 0; i<nominations.length; i++){
-      console.log(nominations[i].patientName)
-      const nomination = nominations[i]
-      sendReminderEmail(nomination)
-    } 
+      for(let i = 0; i<nominations.length; i++){
+        console.log("A reminder email has been triggered...")
+        let nomination = nominations[i]
+        //sendReminderEmail(nomination)
+      } 
+  } catch(error) { 
+    console.log(error)
   }
-  catch{}
 }
 
 module.exports = {

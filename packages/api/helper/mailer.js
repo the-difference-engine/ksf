@@ -111,27 +111,31 @@ function sendHIPAAEmail(nomination) {
           imgUrl,
           targetQuarter,
         },
-      }.catch((err) => console.log(err))
+      }
     )
-    .then(() => console.log('email has been sent!'));
+    .then(() => console.log('email has been sent!'))
+    .catch((err) => console.log(err))
 }
 
 function sendReminderEmail(nomination) {
-  email.send(
-    {
-      template: 'reminder',
-      message: {
-        from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-        replyTo: 'info@keepswimmingfoundation.org',
-        to: nomination.representativeEmailAddress,
-      },
-      locals: {
-        name: nomination.patientName,
-        providerName: nomination.providerName,
-        imgUrl
+  email
+    .send(
+      {
+        template: 'reminder',
+        message: {
+          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+          replyTo: 'info@keepswimmingfoundation.org',
+          to: nomination.representativeEmailAddress,
+        },
+        locals: {
+          name: nomination.patientName,
+          providerName: nomination.providerName,
+          imgUrl
+        }
       }
-    }.catch((err) => console.log(err))
-  ).then(console.log("reminder email has been sent"))
+    )
+    .then(console.log("reminder email has been sent"))
+    .catch((err) => console.log(err))
 }
 
 module.exports = {
