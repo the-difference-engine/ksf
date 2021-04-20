@@ -1,6 +1,35 @@
 import React from "react";
 import styles from "./styles.module.css";
 
+const updatedFields = [{
+        label = "Admission Date",
+        value = properDateFormat
+    },
+    {
+        label = "Discharge Date",
+        value = activateNomation.dischargeDate
+    },
+    {
+        label: "Family Name",
+        value: activeNomination.representativeName
+    },
+    {
+        label: "Email Address",
+        value: activeNomination.representativeEmailAddress
+    },
+    {
+        label: "Phone Number",
+        value: activeNomination.representativePhoneNumber
+    },
+    {
+        label: "Relationship",
+        value: activeNomination.representativeRelationship
+    },
+    {
+        label: "Request to communicate in Spanish?",
+        value: "No"
+    }];
+
 function ApplicationUpdateDetail(props) {
     // const [formData, setFormData] 
     const handleChange = (e) => {
@@ -8,6 +37,7 @@ function ApplicationUpdateDetail(props) {
         console.log(props.propsData)
         console.log(e.target.value)
     }
+
     return (
         <div className={styles.main}>
             <div className={styles.header}>
@@ -22,7 +52,7 @@ function ApplicationUpdateDetail(props) {
                                 props.propsData.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
                                     {obj.label === "Admission Date" || obj.label === "Discharge Date" ?
                                         <div><label className={styles.label}>{obj.label}</label>
-                                            <input name={obj.label} type="text" defaultValue={obj.value} /></div> :
+                                            <input name={obj.label} type="date" defaultValue={obj.value} /></div> :
                                         <div>
                                             <label className={styles.label}>{obj.label}</label>
                                             <span className={styles.value}>{String(obj.value)}</span>
@@ -49,4 +79,5 @@ function ApplicationUpdateDetail(props) {
     );
 }
 
+export default updatedFields;
 export default ApplicationUpdateDetail;
