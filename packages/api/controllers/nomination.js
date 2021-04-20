@@ -7,7 +7,8 @@ const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
-const { sendReminderEmail } = require('../helper/mailer')
+const { sendSurveyReminder } = require('../helper/mailer')
+const { sendHIPAAReminder } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
@@ -172,31 +173,31 @@ const checkApplicationStatuses = async (req, res) => {
     try{console.log(nominations.length)
       for(let i = 0; i<nominations.length; i++){
         let nomination = nominations[i]
-        console.log("A reminder email has been triggered..." + nomination.patientName)
-        sendReminderEmail(nomination)
+        console.log("A survey reminder email has been triggered..." + nomination.patientName)
+        // sendSurveyReminder(nomination)
       } 
   } catch(error) { 
     console.log(error)
   }
 
-  // const nom = await db.Nomination.findAll({
-  //   where:
-  //   {
-  //     status: 'Awaiting HIIPA',
-  //     awaitingHipaaTimestamp: {
-  //       [Op.lte]: new Date(new Date() - sevenSeconds)
-  //     }
-  //   }
-  // })
-  //   try{console.log(nom.length)
-  //     for(let i = 0; i<nom.length; i++){
-  //       console.log("A reminder email has been triggered...")
-  //       let nom = nom[i]
-  //       sendHIPAAReminder(nom)
-  //     } 
-  // } catch(error) { 
-  //   console.log(error)
-  // }
+  const nom = await db.Nomination.findAll({
+    where:
+    {
+      status: 'Awaiting HIPAA',
+      awaitingHipaaTimestamp: {
+        [Op.lte]: new Date(new Date() - sevenSeconds)
+      }
+    }
+  })
+    try{console.log(nom.length)
+      for(let i = 0; i<nom.length; i++){
+        console.log("A HIPAA reminder email has been triggered...")
+        let nomination = nom[i]
+        sendHIPAAReminder(nomination)
+      } 
+  } catch(error) { 
+    console.log(error)
+  }
 }
 
 module.exports = {
@@ -206,5 +207,5 @@ module.exports = {
   updateNomination,
   syncNominations,
   emailVerifiction,
-  checkApplicationStatuses,
+  checkApplicationStatuses
 };

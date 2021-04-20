@@ -4,7 +4,8 @@ const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
 const previewEmail = require('preview-email');
 const path = require('path');
-const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL
+const imgUrl = process.env.IMG_BASE_URL 
+// ?? process.env.APP_URL
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 
 const transport = {
@@ -33,7 +34,7 @@ const email = new emailTemplate({
   transport: transporter,
 
   // CHANGE THESE BACK
-  send: false,
+  send: true,
   //send status will eventually need to be updated to true
   preview: true,
 });
@@ -43,7 +44,7 @@ function sendDeclineEmail(nomination) {
     template: 'decline',
     message: {
       from: adminEmail,
-      to: nomination.providerEmailAddress
+      to: "john@thedifferenceengine.io"
     },
     locals: {
       name: nomination.providerName,
@@ -59,7 +60,7 @@ function sendSurveyEmail(nomination) {
     attachments: './survey/header.jpg',
     message: {
       from: adminEmail,
-      to: nomination.providerEmailAddress
+      to: "john@thedifferenceengine.io"
     },
     locals: {
       name: nomination.providerName,
@@ -79,7 +80,7 @@ function verifyHcEmail(nomination) {
       template: 'verifyHcEmail',
       message: {
         from: 'formmaster@keepswimmingfoundation.org',
-        to: nomination.providerEmailAddress,
+        to: "john@thedifferenceengine.io",
       },
       locals: {
         name: nomination.providerName,
@@ -104,7 +105,7 @@ function sendHIPAAEmail(nomination) {
         message: {
           from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
           replyTo: 'info@keepswimmingfoundation.org',
-          to: nomination.representativeEmailAddress,
+          to: "john@thedifferenceengine.io",
         },
         locals: {
           name: nomination.patientName,
@@ -117,15 +118,15 @@ function sendHIPAAEmail(nomination) {
     .catch((err) => console.log(err))
 }
 
-function sendReminderEmail(nomination) {
+function sendSurveyReminder(nomination) {
   email
     .send(
       {
-        template: 'reminder',
+        template: 'surveyReminder',
         message: {
           from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
           replyTo: 'info@keepswimmingfoundation.org',
-          to: nomination.representativeEmailAddress,
+          to: "john@thedifferenceengine.io",
         },
         locals: {
           name: nomination.patientName,
@@ -134,7 +135,28 @@ function sendReminderEmail(nomination) {
         }
       }
     )
-    .then(console.log("reminder email has been sent"))
+    .then(console.log("reminder email has been sent to" + nomination.patientName))
+    .catch((err) => console.log(err))
+}
+
+function sendHIPAAReminder(nomination) {
+  email
+    .send(
+      {
+        template: 'surveyReminder',
+        message: {
+          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+          replyTo: 'info@keepswimmingfoundation.org',
+          to: "john@thedifferenceengine.io",
+        },
+        locals: {
+          name: nomination.patientName,
+          providerName: nomination.providerName,
+          imgUrl
+        }
+      }
+    )
+    .then(console.log("reminder email has been sent to" + nomination.patientName))
     .catch((err) => console.log(err))
 }
 
@@ -143,6 +165,7 @@ module.exports = {
   sendSurveyEmail,
   verifyHcEmail,
   sendHIPAAEmail,
-  sendReminderEmail
+  sendHIPAAReminder,
+  sendSurveyReminder
 };
 
