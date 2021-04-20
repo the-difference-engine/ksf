@@ -6,9 +6,9 @@ const { checkApplicationStatuses } = require('../controllers/nomination')
 // }, null, true, 'America/Chicago')
 
 // use testing for below, every 10 seconds
-let job = new CronJob('*/10 * * * * *', function() {
+let reminders = new CronJob('*/10 * * * * *', function() {
     console.log("The scheduler has started.")
     checkApplicationStatuses()
 }, null, true, 'America/Chicago')
 
-job.start()
+module.exports ={reminders}

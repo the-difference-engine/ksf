@@ -7,8 +7,7 @@ const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
-const { sendHIPAAReminder } = require('../helper/mailer')
-const { sendSurveyReminder } = require('../helper/mailer')
+const { sendReminderEmail } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
@@ -116,7 +115,7 @@ const updateNomination = async (req, res) => {
             return res.status(400)
           });
         }
-        finally { console.log("no"); }
+        finally { sendSurveyEmail(nomination); }
 
       }
 
@@ -161,7 +160,6 @@ const checkApplicationStatuses = async (req, res) => {
 
   //// query db for apps in awaiting hipaa and hipaa verified
   console.log('Querying db for applications in Awaiting HIPAA and HIPAA Verified')
-  console.log(nomination.hipaaTimestamp)
   const nominations = await db.Nomination.findAll({
     where:
     {
@@ -173,9 +171,9 @@ const checkApplicationStatuses = async (req, res) => {
   })
     try{console.log(nominations.length)
       for(let i = 0; i<nominations.length; i++){
-        console.log("A reminder email has been triggered...")
         let nomination = nominations[i]
-        sendSurveyReminder(nomination)
+        console.log("A reminder email has been triggered..." + nomination.patientName)
+        sendReminderEmail(nomination)
       } 
   } catch(error) { 
     console.log(error)
@@ -208,5 +206,5 @@ module.exports = {
   updateNomination,
   syncNominations,
   emailVerifiction,
-  checkApplicationStatuses
+  checkApplicationStatuses,
 };
