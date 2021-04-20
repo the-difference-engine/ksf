@@ -113,7 +113,7 @@ function NominationInfo(props) {
         <div className={styles.layout}>
           {
           !props.hasBeenClicked ? <div><ApplicationDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
-          <ApplicationDetail propsData={familyinfo} title="Family Member Information"/></div> : <div>
+            <ApplicationDetail propsData={familyinfo} title="Family Member Information"/></div> : <div>
             <ApplicationUpdateDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationUpdateDetail propsData={familyinfo} title="Family Member Information"/>
             </div>
