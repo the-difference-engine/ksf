@@ -140,6 +140,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.DATE
       },
+      awaitingHipaaTimestamp: {
+        allowNull: true,
+        type: DataTypes.DATE
+      },
     },
     {
       hooks: {

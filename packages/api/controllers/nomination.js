@@ -7,7 +7,8 @@ const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
-const { sendReminderEmail } = require('../helper/mailer')
+const { sendHIPAAReminder } = require('../helper/mailer')
+const { sendSurveyReminder } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
@@ -87,10 +88,16 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === 'Awaiting HIPAA') {
+        
         try {
+          nomination.update(
+            { awaitingHipaaTimestamp: Date() })
+            console.log(nomination.awaitingHipaaTimestamp)
           const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
           const state = states.getStateCodeByStateName(nomination.hospitalState);
           const applicationName = `${lastName}-${state}`
+          
+         
 
           createFolder(applicationName)
         }
@@ -109,7 +116,7 @@ const updateNomination = async (req, res) => {
             return res.status(400)
           });
         }
-        finally { sendSurveyEmail(nomination); }
+        finally { console.log("no"); }
 
       }
 
@@ -154,6 +161,7 @@ const checkApplicationStatuses = async (req, res) => {
 
   //// query db for apps in awaiting hipaa and hipaa verified
   console.log('Querying db for applications in Awaiting HIPAA and HIPAA Verified')
+  console.log(nomination.hipaaTimestamp)
   const nominations = await db.Nomination.findAll({
     where:
     {
@@ -167,11 +175,30 @@ const checkApplicationStatuses = async (req, res) => {
       for(let i = 0; i<nominations.length; i++){
         console.log("A reminder email has been triggered...")
         let nomination = nominations[i]
-        //sendReminderEmail(nomination)
+        sendSurveyReminder(nomination)
       } 
   } catch(error) { 
     console.log(error)
   }
+
+  // const nom = await db.Nomination.findAll({
+  //   where:
+  //   {
+  //     status: 'Awaiting HIIPA',
+  //     awaitingHipaaTimestamp: {
+  //       [Op.lte]: new Date(new Date() - sevenSeconds)
+  //     }
+  //   }
+  // })
+  //   try{console.log(nom.length)
+  //     for(let i = 0; i<nom.length; i++){
+  //       console.log("A reminder email has been triggered...")
+  //       let nom = nom[i]
+  //       sendHIPAAReminder(nom)
+  //     } 
+  // } catch(error) { 
+  //   console.log(error)
+  // }
 }
 
 module.exports = {
