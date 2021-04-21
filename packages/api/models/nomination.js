@@ -144,6 +144,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.DATE
       },
+      reminderSent: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      }
     },
     {
       hooks: {

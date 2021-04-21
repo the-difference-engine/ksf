@@ -83,6 +83,15 @@ const updateNomination = async (req, res) => {
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
+      try {
+        // resets reminderSent bool every stage
+        nomination.update(
+          {reminderSent: false}
+        )
+      } catch(error) {
+        console.error('Was not able to change redminderSent bool', error)
+      }
+
       if (nomination.status === 'Decline') {
         sendDeclineEmail(nomination);
       }
@@ -167,14 +176,17 @@ const checkApplicationStatuses = async (req, res) => {
       status: 'HIPAA Verified',
       hipaaTimestamp: {
         [Op.lte]: new Date(new Date() - sevenSeconds)
-      }
+      },
+      reminderSent: false
     }
   })
     try{console.log(nominations.length)
       for(let i = 0; i<nominations.length; i++){
         let nomination = nominations[i]
+        let id = nomination.id
         console.log("A survey reminder email has been triggered..." + nomination.patientName)
-        // sendSurveyReminder(nomination)
+        sendSurveyReminder(nomination)
+        nomination.update({ reminderSent: true }, { where: { id } })
       } 
   } catch(error) { 
     console.log(error)
@@ -186,14 +198,17 @@ const checkApplicationStatuses = async (req, res) => {
       status: 'Awaiting HIPAA',
       awaitingHipaaTimestamp: {
         [Op.lte]: new Date(new Date() - sevenSeconds)
-      }
+      },
+      reminderSent: false
     }
   })
     try{console.log(nom.length)
       for(let i = 0; i<nom.length; i++){
         console.log("A HIPAA reminder email has been triggered...")
         let nomination = nom[i]
+        let id = nomination.id
         sendHIPAAReminder(nomination)
+        nomination.update({ reminderSent: true }, { where: { id } })
       } 
   } catch(error) { 
     console.log(error)
