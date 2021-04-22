@@ -147,6 +147,10 @@ module.exports = (sequelize, DataTypes) => {
       reminderSent: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+      },
+      applicationFolderId: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
     {

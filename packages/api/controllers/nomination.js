@@ -109,6 +109,9 @@ const updateNomination = async (req, res) => {
 
 
           createFolder(applicationName)
+          // ticket: 197B_RecordReminderTimestamp
+          // capture folder id, save into DB
+
         }
         catch (err) {
           console.error('Could not create a folder', err)
@@ -213,7 +216,7 @@ const checkApplicationStatuses = async (req, res) => {
           // - create a file in their folder with a timestamp of the send time
           // - need a way to tie nomination to their respective applicationFolderId, which we need to capture
           // if/when representative responds with attachment
-          // - attachment is added to folder (needapplicationFolderId)
+          // - attachment is added to folder (need applicationFolderId)
           // - if replied to, flagged for manual review by the admin
         }
         if (status === 'Awaiting HIPAA') {
