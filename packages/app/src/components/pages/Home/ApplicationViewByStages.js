@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from "./styles.css";
 import useSort from './useSort'
+import { SORT_DIRECTION } from '../../enum.js';
 
 const ApplicationViewByStages = () => {
   const [currentlyViewing, setCurrentlyViewing] = useState("Ready for Board Review");
@@ -22,7 +23,7 @@ const ApplicationViewByStages = () => {
   const renderSortArrow = (columnName) => {
     return (
       (sortConfig && sortConfig.key === columnName) &&
-      <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />
+      <FontAwesomeIcon icon={sortConfig.direction === SORT_DIRECTION.DOWN ? 'arrow-down' : 'arrow-up'} />
     )
   }
 
@@ -37,7 +38,7 @@ const ApplicationViewByStages = () => {
 
   const handleViewStageChange = (evt) => {
     setCurrentlyViewing(evt.currentTarget.value)
-    requestSort('dateReceived')
+    requestSort('dateReceived', true)
   }
 
   return (

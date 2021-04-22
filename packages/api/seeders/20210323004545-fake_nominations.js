@@ -6,6 +6,7 @@ module.exports = {
     const generateRandomNoms = () => {
 
       const arrayOfDictNom = []
+
       for(let i = 0; i <= 100; i++) {
         arrayOfDictNom.push({
           id: faker.datatype.uuid(),
