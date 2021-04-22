@@ -10,14 +10,18 @@ const NominationBanner = (props) => {
   const nominationName = `${lastName}-${geoState}`
   const formattedAmount = props.nomination.amountRequestedCents ? (props.nomination.amountRequestedCents).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : ''
 
+  // Variables for edit button coloring and save functionality.
   let backColor = "white";
   let textColor = "green";
-  let toSaveOrNotToSave = "Edit"
+  let saveOrEditLabel = "Edit";
+  let saveConfirm = false;
 
+  // Handles changing edit button colors and title to "save" if clicked.
   if(props.hasBeenClicked) {
+    saveConfirm = true;
     backColor = "green";
     textColor = "white";
-    toSaveOrNotToSave = "Save";
+    saveOrEditLabel = "Save";
   }
 
   return (
@@ -56,7 +60,7 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color:textColor }} onClick={props.handleClick} id="edit-button">{toSaveOrNotToSave}</button>
+          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color:textColor }} onClick={props.handleClick} id="edit-button">{saveOrEditLabel}</button>
         </div>
       </div>
     </div>

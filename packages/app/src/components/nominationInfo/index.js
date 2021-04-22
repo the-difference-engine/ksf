@@ -5,8 +5,6 @@ import ApplicationUpdateDetail from "./applicationUpdateDetail";
 import HealthProviderDetail from "./healthProviderDetail";
 import styles from "./styles.module.css";
 
-
-
 function NominationInfo(props) {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
@@ -24,8 +22,6 @@ function NominationInfo(props) {
 
   const newDate = new Date(dischargeDate);
   const dischargeDateStr = newDate.toLocaleDateString();
-
-
 
   const fields = [
     {
@@ -112,8 +108,9 @@ function NominationInfo(props) {
     ];
       return (
         <div className={styles.layout}>
-          {
-          !props.hasBeenClicked ? <div><ApplicationDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
+          { // Dictates which data is displayed based on the edit button being clicked: first half is current app data (edit button visible),
+            // second half allows updates to the active application data (save button visible).
+          !props.hasBeenClicked && !props.saveConfirm ? <div><ApplicationDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail propsData={familyinfo} title="Family Member Information"/></div> : <div>
             <ApplicationUpdateDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationUpdateDetail propsData={familyinfo} title="Family Member Information"/>
