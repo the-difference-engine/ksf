@@ -209,6 +209,12 @@ const checkApplicationStatuses = async (req, res) => {
         let id = nomination.id
         if (status === 'HIPAA Verified') {
           sendSurveyReminder(nomination)
+          // when a nomination's reminder email is sent, 
+          // - create a file in their folder with a timestamp of the send time
+          // - need a way to tie nomination to their respective applicationFolderId, which we need to capture
+          // if/when representative responds with attachment
+          // - attachment is added to folder (needapplicationFolderId)
+          // - if replied to, flagged for manual review by the admin
         }
         if (status === 'Awaiting HIPAA') {
           sendHIPAAReminder(nomination)
