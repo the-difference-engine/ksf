@@ -33,7 +33,7 @@ const email = new emailTemplate({
   transport: transporter,
 
   // CHANGE THESE BACK
-  send: false,
+  send: true,
   //send status will eventually need to be updated to true
   preview: true,
 });

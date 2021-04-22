@@ -1,6 +1,6 @@
 const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize')
-const { ValidationError } = require('sequelize');
+const { ValidationError, where } = require('sequelize');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer')
 const { createFolder } = require('../helper/googleDrive');
@@ -86,9 +86,9 @@ const updateNomination = async (req, res) => {
       try {
         // resets reminderSent bool every stage
         nomination.update(
-          {reminderSent: false}
+          { reminderSent: false }
         )
-      } catch(error) {
+      } catch (error) {
         console.error('Was not able to change reminderSent bool', error)
       }
 
@@ -97,16 +97,16 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === 'Awaiting HIPAA') {
-        
+
         try {
           nomination.update(
             { awaitingHipaaTimestamp: Date() })
-            console.log(nomination.awaitingHipaaTimestamp)
+          console.log(nomination.awaitingHipaaTimestamp)
           const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
           const state = states.getStateCodeByStateName(nomination.hospitalState);
           const applicationName = `${lastName}-${state}`
-          
-         
+
+
 
           createFolder(applicationName)
         }
@@ -116,7 +116,7 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === 'HIPAA Verified') {
-        
+
         try {
           nomination.update(
             { hipaaTimestamp: Date() }
@@ -166,51 +166,58 @@ const emailVerifiction = async (req, res) => {
 const checkApplicationStatuses = async (req, res) => {
   const sevenSeconds = 1000 * 7 // use for testing
   const sevenDays = 24 * 60 * 60 * 1000 * 7
-  
-  const agingHipaaVerified = {
-    where:
-    {
-      status: 'HIPAA Verified',
-      hipaaTimestamp: {
-        [Op.lte]: new Date(new Date() - sevenSeconds)
-      },
-      reminderSent: false
+  const statuses = ['HIPAA Verified', 'Awaiting HIPAA']
+
+  statuses.forEach(async (status) => {
+    let query
+
+    if (status === 'HIPAA Verified') {
+      query = {
+        where:
+        {
+          status: status,
+          hipaaTimestamp: {
+            [Op.lte]: new Date(new Date() - sevenDays)
+          },
+          reminderSent: false
+        }
+      }
     }
-  }
-  const agingAwaitingHipaa = {
-    where:
-    {
-      status: 'Awaiting HIPAA',
-      awaitingHipaaTimestamp: {
-        [Op.lte]: new Date(new Date() - sevenSeconds)
-      },
-      reminderSent: false
+    if (status === 'Awaiting HIPAA') {
+      query = {
+        where:
+        {
+          status: status,
+          awaitingHipaaTimestamp: {
+            [Op.lte]: new Date(new Date() - sevenDays)
+          },
+          reminderSent: false
+        }
+      }
     }
-  }
-  //// query db for apps in awaiting hipaa and hipaa verified
-  console.log('Querying db for applications in Awaiting HIPAA and HIPAA Verified')
-  const nominations = await db.Nomination.findAll(agingHipaaVerified)
-    try{console.log(nominations.length)
-      for(let i = 0; i<nominations.length; i++){
+
+    await searchAndSend(status, query)
+  })
+
+  async function searchAndSend(status, query) {
+
+    const nominations = await db.Nomination.findAll(query)
+    try {
+      console.log(nominations.length)
+      for (let i = 0; i < nominations.length; i++) {
         let nomination = nominations[i]
         let id = nomination.id
-        sendSurveyReminder(nomination)
+        if (status === 'HIPAA Verified') {
+          sendSurveyReminder(nomination)
+        }
+        if (status === 'Awaiting HIPAA') {
+          sendHIPAAReminder(nomination)
+        }
         nomination.update({ reminderSent: true }, { where: { id } })
-      } 
-  } catch(error) { 
-    console.log(error)
-  }
-
-  const nom = await db.Nomination.findAll(agingAwaitingHipaa)
-    try{console.log(nom.length)
-      for(let i = 0; i<nom.length; i++){
-        let nomination = nom[i]
-        let id = nomination.id
-        sendHIPAAReminder(nomination)
-        nomination.update({ reminderSent: true }, { where: { id } })
-      } 
-  } catch(error) { 
-    console.log(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
