@@ -134,7 +134,7 @@ function sendSurveyReminder(nomination) {
         }
       }
     )
-    .then(console.log("reminder email has been sent to" + nomination.patientName))
+    .then(console.log("reminder email has been sent to" + nomination.providerName))
     .catch((err) => console.log(err))
 }
 
@@ -155,7 +155,7 @@ function sendHIPAAReminder(nomination) {
         }
       }
     )
-    .then(console.log("reminder email has been sent to" + nomination.patientName))
+    .then(console.log("reminder email has been sent to" + nomination.providerName))
     .catch((err) => console.log(err))
 }
 

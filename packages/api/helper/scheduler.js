@@ -1,7 +1,7 @@
 const CronJob = require('cron').CronJob
 const { checkApplicationStatuses } = require('../controllers/nomination')
 //runs every day at 7am
-// let job = new CronJob('* * 7 * * 0-7', function() {
+// let reminders = new CronJob('00 00 7 * * 0-6', function() {
 //     console.log("please work")
 // }, null, true, 'America/Chicago')
 

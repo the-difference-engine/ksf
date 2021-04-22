@@ -89,7 +89,7 @@ const updateNomination = async (req, res) => {
           {reminderSent: false}
         )
       } catch(error) {
-        console.error('Was not able to change redminderSent bool', error)
+        console.error('Was not able to change reminderSent bool', error)
       }
 
       if (nomination.status === 'Decline') {
@@ -164,13 +164,10 @@ const emailVerifiction = async (req, res) => {
 
 
 const checkApplicationStatuses = async (req, res) => {
+  const sevenSeconds = 1000 * 7 // use for testing
   const sevenDays = 24 * 60 * 60 * 1000 * 7
-  const sevenSeconds = 1000 * 7
-
-
-  //// query db for apps in awaiting hipaa and hipaa verified
-  console.log('Querying db for applications in Awaiting HIPAA and HIPAA Verified')
-  const nominations = await db.Nomination.findAll({
+  
+  const agingHipaaVerified = {
     where:
     {
       status: 'HIPAA Verified',
@@ -179,20 +176,8 @@ const checkApplicationStatuses = async (req, res) => {
       },
       reminderSent: false
     }
-  })
-    try{console.log(nominations.length)
-      for(let i = 0; i<nominations.length; i++){
-        let nomination = nominations[i]
-        let id = nomination.id
-        console.log("A survey reminder email has been triggered..." + nomination.patientName)
-        sendSurveyReminder(nomination)
-        nomination.update({ reminderSent: true }, { where: { id } })
-      } 
-  } catch(error) { 
-    console.log(error)
   }
-
-  const nom = await db.Nomination.findAll({
+  const agingAwaitingHipaa = {
     where:
     {
       status: 'Awaiting HIPAA',
@@ -201,10 +186,24 @@ const checkApplicationStatuses = async (req, res) => {
       },
       reminderSent: false
     }
-  })
+  }
+  //// query db for apps in awaiting hipaa and hipaa verified
+  console.log('Querying db for applications in Awaiting HIPAA and HIPAA Verified')
+  const nominations = await db.Nomination.findAll(agingHipaaVerified)
+    try{console.log(nominations.length)
+      for(let i = 0; i<nominations.length; i++){
+        let nomination = nominations[i]
+        let id = nomination.id
+        sendSurveyReminder(nomination)
+        nomination.update({ reminderSent: true }, { where: { id } })
+      } 
+  } catch(error) { 
+    console.log(error)
+  }
+
+  const nom = await db.Nomination.findAll(agingAwaitingHipaa)
     try{console.log(nom.length)
       for(let i = 0; i<nom.length; i++){
-        console.log("A HIPAA reminder email has been triggered...")
         let nomination = nom[i]
         let id = nomination.id
         sendHIPAAReminder(nomination)
