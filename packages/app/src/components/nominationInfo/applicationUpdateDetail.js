@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./styles.module.css";
 import nominationsAPI from "./../../utils/API/nominationsAPI.js";
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 
 function ApplicationUpdateDetail(props) {
-    // const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+    const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+    let saveConfirm = false;
     // Directly manipulates corresponding props values based on if statement checks.
     const handleChange = (e) => {
+        // Prevents infinite change loop.
         e.preventDefault();
+        saveConfirm = true;
 
         if (e.target.name === 'Admission Date') {
             props.propsData[2].value = e.target.value;
@@ -36,19 +39,15 @@ function ApplicationUpdateDetail(props) {
         if (e.target.name === 'Request to communicate in Spanish?') {
             props.propsData[4].value = e.target.value;
         }
-
-        // How do we write these changes to the database? Following statement shows they are updated.
-        console.log(props.propsData);
         
         // Tries to update database with an Axios call, catches error if one occurs.
-        // if (props.saveConfirm === true) {
-        //     try {
-        //         nominationsAPI.updateNomination(activeNomination.id, props.propsData);
-        //     } catch (err) {
-        //         console.log(err);
-        //     }
-        // }
-
+        if (saveConfirm === true) {
+            try {
+                nominationsAPI.updateNomination(activeNomination.id, props.propsData);
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
 
     return (
@@ -87,10 +86,8 @@ function ApplicationUpdateDetail(props) {
                         </div>
                     </form>
             }
-
         </div>
     );
 }
 
-// export default updatedFields;
 export default ApplicationUpdateDetail;

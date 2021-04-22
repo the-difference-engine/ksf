@@ -14,11 +14,9 @@ const NominationBanner = (props) => {
   let backColor = "white";
   let textColor = "green";
   let saveOrEditLabel = "Edit";
-  let saveConfirm = false;
 
   // Handles changing edit button colors and title to "save" if clicked.
   if(props.hasBeenClicked) {
-    saveConfirm = true;
     backColor = "green";
     textColor = "white";
     saveOrEditLabel = "Save";
