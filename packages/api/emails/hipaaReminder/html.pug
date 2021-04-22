@@ -1,11 +1,94 @@
 doctype html
-html(lang="en")
-  head
-    
-  body
-   
-      p Hello #{name},
-      p We are writing to inform you that your application with The Difference Engine is incomplete.
-      p The application is currently awaiting ...
-      p Please reply to this email with the missing information and/or attachments.
-      p TEST TEST TEST
+html
+    //- added
+    head
+        style(type='text/css').
+            body {
+                width: 600px;
+                margin: 0;
+                font-family: sans-serif;
+                -webkit-font-smoothing: antialiased;
+                //- -moz-osx-font-smoothing: grayscale;
+                background: white;
+            }
+            .container {
+                padding: 20px;
+            }
+            a {
+                text-decoration: none;
+            }
+            p {
+                font-size: 0.875rem;
+                margin-bottom: 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            h2, h2 a {
+                text-decoration: none;
+                font-size: 1.5rem;
+                color: #6D7278;
+                text-align: center;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                color: #128B3E;
+            }
+
+            td {
+                border: none;
+                padding: 1.5rem 2rem;
+            }
+            .f0 {
+                text-align: center;
+            }
+            .f1 h6, .f1 p {
+                margin-bottom: 0px;
+                margin-top: 0px;
+                color: red;
+            }
+            .f1 {
+                margin-top: 50px;
+            }
+
+    body
+        img(src= `${imgUrl}/email/header.jpg` alt='header' style='width:100%; height:auto;')
+        div(class="container")
+            h1 REMINDER: Your Application is Incomplete
+            
+            p Hi #{providerName},
+            
+            p If you are receiving this message, your application has been awaiting documentation for over seven days.
+            p Please reply to this email with your completed HIPAA authorization form.  
+            p We look forward to finalizing this nomination process with you. Thank you for your time.
+            
+            p Sincerely,
+
+            p -Keep Swimming Foundation
+
+
+            h3 DEADLINE:
+
+            p 
+                strong Deadline: Tuesday, March 31, 2020 at 11:59 PM CT 
+                | (All Supporting Surveys submitted after this time will not be considered). The completion of this Supporting Survey does not guarantee the nominated individual family a Keep Swimming Foundation grant. 
+            
+            h2 
+                | <a href="https://www.dropbox.com/?_hp=c">DOWNLOAD THE SUPPORTING SURVEY</a>
+            div(class="f0")
+                p Keep Swimming Foundation |
+                    | <a href="https://goo.gl/maps/rBQrsB3VHb4bji4z8"> N9W30025 Lang Udsigt Cir., Waukesha, WI 53188 </a>
+                    //- unsure of where to direct the bellow link unsubscribe
+                p <a href="#">  Unsubscribe #{ email } 
+                p Update Profile | About Constant Contact 
+                p Sent by info@keepswimmingfoundation.org in collaboration with
+                p Try email marketing for free today! 
+            
+            div(class="f1")
+                h6 THIS IS A TEST EMAIL ONLY. 
+                p This email was sent by the author for the sole purpose of testing a draft message. If you believe you have received the message in error, please contact the author by replying to this message. Constant Contact takes reports of abuse very seriously. If you wish to report abuse, please forward this message to
+                    | <a href="mailto: abuse@constantcontact.com."> abuse@constantcontact.com.</a>
