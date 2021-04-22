@@ -64,7 +64,7 @@ function NominationInfo(props) {
 
     const familyinfo = [
       {
-        label: "Name",
+        label: "Representative Name",
         value: activeNomination.representativeName
       },
       {
@@ -83,9 +83,10 @@ function NominationInfo(props) {
         label: "Request to communicate in Spanish?",
         value: "No"
       }];
+      
     const patientInfo = [
       {
-        label: "Name",
+        label: "Patient Name",
         value: activeNomination.patientName
       },
       {
