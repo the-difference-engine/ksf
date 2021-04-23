@@ -21,6 +21,11 @@ const nominationsAPI = {
       status: value
     });
   },
+  updateActiveNomData: function (id, nomChangeData) {
+    return axios.put(`${cleanURL(API_URL)}/api/nominations/${id}`, {
+      propsObject: nomChangeData
+    });
+  },
   syncNominations: function () {
     return axios.get(`${cleanURL(API_URL)}/api/syncnominations`);
   },

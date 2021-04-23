@@ -43,7 +43,8 @@ function ApplicationUpdateDetail(props) {
         // Tries to update database with an Axios call, catches error if one occurs.
         if (saveConfirm === true) {
             try {
-                nominationsAPI.updateNomination(activeNomination.id, props.propsData);
+                nominationsAPI.updateActiveNomData(activeNomination.id, props.propsData);
+                console.log("success");
             } catch (err) {
                 console.log(err);
             }

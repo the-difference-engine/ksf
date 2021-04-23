@@ -133,6 +133,25 @@ const emailVerifiction = async (req, res) => {
   }
 };
 
+/**
+ * Updates databse with information from active application updates on front end.
+ * 
+ * @param {*} req - updated props data object 
+ * @param {*} res - response code
+ */
+const updateActiveNomData = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const nomination = await db.Nomination.findOne({
+      where: { id },
+    });
+    console.log(req.body);
+    console.log(nomination.toString()); 
+  } catch (err) {
+      console.log(err);
+    }
+}
+
 module.exports = {
   getNominationById,
   findAllNominataions,
@@ -140,4 +159,5 @@ module.exports = {
   updateNomination,
   syncNominations,
   emailVerifiction,
+  updateActiveNomData,
 };
