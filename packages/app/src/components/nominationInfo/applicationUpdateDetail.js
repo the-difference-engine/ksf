@@ -41,6 +41,7 @@ function ApplicationUpdateDetail(props) {
         }
     }
     const handleSubmit = (e) => {
+        console.log("Sommmmeeee bullll")
         // Tries to update database with an Axios call, catches error if one occurs.
         if (saveConfirm === true) {
             try {
@@ -59,7 +60,7 @@ function ApplicationUpdateDetail(props) {
             </div>
             {
                 props.title == "Patient Information" ? <div>
-                    <form handleSubmit={(e)=>handleSubmit(e)}>
+                    <form onSubmit={(e)=>handleSubmit(e)}>
                         <h1></h1>
                         <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
                             {
