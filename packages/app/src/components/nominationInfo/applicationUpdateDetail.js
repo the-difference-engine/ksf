@@ -39,7 +39,8 @@ function ApplicationUpdateDetail(props) {
         if (e.target.name === 'Request to communicate in Spanish?') {
             props.propsData[4].value = e.target.value;
         }
-        
+    }
+    const handleSubmit = (e) => {
         // Tries to update database with an Axios call, catches error if one occurs.
         if (saveConfirm === true) {
             try {
@@ -58,14 +59,14 @@ function ApplicationUpdateDetail(props) {
             </div>
             {
                 props.title == "Patient Information" ? <div>
-                    <form onChange={(e) => handleChange(e)}>
+                    <form handleSubmit={(e)=>handleSubmit(e)}>
                         <h1></h1>
                         <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
                             {
                                 props.propsData.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
                                     {obj.label === "Admission Date" || obj.label === "Discharge Date" ?
                                         <div><label className={styles.label}>{obj.label}</label>
-                                            <input name={obj.label} type="date" defaultValue={obj.value} /></div> :
+                                            <input onChange={(e) => handleChange(e)} name={obj.label} type="date" defaultValue={obj.value} /></div> :
                                         <div>
                                             <label className={styles.label}>{obj.label}</label>
                                             <span className={styles.value}>{String(obj.value)}</span>
