@@ -9,6 +9,7 @@ const NominationBanner = ({ nomination }) => {
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = nomination.amountRequestedCents ? nomination.amountRequestedCents.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : '';
   const hippaDate = nomination.hipaaTimestamp;
+  const valid = new Date(hippaDate).getTime() > 0;
   let newDate = new Date(hippaDate);
   const time = newDate.toLocaleDateString();
   const minutes = newDate.toLocaleTimeString();
@@ -70,7 +71,7 @@ const NominationBanner = ({ nomination }) => {
               <p className="secondary-dark">HIPPA Date</p>
               <span>
                 <h2 className="body-font">
-                  <strong>{finalDate !== '12/31/1969 – 6:00:00 PM' ? finalDate : 'Awaiting HIPPA'}</strong>
+                  <strong>{valid ? finalDate : 'Awaiting HIPPA'}</strong>
                 </h2>
               </span>
             </div>
