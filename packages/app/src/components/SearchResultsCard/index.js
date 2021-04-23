@@ -4,10 +4,7 @@ import { SearchResultDataContext } from '../../utils/context/SearchResultsContex
 import './style.css';
 
 const SearchResultsCard = () => {
-  const [SearchResultData, setSearchResultData] = useContext(
-    SearchResultDataContext
-  );
-
+  const [SearchResultData, setSearchResultData] = useContext(SearchResultDataContext);
   return (
     <>
       <section className="search-result-card">
@@ -24,19 +21,17 @@ const SearchResultsCard = () => {
               <td><h1><strong>Patient Name</strong></h1></td>
               <td><h1><strong>Received Date</strong></h1></td>
             </tr>
-            { SearchResultData && SearchResultData.map((result) => (
-              <tr key={result.id} >
-                <td className="nom-name">
-                <Link target={"_blank"} to={`/nomination/${result.id}`}>
-                    {result.nominationName}
-                </Link>
-                </td>
-                <td>{result.providerName}</td>
-                <td>{result.patientName}</td>
-                <td>{result.dateReceived}</td>
-              </tr>
-              )
-            )}
+            {SearchResultData?.map((result) => (
+                  <tr key={result.id}>
+                    <td>
+                      <Link to={`/nomination/${result.id}`}>{result.nominationName}</Link>
+                    </td>
+                    <td>{result.providerName}</td>
+                    <td>{result.patientName}</td>
+                    <td>{result.dateReceived}</td>
+                  </tr>
+                ))
+              }
           </tbody>
         </table>
       </section>

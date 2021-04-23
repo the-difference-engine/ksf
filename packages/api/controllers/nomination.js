@@ -1,6 +1,9 @@
 const { validate: uuidValidate } = require('uuid');
 const { ValidationError } = require('sequelize');
 const db = require('../models');
+const { sendSurveyEmail } = require('../helper/mailer')
+const createFolder = require('../helper/googleDrive');
+const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
@@ -81,13 +84,21 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === 'HIPAA Verified') {
         try {
-          nomination.update({ hipaaTimestamp: Date() }).catch((err) => {
-            console.log('Nomination Not Found', err);
-            return res.status(400);
-          });
-        } finally {
-          sendSurveyEmail(nomination);
-        }
+
+          const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
+          const state = states.getStateCodeByStateName(nomination.hospitalState);
+          const applicationName = `${lastName}-${state}`
+
+          createFolder(applicationName)
+          
+          nomination.update(
+            { hipaaTimestamp: Date() }
+          ).catch ((err)=> {
+            console.log('Nomination Not Found', err)
+            return res.status(400)});
+          }
+        finally { sendSurveyEmail(nomination); }
+
       }
 
       return res.status(200).json(nomination);
@@ -105,6 +116,7 @@ const syncNominations = async (req, res) => {
     return res.status(200).json({ status: 'ok' });
   } catch (error) {
     console.log('error', error);
+
     return res.status(400).json({ error: error.message });
   }
 };
