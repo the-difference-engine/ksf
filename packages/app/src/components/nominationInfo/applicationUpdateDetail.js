@@ -3,6 +3,12 @@ import styles from "./styles.module.css";
 import nominationsAPI from "./../../utils/API/nominationsAPI.js";
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 
+/**
+ * Function which is called to update the current active nomination's data fields.
+ * 
+ * @param {*} props - active nomination props 
+ * @returns - renders data based on click status of edit button
+ */
 function ApplicationUpdateDetail(props) {
     const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
     let saveConfirm = false;
@@ -12,6 +18,7 @@ function ApplicationUpdateDetail(props) {
         e.preventDefault();
         saveConfirm = true;
 
+        // e.target.name checks props obj name string
         if (e.target.name === 'Admission Date') {
             props.propsData[2].value = e.target.value;
         }
@@ -40,8 +47,8 @@ function ApplicationUpdateDetail(props) {
             props.propsData[4].value = e.target.value;
         }
     }
+    
     const handleSubmit = (e) => {
-        console.log("Sommmmeeee bullll")
         // Tries to update database with an Axios call, catches error if one occurs.
         if (saveConfirm === true) {
             try {
