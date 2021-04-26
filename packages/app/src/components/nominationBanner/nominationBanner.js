@@ -26,15 +26,18 @@ const NominationBanner = (props) => {
     <div className="nomination-banner-container">
       <div className="row">
         <div className="column column-10 icon-container">
-          <img src="/ksflogo.png" alt="other"/>
+          <img src="/ksflogo.png" alt="other" />
         </div>
 
         <div className="column column-80 nomination-details">
-
           <div className="row banner-top">
             <div className="column name">
               <p>Application</p>
-              <span><h1 className="nom-name"><strong>{nominationName}</strong></h1></span>
+              <span>
+                <h1 className="nom-name">
+                  <strong>{nominationName}</strong>
+                </h1>
+              </span>
             </div>
           </div>
 
@@ -49,11 +52,27 @@ const NominationBanner = (props) => {
             </div>
             <div className="column created-at">
               <p className="secondary-dark">Submission Date</p>
-              <span><h2 className="body-font"><strong>{date}</strong></h2></span>
+              <span>
+                <h2 className="body-font">
+                  <strong>{date}</strong>
+                </h2>
+              </span>
             </div>
             <div className="column amount">
               <p className="secondary-dark">Grant Amount Requested</p>
-              <span><h2 className="body-font"><strong>{formattedAmount ? `$${formattedAmount}` : ''}</strong></h2></span>
+              <span>
+                <h2 className="body-font">
+                  <strong>{formattedAmount ? `$${formattedAmount}` : ''}</strong>
+                </h2>
+              </span>
+            </div>
+            <div className="column hippa">
+              <p className="secondary-dark">HIPPA Date</p>
+              <span>
+                <h2 className="body-font">
+                  <strong>{valid ? finalDate : 'Awaiting HIPPA'}</strong>
+                </h2>
+              </span>
             </div>
           </div>
         </div>
