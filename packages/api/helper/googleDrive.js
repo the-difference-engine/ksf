@@ -1,8 +1,8 @@
 const { google } = require('googleapis');
+const parsePrivateKey = require('./parsePrivateKey');
 const parentFolderId = process.env.APPLICATION_FOLDER_ID
-const clientEmail  = process.env.SERVICE_CLIENT_EMAIL
-const privateKey = process.env.SERVICE_PRIVATE_KEY
-
+const clientEmail = process.env.SERVICE_CLIENT_EMAIL
+const privateKey = parsePrivateKey(process.env.SERVICE_PRIVATE_KEY)
 const scopes = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/drive.appdata',
