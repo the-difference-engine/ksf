@@ -140,4 +140,4 @@ module.exports = {
   updateNomination,
   syncNominations,
   emailVerifiction,
-};
+};  
