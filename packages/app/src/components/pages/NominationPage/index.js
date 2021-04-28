@@ -18,7 +18,7 @@ const NominationPage = ({
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
-  const [error, setError] = useState()
+  const [error, setError] = useState();
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
 
   
@@ -34,9 +34,11 @@ const NominationPage = ({
       });
     }
   });
+
   function handleClick(){
-    setHasBeenClicked((isclicked)=>!isclicked)
+    setHasBeenClicked((isClicked)=>!isClicked)
   }
+  
   return (
     <>
     {activeNomination
