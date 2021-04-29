@@ -31,6 +31,7 @@
 
 .hp-name,
 .fam-name,
+.hippa,
 .created-at {
   border-right: 1px solid var(--light-background);
   margin-top: 1rem;
