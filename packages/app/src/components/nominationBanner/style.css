@@ -1,4 +1,4 @@
-@import "../../App.css";
+@import '../../App.css';
 
 .nomination-banner-container {
   padding: 3rem;
@@ -13,6 +13,10 @@
 }
 
 .edit-button {
+  border-radius: 4rem;
+}
+
+.decline-button {
   border-radius: 4rem;
 }
 
@@ -45,6 +49,6 @@
   font-size: 2rem;
 }
 
-.nom-name{
+.nom-name {
   font-size: 2.5rem;
 }
