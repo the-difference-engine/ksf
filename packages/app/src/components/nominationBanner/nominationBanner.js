@@ -3,13 +3,19 @@ import style from './style.css'
 import React, {useEffect, useState} from 'react';
 const states = require('us-state-codes');
 
-const NominationBanner = ({ nomination }) => {
-  const date = new Date(nomination.dateReceived).toLocaleDateString();
-  const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
-  const state = states.getStateCodeByStateName(nomination.hospitalState);
+/**
+ * Creates and renders the active nomination banner.
+ * 
+ * @param {*} props - active nomination props
+ * @returns - nomination banner component
+ */
+const NominationBanner = (props) => {
+  const date = new Date(props.nomination.dateReceived).toLocaleDateString();
+  const lastName = props.nomination.patientName ? props.nomination.patientName.split(' ')[1] : '';
+  const state = states.getStateCodeByStateName(props.nomination.hospitalState);
   const nominationName = `${lastName}-${state}`;
-  const formattedAmount = nomination.amountRequestedCents ? nomination.amountRequestedCents.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : '';
-  const hipaaDate = nomination.hipaaTimestamp;
+  const formattedAmount = props.nomination.amountRequestedCents ? props.nomination.amountRequestedCents.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : '';
+  const hipaaDate = props.nomination.hipaaTimestamp;
   const valid = new Date(hipaaDate).getTime() > 0;
   let newDate = new Date(hipaaDate);
   const time = newDate.toLocaleDateString();
@@ -22,7 +28,7 @@ const NominationBanner = ({ nomination }) => {
   let saveOrEditLabel = "Edit";
 
   // Handles changing edit button colors and title to "save" if clicked.
-  if(nomination.hasBeenClicked) {
+  if(props.hasBeenClicked) {
     backColor = "green";
     textColor = "white";
     saveOrEditLabel = "Save";
@@ -50,11 +56,11 @@ const NominationBanner = ({ nomination }) => {
           <div className="row">
             <div className="column hp-name">
               <p className="secondary-dark">HP Name</p>
-              <span><h2 className="body-font"><strong>{nomination.providerName}</strong></h2></span>
+              <span><h2 className="body-font"><strong>{props.nomination.providerName}</strong></h2></span>
             </div>
             <div className="column fam-name">
               <p className="secondary-dark">Family Member Name</p>
-              <span><h2 className="body-font"><strong>{nomination.representativeName}</strong></h2></span>
+              <span><h2 className="body-font"><strong>{props.nomination.representativeName}</strong></h2></span>
             </div>
             <div className="column created-at">
               <p className="secondary-dark">Submission Date</p>
@@ -83,7 +89,7 @@ const NominationBanner = ({ nomination }) => {
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color:textColor }} onClick={nomination.handleClick} id="edit-button">{saveOrEditLabel}</button>
+          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color:textColor }} onClick={props.handleClick} id="edit-button">{saveOrEditLabel}</button>
         </div>
       </div>
     </div>
