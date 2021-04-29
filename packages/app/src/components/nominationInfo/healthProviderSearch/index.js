@@ -13,12 +13,7 @@ const SearchHealthProvider = () => {
     let filteredNoms = [];
     if (NominationsData && searchTerm !== undefined) {
       filteredNoms = NominationsData.filter((nomination) => {
-        return [
-          nomination.providerName,
-          nomination.patientName,
-          nomination.nominationName,
-          nomination.representativeName,
-        ].some((nom) => nom.includes(searchTerm));
+        return [nomination.providerName, nomination.patientName, nomination.nominationName, nomination.representativeName].some((nom) => nom.includes(searchTerm));
       });
       setSearchHealthcareProvider(filteredNoms);
     }
@@ -27,8 +22,8 @@ const SearchHealthProvider = () => {
   const { id } = useParams();
 
   useEffect(() => {
-      findSearchResults(id);
-  }, []);
+    findSearchResults(id);
+  }, [NominationsData]);
 
   return (
     <>
@@ -47,15 +42,15 @@ const SearchHealthProvider = () => {
               <td>Recieved Date </td>
             </tr>
             {SearchHealthcareProvider?.map((result) => (
-                  <tr key={result.id}>
-                    <td>
-                      <Link to={`/nomination/${result.id}`}>{result.nominationName}</Link>
-                    </td>
-                    <td>{result.providerName}</td>
-                    <td>{result.patientName}</td>
-                    <td>{result.dateReceived}</td>
-                  </tr>
-                ))}
+              <tr key={result.id}>
+                <td>
+                  <Link to={`/nomination/${result.id}`}>{result.nominationName}</Link>
+                </td>
+                <td>{result.providerName}</td>
+                <td>{result.patientName}</td>
+                <td>{result.dateReceived}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </section>
