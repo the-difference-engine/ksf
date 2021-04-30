@@ -17,16 +17,28 @@ function ApplicationUpdateDetail(props) {
     // Formik object which handles form updates and submits changes.
     const patientEditForm = () => {
         const formik = useFormik({
-            initialValues: {
-                'Admission Date': '',
-                'Discharge Date': '',
-                'Representative Name': '',
-                'Email Address': '',
-                'Phone Number': '',
-                Relationship: '',
-                'Request to communicate in Spanish?': '',
-            }
-        })
+            initialValues: { // These initial values should be pulled from the objects in ../nominationInfo/index.js...how?
+                admissionDate: '',
+                dischargeDate: '',
+                repName: '',
+                email: '',
+                phoneNum: '',
+                relationship: '',
+                spanishComms: '',
+            },
+            validationSchema: Yup.object({
+                admissionDate: Yup.date.required('Required'),
+                dischargeDate: Yup.date.required('Required'),
+                repName: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
+                email: Yup.string().email('Invalid email address').required('Required'), // Need to validate to actual email
+                phoneNum: Yup.string().required('Required'), // Need to validate as valid phone number
+                relationship: Yup.string().required('Required'), // Need to validate to certain relationships
+                spanishComms: Yup.string().required('Required'), // Need to validate to yes or no
+            }),
+            onSubmit: values => {
+                alert(JSON.stringify(values, null, 2));
+            },
+        });
     }
     // let saveConfirm = false;
 
@@ -94,7 +106,8 @@ function ApplicationUpdateDetail(props) {
                                 props.propsData.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
                                     {obj.label === "Admission Date" || obj.label === "Discharge Date" ?
                                         <div><label className={styles.label}>{obj.label}</label>
-                                            <input onChange={(e) => handleChange(e)} name={obj.label} type="date" defaultValue={obj.value} /></div> :
+                                        {/* Need to tie label to value in next line somehow, and make functional for each label. */}
+                                            <input onChange={formik.handleChange} name={obj.label} type="date" defaultValue={obj.value} value={formik.values.admissionDate}/></div> :
                                         <div>
                                             <label className={styles.label}>{obj.label}</label>
                                             <span className={styles.value}>{String(obj.value)}</span>
@@ -105,12 +118,13 @@ function ApplicationUpdateDetail(props) {
                         </div>
                     </form>
                 </div>
+                // False condition which does not change any form data.
                     : <form onSubmit={formik.handleSubmit}>
                         <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
                             {
                                 props.propsData.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
                                     <label className={styles.label}>{obj.label}</label>
-                                    <input name={obj.label} onChange={(e) => handleChange(e)} type="text" defaultValue={obj.value} />
+                                    <input name={obj.label} onChange={formik.handleChange} type="text" defaultValue={obj.value} />
                                 </div>))
                             }
                         </div>
