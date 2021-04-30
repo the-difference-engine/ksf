@@ -1,0 +1,56 @@
+.new-files-table {
+  background-color: white;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+
+.home-new-files-headers {
+  background-color: var(--light-background);
+  flex-grow: 1;
+}
+
+.new-files-application-name {
+  color: var(--brand);
+}
+
+.add-padding-left {
+  padding-left: 2rem !important;
+  /* using important to override inline styles rendered by 3rd party component Milligram */
+}
+
+.new-files-title {
+  display: flex;
+  align-items: center;
+}
+
+.new-files-title h1 {
+  margin-left: 5px;
+  margin-bottom: 0rem !important;
+  letter-spacing: normal !important;
+}
+
+.home-new-files-headers h2 {
+  margin-bottom: 0rem !important;
+  font-size: 1.4rem;
+  letter-spacing: normal !important;
+}
+
+.detail-font-size {
+  font-size: 1rem;
+}
+
+.green * {
+  color: #128b3e !important;
+  font-weight: bold;
+}
+
+.sortable-column {
+  cursor: pointer;
+}
+
+.width-column {
+  width: 20%;
+}
+.last-column {
+  width: 10%;
+}
