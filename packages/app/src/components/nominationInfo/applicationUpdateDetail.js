@@ -14,84 +14,37 @@ import * as Yup from 'yup'; // npm install yup --save
 function ApplicationUpdateDetail(props) {
     const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
 
+    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    const yesNoRegex = /^(?:Yes\b|No\b)/;
+    
     // Formik object which handles form updates and submits changes.
     const patientEditForm = () => {
         const formik = useFormik({
             initialValues: { // These initial values should be pulled from the objects in ../nominationInfo/index.js...how?
-                admissionDate: '',
-                dischargeDate: '',
-                repName: '',
-                email: '',
-                phoneNum: '',
-                relationship: '',
-                spanishComms: '',
+                admissionDate: props.propsData[2].value,
+                dischargeDate: props.propsData[3].value,
+                repName: props.propsData[0].value,
+                email: props.propsData[1].value,
+                phoneNum: props.propsData[2].value,
+                relationship: props.propsData[3].value,
+                spanishComms: props.propsData[4].value,
             },
+            // Yup handles validation in schema format. Confirm required function call does not matter for unchanged values.
             validationSchema: Yup.object({
-                admissionDate: Yup.date.required('Required'),
-                dischargeDate: Yup.date.required('Required'),
+                admissionDate: Yup.date.max(today).required('Required'),
+                dischargeDate: Yup.date.max(today).required('Required'),
                 repName: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
-                email: Yup.string().email('Invalid email address').required('Required'), // Need to validate to actual email
-                phoneNum: Yup.string().required('Required'), // Need to validate as valid phone number
-                relationship: Yup.string().required('Required'), // Need to validate to certain relationships
-                spanishComms: Yup.string().required('Required'), // Need to validate to yes or no
+                email: Yup.string().email('Invalid email address').required('Required'), // This handles email validation with no regex.
+                phoneNum: Yup.string().matches(phoneRegex, "Please enter a valid phone number.").required('Required'),
+                relationship: Yup.string().min(3, "Must be at least 3 characters.").max(20, "Must be no more than 20 characters.").required('Required'),
+                spanishComms: Yup.string().matches(yesNoRegex, "Please enter yes or no.").required('Required'),
             }),
             onSubmit: values => {
                 alert(JSON.stringify(values, null, 2));
             },
         });
     }
-    // let saveConfirm = false;
-
-    // // Directly manipulates corresponding props values based on if statement checks.
-    // // TODO: Need to figure out data validation in the form.
-    // const handleChange = (e) => {
-    //     // Prevents infinite change loop.
-    //     e.preventDefault();
-    //     saveConfirm = true;
-
-    //     // e.target.name checks props obj name string
-    //     if (e.target.name === 'Admission Date') {
-    //         props.propsData[2].value = e.target.value;
-    //     }
-
-    //     if (e.target.name === 'Discharge Date') {
-    //         props.propsData[3].value = e.target.value;
-    //     }
-
-    //     if (e.target.name === 'Representative Name') {
-    //         props.propsData[0].value = e.target.value;
-    //     }
-
-    //     if (e.target.name === 'Email Address') {
-    //         props.propsData[1].value = e.target.value;
-    //     }
-
-    //     if (e.target.name === 'Phone Number') { 
-    //         props.propsData[2].value = e.target.value;
-    //     }
-
-    //     if (e.target.name === 'Relationship') {
-    //         props.propsData[3].value = e.target.value;
-    //     }
-
-    //     if (e.target.name === 'Request to communicate in Spanish?') {
-    //         props.propsData[4].value = e.target.value;
-    //     }
-    // }
     
-    // // Handles form submission to back end.
-    // const handleSubmit = (e) => {
-    //     // Tries to update database with an API call, catches error if one occurs.
-    //     if (saveConfirm === true) {
-    //         try {
-    //             nominationsAPI.updateActiveNomData(activeNomination.id, props.propsData);
-    //             console.log("success");
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    // }
-
     return (
         <div className={styles.main}>
             <div className={styles.header}>
