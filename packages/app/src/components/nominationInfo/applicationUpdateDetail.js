@@ -33,8 +33,8 @@ function ApplicationUpdateDetail(props) {
             validationSchema: Yup.object({
                 admissionDate: Yup.date.max(today).required('Required'),
                 dischargeDate: Yup.date.max(today).required('Required'),
-                repName: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
-                email: Yup.string().email('Invalid email address').required('Required'), // This handles email validation with no regex.
+                repName: Yup.string().max(30, 'Must be 30 characters or less.').required('Required'),
+                email: Yup.string().email('Invalid email address.').required('Required'), // This handles email validation with no regex.
                 phoneNum: Yup.string().matches(phoneRegex, "Please enter a valid phone number.").required('Required'),
                 relationship: Yup.string().min(3, "Must be at least 3 characters.").max(20, "Must be no more than 20 characters.").required('Required'),
                 spanishComms: Yup.string().matches(yesNoRegex, "Please enter yes or no.").required('Required'),
