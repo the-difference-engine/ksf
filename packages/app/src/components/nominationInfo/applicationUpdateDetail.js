@@ -21,19 +21,19 @@ function ApplicationUpdateDetail(props) {
     const patientEditForm = () => {
         const formik = useFormik({
             initialValues: { // These initial values should be pulled from the objects in ../nominationInfo/index.js...how?
-                admissionDate: props.propsData[2].value,
-                dischargeDate: props.propsData[3].value,
-                repName: props.propsData[0].value,
-                email: props.propsData[1].value,
-                phoneNum: props.propsData[2].value,
-                relationship: props.propsData[3].value,
-                spanishComms: props.propsData[4].value,
+                admissionDate: props.propsPatientData[2].value,
+                dischargeDate: props.propsPatientData[3].value,
+                repName: props.propsFamData[0].value,
+                email: props.propsFamData[1].value,
+                phoneNum: props.propsFamData[2].value,
+                relationship: props.propsFamData[3].value,
+                spanishComms: props.propsFamData[4].value,
             },
             // Yup handles validation in schema format. Confirm required function call does not matter for unchanged values.
             validationSchema: Yup.object({
-                admissionDate: Yup.date.max(today).required('Required'),
-                dischargeDate: Yup.date.max(today).required('Required'),
-                repName: Yup.string().max(30, 'Must be 30 characters or less.').required('Required'),
+                admissionDate: Yup.date().max(today).required('Required'),
+                dischargeDate: Yup.date().max(today).required('Required'),
+                repName: Yup.string().min(3, "Must be 3 characters or more.").max(30, 'Must be 30 characters or less.').required('Required'),
                 email: Yup.string().email('Invalid email address.').required('Required'), // This handles email validation with no regex.
                 phoneNum: Yup.string().matches(phoneRegex, "Please enter a valid phone number.").required('Required'),
                 relationship: Yup.string().min(3, "Must be at least 3 characters.").max(20, "Must be no more than 20 characters.").required('Required'),

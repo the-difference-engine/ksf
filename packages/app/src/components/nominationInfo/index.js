@@ -110,14 +110,14 @@ function NominationInfo(props) {
         <div className={styles.layout}>
           { // Dictates which data is displayed based on the edit button being clicked: first half is current app data (edit button visible),
             // second half allows updates to the active application data (save button visible).
-          !props.hasBeenClicked && !props.saveConfirm ? <div><ApplicationDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
-            <ApplicationDetail propsData={familyinfo} title="Family Member Information"/></div> : <div>
-            <ApplicationUpdateDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
-            <ApplicationUpdateDetail propsData={familyinfo} title="Family Member Information"/>
+          !props.hasBeenClicked && !props.saveConfirm ? <div><ApplicationDetail propsPatientData={patientInfo} gridContent={true} title="Patient Information" />
+            <ApplicationDetail propsFamData={familyinfo} title="Family Member Information"/></div> : <div>
+            <ApplicationUpdateDetail propsPatientData={patientInfo} gridContent={true} title="Patient Information" />
+            <ApplicationUpdateDetail propsFamData={familyinfo} title="Family Member Information"/>
             </div>
           }
             {/* This set of data is always displayed. */}
-            <HealthProviderDetail propsData={fields} gridContent={true} title="Health Provider Information" />
+            <HealthProviderDetail propsHealthData={fields} gridContent={true} title="Health Provider Information" />
         </div>
       );
     }
