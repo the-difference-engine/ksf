@@ -101,7 +101,7 @@ const updateNomination = async (req, res) => {
         try {
           nomination.update(
             { awaitingHipaaTimestamp: Date() })
-          console.log(nomination.awaitingHipaaTimestamp)
+
           const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
           const state = states.getStateCodeByStateName(nomination.hospitalState);
           const applicationName = `${lastName}-${state}`
@@ -166,6 +166,8 @@ const emailVerifiction = async (req, res) => {
 const checkApplicationStatuses = async (req, res) => {
   const sevenSeconds = 1000 * 7 // use for testing
   const sevenDays = 24 * 60 * 60 * 1000 * 7
+  let time = process.env.APP_URL === 'http://localhost:3000' ? sevenSeconds : sevenDays
+
   const statuses = ['HIPAA Verified', 'Awaiting HIPAA']
 
   statuses.forEach(async (status) => {
@@ -177,19 +179,18 @@ const checkApplicationStatuses = async (req, res) => {
         {
           status: status,
           hipaaTimestamp: {
-            [Op.lte]: new Date(new Date() - sevenDays)
+            [Op.lte]: new Date(new Date() - time)
           },
           reminderSent: false
         }
       }
-    }
-    if (status === 'Awaiting HIPAA') {
+    } else  {
       query = {
         where:
         {
           status: status,
           awaitingHipaaTimestamp: {
-            [Op.lte]: new Date(new Date() - sevenDays)
+            [Op.lte]: new Date(new Date() - time)
           },
           reminderSent: false
         }
@@ -203,7 +204,6 @@ const checkApplicationStatuses = async (req, res) => {
 
     const nominations = await db.Nomination.findAll(query)
     try {
-      console.log(nominations.length)
       for (let i = 0; i < nominations.length; i++) {
         let nomination = nominations[i]
         let id = nomination.id

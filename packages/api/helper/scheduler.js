@@ -1,14 +1,16 @@
 const CronJob = require('cron').CronJob
 const { checkApplicationStatuses } = require('../controllers/nomination')
-//runs every day at 7am
-let reminders = new CronJob('00 00 7 * * 0-6', function() {
-    console.log("please work")
-}, null, true, 'America/Chicago')
+process.env.TZ = 'America/Chicago'
+const production = '00 00 11 * * 0-6' // run at 9am PST / 11am Central
+const development = '*/45 * * * * *'  // every 45th second on the minute
 
-// use testing for below, every 10 seconds
-// let reminders = new CronJob('*/10 * * * * *', function() {
-//     console.log("The scheduler has started.")
-//     checkApplicationStatuses()
-// }, null, true, 'America/Chicago')
+
+let schedule = process.env.APP_URL === 'http://localhost:3000' ? development : production
+
+
+let reminders = new CronJob(schedule, function() {
+    console.log("The scheduler has started.")
+    checkApplicationStatuses()
+}, null, true, process.env.TZ)
 
 module.exports ={reminders}
