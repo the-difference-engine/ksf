@@ -1,14 +1,9 @@
 const CronJob = require('cron').CronJob
 const { checkApplicationStatuses } = require('../controllers/nomination')
-const env = process.env.NODE_ENV || 'development';
-const production = '00 00 11 * * 0-6' // run at 9am PST / 11am Central
-const development = '*/45 * * * * *'  // every 45th second on the minute
+// To override in testing set: EMAIL_CRON='*/45 * * * * *' runs every minute on the 45th second
+const defaultCron = process.env.EMAIL_CRON ?? '00 00 11 * * 0-6'
 
-
-let schedule = env === 'development' ? development : production
-
-
-let reminders = new CronJob(schedule, function() {
+let reminders = new CronJob(defaultCron, function() {
     console.log("The scheduler has started.")
     checkApplicationStatuses()
 }, null, true)
