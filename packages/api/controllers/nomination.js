@@ -166,7 +166,8 @@ const emailVerifiction = async (req, res) => {
 const checkApplicationStatuses = async (req, res) => {
   const sevenSeconds = 1000 * 7 // use for testing
   const sevenDays = 24 * 60 * 60 * 1000 * 7
-  let time = process.env.APP_URL === 'http://localhost:3000' ? sevenSeconds : sevenDays
+  const env = process.env.NODE_ENV || 'development';
+  const time = env === 'development' ? sevenSeconds : sevenDays
 
   const statuses = ['HIPAA Verified', 'Awaiting HIPAA']
 

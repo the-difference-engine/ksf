@@ -15,5 +15,6 @@ async function testSequelizeConnection() {
   }
 }
 testSequelizeConnection();
+process.env.TZ = 'America/Chicago'
 scheduler.reminders.start();
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
