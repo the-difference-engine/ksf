@@ -17,7 +17,18 @@
 }
 
 .decline-button {
-  border-radius: 4rem;
+  background-color: #f72314;
+  color: #ffffff;
+  border: #8a8a8a;
+  font-size: 0.85rem;
+  font-weight: bold;
+  padding: 2px 10px 10px 10px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.decline-button:hover {
+  background-color: #d4190c;
 }
 
 #edit-button {
