@@ -128,6 +128,15 @@ const updateNomination = async (req, res) => {
         finally { sendSurveyEmail(nomination); }
 
       }
+      if (nomination.status === 'Ready for Board Review') {
+        try {
+          nomination.update(
+            { readyForBoardReviewTimestamp: Date() }
+          )
+        } catch (error) {
+          console.log("Could not record readyForBoardReviewTimestamp ", error)
+        }
+      }
 
       return res.status(200).json(nomination);
     }

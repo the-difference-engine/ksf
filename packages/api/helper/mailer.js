@@ -29,11 +29,9 @@ transporter.verify((error, success) => {
 
 const email = new emailTemplate({
   transport: transporter,
-
-  // CHANGE THESE BACK
   send: true,
   //send status will eventually need to be updated to true
-  preview: true,
+  preview: false
 });
 
 function sendDeclineEmail(nomination) {

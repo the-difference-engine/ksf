@@ -147,6 +147,10 @@ module.exports = (sequelize, DataTypes) => {
       reminderSent: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+      },
+      readyForBoardReviewTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
       }
     },
     {
