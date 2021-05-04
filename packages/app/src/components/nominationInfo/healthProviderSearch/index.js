@@ -49,25 +49,23 @@ const SearchHealthProvider = () => {
           </td>
           <td className="width-column">
             <h2 className="sortable-column">
-              <strong> HP Name </strong>
+              <strong>HP Name</strong>
             </h2>
           </td>
           <td className="width-column">
             {' '}
             <h2 className="sortable-column">
-              <strong>Patient Name </strong>
+              <strong>Patient Name</strong>
             </h2>
           </td>
           <td className="width-column">
             {' '}
             <h2 className="sortable-column">
-              <strong>Recieved Date </strong>
+              <strong>Recieved Date</strong>
             </h2>
           </td>
           <td className="last-column">
-            <h2 className="sortable-column">
-              <strong> </strong>
-            </h2>
+            <h2 className="sortable-column"></h2>
           </td>
         </tr>
         {SearchHealthcareProvider?.map((result) => (
