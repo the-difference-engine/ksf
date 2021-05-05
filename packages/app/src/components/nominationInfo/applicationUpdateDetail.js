@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import styles from "./styles.module.css";
-import nominationsAPI from "./../../utils/API/nominationsAPI.js";
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import { Formik, Form, useField, useFormikContext } from "formik"; // npm install formik --save
+import { Formik, Form } from "formik"; // npm install formik --save
 import * as Yup from 'yup'; // npm install yup --save
 
 /**
@@ -17,7 +16,6 @@ function ApplicationUpdateDetail(props) {
     const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     const yesNoRegex = /^(?:Yes\b|No\b)/;
 
-    
     return (
         <div className={styles.main}>
             <div className={styles.header}>
@@ -27,11 +25,11 @@ function ApplicationUpdateDetail(props) {
                 props.title == "Patient Information" ? <div>
                     <Formik initialValues = {{
                         admissionDate: props.propsData[2].value,
-                        dischargeDate: props.propsData[3].value,
-                        repName: props.propsData[0].value,
-                        email: props.propsData[1].value,
-                        phoneNum: props.propsData[2].value,
-                        relationship: props.propsData[3].value,
+                        dischargeDate: activeNomination.dischargeDate,
+                        repName: activeNomination.representativeName,
+                        email: activeNomination.representativeEmailAddress,
+                        phoneNum: activeNomination.representativePhoneNumber,
+                        relationship: activeNomination.representativeRelationship,
                         spanishComms: props.propsData[4].value,
                     }} validationSchema = {Yup.object({
                         admissionDate: Yup.date().required('Required'),
@@ -47,15 +45,22 @@ function ApplicationUpdateDetail(props) {
                       setSubmitting(false);
                     }}
                   >
-                      <Form>
+                    <Form>
                         <h1></h1>
                         <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
                             {
-                                props.propsData.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
+                                props.propsData.map((obj) => 
+                                (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
                                     {obj.label === "Admission Date" || obj.label === "Discharge Date" ?
-                                        <div><label className={styles.label}>{obj.label}</label>
-                                        {/* Need to tie label to value in next line somehow, and make functional for each label. */}
-                                            <input name={obj.label} type="date" defaultValue={obj.value} /></div> :
+                                        <div>
+                                            <label className={styles.label}>{obj.label}</label>
+                                            {/* Need to tie label to value in next line somehow, and make functional for each label. */}
+                                            <input 
+                                                name={obj.label} 
+                                                type="date" 
+                                                defaultValue={obj.value} />
+                                        </div> 
+                                        :
                                         <div>
                                             <label className={styles.label}>{obj.label}</label>
                                             <span className={styles.value}>{String(obj.value)}</span>
@@ -64,20 +69,20 @@ function ApplicationUpdateDetail(props) {
                                 </div>))
                             }
                         </div>
-                    </Form>
+                    </Form> 
                     </Formik>
                 </div>
                 // False condition which does not change any form data.
-                    : <Form>
+                    : 
                         <div className={[styles.content, (props.gridContent && styles["grid-container"])].join(" ")}>
                             {
-                                props.propsData.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
+                                props.propsData.map((obj) => 
+                                (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
                                     <label className={styles.label}>{obj.label}</label>
                                     <input name={obj.label} type="text" defaultValue={obj.value} />
                                 </div>))
                             }
                         </div>
-                    </Form>
             }
         </div>
     );
