@@ -86,3 +86,10 @@
 .sortable-column {
   cursor: pointer;
 }
+
+.width-column {
+  width: 20%;
+}
+.last-column {
+  width: 10%;
+}

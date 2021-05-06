@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { SearchResultDataContext } from '../../../utils/context/SearchResultsContext';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
-import styles from './styles.css';
+import styles from '../../pages/Home/styles.css';
 import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
