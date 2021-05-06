@@ -20,13 +20,20 @@
   background-color: #f72314;
   color: #ffffff;
   border: #8a8a8a;
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: bold;
-  text-justify: center;
   padding: 0px 10px 10px 10px;
   height: 35px;
-  border-radius: 4rem;
+  border-radius: 5rem;
   cursor: pointer;
+  text-transform: none;
+}
+
+.button-center {
+  position: absolute;
+  top: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .decline-button:hover {
@@ -64,4 +71,11 @@
 
 .nom-name {
   font-size: 2.5rem;
+}
+
+.center {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
