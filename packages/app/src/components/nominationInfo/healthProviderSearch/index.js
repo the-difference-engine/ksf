@@ -42,7 +42,6 @@ const SearchHealthProvider = () => {
       <tbody>
         <tr className="home-new-files-headers">
           <td className="add-padding-left width-column">
-            {' '}
             <h2 className="sortable-column">
               <strong>Application Name </strong>
             </h2>
@@ -53,13 +52,11 @@ const SearchHealthProvider = () => {
             </h2>
           </td>
           <td className="width-column">
-            {' '}
             <h2 className="sortable-column">
               <strong>Patient Name</strong>
             </h2>
           </td>
           <td className="width-column">
-            {' '}
             <h2 className="sortable-column">
               <strong>Recieved Date</strong>
             </h2>
