@@ -1,6 +1,7 @@
 import NominationInfo from '../nominationInfo';
 import style from './style.css'
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { submitForm } from 'formik';
 const states = require('us-state-codes');
 
 /**
@@ -28,7 +29,7 @@ const NominationBanner = (props) => {
   let saveOrEditLabel = "Edit";
 
   // Handles changing edit button colors and title to "save" if clicked.
-  if(props.hasBeenClicked) {
+  if (props.hasBeenClicked) {
     backColor = "green";
     textColor = "white";
     saveOrEditLabel = "Save";
@@ -94,7 +95,8 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color:textColor }} onClick={props.handleClick} id="edit-button">{saveOrEditLabel}</button>
+          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color: textColor }}
+            onClick={props.handleClick} id="edit-button">{saveOrEditLabel}</button>
         </div>
       </div>
     </div>
