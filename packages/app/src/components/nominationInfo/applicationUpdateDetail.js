@@ -42,8 +42,8 @@ function ApplicationUpdateDetail(props) {
                         spanishComms: Yup.string().matches(yesNoRegex, "Please enter yes or no.").required('Required'),
                     })}
                         onSubmit={(values, actions) => {
-                            nominationsAPI.updateActiveNomData(activeNomination.id, values);
-                            actions.setSubmitting(false);
+                                nominationsAPI.updateActiveNomData(activeNomination.id, values);
+                                actions.setSubmitting(false);
                         }}
                     >
                         {formikProps => (
@@ -72,6 +72,7 @@ function ApplicationUpdateDetail(props) {
                                     }
                                 </div>
                                 {formikProps.errors.name && <div id="feedback">{formikProps.errors.name}
+
                                 </div>}
                             </form>
                         )}

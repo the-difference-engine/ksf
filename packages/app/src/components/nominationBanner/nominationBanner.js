@@ -1,7 +1,4 @@
-import NominationInfo from '../nominationInfo';
-import style from './style.css'
-import React, { useEffect, useState } from 'react';
-import { submitForm } from 'formik';
+import React from 'react';
 const states = require('us-state-codes');
 
 /**

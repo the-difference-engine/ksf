@@ -5,6 +5,7 @@ import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
 import SearchBar from '../../SearchBar'
 import NominationInfo from '../../nominationInfo';
+import ApplicationUpdateDetail from '../../nominationInfo/applicationUpdateDetail';
 
 const NominationPage = ({
 
@@ -20,7 +21,6 @@ const NominationPage = ({
   );
   const [error, setError] = useState();
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
-
 
   useEffect(() => {
     if (NominationsData) {
@@ -47,6 +47,7 @@ const NominationPage = ({
           <SearchBar />
           <NominationBanner hasBeenClicked={hasBeenClicked} handleClick={handleClick} nomination={activeNomination} />
           <ApplicationStages />
+          {/* Sends click state data to all NominationInfo children */}
           <NominationInfo hasBeenClicked={hasBeenClicked} />
         </div>
         :
