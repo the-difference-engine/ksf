@@ -20,13 +20,6 @@
   background-color: #f72314;
   color: #ffffff;
   border: #8a8a8a;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 0px 10px 10px 10px;
-  height: 35px;
-  border-radius: 5rem;
-  cursor: pointer;
-  text-transform: none;
 }
 
 .button-center {

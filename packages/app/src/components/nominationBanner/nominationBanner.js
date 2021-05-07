@@ -33,7 +33,7 @@ const NominationBanner = ({ nomination }) => {
               </span>
             </div>
             <div className="column center">
-              <button className="decline-button button-center">
+              <button className="decline-button button-center button">
                 <span>Decline Application</span>
               </button>
             </div>
