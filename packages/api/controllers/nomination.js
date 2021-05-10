@@ -164,10 +164,8 @@ const emailVerifiction = async (req, res) => {
 
 
 const checkApplicationStatuses = async (req, res) => {
-  const sevenSeconds = 1000 * 7 // use for testing
-  const sevenDays = 24 * 60 * 60 * 1000 * 7
-  const env = process.env.NODE_ENV || 'development';
-  const time = env === 'development' ? sevenSeconds : sevenDays
+
+  const age = process.env.APPLICATION_AGE ?? 1000 * 7
 
   const statuses = ['HIPAA Verified', 'Awaiting HIPAA']
 
@@ -180,7 +178,7 @@ const checkApplicationStatuses = async (req, res) => {
         {
           status: status,
           hipaaTimestamp: {
-            [Op.lte]: new Date(new Date() - time)
+            [Op.lte]: new Date(new Date() - age)
           },
           reminderSent: false
         }
@@ -191,7 +189,7 @@ const checkApplicationStatuses = async (req, res) => {
         {
           status: status,
           awaitingHipaaTimestamp: {
-            [Op.lte]: new Date(new Date() - time)
+            [Op.lte]: new Date(new Date() - age)
           },
           reminderSent: false
         }
