@@ -1,5 +1,7 @@
 import style from './style.css';
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import nominationsAPI from '../../utils/API/nominationsAPI'
+import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 const states = require('us-state-codes');
 
 const NominationBanner = ({ nomination }) => {
@@ -14,6 +16,19 @@ const NominationBanner = ({ nomination }) => {
   const time = newDate.toLocaleDateString();
   const minutes = newDate.toLocaleTimeString();
   const finalDate = `${time} – ${minutes}`;
+
+  function declineApplication() {
+    const declineStatus = 'Ready for Board Review'
+    return updateNomination(declineStatus)
+  }
+
+  function updateNomination(s) {
+    try {
+       nominationsAPI.updateNomination(nomination.id, s)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="nomination-banner-container">
@@ -33,7 +48,7 @@ const NominationBanner = ({ nomination }) => {
               </span>
             </div>
             <div className="column name">
-              <button className=" decline-button" style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
+              <button className=" decline-button" onClick={() => declineApplication() } style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
                 Decline Application
               </button>
             </div>
