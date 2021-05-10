@@ -55,12 +55,12 @@ function sendSurveyEmail(nomination) {
     attachments: './survey/header.jpg',
     message: {
       from: adminEmail,
-      to: nomination.providerEmailAddress
+      to: nomination.representativeEmailAddress
     },
     locals: {
-      name: nomination.providerName,
+      name: nomination.representativeName,
       patientName: nomination.patientName,
-      email: nomination.providerEmailAddress,
+      email: nomination.representativeEmailAddress,
       imgUrl
     }
   }).catch((err) => console.log(err))
