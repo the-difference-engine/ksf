@@ -23,7 +23,7 @@ function ApplicationUpdateDetail(props) {
                 <label className={styles.bold}>{props.title}</label>
             </div>
             {
-                props.title == "Patient Information" ? <div>
+                props.title === "Patient Information" ? <div>
                     <Formik initialValues={{
                         admissionDate: props.propsData[2].value,
                         dischargeDate: activeNomination.dischargeDate,
@@ -32,15 +32,16 @@ function ApplicationUpdateDetail(props) {
                         phoneNum: activeNomination.representativePhoneNumber,
                         relationship: activeNomination.representativeRelationship,
                         spanishComms: props.propsData[4].value,
-                    }} validationSchema={Yup.object({
-                        admissionDate: Yup.date().required('Required'),
-                        dischargeDate: Yup.date().min(Yup.ref('admissionDate'), 'Discharge date cannot be before admission date.').required('Required'),
-                        repName: Yup.string().min(3, "Must be 3 characters or more.").max(30, 'Must be 30 characters or less.').required('Required'),
-                        email: Yup.string().email('Invalid email address.').required('Required'), // This handles email validation with no regex.
-                        phoneNum: Yup.string().matches(phoneRegex, "Please enter a valid phone number.").required('Required'),
-                        relationship: Yup.string().min(3, "Must be at least 3 characters.").max(20, "Must be no more than 20 characters.").required('Required'),
-                        spanishComms: Yup.string().matches(yesNoRegex, "Please enter yes or no.").required('Required'),
+                    }}  validationSchema={Yup.object({
+                            admissionDate: Yup.date().required('Required'),
+                            dischargeDate: Yup.date().min(Yup.ref('admissionDate'), 'Discharge date cannot be before admission date.').required('Required'),
+                            repName: Yup.string().min(3, "Must be 3 characters or more.").max(30, 'Must be 30 characters or less.').required('Required'),
+                            email: Yup.string().email('Invalid email address.').required('Required'), // This handles email validation with no regex.
+                            phoneNum: Yup.string().matches(phoneRegex, "Please enter a valid phone number.").required('Required'),
+                            relationship: Yup.string().min(3, "Must be at least 3 characters.").max(20, "Must be no more than 20 characters.").required('Required'),
+                            spanishComms: Yup.string().matches(yesNoRegex, "Please enter yes or no.").required('Required'),
                     })}
+                        // onSubmit needs to fire when props.hasBeenClicked it true...how??!
                         onSubmit={(values, actions) => {
                                 nominationsAPI.updateActiveNomData(activeNomination.id, values);
                                 actions.setSubmitting(false);
@@ -72,7 +73,6 @@ function ApplicationUpdateDetail(props) {
                                     }
                                 </div>
                                 {formikProps.errors.name && <div id="feedback">{formikProps.errors.name}
-
                                 </div>}
                             </form>
                         )}
