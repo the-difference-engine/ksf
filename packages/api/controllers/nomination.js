@@ -161,62 +161,59 @@ const emailVerifiction = async (req, res) => {
   }
 };
 
-
-
 const checkApplicationStatuses = async (req, res) => {
 
-  const age = process.env.APPLICATION_AGE ?? 1000 * 7
-
-  const statuses = ['HIPAA Verified', 'Awaiting HIPAA']
-
-  statuses.forEach(async (status) => {
-    let query
-
-    if (status === 'HIPAA Verified') {
-      query = {
-        where:
-        {
-          status: status,
-          hipaaTimestamp: {
-            [Op.lte]: new Date(new Date() - age)
-          },
-          reminderSent: false
-        }
-      }
-    } else  {
-      query = {
-        where:
-        {
-          status: status,
-          awaitingHipaaTimestamp: {
-            [Op.lte]: new Date(new Date() - age)
-          },
-          reminderSent: false
-        }
-      }
+  const age = process.env.APPLICATION_AGE ?? 86400000 * 7 // seven days in ms
+  const hipaaVerified = {
+    where:
+    {
+      status: 'HIPAA Verified',
+      hipaaTimestamp: {
+        [Op.lte]: new Date(new Date() - age)
+      },
+      reminderSent: false
     }
-
-    await searchAndSend(status, query)
-  })
-
-  async function searchAndSend(status, query) {
-
-    const nominations = await db.Nomination.findAll(query)
-    try {
-      for (let i = 0; i < nominations.length; i++) {
-        let nomination = nominations[i]
-        let id = nomination.id
-        if (status === 'HIPAA Verified') {
-          sendSurveyReminder(nomination)
-        }
-        if (status === 'Awaiting HIPAA') {
-          sendHIPAAReminder(nomination)
-        }
-        nomination.update({ reminderSent: true }, { where: { id } })
-      }
-    } catch (error) {
-      console.log(error)
+  }
+  const awaitingHipaa = {
+    where:
+    {
+      status: 'Awaiting HIPAA',
+      awaitingHipaaTimestamp: {
+        [Op.lte]: new Date(new Date() - age)
+      },
+      reminderSent: false
     }
+  }
+  await searchAndSend('HIPAA Verified', hipaaVerified)
+  await searchAndSend('Awaiting HIPAA', awaitingHipaa)
+}
+
+async function searchAndSend(status, query) {
+
+  const nominations = await db.Nomination.findAll(query)
+  let nomination
+  let ids = []
+
+  for (let i = 0; i < nominations.length; i++) {
+    nomination = nominations[i]
+
+    switch (status) {
+      case 'HIPAA Verified':
+        sendSurveyReminder(nomination)
+        ids.push(nomination.id)
+        break;
+      case 'Awaiting HIPAA':
+        sendHIPAAReminder(nomination)
+        ids.push(nomination.id)
+        break;
+      default:
+        console.log(status, ' is not a status')
+    }
+  }
+  try {
+    db.Nomination.update({ reminderSent: true }, { where: { id: ids } })
+  } catch (error) {
+    console.log(error)
   }
 }
 
