@@ -89,7 +89,13 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color:textColor }} onClick={props.handleClick} id="edit-button">{saveOrEditLabel}</button>
+          <button 
+            className="button button-outline edit-button"
+            style={{ backgroundColor: backColor, color:textColor }}
+            onClick={props.handleClick}
+            type="submit"
+            form="update-form"
+            id="edit-button">{saveOrEditLabel}</button>
         </div>
       </div>
     </div>
