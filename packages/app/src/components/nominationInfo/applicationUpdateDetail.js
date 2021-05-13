@@ -13,6 +13,9 @@ import { useForm } from 'react-hook-form'; // npm install react-hook-form
 function ApplicationUpdateDetail(props, hasBeenClicked) {
     const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
     const { register, handleSubmit } = useForm();
+
+    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    const yesNoRegex = /^(?:Yes\b|No\b)/;
     
     const onSubmit = data => {
         if (hasBeenClicked) {
