@@ -9,7 +9,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
  * @param {*} props - active nomination props 
  * @returns - renders data based on click status of edit button
  */
-function ApplicationUpdateDetail(props) {
+function ApplicationUpdateDetail(props, hasBeenClicked) {
     const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
     let saveConfirm = false;
     // Directly manipulates corresponding props values based on if statement checks.
