@@ -1,9 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useForm } from "react";
 import styles from "./styles.module.css";
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import { Formik, Form } from "formik"; // npm install formik --save
+import { useFormikContext, Formik } from "formik"; // npm install formik --save
 import * as Yup from 'yup'; // npm install yup --save
 import nominationsAPI from "../../utils/API/nominationsAPI";
+
+
+const SubmitHandler = (hasBeenClicked) => {
+    const { submitForm } = useFormikContext();
+
+    React.useEffect(() => {
+      if (hasBeenClicked) {
+        submitForm();
+      }
+    }, [submitForm]);
+    return null;
+  };
+
 
 /**
  * Function which is called to update the current active nomination's data fields.
@@ -11,11 +24,17 @@ import nominationsAPI from "../../utils/API/nominationsAPI";
  * @param {*} props - active nomination props 
  * @returns - renders data based on click status of edit button
  */
-function ApplicationUpdateDetail(props) {
+const ApplicationUpdateDetail = (props, hasBeenClicked) => {
     const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
-
+    const {handleSubmit} = useForm();
     const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     const yesNoRegex = /^(?:Yes\b|No\b)/;
+
+    useEffect(() => {
+        if (hasBeenClicked) {
+            handleSubmit();
+        }
+    });
 
     return (
         <div className={styles.main}>
@@ -43,9 +62,11 @@ function ApplicationUpdateDetail(props) {
                     })}
                         // onSubmit needs to fire when props.hasBeenClicked it true...how??!
                         onSubmit={(values, actions) => {
+                                console.log("Did I make it here?");
                                 nominationsAPI.updateActiveNomData(activeNomination.id, values);
                                 actions.setSubmitting(false);
                         }}
+
                     >
                         {formikProps => (
                             <form onSubmit={formikProps.handleSubmit}>
@@ -74,6 +95,7 @@ function ApplicationUpdateDetail(props) {
                                 </div>
                                 {formikProps.errors.name && <div id="feedback">{formikProps.errors.name}
                                 </div>}
+                            {/* <SubmitHandler /> */}
                             </form>
                         )}
                     </Formik>
@@ -92,6 +114,7 @@ function ApplicationUpdateDetail(props) {
             }
         </div>
     );
-}
+        }
+
 
 export default ApplicationUpdateDetail;

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 
-function ApplicationDetail(props) {
+const ApplicationDetail = (props) => {
       return (
         <div className={styles.main}>
           <div className={styles.header}>

@@ -112,8 +112,8 @@ function NominationInfo(props) {
             // second half allows updates to the active application data (save button visible).
           !props.hasBeenClicked && !props.saveConfirm ? <div><ApplicationDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
             <ApplicationDetail propsData={familyinfo} title="Family Member Information"/></div> : <div>
-            <ApplicationUpdateDetail propsData={patientInfo} gridContent={true} title="Patient Information" />
-            <ApplicationUpdateDetail propsData={familyinfo} title="Family Member Information"/>
+            <ApplicationUpdateDetail propsData={patientInfo} hasBeenClicked={props.hasBeenClicked} gridContent={true} title="Patient Information" />
+            <ApplicationUpdateDetail propsData={familyinfo} hasBeenClicked={props.hasBeenClicked} title="Family Member Information"/>
             </div>
           }
             {/* This set of data is always displayed. */}
