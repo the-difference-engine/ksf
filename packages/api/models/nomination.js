@@ -147,6 +147,14 @@ module.exports = (sequelize, DataTypes) => {
       reminderSent: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+      }, 
+      hipaaReminderEmailTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
+      },
+      awaitingHipaaReminderEmailTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
       }
     },
     {

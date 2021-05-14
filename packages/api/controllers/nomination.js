@@ -192,10 +192,24 @@ async function searchAndSend(status, query) {
     switch (status) {
       case 'HIPAA Verified':
         sendSurveyReminder(nomination);
+        try {
+          nomination.update(
+            { hipaaReminderEmailTimestamp: Date() }
+          );
+        } catch (err) {
+          console.log('Unable to update record timestamp', err);
+        }
         ids.push(nomination.id);
         break;
       case 'Awaiting HIPAA':
         sendHIPAAReminder(nomination);
+        try {
+          nomination.update(
+            { awaitingHipaaReminderEmailTimestamp: Date() }
+          );
+        } catch (err) {
+          console.log('Unable to update record timestamp', err);
+        }
         ids.push(nomination.id);
         break;
       default:
