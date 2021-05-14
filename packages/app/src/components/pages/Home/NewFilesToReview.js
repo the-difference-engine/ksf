@@ -1,33 +1,30 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
-import styles from "./styles.css";
-import useSort from './useSort'
+import styles from './styles.css';
+import useSort from './useSort';
 
 const NewFilesToReview = () => {
   const [showAll, setShowAll] = useState(false);
-  const { sortedNoms, requestSort, sortConfig } = useSort()
-  const sortedNominations = sortedNoms ? sortedNoms.filter(nominations => nominations.status === 'Received') : []
+  const { sortedNoms, requestSort, sortConfig } = useSort();
+  const sortedNominations = sortedNoms ? sortedNoms.filter((nominations) => nominations.status === 'received') : [];
 
   const handleClick = () => {
-    setShowAll(!showAll)
-  }
+    setShowAll(!showAll);
+  };
 
   const conditionalNominationRender = () => {
     if (sortedNoms && showAll) {
-      return sortedNominations
+      return sortedNominations;
     }
     if (sortedNoms && !showAll) {
-      return sortedNominations.slice(0,3)
+      return sortedNominations.slice(0, 3);
     }
-  }
+  };
 
   const renderSortArrow = (columnName) => {
-    return (
-      (sortConfig && sortConfig.key === columnName) &&
-      <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />
-    )
-  }
+    return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />;
+  };
 
   const renderSortableCell = (key, label) => {
     return (
@@ -35,8 +32,8 @@ const NewFilesToReview = () => {
         <strong>{label}</strong>
         <>{renderSortArrow(key)}</>
       </h2>
-    )
-  }
+    );
+  };
 
   return (
     <table className="new-files-table">
@@ -51,7 +48,7 @@ const NewFilesToReview = () => {
           <td></td>
           <td className="new-files-see-more">
             <div onClick={handleClick}>
-              <FontAwesomeIcon icon={showAll ? "chevron-circle-up" : "chevron-circle-down"} />
+              <FontAwesomeIcon icon={showAll ? 'chevron-circle-up' : 'chevron-circle-down'} />
             </div>
           </td>
         </tr>
@@ -62,21 +59,22 @@ const NewFilesToReview = () => {
           <td> {renderSortableCell('providerName', 'HP Name')} </td>
           <td> {renderSortableCell('representativeName', 'Family Member Name')} </td>
           <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
-          <td><h2><strong>Stage</strong></h2></td>
+          <td>
+            <h2>
+              <strong>Stage</strong>
+            </h2>
+          </td>
         </tr>
-          {sortedNominations
-            ?
-              conditionalNominationRender().map(nomination =>
-                <NewNomination nomination={nomination} key={nomination.id} />
-              )
-            :
-            <tr>
-              <td className="add-padding-left new-files-title">
-                <h1>No new nominations.</h1>
-              </td>
-            </tr>
-          }
-        </tbody>
+        {sortedNominations ? (
+          conditionalNominationRender().map((nomination) => <NewNomination nomination={nomination} key={nomination.id} />)
+        ) : (
+          <tr>
+            <td className="add-padding-left new-files-title">
+              <h1>No new nominations.</h1>
+            </td>
+          </tr>
+        )}
+      </tbody>
     </table>
   );
 };

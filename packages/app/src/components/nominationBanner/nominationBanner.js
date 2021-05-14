@@ -42,7 +42,7 @@ const NominationBanner = (props) => {
 
         <div className="column column-80 nomination-details">
           <div className="row banner-top">
-            <div className="column name">
+            <div className="column name" style={{ width: '25%' }}>
               <p>Application</p>
               <span>
                 <h1 className="nom-name">
@@ -50,8 +50,12 @@ const NominationBanner = (props) => {
                 </h1>
               </span>
             </div>
+            <div className="column center">
+              <button className="decline-button button-center button">
+                <span>Decline Application</span>
+              </button>
+            </div>
           </div>
-
           <div className="row">
             <div className="column hp-name">
               <p className="secondary-dark">HP Name</p>
