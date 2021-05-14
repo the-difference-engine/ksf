@@ -33,6 +33,7 @@ const SearchHealthProvider = () => {
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
             <h1>Health Provider Search Results</h1>
+            <h1>({SearchHealthcareProvider.length})</h1>
           </td>
           <td></td>
           <td></td>
@@ -58,7 +59,7 @@ const SearchHealthProvider = () => {
           </td>
           <td className="width-column">
             <h2 className="sortable-column">
-              <strong>Recieved Date</strong>
+              <strong>Submission Date</strong>
             </h2>
           </td>
           <td className="last-column">
@@ -67,7 +68,7 @@ const SearchHealthProvider = () => {
         </tr>
         {SearchHealthcareProvider?.map((result) => (
           <tr key={result.id}>
-            <td>
+            <td className="decrease-spacing">
               <Link className="green new-files-application-name add-padding-left detail-font-size" to={`/nomination/${result.id}`}>
                 <strong> {result.nominationName}</strong>
               </Link>
