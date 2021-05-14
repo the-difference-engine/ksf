@@ -27,11 +27,10 @@ const NominationBanner = (props) => {
   let textColor = "green";
   let saveOrEditLabel = "Edit";
 
-  // Handles changing edit button colors and title to "save" if clicked.
-  if(props.hasBeenClicked) {
+  // Handles changing edit button colors if clicked.
+  if (props.hasBeenClicked) {
     backColor = "green";
     textColor = "white";
-    saveOrEditLabel = "Save";
   }
 
   return (
@@ -93,8 +92,6 @@ const NominationBanner = (props) => {
             className="button button-outline edit-button"
             style={{ backgroundColor: backColor, color:textColor }}
             onClick={props.handleClick}
-            type="submit"
-            form="update-form"
             id="edit-button">{saveOrEditLabel}</button>
         </div>
       </div>
