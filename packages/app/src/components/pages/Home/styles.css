@@ -93,3 +93,7 @@
 .last-column {
   width: 10%;
 }
+
+.decrease-spacing {
+  line-height: 2px;
+}

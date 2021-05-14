@@ -77,3 +77,8 @@
     font-size: large;
   }
 }
+
+.green {
+  color: #128b3e;
+  font-weight: bold;
+}
