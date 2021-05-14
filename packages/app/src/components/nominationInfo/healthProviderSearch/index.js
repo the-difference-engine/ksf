@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const SearchHealthProvider = () => {
   const [SearchHealthcareProvider, setSearchHealthcareProvider] = useContext(SearchResultDataContext);
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
-  const [count, setCount] = useState(0);
 
   const findSearchResults = (searchTerm) => {
     let filteredNoms = [];
@@ -18,7 +17,6 @@ const SearchHealthProvider = () => {
         return [nomination.providerName, nomination.patientName, nomination.nominationName, nomination.representativeName].some((nom) => nom.includes(searchTerm));
       });
       setSearchHealthcareProvider(filteredNoms);
-      setCount(filteredNoms.length);
     }
   };
 
@@ -35,7 +33,7 @@ const SearchHealthProvider = () => {
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
             <h1>Health Provider Search Results</h1>
-            <h1>({count})</h1>
+            <h1>({SearchHealthcareProvider.length})</h1>
           </td>
           <td></td>
           <td></td>

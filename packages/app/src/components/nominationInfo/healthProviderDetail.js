@@ -20,12 +20,10 @@ function HealthProviderDetail(props) {
             <div key={index} className={obj.label === '' ? styles.mobileHide : ''}>
               <label className={styles.label}>{obj.label}</label>
 
-              <Link to={`/nomination/${id}`} className="green">
-                <u>
-                  <span className={styles.value} onClick={() => openWindow(obj.value)} key={index}>
-                    {obj.value}
-                  </span>
-                </u>
+              <Link to={`/nomination/${id}`} className={styles.underline}>
+                <span className={(styles.value, 'green')} onClick={() => openWindow(obj.value)} key={index}>
+                  {obj.value}
+                </span>
               </Link>
             </div>
           ) : (

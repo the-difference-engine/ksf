@@ -78,7 +78,6 @@
   }
 }
 
-.green {
-  color: #128b3e;
-  font-weight: bold;
+.underline {
+  text-decoration-line: underline;
 }
