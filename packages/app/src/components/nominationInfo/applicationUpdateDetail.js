@@ -35,8 +35,6 @@ function ApplicationUpdateDetail(props, hasBeenClicked) {
         }
     };
 
-    
-
     return (
         <div className={styles.main}>
             <div className={styles.header}>
@@ -58,7 +56,7 @@ function ApplicationUpdateDetail(props, hasBeenClicked) {
                                                 name={obj.label} 
                                                 type="date" 
                                                 defaultValue={obj.value}
-                                                {...register("Admission Date", 
+                                                {...register(obj.label, 
                                                     {required: true}, 
                                                     {valueAsDate: true},
                                                     {validate: yes => yes }
