@@ -50,7 +50,18 @@ select {
   font-size: 1.5rem;
 }
 
+
 .green {
   color: #128b3e;
   font-weight: bold;
+}
+
+.button {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0px 10px 10px 10px;
+  height: 35px;
+  border-radius: 4rem;
+  cursor: pointer;
+  text-transform: none;
 }
