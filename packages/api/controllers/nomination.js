@@ -97,38 +97,32 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === 'Awaiting HIPAA') {
-
         try {
           nomination.update(
-            { awaitingHipaaTimestamp: Date() })
+            { awaitingHipaaTimestamp: Date() });
 
           const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
           const state = states.getStateCodeByStateName(nomination.hospitalState);
-          const applicationName = `${lastName}-${state}`
+          const applicationName = `${lastName}-${state}`;
 
-
-
-          createFolder(applicationName)
+          createFolder(applicationName);
         }
         catch (err) {
-          console.error('Could not create a folder', err)
+          console.error('Could not create a folder', err);
         }
       }
 
       if (nomination.status === 'HIPAA Verified') {
-
         try {
           nomination.update(
             { hipaaTimestamp: Date() }
-          ).catch((err) => {
-            console.log('Nomination Not Found', err)
-            return res.status(400)
-          });
+          );
+        } catch (err) {
+          console.log('Nomination Not Found', err);
+          return res.status(400);
         }
         finally { sendSurveyEmail(nomination); }
-
       }
-
       return res.status(200).json(nomination);
     }
   } catch (error) {
@@ -162,8 +156,7 @@ const emailVerifiction = async (req, res) => {
 };
 
 const checkApplicationStatuses = async (req, res) => {
-
-  const age = process.env.APPLICATION_AGE ?? 86400000 * 7 // seven days in ms
+  const age = process.env.APPLICATION_AGE ?? 86400000 * 7; // seven days in ms
   const hipaaVerified = {
     where:
     {
@@ -173,7 +166,7 @@ const checkApplicationStatuses = async (req, res) => {
       },
       reminderSent: false
     }
-  }
+  };
   const awaitingHipaa = {
     where:
     {
@@ -183,37 +176,36 @@ const checkApplicationStatuses = async (req, res) => {
       },
       reminderSent: false
     }
-  }
-  await searchAndSend('HIPAA Verified', hipaaVerified)
-  await searchAndSend('Awaiting HIPAA', awaitingHipaa)
+  };
+  await searchAndSend('HIPAA Verified', hipaaVerified);
+  await searchAndSend('Awaiting HIPAA', awaitingHipaa);
 }
 
 async function searchAndSend(status, query) {
-
-  const nominations = await db.Nomination.findAll(query)
-  let nomination
-  let ids = []
+  const nominations = await db.Nomination.findAll(query);
+  let nomination;
+  let ids = [];
 
   for (let i = 0; i < nominations.length; i++) {
-    nomination = nominations[i]
+    nomination = nominations[i];
 
     switch (status) {
       case 'HIPAA Verified':
-        sendSurveyReminder(nomination)
-        ids.push(nomination.id)
+        sendSurveyReminder(nomination);
+        ids.push(nomination.id);
         break;
       case 'Awaiting HIPAA':
-        sendHIPAAReminder(nomination)
-        ids.push(nomination.id)
+        sendHIPAAReminder(nomination);
+        ids.push(nomination.id);
         break;
       default:
-        console.log(status, ' is not a status')
+        console.log(status, ' is not a status');
     }
   }
   try {
-    db.Nomination.update({ reminderSent: true }, { where: { id: ids } })
+    db.Nomination.update({ reminderSent: true }, { where: { id: ids } });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
