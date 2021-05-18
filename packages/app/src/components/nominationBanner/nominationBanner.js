@@ -3,7 +3,10 @@ import React from 'react';
 const states = require('us-state-codes');
 
 const NominationBanner = ({ nomination }) => {
-  const date = new Date(nomination.dateReceived).toLocaleDateString();
+  const date = new Date(nomination.dateReceived);
+  const submissionDate = date.toLocaleDateString();
+  const submissionDateMinutes = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const finalSubmissionDate = `${submissionDate} – ${submissionDateMinutes}`;
   const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
   const state = states.getStateCodeByStateName(nomination.hospitalState);
   const nominationName = `${lastName}-${state}`;
@@ -12,7 +15,7 @@ const NominationBanner = ({ nomination }) => {
   const valid = new Date(hippaDate).getTime() > 0;
   let newDate = new Date(hippaDate);
   const time = newDate.toLocaleDateString();
-  const minutes = newDate.toLocaleTimeString();
+  const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const finalDate = `${time} – ${minutes}`;
 
   return (
@@ -59,7 +62,7 @@ const NominationBanner = ({ nomination }) => {
               <p className="secondary-dark">Submission Date</p>
               <span>
                 <h2 className="body-font">
-                  <strong>{date}</strong>
+                  <strong>{finalSubmissionDate}</strong>
                 </h2>
               </span>
             </div>
