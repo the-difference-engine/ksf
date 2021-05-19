@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
-import styles from "./styles.css";
-import useSort from './useSort'
+import styles from './styles.css';
+import useSort from './useSort';
 import { SORT_DIRECTION } from '../../enum.js';
 
 const ApplicationViewByStages = () => {
-  const [currentlyViewing, setCurrentlyViewing] = useState("Ready for Board Review");
-  const { sortedNoms, requestSort, sortConfig } = useSort()
+  const [currentlyViewing, setCurrentlyViewing] = useState('Ready for Board Review');
+  const { sortedNoms, requestSort, sortConfig } = useSort();
 
   const conditionalNominationRender = () => {
     if (sortedNoms) {
-      return sortedNoms.filter(nominations => nominations.status === currentlyViewing)
+      return sortedNoms.filter((nominations) => nominations.status === currentlyViewing);
     }
-  }
+  };
 
   function renderOptionList() {
-    const statuses = ["Awaiting HIPAA", "HIPAA Verified", "Document Review", "Ready for Board Review"]
-    return statuses.map( (status, index) => <option key={index} selected={status === currentlyViewing} value={status}>{status}</option> )
+    const statuses = ['Awaiting HIPAA', 'HIPAA Verified', 'Document Review', 'Ready for Board Review'];
+    return statuses.map((status, index) => (
+      <option key={index} selected={status === currentlyViewing} value={status}>
+        {status}
+      </option>
+    ));
   }
 
   const renderSortArrow = (columnName) => {
-    return (
-      (sortConfig && sortConfig.key === columnName) &&
-      <FontAwesomeIcon icon={sortConfig.direction === SORT_DIRECTION.DOWN ? 'arrow-down' : 'arrow-up'} />
-    )
-  }
+    return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === SORT_DIRECTION.DOWN ? 'arrow-down' : 'arrow-up'} />;
+  };
 
   const renderSortableCell = (key, label) => {
     return (
@@ -33,13 +34,13 @@ const ApplicationViewByStages = () => {
         <strong>{label}</strong>
         <>{renderSortArrow(key)}</>
       </h2>
-    )
-  }
+    );
+  };
 
   const handleViewStageChange = (evt) => {
-    setCurrentlyViewing(evt.currentTarget.value)
-    requestSort('dateReceived', true)
-  }
+    setCurrentlyViewing(evt.currentTarget.value);
+    requestSort('dateReceived', true);
+  };
 
   return (
     <table className="new-files-table">
@@ -47,7 +48,7 @@ const ApplicationViewByStages = () => {
         <tr>
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
-            <select onChange={e => handleViewStageChange(e)} className="stage-dropdown">
+            <select onChange={(e) => handleViewStageChange(e)} className="stage-dropdown">
               {renderOptionList()}
             </select>
           </td>
@@ -59,19 +60,22 @@ const ApplicationViewByStages = () => {
           <td> {renderSortableCell('providerName', 'HP Name')} </td>
           <td> {renderSortableCell('representativeName', 'Family Member Name')} </td>
           <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
-          <td><h2><strong>Stage</strong></h2></td>
+          <td>
+            <h2>
+              <strong>Stage</strong>
+            </h2>
+          </td>
         </tr>
-          {conditionalNominationRender().length !== 0 && sortedNoms
-            ?
-            conditionalNominationRender().map(nomination =>
-              <NewNomination nomination={nomination} key={nomination.id} />
-              )
-            :
-            <tr>
-              <td className="add-padding-left new-files-title"><h1>No nominations in {currentlyViewing}.</h1></td>
-            </tr>
-          }
-        </tbody>
+        {conditionalNominationRender().length !== 0 && sortedNoms ? (
+          conditionalNominationRender().map((nomination) => <NewNomination nomination={nomination} key={nomination.id} />)
+        ) : (
+          <tr>
+            <td className="add-padding-left new-files-title">
+              <h1>No nominations in {currentlyViewing}.</h1>
+            </td>
+          </tr>
+        )}
+      </tbody>
     </table>
   );
 };
