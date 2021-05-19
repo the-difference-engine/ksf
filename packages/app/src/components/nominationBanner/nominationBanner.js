@@ -16,17 +16,21 @@ const NominationBanner = ({ nomination }) => {
   const time = newDate.toLocaleDateString();
   const minutes = newDate.toLocaleTimeString();
   const finalDate = `${time} – ${minutes}`;
+  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
 
   function declineApplication() {
     const declineStatus = 'Ready for Board Review'
-    return updateNomination(declineStatus)
+    activeNomination.status = declineStatus
+    setActiveNomination({ ...activeNomination })
+    
+    return updateNomination(declineStatus);
   }
 
   function updateNomination(s) {
     try {
-       nominationsAPI.updateNomination(nomination.id, s)
+       nominationsAPI.updateNomination(nomination.id, s);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -48,7 +52,7 @@ const NominationBanner = ({ nomination }) => {
               </span>
             </div>
             <div className="column name">
-              <button className=" decline-button" onClick={() => declineApplication() } style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
+              <button className=" decline-button" onClick={declineApplication} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
                 Decline Application
               </button>
             </div>
