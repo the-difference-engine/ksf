@@ -3,7 +3,7 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
 const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL
-const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
+const adminEmail = 'Keep Swimming Foundation <info@keepswimmingfoundation.org>';
 
 const transport = {
   port: 587,

@@ -92,7 +92,14 @@ const updateNomination = async (req, res) => {
         console.error('Was not able to change reminderSent bool', error)
       }
 
-      if (nomination.status === 'Decline') {
+      if (nomination.status === 'Declined') {
+        try {
+          nomination.update(
+            { readyForBoardReviewTimestamp: Date() }
+            )
+          } catch (error) {
+            console.log("Error declining nomination. Could not record readyForBoardReviewTimestamp ", error)
+          }
         sendDeclineEmail(nomination);
       }
 

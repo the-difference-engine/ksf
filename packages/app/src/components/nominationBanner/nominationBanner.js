@@ -17,9 +17,9 @@ const NominationBanner = ({ nomination }) => {
   const minutes = newDate.toLocaleTimeString();
   const finalDate = `${time} – ${minutes}`;
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+  const declineStatus = 'Declined'
 
   function declineApplication() {
-    const declineStatus = 'Ready for Board Review'
     activeNomination.status = declineStatus
     setActiveNomination({ ...activeNomination })
     
