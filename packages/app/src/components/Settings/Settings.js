@@ -4,20 +4,30 @@ import grantCycleAPI from '../../utils/API/grantCycleAPI';
 import './styles.css';
 
 const Settings = (props) => {
-    const [newGrantCycle, setNewGrantCycle] = useState({openedOn: "", closedOn: ""});
+    const [newGrantCycle, setNewGrantCycle] = useState({openedOn: "", closedOn: "", name: ""});
     const [allGrantCycles, setGrantCycles] = useState([]);
     const [disableButton, setDisableButton] = useState(true);
     const [errors, setErrors] = useState("");
     const createButton = useRef(null);
     const [updateId, setUpdateId] = useState(null);
+    const [activeGrantCycle, setActiveGrantCycle] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     async function getGrantCycles() {
         const { data } = await grantCycleAPI.getGrantCycles();
         setGrantCycles(data);
     }
 
+    async function getActiveGrantCycle() {
+        const { data } = await grantCycleAPI.getActiveGrantCycle();
+        if (data) {
+            setActiveGrantCycle(data);
+        }
+    }
+
     useEffect(() => {
         getGrantCycles();
+        getActiveGrantCycle();
     }, []);
 
     const handleChange = ({currentTarget: input}) => {
@@ -30,7 +40,7 @@ const Settings = (props) => {
         
         try{
             if (updateId) {
-                console.log('here');
+                
                 const grantCycle = {...newGrantCycle};
                 grantCycle["id"] = updateId;
                 const { data } = await grantCycleAPI.updateGrantCycle(grantCycle);
@@ -39,7 +49,7 @@ const Settings = (props) => {
             else {
                 const {data} = await grantCycleAPI.createGrantCycle(newGrantCycle);
             }
-            setNewGrantCycle({openedOn: "", closedOn: ""})
+            setNewGrantCycle({openedOn: "", closedOn: "", name: ""})
             createButton.current.blur();
             getGrantCycles();
         }
@@ -68,12 +78,26 @@ const Settings = (props) => {
             const result = endDate - startDate >= millisecondsInADay ? false : true;
             
             setDisableButton(result);
-            if (!result) setErrors("")
+            if (!result) {
+                setErrors("")
+                if (gc.name === "") {
+                    setDisableButton(true);
+                    setErrors("Please enter a name for the grant cycle");
+                }
+            }
             else setErrors("Start Date must be earlier than End Date");
         }
         else {
             setDisableButton(true);
         }
+    }
+
+    const formatDateString = date => {
+        const year = date.slice(0, 4);
+        const month = date.slice(5, 7);
+        const day = date.slice(8, 10);
+        const result = `${month}-${day}-${year}`;
+        return result;
     }
 
     return ( 
@@ -115,9 +139,27 @@ const Settings = (props) => {
                             />
                         </span>
                     </div>
+                    <div className="settings__input-block">
+                        <p className="settings__input-label">Name:</p>
+                        <span className="settings__input">
+                            <input
+                                value={newGrantCycle.name}
+                                name="name"
+                                onChange={handleChange}
+                                type="text"
+                            />
+                        </span>
+                    </div>
                 </div>
                 <button ref={createButton} disabled={disableButton} onClick={handleCreate} className="settings__button">Create</button>
                 <div className="settings__form-errors">{ errors }</div>
+
+                
+                    <div>
+                        <h2 className="settings__heading">Active Grant Cycle: &nbsp;&nbsp;&nbsp;&nbsp;{activeGrantCycle ? <span className="settings__activeGrantCycle">{formatDateString(activeGrantCycle.openedOn)} - {formatDateString(activeGrantCycle.closedOn)}, Name: {activeGrantCycle.name}</span> : <span className="settings__activeGrantCycle">None</span>}</h2>
+                    </div>
+                
+
                 <h2 className="settings__heading">Grant Cycle History</h2>
                 <div className="settings__table-wrapper">
                     <table className="settings__table">
@@ -125,7 +167,8 @@ const Settings = (props) => {
                             <tr>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Total<br/>Applicatons</th>
+                                <th>Name</th>
+                                <th className="settings__th-column">Applications<br/>Ready for Board Review</th>
                                 <th>View<br/>Applications</th>
                             </tr>
                         </thead>

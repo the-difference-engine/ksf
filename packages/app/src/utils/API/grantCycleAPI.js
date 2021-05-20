@@ -22,6 +22,10 @@ const grantCycleAPI = {
 
     updateGrantCycle: function(grantCycle) {
         return axios.put(`${apiEndpoint}/${grantCycle.id}`, grantCycle);
+    },
+
+    getActiveGrantCycle: function() {
+        return axios.get(`${apiEndpoint}/findactive`)
     }
 }
 

@@ -52,10 +52,10 @@
 
 .modal {
   position: absolute;
-  top: 12%;
+  top: 8%;
   left: 12%;
   right: 12%;
-  bottom: 12%;
+  bottom: 8%;
   border: 1px solid #ccc;
   background: #fff;
   overflow: visible;

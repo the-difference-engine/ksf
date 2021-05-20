@@ -1,11 +1,10 @@
 .settings__container {
     height: 100%;
-    /* height: calc(100vh - 24%); */
     background: #fff;
     overflow: hidden;
     display: grid;
-    grid-template-columns: 25% calc(100vw - 25% - 24vw);
-    grid-template-rows: 10% calc(100vh - 10% - 25vh);
+    grid-template-columns: 13% calc(100vw - 13% - 24vw);
+    grid-template-rows: 10% calc(100vh - 10% - 17vh);
     grid-template-areas:
         "header  header"
         "sidebar main";
@@ -43,7 +42,7 @@
 .settings__list-item {
     margin: 0;
     padding: 1.5rem 0;
-    padding-left: 3rem;
+    padding-left: 2.3rem;
     height: 20%;
     font-size: 2rem;
     font-weight: 400;
@@ -66,7 +65,7 @@
 
 .settings__input-block {
     display: inline-block;
-    margin-right: 12rem;
+    margin-right: 7rem;
 }
 
 .settings__input-label {
@@ -100,14 +99,26 @@
 }
 
 .settings__form-errors {
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     min-height: 25px;
     color: red;
+}
+
+.settings__active-cycle {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 1rem;
+}
+
+.settings__activeGrantCycle {
+    color: black;
+    font-size: 1.8rem;
 }
 
 .settings__table-wrapper {
     overflow: auto;
 }
+
 .settings__thead {
     background-color: var(--light-background);
 }
@@ -121,8 +132,11 @@
 }
 
 .settings__thead th {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding: 0 1.5rem
+}
+
+.settings__th-column {
+    width: 250px;
 }
 
 .settings__table td {
@@ -134,7 +148,7 @@
     display: block;
     overflow-y: auto;
     width: 100%;
-    height: 250px;
+    height: 275px;
 }
 
 .settings__table tr {

@@ -29,7 +29,8 @@ const TableRow = (props) => {
                 { formatDateString(grantCycle.closedOn) } &nbsp;&nbsp;
                 {timeDiff(grantCycle.closedOn) ? <FontAwesomeIcon onClick={() => onEdit(grantCycle)} icon="pencil-alt" className="icon-table"/> : ""}
             </td>
-            <td>
+            <td> { grantCycle.name } </td>
+            <td style={{width: '250px'}}>
                 { grantCycle.nominations.length } &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 
             </td>
