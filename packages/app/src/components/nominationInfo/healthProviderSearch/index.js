@@ -32,8 +32,8 @@ const SearchHealthProvider = () => {
         <tr>
           <td className="add-padding-left new-files-title same-row-wrapper">
             <FontAwesomeIcon icon="file-image" color="green" />
-            <h1 className="same-row">Health Provider Search Results</h1>
-            <h1 className="same-row">({SearchHealthcareProvider.length})</h1>
+            <h1>Health Provider Search Results</h1>
+            <h1>({SearchHealthcareProvider.length})</h1>
           </td>
           <td></td>
           <td></td>
