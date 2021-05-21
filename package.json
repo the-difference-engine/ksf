@@ -11,5 +11,9 @@
   },
   "devDependencies": {
     "lerna": "^3.22.1"
+  },
+  "dependencies": {
+    "node": "^16.1.0",
+    "postgresql": "0.0.1"
   }
 }
