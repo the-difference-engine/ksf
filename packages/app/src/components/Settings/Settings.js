@@ -2,27 +2,34 @@ import React, { useState, useEffect, useRef } from 'react';
 import TableRow from './TableRow';
 import grantCycleAPI from '../../utils/API/grantCycleAPI';
 import './styles.css';
+import EditModal from './EditModal';
 
 const Settings = (props) => {
     const [newGrantCycle, setNewGrantCycle] = useState({openedOn: "", closedOn: "", name: ""});
     const [allGrantCycles, setGrantCycles] = useState([]);
     const [disableButton, setDisableButton] = useState(true);
+    const [disableEditButton, setDisableEditButton] = useState(true);
     const [errors, setErrors] = useState("");
+    const [editErrors, setEditErrors] = useState("");
     const createButton = useRef(null);
-    const [updateId, setUpdateId] = useState(null);
     const [activeGrantCycle, setActiveGrantCycle] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [gcToEdit, setGcToEdit] = useState();
 
     async function getGrantCycles() {
-        const { data } = await grantCycleAPI.getGrantCycles();
-        setGrantCycles(data);
+        try {
+            const { data } = await grantCycleAPI.getGrantCycles();
+            setGrantCycles(data);
+        }
+        catch {}
     }
 
     async function getActiveGrantCycle() {
-        const { data } = await grantCycleAPI.getActiveGrantCycle();
-        if (data) {
+        try {
+            const { data } = await grantCycleAPI.getActiveGrantCycle();
             setActiveGrantCycle(data);
         }
+        catch {}
     }
 
     useEffect(() => {
@@ -36,19 +43,19 @@ const Settings = (props) => {
         setNewGrantCycle(grantCycle);
     }
 
+    const handleChangeForEdit = ({currentTarget: input}) => {
+        const grantCycle = {...gcToEdit};
+        grantCycle[input.name] = input.value;
+        setGcToEdit(grantCycle);
+    }
+
+
+
     const handleCreate = async (e) => {
         
         try{
-            if (updateId) {
-                
-                const grantCycle = {...newGrantCycle};
-                grantCycle["id"] = updateId;
-                const { data } = await grantCycleAPI.updateGrantCycle(grantCycle);
-                setUpdateId(null);
-            }
-            else {
-                const {data} = await grantCycleAPI.createGrantCycle(newGrantCycle);
-            }
+            const {data} = await grantCycleAPI.createGrantCycle(newGrantCycle);
+            
             setNewGrantCycle({openedOn: "", closedOn: "", name: ""})
             createButton.current.blur();
             getGrantCycles();
@@ -62,13 +69,18 @@ const Settings = (props) => {
     }
 
     const handleEdit = gc => {
-        setUpdateId(gc.id);
-        setNewGrantCycle({ openedOn: gc.openedOn.split("T")[0], closedOn: gc.closedOn.split("T")[0] });
+        setGcToEdit({ openedOn: gc.openedOn.split("T")[0], closedOn: gc.closedOn.split("T")[0], name: gc.name });
+        setShowEditModal(true);
     }
 
     useEffect(() => {
         handleDisableButton(newGrantCycle);
     }, [newGrantCycle])
+
+    useEffect(() => {
+        if (gcToEdit)
+            handleDisableEditButton(gcToEdit);
+    }, [gcToEdit])
 
     const handleDisableButton = (gc) => {
         if (gc.openedOn !== "" && gc.closedOn !== "") {
@@ -91,6 +103,35 @@ const Settings = (props) => {
             setDisableButton(true);
         }
     }
+    
+    const handleDisableEditButton = (gc) => {
+        if (gc.openedOn !== "" && gc.closedOn !== "") {
+            const millisecondsInADay = 86400000;
+            const startDate = new Date(gc.openedOn);
+            const endDate = new Date(gc.closedOn);
+            const result = endDate - startDate >= millisecondsInADay ? false : true;
+            
+            setDisableEditButton(result);
+            if (!result) {
+                setEditErrors("")
+                if (gc.name === "") {
+                    setDisableEditButton(true);
+                    setEditErrors("Please enter a name for the grant cycle");
+                }
+            }
+            else setEditErrors("Start Date must be earlier than End Date");
+        }
+        console.log(new Date().toLocaleDateString('en-Us', {timeZone: 'US/Central'}));
+        if (gc.closedOn < new Date().toLocaleDateString())
+            setDisableEditButton(true);
+        else {
+            setDisableEditButton(true);
+        }
+    }
+
+    const closeEditModal = () => {
+        setShowEditModal(false);
+    }
 
     const formatDateString = date => {
         const year = date.slice(0, 4);
@@ -102,6 +143,7 @@ const Settings = (props) => {
 
     return ( 
         <div className="settings__container">
+            <EditModal show={showEditModal} handleClose={closeEditModal} gc={gcToEdit} disableButton={disableEditButton} errors={editErrors} handleChange={handleChangeForEdit}/>
             <header className="settings__header">
                 <h1 className="settings__title">
                     Settings
