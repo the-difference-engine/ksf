@@ -33,17 +33,4 @@ function createFolder(applicationName) {
   })
 }
 
-// uncomment to list files
-// drive.files.list({}, (err, res) => {
-//   if (err) throw err;
-//   const files = res.data.files;
-//   if (files.length) {
-//     files.map((file) => {
-//       console.log(file);
-//     });
-//   } else {
-//     console.log('No files found');
-//   }
-// });
-
 module.exports = { createFolder }

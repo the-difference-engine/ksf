@@ -97,36 +97,31 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === 'Awaiting HIPAA') {
-
         try {
           nomination.update(
-            { awaitingHipaaTimestamp: Date() })
+            { awaitingHipaaTimestamp: Date() });
 
           const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
           const state = states.getStateCodeByStateName(nomination.hospitalState);
-          const applicationName = `${lastName}-${state}`
+          const applicationName = `${lastName}-${state}`;
 
-
-
-          createFolder(applicationName)
+          createFolder(applicationName);
         }
         catch (err) {
-          console.error('Could not create a folder', err)
+          console.error('Could not create a folder', err);
         }
       }
 
       if (nomination.status === 'HIPAA Verified') {
-
         try {
           nomination.update(
             { hipaaTimestamp: Date() }
-          ).catch((err) => {
-            console.log('Nomination Not Found', err)
-            return res.status(400)
-          });
+          );
+        } catch (err) {
+          console.log('Nomination Not Found', err);
+          return res.status(400);
         }
         finally { sendSurveyEmail(nomination); }
-
       }
       if (nomination.status === 'Ready for Board Review') {
         try {
@@ -170,63 +165,45 @@ const emailVerifiction = async (req, res) => {
   }
 };
 
+async function searchAndSend(status, query) {
+  const nominations = await db.Nomination.findAll(query);
+  let nomination;
+  let ids = [];
 
+  for (let i = 0; i < nominations.length; i++) {
+    nomination = nominations[i];
 
-const checkApplicationStatuses = async (req, res) => {
-  const sevenSeconds = 1000 * 7 // use for testing
-  const sevenDays = 24 * 60 * 60 * 1000 * 7
-  let time = process.env.APP_URL === 'http://localhost:3000' ? sevenSeconds : sevenDays
-
-  const statuses = ['HIPAA Verified', 'Awaiting HIPAA']
-
-  statuses.forEach(async (status) => {
-    let query
-
-    if (status === 'HIPAA Verified') {
-      query = {
-        where:
-        {
-          status: status,
-          hipaaTimestamp: {
-            [Op.lte]: new Date(new Date() - time)
-          },
-          reminderSent: false
+    switch (status) {
+      case 'HIPAA Verified':
+        sendSurveyReminder(nomination);
+        try {
+          nomination.update(
+            { hipaaReminderEmailTimestamp: Date() }
+          );
+        } catch (err) {
+          console.log('Unable to update record timestamp', err);
         }
-      }
-    } else  {
-      query = {
-        where:
-        {
-          status: status,
-          awaitingHipaaTimestamp: {
-            [Op.lte]: new Date(new Date() - time)
-          },
-          reminderSent: false
+        ids.push(nomination.id);
+        break;
+      case 'Awaiting HIPAA':
+        sendHIPAAReminder(nomination);
+        try {
+          nomination.update(
+            { awaitingHipaaReminderEmailTimestamp: Date() }
+          );
+        } catch (err) {
+          console.log('Unable to update record timestamp', err);
         }
-      }
+        ids.push(nomination.id);
+        break;
+      default:
+        console.log(status, ' is not a status');
     }
-
-    await searchAndSend(status, query)
-  })
-
-  async function searchAndSend(status, query) {
-
-    const nominations = await db.Nomination.findAll(query)
-    try {
-      for (let i = 0; i < nominations.length; i++) {
-        let nomination = nominations[i]
-        let id = nomination.id
-        if (status === 'HIPAA Verified') {
-          sendSurveyReminder(nomination)
-        }
-        if (status === 'Awaiting HIPAA') {
-          sendHIPAAReminder(nomination)
-        }
-        nomination.update({ reminderSent: true }, { where: { id } })
-      }
-    } catch (error) {
-      console.log(error)
-    }
+  }
+  try {
+    db.Nomination.update({ reminderSent: true }, { where: { id: ids } });
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -236,6 +213,5 @@ module.exports = {
   createNomination,
   updateNomination,
   syncNominations,
-  emailVerifiction,
-  checkApplicationStatuses
+  emailVerifiction
 };

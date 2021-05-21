@@ -151,6 +151,14 @@ module.exports = (sequelize, DataTypes) => {
       readyForBoardReviewTimestamp: {
         type: DataTypes.DATE,
         allowNull: true
+      }, 
+      hipaaReminderEmailTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
+      },
+      awaitingHipaaReminderEmailTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
       }
     },
     {

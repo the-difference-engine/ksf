@@ -3,7 +3,6 @@ require('dotenv').config();
 const sequelize = require('./helper/sequelize.js');
 const app = require('./server');
 const PORT = process.env.PORT || 8080;
-const scheduler = require('./helper/scheduler.js')
 
 async function testSequelizeConnection() {
   try {
@@ -15,5 +14,4 @@ async function testSequelizeConnection() {
   }
 }
 testSequelizeConnection();
-scheduler.reminders.start();
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));

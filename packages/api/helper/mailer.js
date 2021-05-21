@@ -31,7 +31,7 @@ const email = new emailTemplate({
   transport: transporter,
   send: true,
   //send status will eventually need to be updated to true
-  preview: false
+  preview: false,
 });
 
 function sendDeclineEmail(nomination) {
