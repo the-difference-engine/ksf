@@ -97,3 +97,13 @@
 .decrease-spacing {
   line-height: 2px;
 }
+
+.same-row {
+  display: block;
+}
+
+.same-row-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
