@@ -19,12 +19,10 @@ html
                 font-size: 0.875rem;
                 margin-bottom: 0.5rem;
             }
-
             h1 {
                 font-size: 1.5rem;
                 text-align: center;
             }
-
             h2, h2 a {
                 text-decoration: underline;
                 text-decoration-color: blue;
@@ -32,12 +30,10 @@ html
                 color: #6D7278;
                 text-align: center;
             }
-
             h3 {
                 font-size: 1.25rem;
                 color: #128B3E;
             }
-
             td {
                 border: none;
                 padding: 1.5rem 2rem;
@@ -52,6 +48,12 @@ html
             }
             .f1 {
                 margin-top: 50px;
+            }
+            button {
+                color: white;
+                text-align: center;
+                background-color: #128B3E;
+                border-radius: 1rem;
             }
 
     body
@@ -86,7 +88,7 @@ html
                 strong THIS MONTH'S DEADLINE CAN BE FOUND <a href="https://www.keepswimmingfoundation.org/monthly-application-deadlines">HERE</a>. 
                 | (All Supporting Surveys submitted after this time will not be considered). The completion of this Supporting Survey does not guarantee the nominated individual family a Keep Swimming Foundation grant. 
 
-            a(class="button" href="https://drive.google.com/drive/folders/1_Gbsd5984_INfg4wcAVeIOn55TSHAUyM?usp=sharing" style={color: 'white', text-align: 'center', border-radius: 1 rem, background: 'green'}) DOWNLOAD
+            button(type='submit' onclick='https://drive.google.com/drive/folders/1_Gbsd5984_INfg4wcAVeIOn55TSHAUyM?usp=sharing') DOWNLOAD
             div(class="f0")
                 p Keep Swimming Foundation |
                     | <a href="https://goo.gl/maps/rBQrsB3VHb4bji4z8"> N9W30025 Lang Udsigt Cir., Waukesha, WI 53188 </a>
