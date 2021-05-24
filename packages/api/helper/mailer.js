@@ -55,7 +55,7 @@ function sendSurveyEmail(nomination) {
     attachments: './survey/header.jpg',
     message: {
       from: adminEmail,
-      to: 'jon@thedifferenceengine.io'
+      to: nomination.representativeEmailAddress
     },
     locals: {
       name: nomination.representativeName,
