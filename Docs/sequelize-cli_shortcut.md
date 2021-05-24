@@ -10,6 +10,10 @@
 
         npx sequelize-cli seed:generate --name demo-user
 
+- Run Single Seed by file name * note described in the Docs
+
+        npx  sequelize-cli db:seed --seed fileName
+
 - Run Seed
 
         npx sequelize-cli db:seed:all

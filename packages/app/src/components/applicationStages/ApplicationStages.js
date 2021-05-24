@@ -1,20 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+// importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 
 const ApplicationStages = () => {
-  const [activeNomination, setActiveNomination] = useContext(
-    ActiveNominationContext
-  );
+  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
   const [currentStatus, setCurrentStatus] = useState();
-  const status = [
-    'Received',
-    'Awaiting HIPAA',
-    'HIPAA Verified',
-    'Document Review',
-    'Ready for Board Review',
-  ];
+  // status array is used as the param in
+  const status = ['Received', 'Awaiting HIPAA', 'HIPAA Verified', 'Document Review', 'Ready for Board Review'];
 
   useEffect(() => {
     setCurrentStatus(capitalize(activeNomination.status));
@@ -64,8 +58,7 @@ const ApplicationStages = () => {
   function updateNom(currentStatus) {
     try {
       nominationsAPI.updateNomination(activeNomination.id, currentStatus);
-    }
-    catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -79,22 +72,14 @@ const ApplicationStages = () => {
     <>
       <div className="nomination-bar-wrapper">
         <div className="wrapper">
-          {currentStatus && (
-            <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>
-          )}
-          <div className="next-wrapper">
-          <div
-            className="next"
-            onClick={() => advanceStage(currentStatus)}
-          >
-            <span>&#10003;</span>Mark Stage as Complete
-          </div>
-          <div
-            className="next"
-            onClick={() => closeApplication(currentStatus)}
-          >
-            Close Application
-          </div>
+          {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
+          <div className="button-next-wrapper">
+            <div className="button next" onClick={() => advanceStage(currentStatus)}>
+              <span>&#10003;</span>Mark Stage as Complete
+            </div>
+            <div className="button next" onClick={() => closeApplication(currentStatus)}>
+              Close Application
+            </div>
           </div>
         </div>
       </div>
@@ -103,4 +88,3 @@ const ApplicationStages = () => {
 };
 
 export default ApplicationStages;
-

@@ -19,13 +19,16 @@
     "dotenv": "^8.2.0",
     "email-templates": "^8.0.3",
     "express": "^4.17.1",
+    "faker": "^5.5.3",
     "googleapis": "^59.0.0",
+    "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.4.14",
     "nodemailer-smtp-transport": "^2.7.4",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
-    "pug": "^3.0.0",
+    "pug": "^3.0.2",
     "sequelize": "^6.3.4",
+    "us-state-codes": "^1.1.2",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
