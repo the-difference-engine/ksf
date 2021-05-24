@@ -1,5 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment';
 
 
 const TableRow = (props) => {
@@ -14,7 +15,9 @@ const TableRow = (props) => {
     }
 
     const timeDiff = (dateString) => {
-        return new Date(dateString) - new Date() >= 0 ? true : false;
+        dateString = moment(dateString);
+        const now = moment().startOf('day');
+        return dateString.isAfter(now);
     }
 
     

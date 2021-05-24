@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 
-const EditModal = ({ show, handleClose, gc, errors, disableButton, handleChange }) => {
-
-    const [grantCycle, setGrantCycle] = useState(gc);
+const EditModal = ({ show, handleClose, gc, errors, disableButton, handleChange, onSubmit }) => {
 
     const showHideClassName = show ? "edit-modal edit-modal-display-block" : "edit-modal edit-modal-display-none";
 
     const disableDatePicker = (d) => {
-        const today = new Date().setHours(0,0,0,0);
-        const date = new Date(d).setHours(0,0,0,0);
-
-        return today > date;
+        return moment().isAfter(moment(d));
     }
 
     const getMinDate = () => {
-        const today= new Date().toISOString().substr(0,10);
-        console.log(today);
-        return today;
-
+        return moment().format('YYYY-MM-DD');
     }
 
     return ( 
@@ -35,7 +28,7 @@ const EditModal = ({ show, handleClose, gc, errors, disableButton, handleChange 
                                     name="openedOn"
                                     onChange={handleChange}
                                     type="date"
-                                    disabled={disableDatePicker(gc.openedOn)}
+                                    // disabled={disableDatePicker(gc.openedOn)}
                                 />
                             </span>
                         </div>
@@ -47,8 +40,6 @@ const EditModal = ({ show, handleClose, gc, errors, disableButton, handleChange 
                                     name="closedOn"
                                     onChange={handleChange}
                                     type="date"
-                                    min={getMinDate()}
-                                    max="2100-01-01"
                                     
                                 />
                             </span>
@@ -65,7 +56,7 @@ const EditModal = ({ show, handleClose, gc, errors, disableButton, handleChange 
                             </span>
                         </div>
                     </div>
-                    <button className="edit-modal-button" disabled={disableButton}>Edit</button>
+                    <button className="edit-modal-button" onClick={onSubmit} disabled={disableButton}>Update</button>
                     <button className="edit-modal-button-cancel" onClick={handleClose}>Cancel</button>
                     <div className="edit-modal-errors">{ errors }</div>
                 

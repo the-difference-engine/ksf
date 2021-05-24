@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import moment from 'moment';
 import TableRow from './TableRow';
 import grantCycleAPI from '../../utils/API/grantCycleAPI';
 import './styles.css';
@@ -66,10 +67,27 @@ const Settings = (props) => {
                 createButton.current.blur();
             }
         }
+    
+    }
+    const handleUpdate = async (e) => {
+        
+        try{
+            console.log(gcToEdit);
+            const {data} = await grantCycleAPI.updateGrantCycle(gcToEdit);
+            
+            setGcToEdit({openedOn: "", closedOn: "", name: ""})
+            getGrantCycles();
+            setShowEditModal(false);
+        }
+        catch(ex) {
+            if (ex.response && ex.response.status === 400) {
+                setEditErrors(ex.response.data);
+            }
+        }
     }
 
     const handleEdit = gc => {
-        setGcToEdit({ openedOn: gc.openedOn.split("T")[0], closedOn: gc.closedOn.split("T")[0], name: gc.name });
+        setGcToEdit({ openedOn: gc.openedOn.split("T")[0], closedOn: gc.closedOn.split("T")[0], name: gc.name, id: gc.id });
         setShowEditModal(true);
     }
 
@@ -117,20 +135,31 @@ const Settings = (props) => {
                 if (gc.name === "") {
                     setDisableEditButton(true);
                     setEditErrors("Please enter a name for the grant cycle");
+
                 }
+                const closed = moment(gc.closedOn);
+                if (moment().isAfter(closed))
+                    setDisableEditButton(true);
             }
             else setEditErrors("Start Date must be earlier than End Date");
         }
-        console.log(new Date().toLocaleDateString('en-Us', {timeZone: 'US/Central'}));
-        if (gc.closedOn < new Date().toLocaleDateString())
-            setDisableEditButton(true);
+        
         else {
+            setDisableEditButton(true);
+        }
+
+        if (disableDatePicker(gc.closedOn)) {
+            setEditErrors("Cannot set date earlier than today.");
             setDisableEditButton(true);
         }
     }
 
     const closeEditModal = () => {
         setShowEditModal(false);
+    }
+
+    const disableDatePicker = (d) => {
+        return moment().isAfter(moment(d));
     }
 
     const formatDateString = date => {
@@ -143,7 +172,15 @@ const Settings = (props) => {
 
     return ( 
         <div className="settings__container">
-            <EditModal show={showEditModal} handleClose={closeEditModal} gc={gcToEdit} disableButton={disableEditButton} errors={editErrors} handleChange={handleChangeForEdit}/>
+            <EditModal
+                show={showEditModal}
+                handleClose={closeEditModal}
+                gc={gcToEdit}
+                disableButton={disableEditButton}
+                errors={editErrors}
+                handleChange={handleChangeForEdit}
+                onSubmit={handleUpdate}
+            />
             <header className="settings__header">
                 <h1 className="settings__title">
                     Settings
