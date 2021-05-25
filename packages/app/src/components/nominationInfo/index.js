@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import ApplicationDetail from "./applicationDetail";
-import HealthProviderDetail from "./healthProviderDetail";
-import styles from "./styles.module.css";
+import ApplicationDetail from './applicationDetail';
+import HealthProviderDetail from './healthProviderDetail';
+import styles from './styles.module.css';
 
 function NominationInfo() {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
@@ -99,7 +99,7 @@ function NominationInfo() {
       value: diffDays,
     },
     {
-      label: 'Diagnosis/case information',
+      label: 'Diagnosis/Case Information',
       value: activeNomination.patientDiagnosis,
     },
   ];

@@ -2,13 +2,11 @@ import React, { useContext } from 'react';
 import styles from './styles.module.css';
 import { useParams, Link } from 'react-router-dom';
 
-
 function HealthProviderDetail(props) {
-
   const { id } = useParams();
 
-  const openWindow = () => {
-      window.open('#');
+  const openWindow = (val) => {
+    window.open(`/searchhealthprovider/${val}`);
   };
 
   return (
@@ -21,13 +19,12 @@ function HealthProviderDetail(props) {
           obj.label === 'Provider Name' ? (
             <div key={index} className={obj.label === '' ? styles.mobileHide : ''}>
               <label className={styles.label}>{obj.label}</label>
-              
-                <Link to={`/searchhealthprovider/${obj.value}`}>
-                  <span className={styles.value} onClick={() => openWindow()} key={index}>
-                    {obj.value}
-                  </span>
-                </Link>
-              
+
+              <Link to={`/nomination/${id}`} className={styles.underline}>
+                <span className={(styles.value, 'green')} onClick={() => openWindow(obj.value)} key={index}>
+                  {obj.value}
+                </span>
+              </Link>
             </div>
           ) : (
             <div key={index} className={obj.label === '' ? styles.mobileHide : ''}>
