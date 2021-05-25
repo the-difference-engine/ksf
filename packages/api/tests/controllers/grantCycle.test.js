@@ -7,6 +7,12 @@ const testGrant = {
   closedOn: new Date('2020-02-02'),
   isActive: true,
 };
+const secondTestGrant = {
+  name: 'second grant',
+  openedOn: new Date('2020-02-03'),
+  closedOn: new Date('2020-03-02'),
+  isActive: false,
+};
 describe('POST /api/grantcycles', () => {
   afterEach(async () => {
     try {
@@ -97,7 +103,7 @@ describe('PUT /api/grantcycles', () => {
     try {
       const [firstGrant, secondGrant] = await Promise.all([
         db.GrantCycle.create({ ...testGrant }),
-        db.GrantCycle.create({ ...testGrant, isActive: false, name: 'second grant' }),
+        db.GrantCycle.create({ ...secondTestGrant }),
       ]);
       grants = { firstGrant, secondGrant };
     } catch (error) {
@@ -116,7 +122,7 @@ describe('PUT /api/grantcycles', () => {
     const { id } = grants.secondGrant;
     request(app)
       .put(`/api/grantcycles/${id}`)
-      .send({ name: 'another unique name' })
+      .send({ ...grants.secondGrant, name: 'another unique name' })
       .set('Content-Type', 'application/json')
       .expect(200)
       .end((error, res) => {
@@ -129,7 +135,7 @@ describe('PUT /api/grantcycles', () => {
     const { id } = grants.secondGrant;
     request(app)
       .put(`/api/grantcycles/${id}`)
-      .send({ isActive: false })
+      .send({ ...grants.secondGrant, isActive: false })
       .set('Content-Type', 'application/json')
       .expect(200)
       .end((error, res) => {
