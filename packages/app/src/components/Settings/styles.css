@@ -147,7 +147,7 @@
 .settings__tbody {
     display: block;
     overflow-y: auto;
-    width: 100%;
+    width: 99%;
     height: 275px;
 }
 
@@ -183,13 +183,13 @@
 .settings__results tbody {
     display: block;
     overflow-y: auto;
-    width: 100%;
-    height:660px;
+    width: 99%;
+    height: calc(100vh - 16vw);
 }
 
 .settings__results-table tr {
     display: table;
-    width: 100%;
+    width: 99%;
     table-layout: fixed;
 }
 

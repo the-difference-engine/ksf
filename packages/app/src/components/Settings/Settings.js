@@ -219,7 +219,7 @@ const Settings = (props) => {
                         </span>
                     </div>
                     <div className="settings__input-block">
-                        <p className="settings__input-label">Name:</p>
+                        <p className="settings__input-label">Cycle Name:</p>
                         <span className="settings__input">
                             <input
                                 value={newGrantCycle.name}
@@ -235,7 +235,7 @@ const Settings = (props) => {
 
                 
                     <div>
-                        <h2 className="settings__heading">Active Grant Cycle: &nbsp;&nbsp;&nbsp;&nbsp;{activeGrantCycle ? <span className="settings__activeGrantCycle">{formatDateString(activeGrantCycle.openedOn)} - {formatDateString(activeGrantCycle.closedOn)}, Name: {activeGrantCycle.name}</span> : <span className="settings__activeGrantCycle">None</span>}</h2>
+                        <h2 className="settings__heading">Active Grant Cycle: &nbsp;&nbsp;&nbsp;&nbsp;{activeGrantCycle ? <span className="settings__activeGrantCycle">{activeGrantCycle.name}</span> : <span className="settings__activeGrantCycle">None</span>}</h2>
                     </div>
                 
 
@@ -246,7 +246,7 @@ const Settings = (props) => {
                             <tr>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Name</th>
+                                <th>Cycle Name</th>
                                 <th className="settings__th-column">Applications<br/>Ready for Board Review</th>
                                 <th>View<br/>Applications</th>
                             </tr>

@@ -56,7 +56,7 @@ const findAll = async (req, res) => {
             where: {
               [Op.and]: [{
                 // change 'dateReceived' to 'readyForBoardReviewTimestamp'
-                readyForBoardReviewTimestamp: {
+                dateReceived: {
                   [Op.between]: [g.openedOn, g.closedOn]
                 },
                 status: {
