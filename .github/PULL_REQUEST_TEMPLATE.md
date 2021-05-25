@@ -4,6 +4,8 @@
 
 ### Impacted areas in the application:
 
+### Describe the steps you took to test your changes:
+
 List general components of the application that this PR will affect:
 
 PR checklist

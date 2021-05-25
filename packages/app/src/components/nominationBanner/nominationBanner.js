@@ -12,7 +12,7 @@ const NominationBanner = ({ nomination }) => {
   const valid = new Date(hippaDate).getTime() > 0;
   let newDate = new Date(hippaDate);
   const time = newDate.toLocaleDateString();
-  const minutes = newDate.toLocaleTimeString();
+  const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const finalDate = `${time} – ${minutes}`;
 
   return (
@@ -24,7 +24,7 @@ const NominationBanner = ({ nomination }) => {
 
         <div className="column column-80 nomination-details">
           <div className="row banner-top">
-            <div className="column name" style={{ width: '30%' }}>
+            <div className="column name" style={{ width: '25%' }}>
               <p>Application</p>
               <span>
                 <h1 className="nom-name">
@@ -32,13 +32,12 @@ const NominationBanner = ({ nomination }) => {
                 </h1>
               </span>
             </div>
-            <div className="column name">
-              <button className=" decline-button" style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
-                Decline Application
+            <div className="column center">
+              <button className="decline-button button-center button">
+                <span>Decline Application</span>
               </button>
             </div>
           </div>
-
           <div className="row">
             <div className="column hp-name">
               <p className="secondary-dark">HP Name</p>

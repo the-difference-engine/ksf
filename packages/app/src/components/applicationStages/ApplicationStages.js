@@ -7,14 +7,8 @@ import './style.css';
 const ApplicationStages = () => {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
   const [currentStatus, setCurrentStatus] = useState();
-  // status array is used as the param in 
-  const status = [
-    'Received',
-    'Awaiting HIPAA',
-    'HIPAA Verified',
-    'Document Review',
-    'Ready for Board Review',
-  ];
+  // status array is used as the param in
+  const status = ['Received', 'Awaiting HIPAA', 'HIPAA Verified', 'Document Review', 'Ready for Board Review'];
 
   useEffect(() => {
     setCurrentStatus(capitalize(activeNomination.status));
@@ -78,19 +72,14 @@ const ApplicationStages = () => {
     <>
       <div className="nomination-bar-wrapper">
         <div className="wrapper">
-          {currentStatus && (
-            <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>
-          )}
-          <div className="next-wrapper">
-          <div
-            className="next"
-            onClick={() => advanceStage(currentStatus)}
-          >
-            <span>&#10003;</span>Mark Stage as Complete
-          </div>
-          <div className="next" onClick={() => closeApplication(currentStatus)}>
-            Close Application
-          </div>
+          {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
+          <div className="button-next-wrapper">
+            <div className="button next" onClick={() => advanceStage(currentStatus)}>
+              <span>&#10003;</span>Mark Stage as Complete
+            </div>
+            <div className="button next" onClick={() => closeApplication(currentStatus)}>
+              Close Application
+            </div>
           </div>
         </div>
       </div>
