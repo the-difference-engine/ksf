@@ -14,7 +14,7 @@ const NominationBanner = ({ nomination }) => {
   const valid = new Date(hippaDate).getTime() > 0;
   let newDate = new Date(hippaDate);
   const time = newDate.toLocaleDateString();
-  const minutes = newDate.toLocaleTimeString();
+  const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const finalDate = `${time} – ${minutes}`;
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
   const declineStatus = 'Declined'
