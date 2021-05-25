@@ -30,7 +30,7 @@ const SearchHealthProvider = () => {
     <table className="new-files-table">
       <thead>
         <tr>
-          <td className="add-padding-left new-files-title">
+          <td className="add-padding-left new-files-title same-row-wrapper">
             <FontAwesomeIcon icon="file-image" color="green" />
             <h1>Health Provider Search Results</h1>
             <h1>({SearchHealthcareProvider.length})</h1>
