@@ -71,7 +71,7 @@ const NominationBanner = ({ nomination }) => {
                 </h2>
               </span>
             </div>
-            <div className="column hippa">
+            <div className="column hippa hippa-column">
               <p className="secondary-dark">HIPPA Date</p>
               <span>
                 <h2 className="body-font">
