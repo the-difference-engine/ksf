@@ -19,7 +19,7 @@ const NominationBanner = (props) => {
   const valid = new Date(hipaaDate).getTime() > 0;
   let newDate = new Date(hipaaDate);
   const time = newDate.toLocaleDateString();
-  const minutes = newDate.toLocaleTimeString();
+  const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const finalDate = `${time} – ${minutes}`;
 
   // Variables for edit button coloring and save functionality.
@@ -81,8 +81,8 @@ const NominationBanner = (props) => {
                 </h2>
               </span>
             </div>
-            <div className="column hippa">
-              <p className="secondary-dark">HIPAA Date</p>
+            <div className="column hippa hippa-column">
+              <p className="secondary-dark">HIPPA Date</p>
               <span>
                 <h2 className="body-font">
                   <strong>{valid ? finalDate : 'Awaiting HIPAA'}</strong>

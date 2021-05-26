@@ -93,3 +93,13 @@
 .last-column {
   width: 10%;
 }
+
+.decrease-spacing {
+  line-height: 2px;
+}
+
+.same-row-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
