@@ -17,7 +17,7 @@ function ApplicationUpdateDetail(props, hasBeenClicked) {
     const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     const yesNoRegex = /^(?:Yes\b|No\b)/;
     const emailRegex = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-    
+
     /**
      * Function which handles submitting form to back end
      * 
@@ -28,7 +28,7 @@ function ApplicationUpdateDetail(props, hasBeenClicked) {
             console.log('this happened')
             console.log(data)
             try {
-            nominationsAPI.updateActiveNomData(activeNomination.id, data)
+                nominationsAPI.updateActiveNomData(activeNomination.id, data)
             } catch (err) {
                 console.log(err);
             }
@@ -50,31 +50,31 @@ function ApplicationUpdateDetail(props, hasBeenClicked) {
                             {
                                 props.propsData.map((obj) => (
                                     <div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
-                                    {obj.label === "Admission Date" || obj.label === "Discharge Date" ?
-                                        <div><label className={styles.label}>{obj.label}</label>
-                                            <input 
-                                                name={obj.label} 
-                                                type="date" 
-                                                defaultValue={obj.value}
-                                                {...register(obj.label, 
-                                                    {required: true}, 
-                                                    {valueAsDate: true},
-                                                    {validate: yes => yes }
-                                                )
-                                            } 
-                                            />
-                                        </div> 
-                                        :
-                                        <div>
-                                            <label className={styles.label}>{obj.label}</label>
-                                            <span className={styles.value}>{String(obj.value)}</span>
-                                        </div>
-                                    }
-                                </div>))
+                                        {obj.label === "Admission Date" || obj.label === "Discharge Date" ?
+                                            <div><label className={styles.label}>{obj.label}</label>
+                                                <input
+                                                    name={obj.label}
+                                                    type="date"
+                                                    defaultValue={obj.value}
+                                                    {...register(obj.label,
+                                                        { required: true },
+                                                        { valueAsDate: true },
+                                                        { validate: yes => yes }
+                                                    )
+                                                    }
+                                                />
+                                            </div>
+                                            :
+                                            <div>
+                                                <label className={styles.label}>{obj.label}</label>
+                                                <span className={styles.value}>{String(obj.value)}</span>
+                                            </div>
+                                        }
+                                    </div>))
                             }
                         </div>
-                        <input 
-                            label="Save" 
+                        <input
+                            label="Save"
                             type="submit" />
                     </form>
                 </div>
@@ -83,17 +83,20 @@ function ApplicationUpdateDetail(props, hasBeenClicked) {
                             {
                                 props.propsData.map((obj) => (<div key={obj.label} className={obj.label === "" ? styles.mobileHide : ""}>
                                     <label className={styles.label}>{obj.label}</label>
-                                    <input 
+                                    <input
                                         name={obj.label}
                                         type="text"
                                         defaultValue={obj.value}
-                                        {...register("Representative Name", 
-                                            {required: true}, 
-                                            {min: 
-                                                {value: 3, 
-                                                message:"Please enter 3 or more characters."}
+                                        {...register("Representative Name",
+                                            { required: true },
+                                            {
+                                                min:
+                                                {
+                                                    value: 3,
+                                                    message: "Please enter 3 or more characters."
+                                                }
                                             }
-                                            )
+                                        )
                                         }
                                     />
                                 </div>))
