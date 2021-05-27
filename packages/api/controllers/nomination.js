@@ -145,8 +145,18 @@ const updateActiveNomData = async (req, res) => {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    console.log(req.body);
-    console.log(nomination.toString()); 
+    nomination.update({ 
+      admissionDate: req.body.admissionDate,
+      dischargeDate: req.body.dischargeDate,
+      representativeName: req.body.representativeName,
+      representativeEmailAddress: req.body.representativeEmailAddress,
+      representativePhoneNumber: req.body.representativePhoneNumber,
+      representativeRelationship: req.body.representativeRelationship,
+      representativeSpanishRequested: req.body.representativeSpanishRequested
+     }).catch((err) => {
+      console.log('Nomination Not Found', err);
+      return res.status(400);
+    });
   } catch (err) {
       console.log(err);
     }
