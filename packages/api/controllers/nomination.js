@@ -8,7 +8,7 @@ const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer')
-const { sendHIPAAReminder } = require('../helper/mailer')
+const { sendHIPAAReminder } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
@@ -125,9 +125,21 @@ const updateNomination = async (req, res) => {
       }
       if (nomination.status === 'Ready for Board Review') {
         try {
-          nomination.update(
-            { readyForBoardReviewTimestamp: Date() }
-          )
+          // find the active nomination id
+          
+          // const grant =  await findActive(); //did not work
+          const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
+          console.log("*********** GRANT ***************", grant)
+          console.log("*********** ID ***************", grant.id)
+          console.log("*********** ID TYPE ***************", typeof(grant.id))
+          const grantId = String(grant.id)
+          
+          nomination.update({ 
+              readyForBoardReviewTimestamp: Date()
+
+            }
+          );
+          nomination.belongsTo( GrantCycle, { as: grantId});
         } catch (error) {
           console.log("Could not record readyForBoardReviewTimestamp ", error)
         }
