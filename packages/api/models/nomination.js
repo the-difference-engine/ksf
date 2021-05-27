@@ -140,6 +140,26 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.DATE
       },
+      awaitingHipaaTimestamp: {
+        allowNull: true,
+        type: DataTypes.DATE
+      },
+      reminderSent: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
+      readyForBoardReviewTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
+      }, 
+      hipaaReminderEmailTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
+      },
+      awaitingHipaaReminderEmailTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
+      }
     },
     {
       hooks: {

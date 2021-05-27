@@ -9,14 +9,14 @@ const scopes = [
   'https://www.googleapis.com/auth/drive.file'
 ];
 
-module.exports = function createFolder(applicationName) {
+const auth = new google.auth.JWT(
+  clientEmail, null,
+  privateKey, scopes
+);
 
-  const auth = new google.auth.JWT(
-    clientEmail, null,
-    privateKey, scopes
-  );
+const drive = google.drive({ version: 'v3', auth });
 
-  const drive = google.drive({ version: 'v3', auth });
+function createFolder(applicationName) {
   let fileMetadata = {
     'name': applicationName,
     'parents': [parentFolderId],
@@ -32,3 +32,5 @@ module.exports = function createFolder(applicationName) {
     }
   })
 }
+
+module.exports = { createFolder }
