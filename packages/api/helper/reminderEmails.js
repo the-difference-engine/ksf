@@ -1,4 +1,6 @@
 const { searchAndSend } = require('../controllers/nomination');
+const sequelize = require('sequelize')
+const Op = sequelize.Op;
 
 function emailAgingApplications() {
     const age = 86400000 * 7; // seven days in ms
@@ -22,8 +24,8 @@ function emailAgingApplications() {
             reminderSent: false
         }
     };
-    await searchAndSend('HIPAA Verified', hipaaVerified);
-    await searchAndSend('Awaiting HIPAA', awaitingHipaa);
+    searchAndSend('HIPAA Verified', hipaaVerified);
+    searchAndSend('Awaiting HIPAA', awaitingHipaa);
 }
 
 emailAgingApplications();

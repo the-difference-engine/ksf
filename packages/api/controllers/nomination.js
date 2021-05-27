@@ -1,5 +1,4 @@
 const { validate: uuidValidate } = require('uuid');
-const sequelize = require('sequelize')
 const { ValidationError, where } = require('sequelize');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer')
@@ -11,7 +10,6 @@ const { sendSurveyReminder } = require('../helper/mailer')
 const { sendHIPAAReminder } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
-const Op = sequelize.Op;
 
 
 const getNominationById = async (req, res) => {
@@ -203,5 +201,6 @@ module.exports = {
   createNomination,
   updateNomination,
   syncNominations,
-  emailVerifiction
+  emailVerifiction, 
+  searchAndSend
 };
