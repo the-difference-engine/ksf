@@ -4,7 +4,7 @@ const sequelize = require('sequelize')
 const Op = sequelize.Op;
 
 function emailAgingApplications() {
-    const age = 8647; // seven days in ms
+    const age = 86400000 * 7; // seven days in ms
     const hipaaVerified = {
         where:
         {
