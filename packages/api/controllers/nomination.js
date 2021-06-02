@@ -134,7 +134,7 @@ const emailVerifiction = async (req, res) => {
 };
 
 /**
- * Updates databse with information from active application updates on front end.
+ * Updates database with information from active application updates on front end.
  * 
  * @param {*} req - updated props data object 
  * @param {*} res - response code

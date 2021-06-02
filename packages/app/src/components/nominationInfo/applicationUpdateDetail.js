@@ -29,6 +29,7 @@ function ApplicationUpdateDetail(props, hasBeenClicked) {
             console.log(data)
             try {
                 nominationsAPI.updateActiveNomData(activeNomination.id, data)
+                console.log('this happened too')
             } catch (err) {
                 console.log(err);
             }
