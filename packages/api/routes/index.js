@@ -7,11 +7,11 @@ const router = Router();
 
 // nomintation endpoints
 router.get('/api/nominations/:id', nominationController.getNominationById);
-router.get('/api/nominations', nominationController.findAllNominataions);
+router.get('/api/nominations', nominationController.findAllNominations);
 router.post('/api/nominations', nominationController.createNomination);
 router.put('/api/nominations/:id', nominationController.updateNomination);
 router.get('/api/syncnominations', nominationController.syncNominations);
-router.get('/api/confirmation/:token', nominationController.emailVerifiction);
+router.get('/api/confirmation/:token', nominationController.emailVerification);
 
 // user endpoints
 router.get('/api/user/:id', userController.getUserById);
