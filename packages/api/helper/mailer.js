@@ -35,6 +35,7 @@ const email = new emailTemplate({
 });
 
 function sendDeclineEmail(nomination) {
+
   email
     .send({
       template: 'decline',
@@ -105,9 +106,52 @@ function sendHIPAAEmail(nomination) {
           name: nomination.patientName,
           imgUrl,
         },
-      }.catch((err) => console.log(err))
+      }
     )
-    .then(() => console.log('email has been sent!'));
+    .then(() => console.log('email has been sent!'))
+    .catch((err) => console.log(err))
+}
+
+function sendSurveyReminder(nomination) {
+  email
+    .send(
+      {
+        template: 'surveyReminder',
+        message: {
+          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+          replyTo: 'info@keepswimmingfoundation.org',
+          to: nomination.providerEmailAddress,
+        },
+        locals: {
+          name: nomination.patientName,
+          providerName: nomination.providerName,
+          imgUrl
+        }
+      }
+    )
+    .then(console.log("reminder email has been sent to" + nomination.providerName))
+    .catch((err) => console.log(err))
+}
+
+function sendHIPAAReminder(nomination) {
+  email
+    .send(
+      {
+        template: 'hipaaReminder',
+        message: {
+          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+          replyTo: 'info@keepswimmingfoundation.org',
+          to: nomination.providerEmailAddress,
+        },
+        locals: {
+          name: nomination.patientName,
+          providerName: nomination.providerName,
+          imgUrl
+        }
+      }
+    )
+    .then(console.log("reminder email has been sent to" + nomination.providerName))
+    .catch((err) => console.log(err))
 }
 
 module.exports = {
@@ -115,4 +159,6 @@ module.exports = {
   sendSurveyEmail,
   verifyHcEmail,
   sendHIPAAEmail,
+  sendHIPAAReminder,
+  sendSurveyReminder
 };
