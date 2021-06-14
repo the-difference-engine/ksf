@@ -11,7 +11,7 @@
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
     "pretest": "cross-env NODE_ENV=test npm run migrate:reset",
-    "reminder-emails": "node reminderEmails.js"
+    "reminder-emails": "node helper/reminderEmails.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,7 +28,7 @@
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
     "pug": "^3.0.2",
-    "sequelize": "^6.3.4",
+    "sequelize": "^6.6.2",
     "us-state-codes": "^1.1.2",
     "uuid": "^8.3.0"
   },
