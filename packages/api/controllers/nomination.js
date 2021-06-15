@@ -8,10 +8,11 @@ const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer')
-const { sendHIPAAReminder } = require('../helper/mailer');
+const { sendHIPAAReminder } = require('../helper/mailer')
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
+
 
 
 const getNominationById = async (req, res) => {
@@ -140,7 +141,6 @@ const updateNomination = async (req, res) => {
           console.log("Could not record readyForBoardReviewTimestamp ", error)
         }
       }
-
       return res.status(200).json(nomination);
     }
   } catch (error) {
@@ -221,5 +221,6 @@ module.exports = {
   createNomination,
   updateNomination,
   syncNominations,
-  emailVerifiction
+  emailVerifiction, 
+  searchAndSend
 };
