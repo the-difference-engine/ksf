@@ -14,6 +14,7 @@ const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
 
 
+
 const getNominationById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -132,7 +133,6 @@ const updateNomination = async (req, res) => {
           console.log("Could not record readyForBoardReviewTimestamp ", error)
         }
       }
-
       return res.status(200).json(nomination);
     }
   } catch (error) {
@@ -213,5 +213,6 @@ module.exports = {
   createNomination,
   updateNomination,
   syncNominations,
-  emailVerifiction
+  emailVerifiction, 
+  searchAndSend
 };
