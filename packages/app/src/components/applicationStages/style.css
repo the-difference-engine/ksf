@@ -172,3 +172,8 @@ a:hover {
   width: 300px;
   height: max-content;
 }
+.decline-button {
+  background-color: #f72314;
+  color: #ffffff;
+  border: #8a8a8a;
+}
