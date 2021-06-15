@@ -129,17 +129,13 @@ const updateNomination = async (req, res) => {
           
           // const grant =  await findActive(); //did not work
           const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
-          console.log("*********** GRANT ***************", grant)
-          console.log("*********** ID ***************", grant.id)
-          console.log("*********** ID TYPE ***************", typeof(grant.id))
-          const grantId = String(grant.id)
           
           nomination.update({ 
-              readyForBoardReviewTimestamp: Date()
+              readyForBoardReviewTimestamp: Date(),
+              grantCycleId: grant.id
 
             }
           );
-          nomination.belongsTo( GrantCycle, { as: grantId});
         } catch (error) {
           console.log("Could not record readyForBoardReviewTimestamp ", error)
         }
