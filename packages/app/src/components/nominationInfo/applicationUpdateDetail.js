@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import styles from './styles.module.css';
 // npm install react-hook-form
 import { useForm } from 'react-hook-form';
@@ -7,16 +7,19 @@ import { useFormikContext, Formik } from 'formik'; // npm install formik --save
 import * as Yup from 'yup'; // npm install yup --save
 import nominationsAPI from '../../utils/API/nominationsAPI';
 
-const SubmitHandler = hasBeenClicked => {
-	const { submitForm } = useFormikContext();
 
-	React.useEffect(() => {
-		if (hasBeenClicked) {
-			submitForm();
-		}
-	}, [submitForm]);
-	return null;
-};
+
+// const SubmitHandler = hasBeenClicked => {
+	
+// 	const { submitForm } = useFormikContext();
+
+// 	React.useEffect(() => {
+// 		if (hasBeenClicked) {
+// 			submitForm();
+// 		}
+// 	}, [submitForm]);
+// 	return null;
+// };
 
 /**
  * Function which is called to update the current active nomination's data fields.
@@ -24,22 +27,83 @@ const SubmitHandler = hasBeenClicked => {
  * @param {*} props - active nomination props
  * @returns - renders data based on click status of edit button
  */
-const ApplicationUpdateDetail = (props, hasBeenClicked) => {
+const ApplicationUpdateDetail = (props) => {
 	const [activeNomination, setActiveNomination] = useContext(
 		ActiveNominationContext
 	);
-	const { handleSubmit } = useForm();
+	//const { handleSubmit } = useForm();
 	const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 	const yesNoRegex = /^(?:Yes\b|No\b)/;
 
+	const [isEditing, setIsEditing] = useState(false)
+
+	const firstUpdate = useRef(true)
+
+	const toggleIsEditing = () => {
+	//	console.log("toggling isEditing")
+		setIsEditing(isEditing => !isEditing)
+		setTimeout(() => {
+			console.log(`THIS IS isEditing after toggling after 2 seconds: ${isEditing} `)	
+		}, 2000);
+		
+	};	
+	
+	
 	// Taylor & Somers TODO: add put/patch API call
 	// https://www.freecodecamp.org/news/build-forms-in-react-with-react-hook-form-library/
 	// https://react-hook-form.com/api/useform
-	useEffect(() => {
-		if (hasBeenClicked) {
-			handleSubmit();
+	// useEffect(() => {
+	// 	if (hasBeenClicked) {
+	// 		handleSubmit();
+	// 	}
+	// });
+
+		// if isEditing is false, then if props.hasBeenClicked then isEditing will be true
+		useEffect(() => {
+			
+			if (props.hasBeenClicked) {
+				console.log("edit has been clicked")
+				console.log(props.hasBeenClicked)
+				// setIsEditing(isEditing => !isEditing) 
+				// toggleIsEditing()
+				// console.log(`THIS IS isEditing, in if statement: ${isEditing} `)
+			}
+			// } else {
+			// 	console.log(`THIS IS isEditing, in else statement: ${isEditing} `)
+			// 	console.log("saved has been clicked")
+			// 	handleSubmit()
+			// 	// then the save button has been clicked
+		
+			// }  
+		}, [props.hasBeenClicked])
+
+		useEffect(() => {
+			if (!firstUpdate.current) {
+			console.log("save has been clicked")
+			}
+			firstUpdate.current = false
+
+		}, [props.saveHasBeenClicked])
+
+	// Attach this to your <Formik>
+// const formRef = useRef()
+
+// const handleSubmit = () => {
+//   if (formRef.current) {
+//     formRef.current.handleSubmit()
+//   }
+// }
+
+// // Render
+// <Formik innerRef={formRef} />
+
+    const formRef = useRef()
+
+	const handleSubmit = () => {
+		if (formRef.current) {
+			formRef.current.handleSubmit()
 		}
-	});
+	}
 
 	return (
 		<div className={styles.main}>
@@ -49,6 +113,7 @@ const ApplicationUpdateDetail = (props, hasBeenClicked) => {
 			{props.title === 'Patient Information' ? (
 				<div>
 					<Formik
+						innerRef={formRef}
 						initialValues={{
 							admissionDate: props.propsData[2].value,
 							dischargeDate: activeNomination.dischargeDate,

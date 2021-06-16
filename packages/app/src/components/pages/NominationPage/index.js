@@ -21,6 +21,8 @@ const NominationPage = ({
   );
   const [error, setError] = useState();
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
+  const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);
+
 
   useEffect(() => {
     if (NominationsData) {
@@ -36,7 +38,13 @@ const NominationPage = ({
   });
 
   function handleClick() {
-    setHasBeenClicked((isClicked) => !isClicked)
+    setHasBeenClicked((hasBeenClicked) => !hasBeenClicked)
+    console.log(`this is has been CLICKED in handClick function in NominationPage: ${hasBeenClicked}`)
+  }
+
+  function handleSaveHasBeenClicked() {
+    console.log("handle save has been clicked")
+    setSaveHasBeenClicked((saveHasBeenClicked) => !saveHasBeenClicked)
   }
 
   return (
@@ -45,10 +53,10 @@ const NominationPage = ({
         ?
         <div className="nomination-show-page">
           <SearchBar />
-          <NominationBanner hasBeenClicked={hasBeenClicked} handleClick={handleClick} nomination={activeNomination} />
+          <NominationBanner hasBeenClicked={hasBeenClicked} handleSaveHasBeenClicked={handleSaveHasBeenClicked} handleClick={handleClick} nomination={activeNomination} />
           <ApplicationStages />
           {/* Sends click state data to all NominationInfo children */}
-          <NominationInfo hasBeenClicked={hasBeenClicked} />
+          <NominationInfo hasBeenClicked={hasBeenClicked} saveHasBeenClicked={saveHasBeenClicked}/>
         </div>
         :
         <div>{error}</div>

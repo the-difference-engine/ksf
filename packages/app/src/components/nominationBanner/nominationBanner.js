@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import EditOrSaveButton from './editOrSaveButton';
+
 const states = require('us-state-codes');
 
+//export const 
 /**
  * Creates and renders the active nomination banner.
  * 
@@ -21,16 +24,31 @@ const NominationBanner = (props) => {
   const finalDate = `${time} – ${minutes}`;
 
   // Variables for edit button coloring and save functionality.
-  let backColor = "white";
-  let textColor = "green";
-  let saveOrEditLabel = "Edit";
+  let badStyles = {
+   backColor:"white",
+   textColor:"green",
+   saveOrEditLabel:"Edit",
+  }
+
+// const [isEditing, setIsEditing] = useState(false)
+
+
 
   // Handles changing edit button colors and title to "save" if clicked.
-  if (props.hasBeenClicked) {
-    backColor = "green";
-    textColor = "white";
-    saveOrEditLabel = "Save";
+  if (props.hasBeenClicked && badStyles.saveOrEditLabel != "Save") {
+    badStyles.backColor = "green";
+    badStyles.textColor = "white";
+    badStyles.saveOrEditLabel = "Save";
+   // setIsEditing(isEditing => !isEditing)
+    console.log("EDIT OR SAVE HAS BEEN CLICKED")
   }
+
+  // if (props.hasBeenClicked && badStyles.saveOrEditLabel == "Save") {
+  //   badStyles.backColor = "purple";
+  //   badStyles.saveOrEditLabel = "Saved"
+  // }
+
+
 
   return (
     <div className="nomination-banner-container">
@@ -92,8 +110,7 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div className="column column-10">
-          <button className="button button-outline edit-button" style={{ backgroundColor: backColor, color: textColor }}
-            onClick={props.handleClick} id="edit-button">{saveOrEditLabel}</button>
+          <EditOrSaveButton badStyles={badStyles} handleClick={props.handleClick} handleSaveHasBeenClicked={props.handleSaveHasBeenClicked}/>
         </div>
       </div>
     </div>
@@ -101,3 +118,5 @@ const NominationBanner = (props) => {
 };
 
 export default NominationBanner;
+
+
