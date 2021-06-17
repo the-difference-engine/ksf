@@ -27,7 +27,6 @@ const SearchBar = () => {
           formatSearch(nomination.representativeName),
         ].some((nom) => nom.includes(searchTerm));
       });
-      console.log(filteredNoms.length);
       setSearchResultData(filteredNoms); 
       filteredNoms.length < 1
       ? setShowErrorMessage(true)
