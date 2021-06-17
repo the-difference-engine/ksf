@@ -63,7 +63,7 @@ const ApplicationUpdateDetail = (props) => {
 			
 			if (props.hasBeenClicked) {
 				console.log("edit has been clicked")
-				console.log(props.hasBeenClicked)
+				console.log(`props.hasBeenClicked ${props.hasBeenClicked}`)
 				// setIsEditing(isEditing => !isEditing) 
 				// toggleIsEditing()
 				// console.log(`THIS IS isEditing, in if statement: ${isEditing} `)
