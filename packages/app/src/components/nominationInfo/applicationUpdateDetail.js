@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 // npm install react-hook-form
 import { useForm } from 'react-hook-form';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import { useFormikContext, Formik } from 'formik'; // npm install formik --save
+import { useFormikContext, Formik, useFormik } from 'formik'; // npm install formik --save
 import * as Yup from 'yup'; // npm install yup --save
 import nominationsAPI from '../../utils/API/nominationsAPI';
 
@@ -100,13 +100,26 @@ const ApplicationUpdateDetail = (props) => {
 
     const formRef = useRef()
 
+		
+		const formikHook = useFormik({
+			// initialValues: {
+
+			// },
+			onSubmit: values => {
+				console.log(`values ${values}`);
+			}
+		})
+
 	const triggerOnSubmit = () => {
 		if (formRef.current) {
 			console.log("trigger on submit")
 
-			formRef.current.handleSubmit()
+			formikHook.handleSubmit()
+			// formRef.current.handleSubmit()
 		}
 	}
+
+
 
 	return (
 		<div className={styles.main}>
