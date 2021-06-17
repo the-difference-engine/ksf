@@ -171,6 +171,12 @@ const ApplicationUpdateDetail = (props) => {
 							nominationsAPI.updateActiveNomData(activeNomination.id, values);
 							actions.setSubmitting(false);
 						}}
+
+						// onSubmit={(values, actions, {setSubmitting}) => {
+						// 	actions.setSubmitting(true)
+						// 	console.log(`submitting, values: ${values}, actions: ${actions}`)
+						// 	actions.setSubmitting(false)
+						// }}
 					>
 						{formikProps => (
 							<form onSubmit={formikProps.handleSubmit}>
