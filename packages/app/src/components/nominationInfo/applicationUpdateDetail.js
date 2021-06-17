@@ -80,6 +80,7 @@ const ApplicationUpdateDetail = (props) => {
 		useEffect(() => {
 			if (!firstUpdate.current) {
 			console.log("save has been clicked")
+			triggerOnSubmit()
 			}
 			firstUpdate.current = false
 
@@ -99,8 +100,10 @@ const ApplicationUpdateDetail = (props) => {
 
     const formRef = useRef()
 
-	const handleSubmit = () => {
+	const triggerOnSubmit = () => {
 		if (formRef.current) {
+			console.log("trigger on submit")
+
 			formRef.current.handleSubmit()
 		}
 	}
