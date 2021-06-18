@@ -27,59 +27,79 @@ const SearchHealthProvider = () => {
   }, [NominationsData]);
 
   return (
-    <table className="new-files-table">
-      <thead>
-        <tr>
-          <td className="add-padding-left new-files-title same-row-wrapper">
-            <FontAwesomeIcon icon="file-image" color="green" />
-            <h1>Health Provider Search Results</h1>
-            <h1>({SearchHealthcareProvider.length})</h1>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr className="home-new-files-headers">
-          <td className="add-padding-left width-column">
-            <h2 className="sortable-column">
-              <strong>Application Name </strong>
-            </h2>
-          </td>
-          <td className="width-column">
-            <h2 className="sortable-column">
-              <strong>HP Name</strong>
-            </h2>
-          </td>
-          <td className="width-column">
-            <h2 className="sortable-column">
-              <strong>Patient Name</strong>
-            </h2>
-          </td>
-          <td className="width-column">
-            <h2 className="sortable-column">
-              <strong>Submission Date</strong>
-            </h2>
-          </td>
-          <td className="last-column">
-            <h2 className="sortable-column"></h2>
-          </td>
-        </tr>
-        {SearchHealthcareProvider?.map((result) => (
-          <tr key={result.id}>
-            <td className="decrease-spacing">
-              <Link className="green new-files-application-name add-padding-left detail-font-size" to={`/nomination/${result.id}`}>
-                <strong> {result.nominationName}</strong>
+    <>
+      <div className="search-bar-wrapper">
+        <section className="row">
+          <div className=" column column-25">
+            <div className="search-header-container row">
+              <Link to="/home">
+                <img className="ksf-logo " src="/ksflogo.png" alt="other" />
               </Link>
+              <div className="comand-center-header column">
+                <strong>Command Center</strong>
+              </div>
+            </div>
+          </div>
+          <div className="form-container column column-50"></div>
+        </section>
+        <div data-id="error-message"></div>
+      </div>
+
+      <table className="new-files-table">
+        <thead>
+          <tr>
+            <td className="add-padding-left new-files-title same-row-wrapper">
+              <FontAwesomeIcon icon="file-image" color="green" />
+              <h1>Health Provider Search Results</h1>
+
+              <h1>({SearchHealthcareProvider.length})</h1>
             </td>
-            <td className="detail-font-size">{result.providerName}</td>
-            <td className="detail-font-size">{result.patientName}</td>
-            <td className="detail-font-size">{result.dateReceived}</td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <tr className="home-new-files-headers">
+            <td className="add-padding-left width-column">
+              <h2 className="sortable-column">
+                <strong>Application Name </strong>
+              </h2>
+            </td>
+            <td className="width-column">
+              <h2 className="sortable-column">
+                <strong>HP Name</strong>
+              </h2>
+            </td>
+            <td className="width-column">
+              <h2 className="sortable-column">
+                <strong>Patient Name</strong>
+              </h2>
+            </td>
+            <td className="width-column">
+              <h2 className="sortable-column">
+                <strong>Submission Date</strong>
+              </h2>
+            </td>
+            <td className="last-column">
+              <h2 className="sortable-column"></h2>
+            </td>
+          </tr>
+          {SearchHealthcareProvider?.map((result) => (
+            <tr key={result.id}>
+              <td className="decrease-spacing">
+                <Link className="green new-files-application-name add-padding-left detail-font-size" to={`/nomination/${result.id}`}>
+                  <strong> {result.nominationName}</strong>
+                </Link>
+              </td>
+              <td className="detail-font-size">{result.providerName}</td>
+              <td className="detail-font-size">{result.patientName}</td>
+              <td className="detail-font-size">{result.dateReceived}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 
