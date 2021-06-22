@@ -52,7 +52,7 @@ const NominationBanner = ({ nomination }) => {
               </span>
             </div>
             <div className="column name">
-              <button className=" decline-button" onClick={declineApplication} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
+              <button className=" decline-button" onClick={declineApplication}>
                 Decline Application
               </button>
             </div>

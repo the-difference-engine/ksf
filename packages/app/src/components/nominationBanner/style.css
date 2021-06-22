@@ -19,7 +19,8 @@
 .decline-button {
   background-color: #f72314;
   color: #ffffff;
-  border: #8a8a8a;
+  border: #929292;
+  font-weight: bold;
 }
 
 .button-center {
