@@ -39,11 +39,7 @@ const RenderForm = (props) => {
       let keys = Object.keys(props.formData)
       let jsxArray = keys.map(key => {
         switch (key) {
-          case 'Provider Name':
-            return (
-              <h4>{key},{props.formData[key]}</h4>
-            )
-          case 'Patient Name':
+          case 'Provider Name': case 'Patient Name':
             return (
               <h4>{key},{props.formData[key]}</h4>
             )
