@@ -2,17 +2,16 @@ const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize')
 const { ValidationError, where } = require('sequelize');
 const db = require('../models');
-const { sendSurveyEmail } = require('../helper/mailer')
+const { sendSurveyEmail } = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
-const { sendSurveyReminder } = require('../helper/mailer')
-const { sendHIPAAReminder } = require('../helper/mailer')
+const { sendSurveyReminder } = require('../helper/mailer');
+const { sendHIPAAReminder } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
-
 
 
 const getNominationById = async (req, res) => {
@@ -28,14 +27,16 @@ const getNominationById = async (req, res) => {
     if (nomination) {
       return res.status(200).json({ nomination });
     }
-    return res.status(404).send('Nomination with the specified ID does not exist!');
+    return res
+      .status(404)
+      .send('Nomination with the specified ID does not exist!');
   } catch (error) {
     console.error('500 - something is not right', error);
     return res.status(500).send(error.message);
   }
 };
 
-const findAllNominataions = async (req, res) => {
+const findAllNominations = async (req, res) => {
   try {
     const nominations = await db.Nomination.findAll();
     if (nominations.length) {
@@ -53,8 +54,10 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
-    const hasProviderBeenValidated = nominations.some((nom) => {
-      return nom.providerEmailAddress === providerEmailAddress && nom.emailValidated;
+    const hasProviderBeenValidated = nominations.some(nom => {
+      return (
+        nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
+      );
     });
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
@@ -76,7 +79,7 @@ const updateNomination = async (req, res) => {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    nomination.update({ status: req.body.status }).catch((err) => {
+    nomination.update({ status: req.body.status }).catch(err => {
       console.log('Nomination Not Found', err);
       return res.status(400);
     });
@@ -86,11 +89,9 @@ const updateNomination = async (req, res) => {
     if (nomination.changed('status')) {
       try {
         // resets reminderSent bool every stage
-        nomination.update(
-          { reminderSent: false }
-        )
+        nomination.update({ reminderSent: false });
       } catch (error) {
-        console.error('Was not able to change reminderSent bool', error)
+        console.error('Was not able to change reminderSent bool', error);
       }
 
       if (nomination.status === 'Decline') {
@@ -99,30 +100,31 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === 'Awaiting HIPAA') {
         try {
-          nomination.update(
-            { awaitingHipaaTimestamp: Date() });
+          nomination.update({ awaitingHipaaTimestamp: Date() });
 
-          const lastName = nomination.patientName ? nomination.patientName.split(' ')[1] : '';
-          const state = states.getStateCodeByStateName(nomination.hospitalState);
+          const lastName = nomination.patientName
+            ? nomination.patientName.split(' ')[1]
+            : '';
+          const state = states.getStateCodeByStateName(
+            nomination.hospitalState
+          );
           const applicationName = `${lastName}-${state}`;
 
           createFolder(applicationName);
-        }
-        catch (err) {
+        } catch (err) {
           console.error('Could not create a folder', err);
         }
       }
 
       if (nomination.status === 'HIPAA Verified') {
         try {
-          nomination.update(
-            { hipaaTimestamp: Date() }
-          );
+          nomination.update({ hipaaTimestamp: Date() });
         } catch (err) {
           console.log('Nomination Not Found', err);
           return res.status(400);
+        } finally {
+          sendSurveyEmail(nomination);
         }
-        finally { sendSurveyEmail(nomination); }
       }
       if (nomination.status === 'Ready for Board Review') {
         try {
@@ -153,7 +155,7 @@ const syncNominations = async (req, res) => {
   }
 };
 
-const emailVerifiction = async (req, res) => {
+const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
     const { nomination: id } = jwt.verify(token, process.env.JWT_SECRET);
@@ -177,9 +179,7 @@ async function searchAndSend(status, query) {
       case 'HIPAA Verified':
         sendSurveyReminder(nomination);
         try {
-          nomination.update(
-            { hipaaReminderEmailTimestamp: Date() }
-          );
+          nomination.update({ hipaaReminderEmailTimestamp: Date() });
         } catch (err) {
           console.log('Unable to update record timestamp', err);
         }
@@ -188,9 +188,7 @@ async function searchAndSend(status, query) {
       case 'Awaiting HIPAA':
         sendHIPAAReminder(nomination);
         try {
-          nomination.update(
-            { awaitingHipaaReminderEmailTimestamp: Date() }
-          );
+          nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
           console.log('Unable to update record timestamp', err);
         }
@@ -209,10 +207,10 @@ async function searchAndSend(status, query) {
 
 module.exports = {
   getNominationById,
-  findAllNominataions,
+  findAllNominations,
   createNomination,
   updateNomination,
   syncNominations,
-  emailVerifiction, 
-  searchAndSend
+  emailVerification,
+  searchAndSend,
 };
