@@ -9,3 +9,4 @@ lerna-debug.log
 *.DS_Store
 /node_modules
 /.vscode
+README.md
