@@ -112,7 +112,6 @@ const NominationPage = ({
     <NominationBanner hasBeenClicked={hasBeenClicked} handleSaveHasBeenClicked={handleSaveHasBeenClicked} handleClick={handleClick} nomination={activeNomination} />
     <ApplicationStages />
     {/* Sends click state data to all NominationInfo children */}
-    
     <RenderForm formData={formData} mode={mode} hasBeenClicked={hasBeenClicked} saveHasBeenClicked={saveHasBeenClicked} nomination={activeNomination}/>
   </div>
   :
