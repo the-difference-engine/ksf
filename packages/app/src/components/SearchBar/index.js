@@ -27,12 +27,11 @@ const SearchBar = () => {
           formatSearch(nomination.representativeName),
         ].some((nom) => nom.includes(searchTerm));
       });
-      setSearchResultData(filteredNoms);
-    } else {
-    filteredNoms.length < 1
+      setSearchResultData(filteredNoms); 
+      filteredNoms.length < 1
       ? setShowErrorMessage(true)
       : setShowErrorMessage(false);
-    }
+    } 
   }
 
   function handleInputChange(e) {
@@ -69,7 +68,6 @@ const SearchBar = () => {
       }
     }
   }
-
   return (
     <>
       <div className="search-bar-wrapper">
@@ -94,10 +92,13 @@ const SearchBar = () => {
                 aria-label="search-input"
               />
             </form>
+          
           </div>
+
+          <select className ="select">Here </select>
         </section>
         <div data-id="error-message">
-          {showErrorMessage ? <>Application Not Found</> : null}
+          {showErrorMessage ? <Redirect to="/searchresults" />: null}
         </div>
       </div>
       {searchResultRedirect()}

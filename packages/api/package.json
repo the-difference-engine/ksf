@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": " node ./helper/checkNodeVersion.js && node index.js",
+    "dev": " node ./helper/checkNodeVersion.js && nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
     "lint": "npx eslint .",
     "migrate": "npx sequelize-cli db:migrate",
@@ -28,6 +28,7 @@
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
     "pug": "^3.0.2",
+    "semver": "^5.7.1",
     "sequelize": "^6.6.2",
     "us-state-codes": "^1.1.2",
     "uuid": "^8.3.0"
@@ -48,5 +49,9 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
+  },
+  "engines": {
+    "node": ">=14.0.0 <=14.17.0",
+    "npm": "<=6.14.13"
   }
 }
