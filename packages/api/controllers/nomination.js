@@ -13,6 +13,14 @@ const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
 
+const NOMINATION_STATUS = {
+  received: 'received',
+  awaiting: 'Awaiting HIPAA',
+  verified: 'HIPAA Verified',
+  document_review: 'Document Review',
+  board_review: 'Ready for Board Review',
+  declined: 'Declined',
+}
 
 const getNominationById = async (req, res) => {
   try {
@@ -94,7 +102,7 @@ const updateNomination = async (req, res) => {
         console.error('Was not able to change reminderSent bool', error);
       }
 
-      if (nomination.status === 'Declined') {
+      if (nomination.status === NOMINATION_STATUS.declined) {
         try {
           nomination.update(
             { readyForBoardReviewTimestamp: Date() }
@@ -105,7 +113,7 @@ const updateNomination = async (req, res) => {
         sendDeclineEmail(nomination);
       }
 
-      if (nomination.status === 'Awaiting HIPAA') {
+      if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
 
@@ -123,7 +131,7 @@ const updateNomination = async (req, res) => {
         }
       }
 
-      if (nomination.status === 'HIPAA Verified') {
+      if (nomination.status === NOMINATION_STATUS.verified) {
         try {
           nomination.update({ hipaaTimestamp: Date() });
         } catch (err) {
@@ -133,7 +141,7 @@ const updateNomination = async (req, res) => {
           sendSurveyEmail(nomination);
         }
       }
-      if (nomination.status === 'Ready for Board Review') {
+      if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
           nomination.update(
             { readyForBoardReviewTimestamp: Date() }
