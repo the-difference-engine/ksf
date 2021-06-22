@@ -34,14 +34,35 @@ const RenderForm = (props) => {
 
  const onSubmit = () => console.log("on submit triggered")
 
+  const editablePlainText = [
+  // editable family info:
+    "Representative Name",
+    "Email Address",
+    "Phone Number",
+    "Relationship",
+    "Request to communicate in Spanish?",
+  ]
+
+  const editableDates = [
+      // editable patient info labels with dates:
+    "Admission Date",
+    "Discharge Date",
+  ]
+
+
   const modes = {
     view: () => {
       let keys = Object.keys(props.formData)
       let jsxArray = keys.map(key => {
-        switch (key) {
-          case 'Provider Name': case 'Patient Name':
+        switch (true) {
+          case editableDates.includes(key):
             return (
-              <h4>{key},{props.formData[key]}</h4>
+              <input 
+              name={key} 
+              type='date' 
+              defaultValue={props.formData[key]}
+              /> 
+              
             )
           default:
             return (
