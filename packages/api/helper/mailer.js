@@ -64,7 +64,7 @@ function sendSurveyEmail(nomination) {
       imgUrl
     }
   }).catch((err) => console.log(err))
-    .then(() => console.log('email has been sent!'));
+  .then(() => console.log('email has been sent!'));
 }
 
 

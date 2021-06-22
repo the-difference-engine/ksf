@@ -9,7 +9,7 @@ const SearchBar = () => {
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
-  
+
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
@@ -18,6 +18,7 @@ const SearchBar = () => {
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
+
     if(NominationsData) {
       filteredNoms = NominationsData.filter((nomination) => {
         return [

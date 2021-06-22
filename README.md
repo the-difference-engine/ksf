@@ -14,8 +14,8 @@ The back end application is using the PERN Stack (Postgres, Express React, Node)
 
 In order to work with the KSF app, you will need to install the following:
 
-* NodeJS
-* PostgreSQL
+- NodeJS
+- PostgreSQL
 
 ### Installing NodeJS
 
@@ -57,16 +57,15 @@ If you do not have Postgres installed, you can install it via brew
    postgres=# ALTER ROLE postgres WITH PASSWORD 'postgres';
    ```
 
-### Migrations, Dependencies & Start Back End 
+### Migrations, Dependencies & Start Back End
 
-You should still be in the root of the project. We will start the back end first. So lets head to the back end directory 
+You should still be in the root of the project. We will start the back end first. So lets head to the back end directory
 
 ```
   cd packages
   cd api
   npm install
 ```
-
 
 [Sequelize](https://sequelize.org/master/manual/migrations.html) is the ORM. This is the preferred way of communicating with the database, so the tools provided should be leveraged to help you build models and schema migrations. In particular, creation of new models should use the Sequelize CLI, which will create both a model file and a migration file. [Quick overview of commands](docs/sequelize-cli_shortcut.md)
 
@@ -87,12 +86,12 @@ Now we can go ahead and start he application with the following command:
 ```
   node index.js
 ```
+
 You can also run nodemon, which is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected. To do so run the command below instead of node index.js.
 
 ```
   npm run dev
 ```
-
 
 ### Start Front End
 
@@ -121,10 +120,10 @@ If you navigate to `http://localhost:3000/` you should see the home page!
 
 ## Usage
 
-
 ### Continuous Integration (CI)
 
 [Github Actions](https://docs.github.com/en/actions/building-and-testing-code-with-continuous-integration) is the CI provider. Node.js workflow configuration documentation found [here](https://docs.github.com/en/actions/language-and-framework-guides/using-nodejs-with-github-actions)
 
 ### Working With Email Previews
+
 In order for your images to properly work in local and production stages, including email previews, you must add both of these lines to your api/.env file: `IMG_BASE_URL=https://ksf-stg.herokuapp.com` and `APP_URL=http://localhost:3000`. This allows for a check to take place to determine which environment the mailer is running in.
