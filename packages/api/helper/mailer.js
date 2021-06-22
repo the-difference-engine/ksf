@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
-const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL
+const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL;
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 
 const transport = {
@@ -35,22 +35,28 @@ const email = new emailTemplate({
 });
 
 function sendDeclineEmail(nomination) {
-  email.send({
-    template: 'decline',
-    message: {
-      from: adminEmail,
-      to: nomination.providerEmailAddress,
-    },
-    locals: {
-      name: nomination.providerName,
-      patientName: nomination.patientName,
-      imgUrl
-    }
-  }).catch((err) => console.log(err)).then(() => console.log('email has been sent!'));
+
+  email
+    .send({
+      template: 'decline',
+      message: {
+        from: adminEmail,
+        to: nomination.providerEmailAddress,
+      },
+      locals: {
+        name: nomination.providerName,
+        patientName: nomination.patientName,
+        imgUrl,
+      },
+    })
+    .catch((err) => console.log(err))
+    .then(() => console.log('email has been sent!'));
 }
 
 function sendSurveyEmail(nomination) {
-  email.send({
+
+  email
+    .send({
     template: 'survey',
     attachments: './survey/header.jpg',
     message: {
@@ -66,7 +72,6 @@ function sendSurveyEmail(nomination) {
   }).catch((err) => console.log(err))
   .then(() => console.log('email has been sent!'));
 }
-
 
 function verifyHcEmail(nomination) {
   const emailToken = generateToken(nomination._id);
@@ -88,11 +93,6 @@ function verifyHcEmail(nomination) {
 }
 
 function sendHIPAAEmail(nomination) {
-  const todaysDate = new Date();
-  const monthDate = todaysDate.getMonth() + 1;
-  const targetQuarter = monthDate < 4 ? 1 : monthDate > 3 && monthDate < 7 ? 2 : monthDate > 6 && monthDate < 10 ? 3 : 4;
-
-
   email
     .send(
       {
@@ -105,7 +105,6 @@ function sendHIPAAEmail(nomination) {
         locals: {
           name: nomination.patientName,
           imgUrl,
-          targetQuarter,
         },
       }
     )
@@ -163,4 +162,3 @@ module.exports = {
   sendHIPAAReminder,
   sendSurveyReminder
 };
-
