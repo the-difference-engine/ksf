@@ -6,7 +6,7 @@ import './styles.css';
 import EditModal from './EditModal';
 
 const Settings = (props) => {
-    const [newGrantCycle, setNewGrantCycle] = useState({openedOn: "", closedOn: "", name: ""});
+    const [newGrantCycle, setNewGrantCycle] = useState({ openedOn: "", closedOn: "", name: "" });
     const [allGrantCycles, setGrantCycles] = useState([]);
     const [disableButton, setDisableButton] = useState(true);
     const [disableEditButton, setDisableEditButton] = useState(true);
@@ -22,7 +22,9 @@ const Settings = (props) => {
             const { data } = await grantCycleAPI.getGrantCycles();
             setGrantCycles(data);
         }
-        catch {}
+        catch (e) { 
+            console.log("Error using getGrantCycles: ", e);
+        }
     }
 
     async function getActiveGrantCycle() {
@@ -30,7 +32,9 @@ const Settings = (props) => {
             const { data } = await grantCycleAPI.getActiveGrantCycle();
             setActiveGrantCycle(data);
         }
-        catch {}
+        catch (e) {
+            console.log("Error using getActiveGrantCycle: ", e);
+         }
     }
 
     useEffect(() => {
@@ -38,48 +42,41 @@ const Settings = (props) => {
         getActiveGrantCycle();
     }, []);
 
-    const handleChange = ({currentTarget: input}) => {
-        const grantCycle = {...newGrantCycle};
-        grantCycle[input.name] = input.value;
-        setNewGrantCycle(grantCycle);
+    const handleChange = ({ currentTarget: input }) => {
+        setNewGrantCycle({ ...newGrantCycle, [input.name]: input.value });
     }
 
-    const handleChangeForEdit = ({currentTarget: input}) => {
-        const grantCycle = {...gcToEdit};
-        grantCycle[input.name] = input.value;
-        setGcToEdit(grantCycle);
+    const handleChangeForEdit = ({ currentTarget: input }) => {
+        setGcToEdit({ ...gcToEdit, [input.name]: input.value });
     }
-
-
 
     const handleCreate = async (e) => {
-        
-        try{
-            const {data} = await grantCycleAPI.createGrantCycle(newGrantCycle);
-            
-            setNewGrantCycle({openedOn: "", closedOn: "", name: ""})
+        try {
+            const { data } = await grantCycleAPI.createGrantCycle(newGrantCycle);
+
+            setNewGrantCycle({ openedOn: "", closedOn: "", name: "" })
             createButton.current.blur();
             getGrantCycles();
         }
-        catch(ex) {
+        catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 setErrors(ex.response.data);
                 createButton.current.blur();
             }
         }
-    
     }
+
     const handleUpdate = async (e) => {
-        
-        try{
+
+        try {
             console.log(gcToEdit);
-            const {data} = await grantCycleAPI.updateGrantCycle(gcToEdit);
-            
-            setGcToEdit({openedOn: "", closedOn: "", name: ""})
+            const { data } = await grantCycleAPI.updateGrantCycle(gcToEdit);
+
+            setGcToEdit({ openedOn: "", closedOn: "", name: "" })
             getGrantCycles();
             setShowEditModal(false);
         }
-        catch(ex) {
+        catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 setEditErrors(ex.response.data);
             }
@@ -106,7 +103,7 @@ const Settings = (props) => {
             const startDate = new Date(gc.openedOn);
             const endDate = new Date(gc.closedOn);
             const result = endDate - startDate >= millisecondsInADay ? false : true;
-            
+
             setDisableButton(result);
             if (!result) {
                 setErrors("")
@@ -121,14 +118,14 @@ const Settings = (props) => {
             setDisableButton(true);
         }
     }
-    
+
     const handleDisableEditButton = (gc) => {
         if (gc.openedOn !== "" && gc.closedOn !== "") {
             const millisecondsInADay = 86400000;
             const startDate = new Date(gc.openedOn);
             const endDate = new Date(gc.closedOn);
             const result = endDate - startDate >= millisecondsInADay ? false : true;
-            
+
             setDisableEditButton(result);
             if (!result) {
                 setEditErrors("")
@@ -143,7 +140,7 @@ const Settings = (props) => {
             }
             else setEditErrors("Start Date must be earlier than End Date");
         }
-        
+
         else {
             setDisableEditButton(true);
         }
@@ -170,7 +167,7 @@ const Settings = (props) => {
         return result;
     }
 
-    return ( 
+    return (
         <div className="settings__container">
             <EditModal
                 show={showEditModal}
@@ -186,7 +183,7 @@ const Settings = (props) => {
                     Settings
                 </h1>
             </header>
-            
+
             <aside className="settings__sidebar">
                 <ul className="settings__list">
                     <li className="settings__list-item">Grant Cycle</li>
@@ -231,13 +228,13 @@ const Settings = (props) => {
                     </div>
                 </div>
                 <button ref={createButton} disabled={disableButton} onClick={handleCreate} className="settings__button">Create</button>
-                <div className="settings__form-errors">{ errors }</div>
+                <div className="settings__form-errors">{errors}</div>
 
-                
-                    <div>
-                        <h2 className="settings__heading">Active Grant Cycle: &nbsp;&nbsp;&nbsp;&nbsp;{activeGrantCycle ? <span className="settings__activeGrantCycle">{activeGrantCycle.name}</span> : <span className="settings__activeGrantCycle">None</span>}</h2>
-                    </div>
-                
+
+                <div>
+                    <h2 className="settings__heading">Active Grant Cycle: &nbsp;&nbsp;&nbsp;&nbsp;{activeGrantCycle ? <span className="settings__activeGrantCycle">{activeGrantCycle.name}</span> : <span className="settings__activeGrantCycle">None</span>}</h2>
+                </div>
+
 
                 <h2 className="settings__heading">Grant Cycle History</h2>
                 <div className="settings__table-wrapper">
@@ -247,21 +244,21 @@ const Settings = (props) => {
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Cycle Name</th>
-                                <th className="settings__th-column">Applications<br/>Ready for Board Review</th>
-                                <th>View<br/>Applications</th>
+                                <th className="settings__th-column">Applications<br />Ready for Board Review</th>
+                                <th>View<br />Applications</th>
                             </tr>
                         </thead>
                         <tbody className="settings__tbody">
                             {allGrantCycles.map(gc => (
-                                <TableRow key={gc.id} grantCycle={gc} onResultsClick={props.onResultsClick} onEdit={handleEdit}/>
+                                <TableRow key={gc.id} grantCycle={gc} onResultsClick={props.onResultsClick} onEdit={handleEdit} />
                             ))}
                         </tbody>
                     </table>
                 </div>
             </main>
-            
+
         </div>
-     );
+    );
 }
- 
+
 export default Settings;

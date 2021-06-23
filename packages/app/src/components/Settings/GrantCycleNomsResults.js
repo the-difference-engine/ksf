@@ -2,18 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import states from 'us-state-codes';
 import { Link } from 'react-router-dom';
-
+import { formatDateString } from '../../utils/formatDateString'
 
 const GrantCycleNomsResults = ({results: grantCycle, onClick}) => {
-    
-    const formatDateString = date => {
-        const year = date.slice(0, 4);
-        const month = date.slice(5, 7);
-        const day = date.slice(8, 10);
-        const result = `${month}-${day}-${year}`;
-        return result;
-    }
-
     const nomName = (n) => {
         const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
         const state = states.getStateCodeByStateName(n.hospitalState);

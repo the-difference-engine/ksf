@@ -28,7 +28,6 @@ const EditModal = ({ show, handleClose, gc, errors, disableButton, handleChange,
                                     name="openedOn"
                                     onChange={handleChange}
                                     type="date"
-                                    // disabled={disableDatePicker(gc.openedOn)}
                                 />
                             </span>
                         </div>
