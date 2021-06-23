@@ -97,9 +97,7 @@ module.exports = (sequelize, DataTypes) => {
             }
           }
           catch (error) {
-            if (error instanceof ValidationError) {
-              throw error;
-            }
+            throw error;
           }
           return instance;
         },
