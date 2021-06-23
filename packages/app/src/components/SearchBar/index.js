@@ -24,7 +24,7 @@ const SearchBar = () => {
           formatSearch(nomination.providerName),
           formatSearch(nomination.patientName),
           formatSearch(nomination.nominationName),
-          formatSearch(nomination.representativeName),
+          formatSearch(nomination.representativeName),        // If you do not want to test aganst Representative Name(Family Member Name), delete this line
         ].some((nom) => nom.includes(searchTerm));
       });
       setSearchResultData(filteredNoms); 
@@ -54,7 +54,7 @@ const SearchBar = () => {
   }
 
   function formatSearch(str) {
-    return str.toLowerCase().replace(/ /g, '');
+    return str.toLowerCase();     
   }
 
   function searchResultRedirect() {
@@ -95,7 +95,7 @@ const SearchBar = () => {
           
           </div>
 
-          <select className ="select">Here </select>
+         
         </section>
         <div data-id="error-message">
           {showErrorMessage ? <Redirect to="/searchresults" />: null}
