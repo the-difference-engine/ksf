@@ -5,10 +5,13 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import styles from '../../pages/Home/styles.css';
 import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useSort from '../../pages/Home/useSort';
+import { SORT_DIRECTION } from '../../enum.js';
 
 const SearchHealthProvider = () => {
   const [SearchHealthcareProvider, setSearchHealthcareProvider] = useContext(SearchResultDataContext);
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
+  const { sortedNoms, requestSort, sortConfig } = useSort();
 
   const findSearchResults = (searchTerm) => {
     let filteredNoms = [];
@@ -26,6 +29,37 @@ const SearchHealthProvider = () => {
     findSearchResults(id);
   }, [NominationsData]);
 
+  const renderSortArrow = (columnName) => {
+    return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === SORT_DIRECTION.DOWN ? 'arrow-down' : 'arrow-up'} />;
+  };
+
+  const renderSortableCell = (key, label) => {
+    return (
+      <h2 onClick={() => requestSort(key)} className="sortable-column">
+        <strong>{label}</strong>
+        <>{renderSortArrow(key)}</>
+      </h2>
+    );
+  };
+
+  const sortNominationsByName = (nomsToSort) => {
+    nomsToSort.sort((a, b) => {
+      let aFirstLetter = a[sortConfig.key].toUpperCase().slice(0)
+      let bFirstLetter = b[sortConfig.key].toUpperCase().slice(0)
+
+      if (aFirstLetter < bFirstLetter) {
+        return sortConfig.direction === SORT_DIRECTION.UP ? -1 : 1
+      }
+
+      if (aFirstLetter > bFirstLetter) {
+        return sortConfig.direction === SORT_DIRECTION.UP ? 1 : -1
+      }
+
+      return 0
+    })
+    return nomsToSort
+  }
+
   return (
     <table className="new-files-table">
       <thead>
@@ -42,11 +76,12 @@ const SearchHealthProvider = () => {
       </thead>
       <tbody>
         <tr className="home-new-files-headers">
-          <td className="add-padding-left width-column">
+          {/* <td className="add-padding-left width-column">
             <h2 className="sortable-column">
               <strong>Application Name </strong>
             </h2>
-          </td>
+          </td> */}
+          <td className="add-padding-left"> {renderSortableCell('nominationName', 'Application Name')} </td>
           <td className="width-column">
             <h2 className="sortable-column">
               <strong>HP Name</strong>
@@ -57,11 +92,12 @@ const SearchHealthProvider = () => {
               <strong>Patient Name</strong>
             </h2>
           </td>
-          <td className="width-column">
+          {/* <td className="width-column">
             <h2 className="sortable-column">
               <strong>Submission Date</strong>
             </h2>
-          </td>
+          </td> */}
+          <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
           <td className="last-column">
             <h2 className="sortable-column"></h2>
           </td>
