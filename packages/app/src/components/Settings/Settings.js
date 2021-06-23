@@ -63,6 +63,9 @@ const Settings = (props) => {
                 setErrors(ex.response.data);
                 createButton.current.blur();
             }
+            else {
+                console.log(ex);
+            }
         }
     }
 
@@ -79,6 +82,9 @@ const Settings = (props) => {
         catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 setEditErrors(ex.response.data);
+            }
+            else {
+                console.log(ex);
             }
         }
     }
@@ -97,15 +103,20 @@ const Settings = (props) => {
             handleDisableEditButton(gcToEdit);
     }, [gcToEdit])
 
+    const isDateEditable = (gc) => {
+        const millisecondsInADay = 86400000;
+        const startDate = new Date(gc.openedOn);
+        const endDate = new Date(gc.closedOn);
+        
+        return endDate - startDate >= millisecondsInADay ? false : true;
+    }
+
     const handleDisableButton = (gc) => {
         if (gc.openedOn !== "" && gc.closedOn !== "") {
-            const millisecondsInADay = 86400000;
-            const startDate = new Date(gc.openedOn);
-            const endDate = new Date(gc.closedOn);
-            const result = endDate - startDate >= millisecondsInADay ? false : true;
+            const editableDate = isDateEditable(gc);
 
-            setDisableButton(result);
-            if (!result) {
+            setDisableButton(editableDate);
+            if (!editableDate) {
                 setErrors("")
                 if (gc.name === "") {
                     setDisableButton(true);
@@ -121,13 +132,10 @@ const Settings = (props) => {
 
     const handleDisableEditButton = (gc) => {
         if (gc.openedOn !== "" && gc.closedOn !== "") {
-            const millisecondsInADay = 86400000;
-            const startDate = new Date(gc.openedOn);
-            const endDate = new Date(gc.closedOn);
-            const result = endDate - startDate >= millisecondsInADay ? false : true;
+            const editableDate = isDateEditable(gc);
 
-            setDisableEditButton(result);
-            if (!result) {
+            setDisableEditButton(editableDate);
+            if (!editableDate) {
                 setEditErrors("")
                 if (gc.name === "") {
                     setDisableEditButton(true);
@@ -138,7 +146,9 @@ const Settings = (props) => {
                 if (moment().isAfter(closed))
                     setDisableEditButton(true);
             }
-            else setEditErrors("Start Date must be earlier than End Date");
+            else {
+                setEditErrors("Start Date must be earlier than End Date");
+            }
         }
 
         else {
@@ -157,14 +167,6 @@ const Settings = (props) => {
 
     const disableDatePicker = (d) => {
         return moment().isAfter(moment(d));
-    }
-
-    const formatDateString = date => {
-        const year = date.slice(0, 4);
-        const month = date.slice(5, 7);
-        const day = date.slice(8, 10);
-        const result = `${month}-${day}-${year}`;
-        return result;
     }
 
     return (
@@ -230,11 +232,9 @@ const Settings = (props) => {
                 <button ref={createButton} disabled={disableButton} onClick={handleCreate} className="settings__button">Create</button>
                 <div className="settings__form-errors">{errors}</div>
 
-
                 <div>
                     <h2 className="settings__heading">Active Grant Cycle: &nbsp;&nbsp;&nbsp;&nbsp;{activeGrantCycle ? <span className="settings__activeGrantCycle">{activeGrantCycle.name}</span> : <span className="settings__activeGrantCycle">None</span>}</h2>
                 </div>
-
 
                 <h2 className="settings__heading">Grant Cycle History</h2>
                 <div className="settings__table-wrapper">

@@ -48,7 +48,5 @@ const GrantCycleNomsResults = ({results: grantCycle, onClick}) => {
         </div>
     );
 }
-
-// {/* <Link target={"_blank"} to={`/nomination/${nomination.id}`}>{nomination.nominationName}</Link> */}
  
 export default GrantCycleNomsResults;
