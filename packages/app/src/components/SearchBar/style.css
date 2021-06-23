@@ -9,14 +9,18 @@
   padding-top: 2rem;
   padding-left: 2rem;
   border-radius: 1rem;
+ 
 }
 
 .search-header-container {
   color: var(--brand);
   display: flex;
   align-items: center;
+  
 }
 
 .search-form {
   margin-bottom: 0.5rem;
 }
+
+
