@@ -128,8 +128,8 @@ const NominationPage = ({
 					{/* Sends click state data to all NominationInfo children */}
 					<ApplicationForm
 						formData={formData}
-						// mode={mode}
-            mode={'edit'}
+						mode={mode}
+            // mode={'edit'}
 						hasBeenClicked={hasBeenClicked}
 						saveHasBeenClicked={saveHasBeenClicked}
 						nomination={activeNomination}

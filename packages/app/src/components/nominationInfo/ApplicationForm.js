@@ -70,7 +70,9 @@ const ApplicationForm = props => {
 		'Health Provider Information',
 	];
 
-	const submitFunction = () => {};
+	const submitFunction = (data) => {
+		console.log(data);
+	};
 
 	// let newKeys = Object.keys(props.formData)
 	// const jsxArray = newKeys.map(label => {
@@ -165,7 +167,7 @@ const ApplicationForm = props => {
 												name={label}
 												type='date'
 												defaultValue={props.formData[label]}
-												ref={register}
+												{...register(`${label}`)}
 											/>
 										);
 									case editablePlainText.includes(label):
@@ -174,7 +176,7 @@ const ApplicationForm = props => {
 												name={label}
 												type='text'
 												defaultValue={props.formData[label]}
-												ref={register}
+												{...register(`${label}`)}
 											/>
 										);
 									default:
