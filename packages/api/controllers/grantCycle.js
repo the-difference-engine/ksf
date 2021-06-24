@@ -55,7 +55,6 @@ const findAll = async (req, res) => {
           const nominations = await db.Nomination.findAll({ 
             where: {
               [Op.and]: [{
-
                 readyForBoardReviewTimestamp: {
                   [Op.between]: [g.openedOn, g.closedOn]
                 },
@@ -63,9 +62,9 @@ const findAll = async (req, res) => {
                   [Op.eq]: 'Ready for Board Review'
                 }
               }]
-            }
-          , order: [
-            ['readyForBoardReviewTimestamp', 'DESC' ]
+            }, 
+            order: [
+              ['readyForBoardReviewTimestamp', 'DESC' ]
           ]});
           g.nominations = nominations;
         }
