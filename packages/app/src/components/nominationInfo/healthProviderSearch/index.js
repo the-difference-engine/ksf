@@ -11,7 +11,8 @@ import { SORT_DIRECTION } from '../../enum.js';
 const SearchHealthProvider = () => {
   const [SearchHealthcareProvider, setSearchHealthcareProvider] = useContext(SearchResultDataContext);
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
-  const { sortedNoms, requestSort, sortConfig } = useSort();
+  const { sortedNoms, requestSort, sortConfig } = useSort(SearchHealthcareProvider);
+  console.log(SearchHealthcareProvider)
 
   const findSearchResults = (searchTerm) => {
     let filteredNoms = [];
@@ -42,23 +43,6 @@ const SearchHealthProvider = () => {
     );
   };
 
-  const sortNominationsByName = (nomsToSort) => {
-    nomsToSort.sort((a, b) => {
-      let aFirstLetter = a[sortConfig.key].toUpperCase().slice(0)
-      let bFirstLetter = b[sortConfig.key].toUpperCase().slice(0)
-
-      if (aFirstLetter < bFirstLetter) {
-        return sortConfig.direction === SORT_DIRECTION.UP ? -1 : 1
-      }
-
-      if (aFirstLetter > bFirstLetter) {
-        return sortConfig.direction === SORT_DIRECTION.UP ? 1 : -1
-      }
-
-      return 0
-    })
-    return nomsToSort
-  }
 
   return (
     <table className="new-files-table">
@@ -76,11 +60,6 @@ const SearchHealthProvider = () => {
       </thead>
       <tbody>
         <tr className="home-new-files-headers">
-          {/* <td className="add-padding-left width-column">
-            <h2 className="sortable-column">
-              <strong>Application Name </strong>
-            </h2>
-          </td> */}
           <td className="add-padding-left"> {renderSortableCell('nominationName', 'Application Name')} </td>
           <td className="width-column">
             <h2 className="sortable-column">
@@ -92,17 +71,12 @@ const SearchHealthProvider = () => {
               <strong>Patient Name</strong>
             </h2>
           </td>
-          {/* <td className="width-column">
-            <h2 className="sortable-column">
-              <strong>Submission Date</strong>
-            </h2>
-          </td> */}
           <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
           <td className="last-column">
             <h2 className="sortable-column"></h2>
           </td>
         </tr>
-        {SearchHealthcareProvider?.map((result) => (
+        {sortedNoms?.map((result) => (
           <tr key={result.id}>
             <td className="decrease-spacing">
               <Link className="green new-files-application-name add-padding-left detail-font-size" to={`/nomination/${result.id}`}>

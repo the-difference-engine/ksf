@@ -2,9 +2,10 @@ import React, { useState, useMemo, useContext } from 'react'
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import { SORT_DIRECTION } from '../../enum.js';
 
-const useSort = () => {
+const useSort = (nomsToSort = []) => {
   const [sortConfig, setSortConfig] = useState({key: 'dateReceived', direction: SORT_DIRECTION.UP})
-  const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
+  const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
+
 
   const sortNominationsByName = (nomsToSort) => {
     nomsToSort.sort((a, b) => {
@@ -43,7 +44,8 @@ const useSort = () => {
   }
 
   const sortedNoms = useMemo(() => {
-    let sortableNoms = NominationsData ? [...NominationsData] : []
+    let sortableNoms = nomsToSort ? [...nomsToSort] : (NominationsData ? [...NominationsData] : [])
+    // console.log(nomsToSort)
 
     if (sortConfig && sortConfig.key.includes('Name')) {
       sortNominationsByName(sortableNoms)
@@ -52,7 +54,7 @@ const useSort = () => {
     if (sortConfig && sortConfig.key === 'dateReceived') {
       sortNominationsByDate(sortableNoms)
     }
-
+    
     return sortableNoms
   }, [NominationsData, sortConfig])
 
@@ -62,10 +64,8 @@ const useSort = () => {
     if (!doDefault && sortConfig.key === key && sortConfig.direction === SORT_DIRECTION.UP) {
       direction = SORT_DIRECTION.DOWN;
     }
-
     setSortConfig({ key, direction })
   }
-
   return { sortedNoms, requestSort, sortConfig }
 }
 
