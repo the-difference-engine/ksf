@@ -147,6 +147,10 @@ module.exports = (sequelize, DataTypes) => {
       reminderSent: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+      },
+      readyForBoardReviewTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
       }, 
       hipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
@@ -155,7 +159,11 @@ module.exports = (sequelize, DataTypes) => {
       awaitingHipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
         allowNull: true
-      }
+      },
+      grantCycleId: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
     },
     {
       hooks: {
