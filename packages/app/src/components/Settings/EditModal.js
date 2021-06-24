@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 const EditModal = ({ show, handleClose, gc, errors, disableButton, handleChange, onSubmit }) => {
 
     const showHideClassName = show ? "edit-modal edit-modal-display-block" : "edit-modal edit-modal-display-none";
 
     const disableDatePicker = (d) => {
-        return moment().isAfter(moment(d));
+        // return moment().isAfter(moment(d));
+        const now = DateTime.now()
+
+        return now > d;
     }
 
     const getMinDate = () => {
-        return moment().format('YYYY-MM-DD');
+        // return moment().format('YYYY-MM-DD');
+        return DateTime.now().toISODate();
     }
 
     return ( 

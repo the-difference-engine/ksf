@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import TableRow from './TableRow';
 import grantCycleAPI from '../../utils/API/grantCycleAPI';
 import './styles.css';
@@ -142,9 +142,10 @@ const Settings = (props) => {
                     setEditErrors("Please enter a name for the grant cycle");
 
                 }
-                const closed = moment(gc.closedOn);
-                if (moment().isAfter(closed))
+                const closed = DateTime.fromISO(gc.closedOn);
+                if (DateTime.now() > closed) {
                     setDisableEditButton(true);
+                }
             }
             else {
                 setEditErrors("Start Date must be earlier than End Date");
@@ -166,7 +167,9 @@ const Settings = (props) => {
     }
 
     const disableDatePicker = (d) => {
-        return moment().isAfter(moment(d));
+        const now = DateTime.now();
+
+        return now > DateTime.fromISO(d);
     }
 
     return (

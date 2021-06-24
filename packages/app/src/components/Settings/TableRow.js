@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { formatDateString } from '../../utils/formatDateString'
 
 
@@ -8,11 +8,11 @@ const TableRow = (props) => {
     const { grantCycle, onEdit, show, onResultsClick } = props;
 
     const timeDiff = (dateString) => {
-        dateString = moment(dateString);
-        const now = moment().startOf('day');
-        return dateString.isAfter(now);
-    }
+        const date = DateTime.fromISO(dateString);
+        const now = DateTime.now().startOf('day');
 
+        return date > now;
+    }
     
     return (
         <tr>
