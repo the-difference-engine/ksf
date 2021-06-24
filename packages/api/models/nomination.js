@@ -159,7 +159,11 @@ module.exports = (sequelize, DataTypes) => {
       awaitingHipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
         allowNull: true
-      }
+      },
+      grantCycleId: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
     },
     {
       hooks: {

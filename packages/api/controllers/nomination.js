@@ -143,9 +143,14 @@ const updateNomination = async (req, res) => {
       }
       if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
-          nomination.update(
-            { readyForBoardReviewTimestamp: Date() }
-          )
+          const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
+          
+          nomination.update({ 
+              readyForBoardReviewTimestamp: Date(),
+              grantCycleId: grant.id
+
+            }
+          );
         } catch (error) {
           console.log("Could not record readyForBoardReviewTimestamp ", error)
         }
