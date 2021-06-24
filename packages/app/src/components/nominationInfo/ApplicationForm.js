@@ -72,6 +72,37 @@ const ApplicationForm = props => {
 
 	const submitFunction = () => {};
 
+	// let newKeys = Object.keys(props.formData)
+	// const jsxArray = newKeys.map(label => {
+	//    return (
+	//      titleLabels.includes(label) ?
+	//      <div key={label} className={styles.title}>
+	//        {label}
+	//      </div>
+	//     : editableDates.includes(label) ?
+	//     <input
+	//        name={label}
+	//        type='date'
+	//        defaultValue={props.formData[label]}
+	//        ref={register}
+	//      />
+	//      : editablePlainText.includes(label) ?
+	//      <input
+	//        name={label}
+	//        type='text'
+	//        defaultValue={props.formData[label]}
+	//        ref={register}
+	//      />
+	//    :
+	//      <div>
+	//        <label className={styles.label}>{label}</label>
+	//        <span className={styles.value}>
+	//          {String(props.formData[label])}
+	//        </span>
+	//      </div>
+
+	// )})
+
 	const modes = {
 		view: () => {
 			let keys = Object.keys(props.formData);
@@ -121,33 +152,42 @@ const ApplicationForm = props => {
 							].join(' ')}
 						>
 							{keys.map(label => {
-               if (titleLabels.includes(label)) {
-									<div key={label} className={styles.title}>
-										{label}
-									</div>;
-								} else if (editableDates.includes(label)) {
-									<input
-										name={label}
-										type='date'
-										defaultValue={props.formData[label]}
-										ref={register}
-									/>;
-								} else if (editablePlainText.includes(label)) {
-									<input
-										name={label}
-										type='text'
-										defaultValue={props.formData[label]}
-										ref={register}
-									/>;
-								} else {
-									<div>
-										<label className={styles.label}>{label}</label>
-										<span className={styles.value}>
-											{String(props.formData[label])}
-										</span>
-									</div>;
+								switch (true) {
+									case titleLabels.includes(label):
+										return (
+											<div key={label} className={styles.title}>
+												{label}
+											</div>
+										);
+									case editableDates.includes(label):
+										return (
+											<input
+												name={label}
+												type='date'
+												defaultValue={props.formData[label]}
+												ref={register}
+											/>
+										);
+									case editablePlainText.includes(label):
+										return (
+											<input
+												name={label}
+												type='text'
+												defaultValue={props.formData[label]}
+												ref={register}
+											/>
+										);
+									default:
+										return (
+											<div>
+												<label className={styles.label}>{label}</label>
+												<span className={styles.value}>
+													{String(props.formData[label])}
+												</span>
+											</div>
+										);
 								}
-              })}
+							})}
 						</div>
 					</div>
 				</form>
