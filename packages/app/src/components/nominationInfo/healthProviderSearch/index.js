@@ -12,7 +12,6 @@ const SearchHealthProvider = () => {
   const [SearchHealthcareProvider, setSearchHealthcareProvider] = useContext(SearchResultDataContext);
   const [NominationsData, setNominationsData] = useContext(NominationsDataContext);
   const { sortedNoms, requestSort, sortConfig } = useSort(SearchHealthcareProvider);
-  console.log(SearchHealthcareProvider)
 
   const findSearchResults = (searchTerm) => {
     let filteredNoms = [];
@@ -66,11 +65,12 @@ const SearchHealthProvider = () => {
               <strong>HP Name</strong>
             </h2>
           </td>
-          <td className="width-column">
+          {/* <td className="width-column">
             <h2 className="sortable-column">
               <strong>Patient Name</strong>
             </h2>
-          </td>
+          </td> */}
+          <td> {renderSortableCell('patientName', 'Patient Name')} </td>
           <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
           <td className="last-column">
             <h2 className="sortable-column"></h2>
