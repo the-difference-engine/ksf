@@ -1,11 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SettingsModal from 'react-modal';
+import Settings from '../Settings/Settings';
+import GrantCycleNomsResults from '../Settings/GrantCycleNomsResults';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
 
+SettingsModal.setAppElement('#root');
+
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
+  const [showResults, setShowResults] = useState(false);
+  const [settingsResults, setSettingsResults] = useState({});
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
@@ -15,6 +23,7 @@ const SearchBar = () => {
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [startEmpty, setStartEmpty] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
@@ -68,19 +77,46 @@ const SearchBar = () => {
       }
     }
   }
+
+  function closeModal() {
+    setShowResults(false);
+    setModalIsOpen(false);
+  }
+
+  function handleShowingResults(grantCycle) {
+    if (grantCycle.nominations.length) {
+      setShowResults(true);
+      setSettingsResults(grantCycle);
+    }
+  }
+
+  function handleGoBack() {
+    setShowResults(false);
+  }
+  
   return (
     <>
+      <SettingsModal 
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className="modal"
+        overlayClassName="modal-overlay"
+      >
+        {showResults ? <GrantCycleNomsResults onClick={handleGoBack} results={settingsResults}/> : <Settings onResultsClick={handleShowingResults}/>}
+        <FontAwesomeIcon 
+              onClick={closeModal}
+              icon="times"
+              className="times-icon"
+              size="3x"/>
+      </SettingsModal>
       <div className="search-bar-wrapper">
-        <section className="row">
-          <div className=" column column-25">
-            <div className="search-header-container row">
-              <Link to="/home"><img className="ksf-logo " src="/ksflogo.png" alt="other" /></Link>
-              <div className="comand-center-header column">
-                <strong>Command Center</strong>
-              </div>
+        <div className="search-header-container">
+            <Link to="/home"><img className="ksf-logo " src="/ksflogo.png" alt="other" /></Link>
+            <div className="command-center-header">
+            <strong>Command Center</strong>
             </div>
-          </div>
-          <div className="form-container column column-50">
+        </div>
+          <div className="form-container">
             <form onSubmit={handleSubmit} className="search-form">
               <input
                 className="search-input-class"
@@ -95,8 +131,14 @@ const SearchBar = () => {
           
           </div>
 
-         
-        </section>
+          <div className="cog-container">
+            <FontAwesomeIcon 
+              onClick={() => setModalIsOpen(true)}
+              icon="cog"
+              className="cog-icon"
+              size="3x"/>
+          </div>
+
         <div data-id="error-message">
           {showErrorMessage ? <Redirect to="/searchresults" />: null}
         </div>

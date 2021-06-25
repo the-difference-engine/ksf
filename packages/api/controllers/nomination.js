@@ -1,4 +1,5 @@
 const { validate: uuidValidate } = require('uuid');
+const sequelize = require('sequelize')
 const { ValidationError, where } = require('sequelize');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer');
@@ -10,6 +11,8 @@ const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
+const Op = sequelize.Op;
+
 
 const getNominationById = async (req, res) => {
   try {
@@ -121,6 +124,23 @@ const updateNomination = async (req, res) => {
           return res.status(400);
         } finally {
           sendSurveyEmail(nomination);
+        }
+      }
+      if (nomination.status === 'Ready for Board Review') {
+        try {
+          // find the active nomination id
+          
+          // const grant =  await findActive(); //did not work
+          const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
+          
+          nomination.update({ 
+              readyForBoardReviewTimestamp: Date(),
+              grantCycleId: grant.id
+
+            }
+          );
+        } catch (error) {
+          console.log("Could not record readyForBoardReviewTimestamp ", error)
         }
       }
       return res.status(200).json(nomination);
