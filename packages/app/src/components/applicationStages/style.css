@@ -177,3 +177,9 @@ a:hover {
   color: #ffffff;
   border: #8a8a8a;
 }
+.button-center {
+  position: absolute;
+  top: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

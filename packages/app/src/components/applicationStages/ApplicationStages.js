@@ -75,10 +75,10 @@ const ApplicationStages = () => {
         <div className="wrapper">
           {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
           <div className="button-next-wrapper">
-            <div className="button next" onClick={() => advanceStage(currentStatus)}>
-              <span>&#10003;</span>Mark Stage as Complete
-              {currentStatus === 'Ready for Board Review' ?  <MarkStageAsComplete /> :  null }
-            </div>
+            <MarkStageAsComplete
+              advanceStage={advanceStage}
+              currentStatus={currentStatus}
+            />
             <div className="button next" onClick={() => closeApplication(currentStatus)}>
               Close Application
             </div>

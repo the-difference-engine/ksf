@@ -13,7 +13,9 @@ const customStyles = {
   };
   
 
-const MarkStageAsCompleteModal = () => {
+Modal.setAppElement('#root');
+
+const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
     const [isOpen, setIsOpen] = useState(false)
     
     function openModal() {
@@ -26,19 +28,23 @@ const MarkStageAsCompleteModal = () => {
 
     return (
       <div>
-        <button className='button next' onClick={openModal}>Do you want to mark stage as complete?</button>
+        <button className="button next" onClick={openModal}>
+          <span>&#10003;</span>Mark Stage as Complete
+        </button>
         <Modal
             style={customStyles}
             isOpen={isOpen}
-            // onAfterOpen={afterOpenModal}
             onRequestClose={closeModal}
-            // style={customStyles}
-            contentLabel="Example Modal"
-        >
-        <button className='button next'>Yes</button>
-        <button className='decline-button' onClick={closeModal}>No</button>
+            contentLabel="Mark Stage as Complete"
+        ><h3>Do You Want to Mark Stage as Complete?</h3>
+        <button className='button next' onClick={() => {
+            advanceStage(currentStatus);
+            closeModal();
+          }}>Yes</button>
+        <button className="decline-button" onClick={closeModal}>No</button>
         </Modal>
       </div>
     );
-}
-export default MarkStageAsCompleteModal
+};
+
+export default MarkStageAsCompleteModal;
