@@ -35,28 +35,24 @@ const email = new emailTemplate({
 });
 
 function sendDeclineEmail(nomination) {
-
-  email
-    .send({
-      template: 'decline',
-      message: {
-        from: adminEmail,
-        to: nomination.providerEmailAddress,
-      },
-      locals: {
-        name: nomination.providerName,
-        patientName: nomination.patientName,
-        imgUrl,
-      },
-    })
+  email.send({
+    template: 'decline',
+    message: {
+      from: adminEmail,
+      to: nomination.providerEmailAddress,
+    },
+    locals: {
+      name: nomination.providerName,
+      patientName: nomination.patientName,
+      imgUrl,
+    },
+  })
     .catch((err) => console.log(err))
     .then(() => console.log('email has been sent!'));
 }
 
 function sendSurveyEmail(nomination) {
-
-  email
-    .send({
+  email.send({
     template: 'survey',
     attachments: './survey/header.jpg',
     message: {
