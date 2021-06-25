@@ -4,6 +4,7 @@ import styles from './newstyles.module.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import nominationsAPI from '../../utils/API/nominationsAPI';
 
 const ApplicationForm = props => {
 	const firstUpdate = useRef(true);
@@ -15,8 +16,18 @@ const ApplicationForm = props => {
 		if (!firstUpdate.current) {
 			console.log(`THIS IS MODE IN ApplicationForm ${props.mode}`);
 		}
-		firstUpdate.current = false;
 	}, [props.mode]);
+
+	useEffect(() => {
+		if (!firstUpdate.current) {
+			console.log(
+				`props.saveHasBeenClicked in Application Form: ${props.saveHasBeenClicked}`
+			);
+			handleSubmit(submitForm)();
+			
+		}
+		firstUpdate.current = false;
+	}, [props.saveHasBeenClicked]);
 
 	const validationSchema = Yup.object({
 		admissionDate: Yup.date().required('Required'),
@@ -43,11 +54,18 @@ const ApplicationForm = props => {
 			.required('Required'),
 	});
 
-	const { register, handleSubmit, errors } = useForm({
-		resolver: yupResolver(validationSchema),
-	});
+	// const { register, handleSubmit, errors } = useForm({
+	// 	resolver: yupResolver(validationSchema),
+	// });
+	const { register, handleSubmit, errors } = useForm();
 
-	const onSubmit = () => console.log('on submit triggered');
+	const submitForm = (data)=> {
+		nominationsAPI.updateActiveNomData(props.nomination.id, data)
+		.then(() => {
+			console.log(`on submit triggered ${data}`);
+		})
+		// console.log(data);
+	};
 
 	const editablePlainText = [
 		// editable family info:
@@ -69,39 +87,6 @@ const ApplicationForm = props => {
 		'Family Member Information',
 		'Health Provider Information',
 	];
-
-	const submitFunction = () => {};
-
-	// let newKeys = Object.keys(props.formData)
-	// const jsxArray = newKeys.map(label => {
-	//    return (
-	//      titleLabels.includes(label) ?
-	//      <div key={label} className={styles.title}>
-	//        {label}
-	//      </div>
-	//     : editableDates.includes(label) ?
-	//     <input
-	//        name={label}
-	//        type='date'
-	//        defaultValue={props.formData[label]}
-	//        ref={register}
-	//      />
-	//      : editablePlainText.includes(label) ?
-	//      <input
-	//        name={label}
-	//        type='text'
-	//        defaultValue={props.formData[label]}
-	//        ref={register}
-	//      />
-	//    :
-	//      <div>
-	//        <label className={styles.label}>{label}</label>
-	//        <span className={styles.value}>
-	//          {String(props.formData[label])}
-	//        </span>
-	//      </div>
-
-	// )})
 
 	const modes = {
 		view: () => {
@@ -137,10 +122,11 @@ const ApplicationForm = props => {
 				</div>
 			);
 		},
+		// onSubmit={handleSubmit(submitForm)}
 		edit: () => {
 			let keys = Object.keys(props.formData);
 			return (
-				<form onSubmit={handleSubmit(submitFunction)}>
+				<form >
 					<div className={styles.main}>
 						<div className={styles.header}>
 							<label className={styles.bold}>{props.title}</label>
@@ -165,7 +151,7 @@ const ApplicationForm = props => {
 												name={label}
 												type='date'
 												defaultValue={props.formData[label]}
-												ref={register}
+												{...register(`${label}`)}
 											/>
 										);
 									case editablePlainText.includes(label):
@@ -174,7 +160,7 @@ const ApplicationForm = props => {
 												name={label}
 												type='text'
 												defaultValue={props.formData[label]}
-												ref={register}
+												{...register(`${label}`)}
 											/>
 										);
 									default:
@@ -188,6 +174,7 @@ const ApplicationForm = props => {
 										);
 								}
 							})}
+					{/* <button type='submit'>Submit</button> */}
 						</div>
 					</div>
 				</form>
@@ -198,6 +185,25 @@ const ApplicationForm = props => {
 };
 
 export default ApplicationForm;
+
+// const myForm = () => {
+//   const refSubmitButtom = useRef<HTMLButtonElement>(null);
+//   const { handleSubmit } = useForm();
+//   const triggerSubmit = () => {
+//     refSubmitButtom?.current?.click();
+//   };
+//   const submitHandler = (data: any) => {
+//     console.log(data);
+//   }
+//   return (
+//     <>
+//     <form onSubmit={handleSubmit(submitHandler)}>
+//        {/* your form goes here */}
+//       <button hidden={true} ref={refSubmitButtom} type={"submit"} />
+//     </form>
+//     </>
+//   )
+// }
 
 // Four Things in Edit Mode:
 // Titles to render one way - CHECK
