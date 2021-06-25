@@ -12,9 +12,9 @@
   width: 60px;
 }
 
-.edit-button {
+/* .edit-button {
   border-radius: 4rem;
-}
+} */
 
 .decline-button {
   border-radius: 4rem;
@@ -28,6 +28,7 @@
 .banner-top {
   border-bottom: 1px solid var(--light-background);
 }
+
 
 .hp-name,
 .fam-name,

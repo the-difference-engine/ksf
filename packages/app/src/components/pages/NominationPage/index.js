@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ActiveNominationContext } from '../../../utils/context/ActiveNominationContext';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import NominationBanner from '../../nominationBanner/nominationBanner';
@@ -20,7 +20,7 @@ const NominationPage = ({
 		NominationsDataContext
 	);
 	const [error, setError] = useState();
-	const [hasBeenClicked, setHasBeenClicked] = useState(false);
+	const [editHasBeenClicked, setEditHasBeenClicked] = useState(false);
 	const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);
 
 	const [mode, setMode] = useState('view');
@@ -93,35 +93,33 @@ const NominationPage = ({
 		'How did you hear about KSF?': '',
 	};
 
-	function handleClick() {
-		setHasBeenClicked(hasBeenClicked => !hasBeenClicked);
-		console.log(
-			`this is has been CLICKED in handClick function in NominationPage: ${hasBeenClicked}`
-		);
+	function handleEditHasBeenClicked() {
+		setEditHasBeenClicked(editHasBeenClicked => !editHasBeenClicked);
+		console.log(`Nomination Page - handleEditHasBeenClicked: ${editHasBeenClicked}, ${mode}`);
 
 		setMode('edit');
-		setTimeout(() => {
-			console.log(`THIS IS MODE IN PARENT COMPONENT: ${mode}`);
-		}, 2000);
+
+		console.log(`THIS IS MODE IN PARENT COMPONENT: ${mode}`);
 	}
 
 	function handleSaveHasBeenClicked() {
-		console.log('handle save has been clicked');
 		setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
+		setMode('view');
+		console.log(
+			`Nomination Page - handleSaveHasBeenClicked: ${saveHasBeenClicked}, ${mode}`
+		);
 	}
 
-	const showNewStuff = true;
-
 	return (
-		// TODO FIRST: remove hasBeenClicked prop from RenderForm so it doesn't rerender twice when handleClick() runs above.
 		<>
 			{activeNomination ? (
 				<div className='nomination-show-page'>
 					<SearchBar />
 					<NominationBanner
-						hasBeenClicked={hasBeenClicked}
+						editHasBeenClicked={editHasBeenClicked}
+						saveHasBeenClicked={saveHasBeenClicked}
 						handleSaveHasBeenClicked={handleSaveHasBeenClicked}
-						handleClick={handleClick}
+						handleEditHasBeenClicked={handleEditHasBeenClicked}
 						nomination={activeNomination}
 					/>
 					<ApplicationStages />
@@ -129,11 +127,10 @@ const NominationPage = ({
 					<ApplicationForm
 						formData={formData}
 						mode={mode}
-            // mode={'edit'}
-						hasBeenClicked={hasBeenClicked}
+						editHasBeenClicked={editHasBeenClicked}
 						saveHasBeenClicked={saveHasBeenClicked}
 						nomination={activeNomination}
-            gridContent={true}
+						gridContent={true}
 					/>
 				</div>
 			) : (
