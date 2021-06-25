@@ -23,7 +23,7 @@ const NominationPage = ({
 	const [hasBeenClicked, setHasBeenClicked] = useState(false);
 	const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);
 
-	const [mode, setMode] = useState('view');
+	const [mode, setMode] = useState('edit');
 
 	useEffect(() => {
 		if (NominationsData) {
@@ -128,8 +128,7 @@ const NominationPage = ({
 					{/* Sends click state data to all NominationInfo children */}
 					<ApplicationForm
 						formData={formData}
-						// mode={mode}
-            mode={'edit'}
+						mode={mode}
 						hasBeenClicked={hasBeenClicked}
 						saveHasBeenClicked={saveHasBeenClicked}
 						nomination={activeNomination}
