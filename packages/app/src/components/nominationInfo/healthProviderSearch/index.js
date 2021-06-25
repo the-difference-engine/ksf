@@ -30,7 +30,7 @@ const SearchHealthProvider = () => {
   }, [NominationsData]);
 
   const renderSortArrow = (columnName) => {
-    return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === SORT_DIRECTION.DOWN ? 'arrow-down' : 'arrow-up'} />;
+    return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />;
   };
 
   const renderSortableCell = (key, label) => {
@@ -65,11 +65,6 @@ const SearchHealthProvider = () => {
               <strong>HP Name</strong>
             </h2>
           </td>
-          {/* <td className="width-column">
-            <h2 className="sortable-column">
-              <strong>Patient Name</strong>
-            </h2>
-          </td> */}
           <td> {renderSortableCell('patientName', 'Patient Name')} </td>
           <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
           <td className="last-column">

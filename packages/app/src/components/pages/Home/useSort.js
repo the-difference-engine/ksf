@@ -30,11 +30,11 @@ const useSort = (nomsToSort=[]) => {
       let bDate = new Date(b[sortConfig.key])
 
       if (aDate < bDate) {
-        return sortConfig.direction === SORT_DIRECTION.UP ? 1 : -1
+        return sortConfig.direction === SORT_DIRECTION.DOWN ? 1 : -1
       }
 
       if (aDate > bDate) {
-        return sortConfig.direction === SORT_DIRECTION.UP ? -1 : 1
+        return sortConfig.direction === SORT_DIRECTION.DOWN ? -1 : 1
       }
 
       return 0
