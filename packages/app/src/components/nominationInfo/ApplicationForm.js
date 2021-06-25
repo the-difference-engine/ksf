@@ -57,7 +57,9 @@ const ApplicationForm = props => {
 	// const { register, handleSubmit, errors } = useForm({
 	// 	resolver: yupResolver(validationSchema),
 	// });
-	const { register, handleSubmit, errors } = useForm();
+	const { register, handleSubmit, formState:{errors} } = useForm({
+			resolver: yupResolver(validationSchema),
+		});
 
 	const submitForm = (data)=> {
 		nominationsAPI.updateActiveNomData(props.nomination.id, data)
