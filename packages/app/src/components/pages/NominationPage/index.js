@@ -23,7 +23,7 @@ const NominationPage = ({
 	const [editHasBeenClicked, setEditHasBeenClicked] = useState(false);
 	const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);
 
-	const [mode, setMode] = useState('edit');
+	const [mode, setMode] = useState('view');
 
 	useEffect(() => {
 		if (NominationsData) {
@@ -116,6 +116,7 @@ const NominationPage = ({
 				<div className='nomination-show-page'>
 					<SearchBar />
 					<NominationBanner
+					    mode={mode}
 						editHasBeenClicked={editHasBeenClicked}
 						saveHasBeenClicked={saveHasBeenClicked}
 						handleSaveHasBeenClicked={handleSaveHasBeenClicked}

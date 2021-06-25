@@ -24,11 +24,11 @@ const NominationBanner = (props) => {
   const finalDate = `${time} – ${minutes}`;
 
   // Variables for edit button coloring and save functionality.
-  let badStyles = {
-   backColor:"white",
-   textColor:"green",
-   saveOrEditLabel:"Edit",
-  }
+  // let badStyles = {
+  //  backColor:"white",
+  //  textColor:"green",
+  //  saveOrEditLabel:"Edit",
+  // }
 
 // const [isEditing, setIsEditing] = useState(false)
 
@@ -42,13 +42,13 @@ const NominationBanner = (props) => {
   //  // setIsEditing(isEditing => !isEditing)
   //   console.log("Nomination Banner - EDIT HAS BEEN CLICKED")
   // }
-  if (props.editHasBeenClicked) {
+  // if (props.editHasBeenClicked) {
     // badStyles.backColor = "green";
     // badStyles.textColor = "white";
     // badStyles.saveOrEditLabel = "Save";
    // setIsEditing(isEditing => !isEditing)
-    console.log("Nomination Banner - EDIT HAS BEEN CLICKED")
-  }
+  //   console.log("Nomination Banner - EDIT HAS BEEN CLICKED")
+  // }
 
   // if (props.saveHasBeenClicked && badStyles.saveOrEditLabel === 'Save') {
   // badStyles.backColor = "white";
@@ -56,10 +56,10 @@ const NominationBanner = (props) => {
   //  badStyles.saveOrEditLabel = "Edit";
   //  console.log('Nomination Banner - Save has been clicked');
   // }
-  if (props.saveHasBeenClicked) {
+  // if (props.saveHasBeenClicked) {
    
-     console.log('Nomination Banner - Save has been clicked');
-    }
+  //    console.log('Nomination Banner - Save has been clicked');
+  //   }
 
 
 
@@ -124,7 +124,7 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div className="column column-10">
-          <EditOrSaveButton badStyles={badStyles} handleEditHasBeenClicked={props.handleEditHasBeenClicked} handleSaveHasBeenClicked={props.handleSaveHasBeenClicked}/>
+          <EditOrSaveButton mode={props.mode} handleEditHasBeenClicked={props.handleEditHasBeenClicked} handleSaveHasBeenClicked={props.handleSaveHasBeenClicked}/>
         </div>
       </div>
     </div>

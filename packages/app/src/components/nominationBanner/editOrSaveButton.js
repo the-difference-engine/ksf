@@ -2,8 +2,8 @@ import React from 'react';
 import styles from '../nominationInfo/newstyles.module.css';
 
 const EditOrSaveButton = props => {
-	switch (props.badStyles.saveOrEditLabel) {
-		case 'Edit':
+	switch (props.mode) {
+		case 'view':
 			return (
 				<button
 					className='button button-outline'
@@ -14,7 +14,7 @@ const EditOrSaveButton = props => {
 					Edit
 				</button>
 			);
-		case 'Save':
+		case 'edit':
 			return (
 				<button
 					className='button button-outline'
@@ -26,10 +26,7 @@ const EditOrSaveButton = props => {
 				</button>
 			);
 		default:
-			console.log(
-				`THIS IS saveOrEditLabel in EditOrSaveButton ${props.badStyles.saveOrEditLabel}`
-			);
-			return <h1>WTF</h1>;
+			return <h1></h1>;
 	}
 };
 
