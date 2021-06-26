@@ -30,26 +30,26 @@ const ApplicationForm = props => {
 	}, [props.saveHasBeenClicked]);
 
 	const validationSchema = Yup.object({
-		admissionDate: Yup.date().required('Required'),
-		dischargeDate: Yup.date()
+		'Admission Date': Yup.date().required('Required'),
+		'Discharge Date': Yup.date()
 			.min(
 				Yup.ref('admissionDate'),
 				'Discharge date cannot be before admission date.'
 			)
 			.required('Required'),
-		repName: Yup.string()
+		'Representative Name': Yup.string()
 			.min(3, 'Must be 3 characters or more.')
 			.max(30, 'Must be 30 characters or less.')
 			.required('Required'),
-		email: Yup.string().email('Invalid email address.').required('Required'), // This handles email validation with no regex.
-		phoneNum: Yup.string()
+		'Email Address': Yup.string().email('Invalid email address.').required('Required'), // This handles email validation with no regex.
+		'Phone Number': Yup.string()
 			.matches(phoneRegex, 'Please enter a valid phone number.')
 			.required('Required'),
-		relationship: Yup.string()
+		'Relationship': Yup.string()
 			.min(3, 'Must be at least 3 characters.')
 			.max(20, 'Must be no more than 20 characters.')
 			.required('Required'),
-		spanishComms: Yup.string()
+		'Request to communicate in Spanish?': Yup.string()
 			.matches(yesNoRegex, 'Please enter yes or no.')
 			.required('Required'),
 	});
@@ -65,8 +65,9 @@ const ApplicationForm = props => {
 		nominationsAPI.updateActiveNomData(props.nomination.id, data)
 		.then(() => {
 			console.log(`on submit triggered ${data}`);
+		//	props.returnToViewMode() // this returns to view mode after succuessful update request
 		})
-		// console.log(data);
+		
 	};
 
 	const editablePlainText = [
@@ -92,6 +93,7 @@ const ApplicationForm = props => {
 
 	const modes = {
 		view: () => {
+			console.dir(errors)
 			let keys = Object.keys(props.formData);
 			return (
 				<div className={styles.main}>
@@ -124,8 +126,8 @@ const ApplicationForm = props => {
 				</div>
 			);
 		},
-		// onSubmit={handleSubmit(submitForm)}
 		edit: () => {
+			console.dir(errors)
 			let keys = Object.keys(props.formData);
 			return (
 				<form >
@@ -149,21 +151,27 @@ const ApplicationForm = props => {
 										);
 									case editableDates.includes(label):
 										return (
+											<div>
 											<input
 												name={label}
 												type='date'
 												defaultValue={props.formData[label]}
-												{...register(`${label}`)}
+												{...register(label)}
 											/>
+											<p>{errors[label]?.message}</p>
+											</div>
 										);
 									case editablePlainText.includes(label):
 										return (
+											<div>
 											<input
 												name={label}
 												type='text'
 												defaultValue={props.formData[label]}
-												{...register(`${label}`)}
+												{...register(label)}
 											/>
+											<p>{errors[label]?.message}</p>
+											</div>
 										);
 									default:
 										return (

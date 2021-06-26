@@ -104,10 +104,14 @@ const NominationPage = ({
 
 	function handleSaveHasBeenClicked() {
 		setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
-		setMode('view');
+	//	setMode('view');
 		console.log(
 			`Nomination Page - handleSaveHasBeenClicked: ${saveHasBeenClicked}, ${mode}`
 		);
+	}
+
+	const returnToViewMode = () => {
+		setMode('view')
 	}
 
 	return (
@@ -126,6 +130,7 @@ const NominationPage = ({
 					<ApplicationStages />
 					{/* Sends click state data to all NominationInfo children */}
 					<ApplicationForm
+					    returnToViewMode={returnToViewMode}
 						formData={formData}
 						mode={mode}
 						editHasBeenClicked={editHasBeenClicked}
