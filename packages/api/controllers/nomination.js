@@ -2,13 +2,11 @@ const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize')
 const { ValidationError, where } = require('sequelize');
 const db = require('../models');
-const { sendSurveyEmail } = require('../helper/mailer');
+const { sendSurveyEmail, sendHIPAAEmail, sendSurveyReminder, sendHIPAAReminder, sendHIPAAProvider } = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
-const { sendSurveyReminder } = require('../helper/mailer');
-const { sendHIPAAReminder } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
@@ -113,6 +111,9 @@ const updateNomination = async (req, res) => {
           createFolder(applicationName);
         } catch (err) {
           console.error('Could not create a folder', err);
+        } finally {
+          sendHIPAAEmail(nomination);
+          sendHIPAAProvider(nomination);
         }
       }
 
