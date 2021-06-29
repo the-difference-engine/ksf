@@ -33,7 +33,12 @@ const SearchBar = () => {
           formatSearch(nomination.providerName),
           formatSearch(nomination.patientName),
           formatSearch(nomination.nominationName),
-          formatSearch(nomination.representativeName),        // If you do not want to test aganst Representative Name(Family Member Name), delete this line
+
+           //  The Representative name(called Family Member name on the fronted) 
+           // is not included as one of columns in the search result. Therefore the is confusion when search results don't seem to macth the search term.
+           // Waiting to hear from Bill if the line in question (formatSearch(nomination.representativeName)) should stay or not
+
+          formatSearch(nomination.representativeName),       
         ].some((nom) => nom.includes(searchTerm));
       });
       setSearchResultData(filteredNoms); 
