@@ -42,4 +42,3 @@ export const NominationsDataProvider = (props) => {
   );
 };
 
-// export default { findAllNominations }

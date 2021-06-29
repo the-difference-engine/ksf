@@ -22,7 +22,7 @@ const nominationsAPI = {
     });
   },
   updateActiveNomData: function (id, nomChangeData) {
-    return axios.put(`${cleanURL(API_URL)}/api/nominations/${id}`, {
+    return axios.patch(`${cleanURL(API_URL)}/api/nominations/${id}`, {
       propsObject: nomChangeData
     });
   },

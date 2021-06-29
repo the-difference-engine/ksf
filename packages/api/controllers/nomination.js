@@ -139,6 +139,8 @@ const emailVerifiction = async (req, res) => {
  * @param {*} req - updated props data object 
  * @param {*} res - response code
  */
+
+// work in progress here
 const updateActiveNomData = async (req, res) => {
   const { id } = req.params;
   try {

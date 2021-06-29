@@ -61,13 +61,35 @@ const ApplicationForm = props => {
 			resolver: yupResolver(validationSchema),
 		});
 
+	function updateNominationById(id, newData) {
+		nominationsAPI.updateActiveNomData(id, newData)
+			.then(res => {
+				console.log(res);
+			})
+			.then(() => {
+				nominationsAPI.getNominations()
+				.then((res) => {
+					const nominations = res.data;
+					nominations.forEach((nomination) => {
+						nomination.nominationName = nomName(nomination);
+						nomination.dateReceived = new Date(
+							nomination.dateReceived
+						).toLocaleDateString();
+					});
+					setNominationsData(nominations);
+				})
+				.catch((err) => console.log(err));
+			})
+	}
+
+	// need to fix this on Wednesday
 	const submitForm = (data)=> {
-		nominationsAPI.updateActiveNomData(props.nomination.id, data)
+		updateNominationById(props.nomination.id, data)
 		.then(() => {
 			console.log(`on submit triggered ${data}`);
-		//	props.returnToViewMode() // this returns to view mode after succuessful update request
+			props.returnToViewMode() 
+		// this returns to view mode after successful update request
 		})
-		
 	};
 
 	const editablePlainText = [
@@ -93,7 +115,8 @@ const ApplicationForm = props => {
 
 	const modes = {
 		view: () => {
-			console.dir(errors)
+			// console.dir(`Errors: ${errors}`)
+			console.log(`ID: ${props.id}`);
 			let keys = Object.keys(props.formData);
 			return (
 				<div className={styles.main}>
@@ -128,6 +151,7 @@ const ApplicationForm = props => {
 		},
 		edit: () => {
 			console.dir(errors)
+			
 			let keys = Object.keys(props.formData);
 			return (
 				<form >
@@ -195,6 +219,8 @@ const ApplicationForm = props => {
 };
 
 export default ApplicationForm;
+
+
 
 // const myForm = () => {
 //   const refSubmitButtom = useRef<HTMLButtonElement>(null);

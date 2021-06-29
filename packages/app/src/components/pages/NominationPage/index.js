@@ -37,10 +37,6 @@ const NominationPage = ({
 		}
 	});
 
-	// const [activeNomination, setActiveNomination] = useContext(
-	//   ActiveNominationContext
-	// );
-
 	const {
 		hospitalCity,
 		hospitalState,
@@ -120,7 +116,7 @@ const NominationPage = ({
 				<div className='nomination-show-page'>
 					<SearchBar />
 					<NominationBanner
-					    mode={mode}
+					  mode={mode}
 						editHasBeenClicked={editHasBeenClicked}
 						saveHasBeenClicked={saveHasBeenClicked}
 						handleSaveHasBeenClicked={handleSaveHasBeenClicked}
@@ -130,13 +126,14 @@ const NominationPage = ({
 					<ApplicationStages />
 					{/* Sends click state data to all NominationInfo children */}
 					<ApplicationForm
-					    returnToViewMode={returnToViewMode}
+					  returnToViewMode={returnToViewMode}
 						formData={formData}
 						mode={mode}
 						editHasBeenClicked={editHasBeenClicked}
 						saveHasBeenClicked={saveHasBeenClicked}
 						nomination={activeNomination}
 						gridContent={true}
+						id={id}
 					/>
 				</div>
 			) : (
