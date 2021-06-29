@@ -37,11 +37,11 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
             onRequestClose={closeModal}
             contentLabel="Mark Stage as Complete"
         ><h3>Do You Want to Mark Stage as Complete?</h3>
-        <button className='button next' onClick={() => {
+        <button className='button-modal-next' onClick={() => {
             advanceStage(currentStatus);
             closeModal();
           }}>Yes</button>
-        <button className="decline-button" onClick={closeModal}>No</button>
+        <button className="button-modal-decline" onClick={closeModal}>No</button>
         </Modal>
       </div>
     );

@@ -183,3 +183,27 @@ a:hover {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+.button-modal-next {
+  background-color: #128b3e;
+  color: white;
+  border: #999;
+  margin-left: Auto;
+  margin-right: 18px;
+  padding-left: 25px;
+  padding-right: 60px;
+  width: 155;
+  font-size: Auto;
+  border-radius: 3px;
+}
+.button-modal-decline {
+  background-color: #f72314;
+  color: white;
+  border: #999;
+  margin-left: Auto;
+  margin-right: 18px;
+  padding-left: 25px;
+  padding-right: 60px;
+  width: 155;
+  font-size: Auto;
+  border-radius: 3px;
+}
