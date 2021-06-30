@@ -29,10 +29,13 @@ const SearchHealthProvider = () => {
     findSearchResults(id);
   }, [NominationsData]);
 
+
+  //renders down arrow if config direction is ascending, else renders up arrow
   const renderSortArrow = (columnName) => {
     return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />;
   };
 
+  //renders column name with arrow next to it, using requestSort function from useSort.js
   const renderSortableCell = (key, label) => {
     return (
       <h2 onClick={() => requestSort(key)} className="sortable-column">

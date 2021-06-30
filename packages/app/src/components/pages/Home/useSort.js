@@ -2,9 +2,9 @@ import React, { useState, useMemo, useContext } from 'react'
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import { SORT_DIRECTION } from '../../enum.js';
 
+//passing argument to useSort so can be used with any nomination data
 const useSort = (nomsToSort=[]) => {
   const [sortConfig, setSortConfig] = useState({key: 'dateReceived', direction: SORT_DIRECTION.UP})
-  // const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
 
   const sortNominationsByName = (nomsToSort) => {
     nomsToSort.sort((a, b) => {
@@ -29,11 +29,11 @@ const useSort = (nomsToSort=[]) => {
       let aDate = new Date(a[sortConfig.key])
       let bDate = new Date(b[sortConfig.key])
 
-      if (aDate < bDate) {
+      if (aDate > bDate) {
         return sortConfig.direction === SORT_DIRECTION.DOWN ? 1 : -1
       }
 
-      if (aDate > bDate) {
+      if (aDate < bDate) {
         return sortConfig.direction === SORT_DIRECTION.DOWN ? -1 : 1
       }
 
@@ -43,7 +43,6 @@ const useSort = (nomsToSort=[]) => {
   }
 
   const sortedNoms = useMemo(() => {
-    //let sortableNoms = NominationsData ? [...NominationsData] : []
     let sortableNoms = nomsToSort ? [...nomsToSort] : []
 
     if (sortConfig && sortConfig.key.includes('Name')) {
