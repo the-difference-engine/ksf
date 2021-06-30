@@ -5,23 +5,28 @@ import "./style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SearchResultsCard = () => {
-  const [SearchResultData, setSearchResultData] = useContext(
+  const [SearchResultData, _] = useContext(
     SearchResultDataContext
   );
 
-  SearchResultData.sort((a, b) => {
-    let patient1 = a.patientName;
+  const [sortedSearchResults, setSortedSearchResults] = useState();
+  useEffect(()=>{
+    setSortedSearchResults(SearchResultData.sort((a,b) =>{
+      let patient1 = a.patientName;
     let patient2 = b.patientName;
-
     if (patient1 > patient2) {
       return 1;
     }
-
     if (patient2 > patient1) {
       return -1;
     }
     return 0;
-  });
+
+    }));
+
+  },[SearchResultData, _]);
+
+  
 
   return (
     <>
@@ -57,7 +62,7 @@ const SearchResultsCard = () => {
             </tr>
           </thead>
           <tbody>
-            {SearchResultData.length > 0 ? (
+            {SearchResultData.length > 0 && (
               <tr className="search-result-header">
                 <td>
                   <div className="search-result-alignment">
@@ -82,7 +87,7 @@ const SearchResultsCard = () => {
                   </h1>
                 </td>
               </tr>
-            ) : null}
+            ) }
             {SearchResultData?.map((result) => (
               <tr key={result.id} className="search-result-data">
                 <td>
