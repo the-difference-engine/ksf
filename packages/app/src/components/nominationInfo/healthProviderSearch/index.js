@@ -47,6 +47,24 @@ const SearchHealthProvider = () => {
 
 
   return (
+  <>
+    <div className="search-bar-wrapper">
+      <section className="row">
+        <div className=" column column-25">
+          <div className="search-header-container row">
+            <Link to="/home">
+              <img className="ksf-logo " src="/ksflogo.png" alt="other" />
+            </Link>
+            <div className="comand-center-header column">
+              <strong>Command Center</strong>
+            </div>
+          </div>
+        </div>
+        <div className="form-container column column-50"></div>
+      </section>
+      <div data-id="error-message"></div>
+    </div>
+    
     <table className="new-files-table">
       <thead>
         <tr>
@@ -79,15 +97,16 @@ const SearchHealthProvider = () => {
             <td className="decrease-spacing">
               <Link className="green new-files-application-name add-padding-left detail-font-size" to={`/nomination/${result.id}`}>
                 <strong> {result.nominationName}</strong>
-              </Link>
-            </td>
-            <td className="detail-font-size">{result.providerName}</td>
-            <td className="detail-font-size">{result.patientName}</td>
-            <td className="detail-font-size">{result.dateReceived}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                </Link>
+              </td>
+              <td className="detail-font-size">{result.providerName}</td>
+              <td className="detail-font-size">{result.patientName}</td>
+              <td className="detail-font-size">{result.dateReceived}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 
