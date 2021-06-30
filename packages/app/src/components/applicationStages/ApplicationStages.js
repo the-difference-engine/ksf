@@ -75,10 +75,12 @@ const ApplicationStages = () => {
         <div className="wrapper">
           {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
           <div className="button-next-wrapper">
+          <div className="modal-wrapper">
             <MarkStageAsComplete
               advanceStage={advanceStage}
               currentStatus={currentStatus}
             />
+            </div>
             <div className="button next" onClick={() => closeApplication(currentStatus)}>
               Close Application
             </div>
