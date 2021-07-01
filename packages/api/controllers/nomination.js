@@ -141,6 +141,8 @@ const emailVerifiction = async (req, res) => {
  */
 
 // work in progress here - continue working on Thursday
+// change errors to red text
+// make sure everything is actually updated - the 3 things
 const updateActiveNomData = async (req, res) => {
   const { id } = req.params;
   try {
