@@ -248,6 +248,7 @@ const ApplicationForm = props => {
 									case editableDates.includes(label):
 										return (
 											<div>
+											<label className={styles.label}>{label}</label>
 												<input
 													name={label}
 													type='date'
@@ -260,6 +261,7 @@ const ApplicationForm = props => {
 									case editablePlainText.includes(label):
 										return (
 											<div>
+											<label className={styles.label}>{label}</label>
 												<input
 													name={label}
 													type='text'

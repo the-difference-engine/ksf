@@ -140,7 +140,7 @@ const emailVerifiction = async (req, res) => {
  * @param {*} res - response code
  */
 
-// work in progress here
+// work in progress here - continue working on Thursday
 const updateActiveNomData = async (req, res) => {
   const { id } = req.params;
   try {
