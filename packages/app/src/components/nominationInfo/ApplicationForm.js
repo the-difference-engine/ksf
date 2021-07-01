@@ -1,13 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useContext } from 'react';
 // import styles from './styles.module.css';
 import styles from './newstyles.module.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import nominationsAPI from '../../utils/API/nominationsAPI';
+import { NominationsDataContext } from '../../utils/context/NominationsContext';
+import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 
 const ApplicationForm = props => {
 	const firstUpdate = useRef(true);
+
+	const [NominationsData, setNominationsData] = useContext(
+		NominationsDataContext
+	);
+
+	const [activeNomination, setActiveNomination] = useContext(
+		ActiveNominationContext
+	);
 
 	const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 	const yesNoRegex = /^(?:Yes\b|No\b)/;
@@ -24,10 +34,11 @@ const ApplicationForm = props => {
 				`props.saveHasBeenClicked in Application Form: ${props.saveHasBeenClicked}`
 			);
 			handleSubmit(submitForm)();
-			
 		}
 		firstUpdate.current = false;
 	}, [props.saveHasBeenClicked]);
+
+	const apiCallback = useCallback(() => {});
 
 	const validationSchema = Yup.object({
 		'Admission Date': Yup.date().required('Required'),
@@ -41,11 +52,13 @@ const ApplicationForm = props => {
 			.min(3, 'Must be 3 characters or more.')
 			.max(30, 'Must be 30 characters or less.')
 			.required('Required'),
-		'Email Address': Yup.string().email('Invalid email address.').required('Required'), // This handles email validation with no regex.
+		'Email Address': Yup.string()
+			.email('Invalid email address.')
+			.required('Required'), // This handles email validation with no regex.
 		'Phone Number': Yup.string()
 			.matches(phoneRegex, 'Please enter a valid phone number.')
 			.required('Required'),
-		'Relationship': Yup.string()
+		Relationship: Yup.string()
 			.min(3, 'Must be at least 3 characters.')
 			.max(20, 'Must be no more than 20 characters.')
 			.required('Required'),
@@ -54,42 +67,67 @@ const ApplicationForm = props => {
 			.required('Required'),
 	});
 
-	// const { register, handleSubmit, errors } = useForm({
-	// 	resolver: yupResolver(validationSchema),
-	// });
-	const { register, handleSubmit, formState:{errors} } = useForm({
-			resolver: yupResolver(validationSchema),
-		});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		// resolver: yupResolver(validationSchema),
+	});
 
-	function updateNominationById(id, newData) {
-		nominationsAPI.updateActiveNomData(id, newData)
-			.then(res => {
-				console.log(res);
-			})
-			.then(() => {
-				nominationsAPI.getNominations()
-				.then((res) => {
-					const nominations = res.data;
-					nominations.forEach((nomination) => {
-						nomination.nominationName = nomName(nomination);
-						nomination.dateReceived = new Date(
-							nomination.dateReceived
-						).toLocaleDateString();
-					});
-					setNominationsData(nominations);
-				})
-				.catch((err) => console.log(err));
-			})
-	}
+	// function updateNominationById(id, newData) {
+	// 	nominationsAPI
+	// 		.updateActiveNomData(id, newData)
+	// 		.then(res => {
+	// 			console.log(res);
+	// 		})
+	// 		.then(() => {
+	// 			nominationsAPI
+	// 				.getNominations()
+	// 				.then(res => {
+	// 					const nominations = res.data;
+	// 					nominations.forEach(nomination => {
+	// 						nomination.nominationName = nomName(nomination);
+	// 						nomination.dateReceived = new Date(
+	// 							nomination.dateReceived
+	// 						).toLocaleDateString();
+	// 					});
+	// 					setNominationsData(nominations);
+	// 				})
+	// 				.catch(err => console.log(err));
+	// 		});
+	// }
 
 	// need to fix this on Wednesday
-	const submitForm = (data)=> {
-		updateNominationById(props.nomination.id, data)
-		.then(() => {
-			console.log(`on submit triggered ${data}`);
-			props.returnToViewMode() 
+	const submitForm = data => {
+		if (NominationsData) {
+			let counter = 0;
+			const newNominationData = NominationsData.map(nomination => {
+				if (nomination.id === props.id) {
+					nomination.admissionDate = data['Admission Date'];
+					nomination.dischargeDate = data['Discharge Date'];
+					nomination.representativeEmailAddress = data['Email Address'];
+					nomination.representativePhoneNumber = data['Phone Number'];
+					nomination.representativeRelationship = data['Relationship'];
+					nomination.representativeName = data['Representative Name'];
+					nomination.representativeSpanishRequested =
+						data['Request to communicate in Spanish?'];
+					setActiveNomination(nomination);
+					console.log(nomination);
+					console.log(`Counter: ${counter}`);
+				}
+				counter++
+				return nomination;
+			});
+			console.dir(newNominationData);
+			setNominationsData(newNominationData);
+		}
+
+		// updateNominationById(props.nomination.id, data).then(() => {
+		// 	console.log(`on submit triggered ${data}`);
+		// 	props.returnToViewMode();
 		// this returns to view mode after successful update request
-		})
+		// });
 	};
 
 	const editablePlainText = [
@@ -115,8 +153,6 @@ const ApplicationForm = props => {
 
 	const modes = {
 		view: () => {
-			// console.dir(`Errors: ${errors}`)
-			console.log(`ID: ${props.id}`);
 			let keys = Object.keys(props.formData);
 			return (
 				<div className={styles.main}>
@@ -150,11 +186,11 @@ const ApplicationForm = props => {
 			);
 		},
 		edit: () => {
-			console.dir(errors)
-			
+			console.dir(errors);
+
 			let keys = Object.keys(props.formData);
 			return (
-				<form >
+				<form>
 					<div className={styles.main}>
 						<div className={styles.header}>
 							<label className={styles.bold}>{props.title}</label>
@@ -176,25 +212,25 @@ const ApplicationForm = props => {
 									case editableDates.includes(label):
 										return (
 											<div>
-											<input
-												name={label}
-												type='date'
-												defaultValue={props.formData[label]}
-												{...register(label)}
-											/>
-											<p>{errors[label]?.message}</p>
+												<input
+													name={label}
+													type='date'
+													defaultValue={props.formData[label]}
+													{...register(label)}
+												/>
+												<p>{errors[label]?.message}</p>
 											</div>
 										);
 									case editablePlainText.includes(label):
 										return (
 											<div>
-											<input
-												name={label}
-												type='text'
-												defaultValue={props.formData[label]}
-												{...register(label)}
-											/>
-											<p>{errors[label]?.message}</p>
+												<input
+													name={label}
+													type='text'
+													defaultValue={props.formData[label]}
+													{...register(label)}
+												/>
+												<p>{errors[label]?.message}</p>
 											</div>
 										);
 									default:
@@ -208,7 +244,7 @@ const ApplicationForm = props => {
 										);
 								}
 							})}
-					{/* <button type='submit'>Submit</button> */}
+							{/* <button type='submit'>Submit</button> */}
 						</div>
 					</div>
 				</form>
@@ -219,8 +255,6 @@ const ApplicationForm = props => {
 };
 
 export default ApplicationForm;
-
-
 
 // const myForm = () => {
 //   const refSubmitButtom = useRef<HTMLButtonElement>(null);
