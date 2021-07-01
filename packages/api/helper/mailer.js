@@ -31,7 +31,7 @@ const email = new emailTemplate({
   transport: transporter,
   send: true,
   //send status will eventually need to be updated to true
-  preview: false,
+  preview: true,
 });
 
 function sendDeclineEmail(nomination) {
@@ -75,6 +75,8 @@ function sendSurveyEmail(nomination) {
 
 function verifyHcEmail(nomination) {
   const emailToken = generateToken(nomination._id);
+  console.log(emailToken, '------------');
+  console.log('------------');
   email
     .send({
       template: 'verifyHcEmail',
