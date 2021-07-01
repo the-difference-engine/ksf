@@ -41,7 +41,7 @@ const ApplicationStages = () => {
       advanceStage(status)
     }
   }
-
+ 
   function advanceStage(value) {
     let index = status.indexOf(value);
     if (index >= 0 && index < status.length - 1) {
