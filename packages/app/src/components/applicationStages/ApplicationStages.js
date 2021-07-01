@@ -35,6 +35,13 @@ const ApplicationStages = () => {
     ));
   }
 
+
+  const confirmUpdate= (status) => {
+    if (window.confirm ('Do you want to mark this stage complete?') ) {
+      advanceStage(status)
+    }
+  }
+
   function advanceStage(value) {
     let index = status.indexOf(value);
     if (index >= 0 && index < status.length - 1) {
@@ -74,7 +81,7 @@ const ApplicationStages = () => {
         <div className="wrapper">
           {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
           <div className="button-next-wrapper">
-            <div className="button next" onClick={() => advanceStage(currentStatus)}>
+            <div className="button next" onClick={() => confirmUpdate(currentStatus)}>
               <span>&#10003;</span>Mark Stage as Complete
             </div>
             <div className="button next" onClick={() => closeApplication(currentStatus)}>
