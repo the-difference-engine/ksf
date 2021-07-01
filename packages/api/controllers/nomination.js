@@ -146,8 +146,10 @@ const updateActiveNomData = async (req, res) => {
   try {
     const nomination = await db.Nomination.findOne({
       where: { id },
-    });
+    }); 
     console.log(req.body);
+    console.log('response:');
+    console.log(res)
     console.log(nomination.toString()); 
   } catch (err) {
       console.log(err);

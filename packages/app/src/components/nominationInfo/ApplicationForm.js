@@ -35,10 +35,36 @@ const ApplicationForm = props => {
 			);
 			handleSubmit(submitForm)();
 		}
-		firstUpdate.current = false;
+		// firstUpdate.current = false;
 	}, [props.saveHasBeenClicked]);
 
-	const apiCallback = useCallback(() => {});
+	const functionRequestBody = nomination => {
+		const requestBody = {
+			admissionDate: nomination.admissionDate,
+			dischargeDate: nomination.dischargeDate,
+			representativeEmailAddress: nomination.representativeEmailAddress,
+			representativePhoneNumber: nomination.representativePhoneNumber,
+			representativeRelationship: nomination.representativeRelationship,
+			representativeName: nomination.representativeName,
+			representativeSpanishRequested: nomination.representativeSpanishRequested,			
+		}
+		return requestBody;
+	};
+
+	const apiCallback = useCallback(() => {
+		const requestBody2 = functionRequestBody(props.nomination);
+		const jsonObject = JSON.stringify(requestBody2);
+		console.log('hello in apiCallback');
+		console.log(`JSON STRINGIFY ${jsonObject}`);
+	}, [props.nomination]);
+
+	useEffect(() => {
+		if (!firstUpdate.current) {
+			console.log('hello');
+			apiCallback();
+		}
+		firstUpdate.current = false;
+	}, [apiCallback]);
 
 	const validationSchema = Yup.object({
 		'Admission Date': Yup.date().required('Required'),
@@ -99,7 +125,7 @@ const ApplicationForm = props => {
 	// }
 
 	// need to fix this on Wednesday
-	const submitForm = data => {
+	const submitForm = async data => {
 		if (NominationsData) {
 			let counter = 0;
 			const newNominationData = NominationsData.map(nomination => {
@@ -113,13 +139,25 @@ const ApplicationForm = props => {
 					nomination.representativeSpanishRequested =
 						data['Request to communicate in Spanish?'];
 					setActiveNomination(nomination);
-					console.log(nomination);
-					console.log(`Counter: ${counter}`);
+					// console.log(nomination);
+					// console.log(`Counter: ${counter}`);
 				}
-				counter++
+				counter++;
 				return nomination;
 			});
-			console.dir(newNominationData);
+			const requestBody = {
+				admissionDate: activeNomination.admissionDate,
+				dischargeDate: activeNomination.dischargeDate,
+				representativeEmailAddress: activeNomination.representativeEmailAddress,
+				representativePhoneNumber: activeNomination.representativePhoneNumber,
+				representativeRelationship: activeNomination.representativeRelationship,
+				representativeName: activeNomination.representativeName,
+				representativeSpanishRequested: activeNomination.representativeSpanishRequested
+			}
+			// const jsonObject = JSON.stringify(requestBody)
+			// console.log(`JSON STRINGIFY ${jsonObject}`);
+			const response = await nominationsAPI.updateActiveNomData(props.id, requestBody)
+			console.log(response);
 			setNominationsData(newNominationData);
 		}
 
@@ -186,8 +224,6 @@ const ApplicationForm = props => {
 			);
 		},
 		edit: () => {
-			console.dir(errors);
-
 			let keys = Object.keys(props.formData);
 			return (
 				<form>
