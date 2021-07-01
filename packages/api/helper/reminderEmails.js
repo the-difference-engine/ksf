@@ -25,8 +25,8 @@ function emailAgingApplications() {
             reminderSent: false
         }
     };
-    searchAndSend('HIPAA Verified', hipaaVerified);
-    searchAndSend('Awaiting HIPAA', awaitingHipaa);
+    await searchAndSend('HIPAA Verified', hipaaVerified);
+    await searchAndSend('Awaiting HIPAA', awaitingHipaa);
 }
 
 emailAgingApplications();

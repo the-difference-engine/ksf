@@ -43,3 +43,26 @@
 .nom-name a {
   color: var(--brand);
 }
+
+
+
+.search-result-exit {
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-result-exit-button{
+  background: #128B3E;
+  border: #128B3E;
+}
+
+
+.search-result-nomination-link{
+
+ color:#128B3E;
+ font-size: 1.2rem;
+ font-weight:bold;
+ 
+
+}
