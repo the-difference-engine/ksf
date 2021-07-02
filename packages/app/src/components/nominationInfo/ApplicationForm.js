@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 // import styles from './styles.module.css';
 import styles from './newstyles.module.css';
 import { useForm } from 'react-hook-form';
@@ -7,6 +7,14 @@ import * as Yup from 'yup';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+
+// TODO:
+// 1. Get original dates to display when edit is clicked
+// 2. figure out set view for when API call fails
+// 3. Look at back end and write the rest (res.status etc.)
+// 4. red text for validation errors
+// 5. red highlighting of input box
+// 6. add testing
 
 const ApplicationForm = props => {
 	const firstUpdate = useRef(true);
@@ -38,33 +46,18 @@ const ApplicationForm = props => {
 		firstUpdate.current = false;
 	}, [props.saveHasBeenClicked]);
 
-	const functionRequestBody = nomination => {
-		const requestBody = {
-			admissionDate: nomination.admissionDate,
-			dischargeDate: nomination.dischargeDate,
-			representativeEmailAddress: nomination.representativeEmailAddress,
-			representativePhoneNumber: nomination.representativePhoneNumber,
-			representativeRelationship: nomination.representativeRelationship,
-			representativeName: nomination.representativeName,
-			representativeSpanishRequested: nomination.representativeSpanishRequested,			
-		}
-		return requestBody;
-	};
-
-	// const apiCallback = useCallback(() => {
-	// 	const requestBody2 = functionRequestBody(props.nomination);
-	// 	const jsonObject = JSON.stringify(requestBody2);
-	// 	console.log('hello in apiCallback');
-	// 	console.log(`JSON STRINGIFY ${jsonObject}`);
-	// }, [props.nomination]);
-
-	// useEffect(() => {
-	// 	if (!firstUpdate.current) {
-	// 		console.log('hello');
-	// 		apiCallback();
-	// 	}
-	// 	firstUpdate.current = false;
-	// }, [apiCallback]);
+	// const functionRequestBody = nomination => {
+	// 	const requestBody = {
+	// 		admissionDate: nomination.admissionDate,
+	// 		dischargeDate: nomination.dischargeDate,
+	// 		representativeEmailAddress: nomination.representativeEmailAddress,
+	// 		representativePhoneNumber: nomination.representativePhoneNumber,
+	// 		representativeRelationship: nomination.representativeRelationship,
+	// 		representativeName: nomination.representativeName,
+	// 		representativeSpanishRequested: nomination.representativeSpanishRequested,
+	// 	};
+	// 	return requestBody;
+	// };
 
 	const validationSchema = Yup.object({
 		'Admission Date': Yup.date().required('Required'),
@@ -101,82 +94,69 @@ const ApplicationForm = props => {
 		// resolver: yupResolver(validationSchema),
 	});
 
-	// function updateNominationById(id, newData) {
-	// 	nominationsAPI
-	// 		.updateActiveNomData(id, newData)
-	// 		.then(res => {
-	// 			console.log(res);
-	// 		})
-	// 		.then(() => {
-	// 			nominationsAPI
-	// 				.getNominations()
-	// 				.then(res => {
-	// 					const nominations = res.data;
-	// 					nominations.forEach(nomination => {
-	// 						nomination.nominationName = nomName(nomination);
-	// 						nomination.dateReceived = new Date(
-	// 							nomination.dateReceived
-	// 						).toLocaleDateString();
-	// 					});
-	// 					setNominationsData(nominations);
-	// 				})
-	// 				.catch(err => console.log(err));
-	// 		});
-	// }
-
-	// need to fix this on Wednesday
 	const submitForm = async data => {
 		if (NominationsData) {
 			let counter = 0;
+			let newActiveNomination = {};
 			const newNominationData = NominationsData.map(nomination => {
 				if (nomination.id === props.id) {
 					nomination.admissionDate = data['Admission Date'];
 					nomination.dischargeDate = data['Discharge Date'];
-					nomination.representativeEmailAddress = data['Email Address'];
+					nomination.representativeEmailAddress =
+						data['Representative Email Address'];
 					nomination.representativePhoneNumber = data['Phone Number'];
 					nomination.representativeRelationship = data['Relationship'];
 					nomination.representativeName = data['Representative Name'];
-					nomination.representativeSpanishRequested =
-						data['Request to communicate in Spanish?'];
-					setActiveNomination(nomination);
-					console.log(nomination);
-					console.log(`Counter: ${counter}`);
+					if (data['Request to communicate in Spanish?'] === 'Yes') {
+						nomination.representativeSpanishRequested = true
+					} else {
+						nomination.representativeSpanishRequested = false
+					}
+					// console.log('Data');
+					// console.log(data);
+					// console.log('nomination');
+					// console.log(nomination);
+					// console.log(`Counter: ${counter}`);
+					newActiveNomination = nomination;
 				}
 				counter++;
 				return nomination;
 			});
 			const requestBody = {
-				admissionDate: activeNomination.admissionDate,
-				dischargeDate: activeNomination.dischargeDate,
-				representativeEmailAddress: activeNomination.representativeEmailAddress,
-				representativePhoneNumber: activeNomination.representativePhoneNumber,
-				representativeRelationship: activeNomination.representativeRelationship,
-				representativeName: activeNomination.representativeName,
-				representativeSpanishRequested: activeNomination.representativeSpanishRequested
-			}
-			// const jsonObject = JSON.stringify(requestBody)
-			// console.log(`JSON STRINGIFY ${jsonObject}`);
-			const response = await nominationsAPI.updateActiveNomData(props.id, requestBody)
-			console.log(response);
-			setNominationsData(newNominationData);
-			props.returnToViewMode()
-		}
+				admissionDate: newActiveNomination.admissionDate,
+				dischargeDate: newActiveNomination.dischargeDate,
+				representativeEmailAddress:
+					newActiveNomination.representativeEmailAddress,
+				representativePhoneNumber:
+					newActiveNomination.representativePhoneNumber,
+				representativeRelationship:
+					newActiveNomination.representativeRelationship,
+				representativeName: newActiveNomination.representativeName,
+				representativeSpanishRequested:
+					newActiveNomination.representativeSpanishRequested,
+			};
 
-		// updateNominationById(props.nomination.id, data).then(() => {
-		// 	console.log(`on submit triggered ${data}`);
-		// 	props.returnToViewMode();
-		// this returns to view mode after successful update request
-		// });
+			const response = await nominationsAPI.updateActiveNomData(
+				props.id,
+				requestBody
+			);
+			// console.log(response);
+			setNominationsData(newNominationData);
+			setActiveNomination(newActiveNomination);
+			props.returnToViewMode('view')
+		}
 	};
 
 	const editablePlainText = [
 		// editable family info:
 		'Representative Name',
-		'Email Address',
+		'Representative Email Address',
 		'Phone Number',
 		'Relationship',
-		'Request to communicate in Spanish?',
+		// 'Request to communicate in Spanish?',
 	];
+
+	const spanishDropdown = 'Request to communicate in Spanish?';
 
 	const editableDates = [
 		// editable patient info labels with dates:
@@ -249,7 +229,7 @@ const ApplicationForm = props => {
 									case editableDates.includes(label):
 										return (
 											<div>
-											<label className={styles.label}>{label}</label>
+												<label className={styles.label}>{label}</label>
 												<input
 													name={label}
 													type='date'
@@ -262,7 +242,7 @@ const ApplicationForm = props => {
 									case editablePlainText.includes(label):
 										return (
 											<div>
-											<label className={styles.label}>{label}</label>
+												<label className={styles.label}>{label}</label>
 												<input
 													name={label}
 													type='text'
@@ -270,6 +250,20 @@ const ApplicationForm = props => {
 													{...register(label)}
 												/>
 												<p>{errors[label]?.message}</p>
+											</div>
+										);
+									case spanishDropdown === label:
+										return (
+											<div>
+												<label className={styles.label}>{label}</label>
+												<select
+													name={label}
+													defaultValue={props.formData[label]}
+													{...register(label)}
+												>
+													<option value='Yes'>Yes</option>
+													<option value='No'>No</option>
+												</select>
 											</div>
 										);
 									default:
@@ -283,7 +277,6 @@ const ApplicationForm = props => {
 										);
 								}
 							})}
-							{/* <button type='submit'>Submit</button> */}
 						</div>
 					</div>
 				</form>
@@ -294,55 +287,3 @@ const ApplicationForm = props => {
 };
 
 export default ApplicationForm;
-
-// const myForm = () => {
-//   const refSubmitButtom = useRef<HTMLButtonElement>(null);
-//   const { handleSubmit } = useForm();
-//   const triggerSubmit = () => {
-//     refSubmitButtom?.current?.click();
-//   };
-//   const submitHandler = (data: any) => {
-//     console.log(data);
-//   }
-//   return (
-//     <>
-//     <form onSubmit={handleSubmit(submitHandler)}>
-//        {/* your form goes here */}
-//       <button hidden={true} ref={refSubmitButtom} type={"submit"} />
-//     </form>
-//     </>
-//   )
-// }
-
-// Four Things in Edit Mode:
-// Titles to render one way - CHECK
-// Date inputs to render one way
-// Text inputs to render one way
-// Everything else
-
-// let keys = Object.keys(props.formData);
-// let jsxArray = keys.map(key => {
-//   switch (true) {
-//     case editableDates.includes(key):
-//       return (
-//         <input
-//           name={key}
-//           type='date'
-//           defaultValue={props.formData[key]}
-//         />
-//       );
-//     default:
-//       return (
-//         <h1>
-//           {key},{props.formData[key]}
-//         </h1>
-//       );
-//   }
-// });
-// jsxArray.push(<input type='submit' />);
-// let reactElements = React.createElement(
-//   'form',
-//   { onSubmit: handleSubmit(onSubmit) },
-//   jsxArray
-// );
-// return reactElements;

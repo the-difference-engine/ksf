@@ -64,23 +64,30 @@ const NominationPage = ({
 	const newDate = new Date(dischargeDate);
 	const dischargeDateStr = newDate.toLocaleDateString();
 
+	let spanishRepString;
+	if (activeNomination.representativeSpanishRequested) {
+		spanishRepString = 'Yes'
+	} else {
+		spanishRepString = 'No'
+	}
+
 	const formData = {
 		'Patient Information': '',
 		'Patient Name': `${activeNomination.patientName}`,
 		'Patient Age': `${activeNomination.patientAge}`,
 		'Admission Date': `${properDateFormat}`,
-		'Discharge Date': `${activeNomination.dischargeDate}`,
+		'Discharge Date': `${dischargeDateStr}`,
 		'Hospitalized for at least 21 days?': `${diffDays}`,
 		'Diagnosis/case information': `${activeNomination.patientDiagnosis}`,
 		'Family Member Information': '',
 		'Representative Name': `${activeNomination.representativeName}`,
-		'Email Address': `${activeNomination.representativeEmailAddress}`,
+		'Representative Email Address': `${activeNomination.representativeEmailAddress}`,
 		'Phone Number': `${activeNomination.representativePhoneNumber}`,
 		Relationship: `${activeNomination.representativeRelationship}`,
-		'Request to communicate in Spanish?': 'No',
+		'Request to communicate in Spanish?': `${spanishRepString}`,
 		'Health Provider Information': '',
 		'Provider Name': `${activeNomination.providerName}`,
-		'Email Address': `${activeNomination.providerEmailAddress}`,
+		'Provider Email Address': `${activeNomination.providerEmailAddress}`,
 		'Phone Number': `${activeNomination.providerPhoneNumber}`,
 		Title: `${activeNomination.providerTitle}`,
 		'Name of Hospital': `${activeNomination.providerTitle}`,
@@ -100,14 +107,14 @@ const NominationPage = ({
 
 	function handleSaveHasBeenClicked() {
 		setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
-	//	setMode('view');
+		setMode('view');
 		console.log(
 			`Nomination Page - handleSaveHasBeenClicked: ${saveHasBeenClicked}, ${mode}`
 		);
 	}
 
-	const returnToViewMode = () => {
-		setMode('view')
+	const returnToViewMode = (mode) => {
+		setMode(mode)
 	}
 
 	return (

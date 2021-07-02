@@ -147,8 +147,6 @@ const emailVerifiction = async (req, res) => {
  */
 
 // work in progress here - continue working on Thursday
-// change errors to red text
-// make sure everything is actually updated - the 3 things
 const updateActiveNomData = async (req, res) => {
 	const { id } = req.params;
 	try {
@@ -156,27 +154,11 @@ const updateActiveNomData = async (req, res) => {
 			where: { id },
 		});
 		console.dir(req.body);
-		// console.dir(nomination)
-		// nomination.update({
-		// 	admissionDate: req.body.admissionDate,
-		// 	dischargeDate: req.body.dischargeDate,
-		// 	representativeEmailAddress: req.body.representativeEmailAddress,
-		// 	representativePhoneNumber: req.body.representativePhoneNumber,
-		// 	representativeRelationship: req.body.representativeRelationship,
-		// 	representativeName: req.body.representativeName,
-		// 	representativeSpanishRequested: req.body.representativeSpanishRequested,
-		// });
 
     await nomination.update({ ...req.body.propsObject }, {
       where: { id }
     });
-		// const nomination2 = await db.Nomination.findOne({
-		//   where: { id },
-		// });
-    // console.log('nomination2')
-		// console.dir(nomination2)
-		// console.log('response:');
-		// console.log(res)
+
 	} catch (err) {
 		console.log(err);
 	}
