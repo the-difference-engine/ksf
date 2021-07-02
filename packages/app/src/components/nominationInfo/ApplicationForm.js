@@ -35,7 +35,7 @@ const ApplicationForm = props => {
 			);
 			handleSubmit(submitForm)();
 		}
-		// firstUpdate.current = false;
+		firstUpdate.current = false;
 	}, [props.saveHasBeenClicked]);
 
 	const functionRequestBody = nomination => {
@@ -51,20 +51,20 @@ const ApplicationForm = props => {
 		return requestBody;
 	};
 
-	const apiCallback = useCallback(() => {
-		const requestBody2 = functionRequestBody(props.nomination);
-		const jsonObject = JSON.stringify(requestBody2);
-		console.log('hello in apiCallback');
-		console.log(`JSON STRINGIFY ${jsonObject}`);
-	}, [props.nomination]);
+	// const apiCallback = useCallback(() => {
+	// 	const requestBody2 = functionRequestBody(props.nomination);
+	// 	const jsonObject = JSON.stringify(requestBody2);
+	// 	console.log('hello in apiCallback');
+	// 	console.log(`JSON STRINGIFY ${jsonObject}`);
+	// }, [props.nomination]);
 
-	useEffect(() => {
-		if (!firstUpdate.current) {
-			console.log('hello');
-			apiCallback();
-		}
-		firstUpdate.current = false;
-	}, [apiCallback]);
+	// useEffect(() => {
+	// 	if (!firstUpdate.current) {
+	// 		console.log('hello');
+	// 		apiCallback();
+	// 	}
+	// 	firstUpdate.current = false;
+	// }, [apiCallback]);
 
 	const validationSchema = Yup.object({
 		'Admission Date': Yup.date().required('Required'),
@@ -139,8 +139,8 @@ const ApplicationForm = props => {
 					nomination.representativeSpanishRequested =
 						data['Request to communicate in Spanish?'];
 					setActiveNomination(nomination);
-					// console.log(nomination);
-					// console.log(`Counter: ${counter}`);
+					console.log(nomination);
+					console.log(`Counter: ${counter}`);
 				}
 				counter++;
 				return nomination;
@@ -159,6 +159,7 @@ const ApplicationForm = props => {
 			const response = await nominationsAPI.updateActiveNomData(props.id, requestBody)
 			console.log(response);
 			setNominationsData(newNominationData);
+			props.returnToViewMode()
 		}
 
 		// updateNominationById(props.nomination.id, data).then(() => {
