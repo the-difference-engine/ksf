@@ -22,7 +22,7 @@ const SearchResultsCard = () => {
         return 0;
       })
     );
-  }, [SearchResultData, _]);
+  }, [SearchResultData]);
 
   return (
     <>
