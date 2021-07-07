@@ -154,11 +154,32 @@ function sendHIPAAReminder(nomination) {
     .catch((err) => console.log(err))
 }
 
+function sendHIPAAProvider(nomination) {
+  email
+  .send(
+    {
+      template: 'hipaaProvider',
+      message: {
+        from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+        replyTo: 'info@keepswimmingfoundation.org',
+        to: nomination.providerEmailAddress,
+      },
+      locals: {
+        name: nomination.patientName,
+        providerName: nomination.providerName,
+      }
+    }
+  )
+  .then(console.log('the provider has been notified about HIPAA Authorization process'))
+  .catch((err) => console.log(err))
+}
+
 module.exports = {
   sendDeclineEmail,
   sendSurveyEmail,
   verifyHcEmail,
   sendHIPAAEmail,
   sendHIPAAReminder,
-  sendSurveyReminder
+  sendSurveyReminder,
+  sendHIPAAProvider
 };
