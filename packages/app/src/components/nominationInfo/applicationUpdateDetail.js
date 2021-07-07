@@ -47,15 +47,6 @@ const ApplicationUpdateDetail = props => {
     }, 2000);
   };
 
-  // Taylor & Somers TODO: add put/patch API call
-  // https://www.freecodecamp.org/news/build-forms-in-react-with-react-hook-form-library/
-  // https://react-hook-form.com/api/useform
-  // useEffect(() => {
-  // 	if (hasBeenClicked) {
-  // 		handleSubmit();
-  // 	}
-  // });
-
   // if isEditing is false, then if props.hasBeenClicked then isEditing will be true
   useEffect(() => {
     if (props.hasBeenClicked) {

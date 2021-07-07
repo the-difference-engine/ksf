@@ -108,15 +108,10 @@ const ApplicationForm = props => {
 					nomination.representativeRelationship = data['Relationship'];
 					nomination.representativeName = data['Representative Name'];
 					if (data['Request to communicate in Spanish?'] === 'Yes') {
-						nomination.representativeSpanishRequested = true
+						nomination.representativeSpanishRequested = true;
 					} else {
-						nomination.representativeSpanishRequested = false
+						nomination.representativeSpanishRequested = false;
 					}
-					// console.log('Data');
-					// console.log(data);
-					// console.log('nomination');
-					// console.log(nomination);
-					// console.log(`Counter: ${counter}`);
 					newActiveNomination = nomination;
 				}
 				counter++;
@@ -140,10 +135,9 @@ const ApplicationForm = props => {
 				props.id,
 				requestBody
 			);
-			// console.log(response);
+			console.log(response);
 			setNominationsData(newNominationData);
 			setActiveNomination(newActiveNomination);
-			props.returnToViewMode('view')
 		}
 	};
 
@@ -287,3 +281,7 @@ const ApplicationForm = props => {
 };
 
 export default ApplicationForm;
+
+// Taylor and Somers' TODO:
+// show previous/default values of dates when edit is clicked
+// red text for validation errors/message, red input box

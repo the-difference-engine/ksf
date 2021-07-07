@@ -140,7 +140,7 @@ const emailVerifiction = async (req, res) => {
 };
 
 /**
- * Updates databse with information from active application updates on front end.
+ * Updates database with information from active application updates on front end.
  *
  * @param {*} req - updated props data object
  * @param {*} res - response code
@@ -155,12 +155,16 @@ const updateActiveNomData = async (req, res) => {
 		});
 		console.dir(req.body);
 
-    await nomination.update({ ...req.body.propsObject }, {
-      where: { id }
-    });
-
+		await nomination.update(
+			{ ...req.body },
+			{
+				where: { id },
+			}
+		);
+		return res.status(200).json({ message: 'updated' });
 	} catch (err) {
 		console.log(err);
+		return res.status(400).json({ error: error.message });
 	}
 };
 

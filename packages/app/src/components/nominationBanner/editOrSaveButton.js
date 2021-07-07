@@ -26,7 +26,6 @@ const EditOrSaveButton = props => {
 				<button
 					className='button button-outline'
 					type='submit'
-					// onClick={props.handleSaveHasBeenClicked}
 					onClick={() => {
 						props.handleSaveHasBeenClicked();
 						console.log(`Button Click: ${props.mode}`);

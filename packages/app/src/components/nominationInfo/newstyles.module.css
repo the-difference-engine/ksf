@@ -55,7 +55,6 @@
 
 input[type='text'],
 input[type='date'] {
-	margin-left: 20px;
 	width: 75%;
 }
 

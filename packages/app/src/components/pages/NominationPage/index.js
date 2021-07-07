@@ -113,10 +113,6 @@ const NominationPage = ({
 		);
 	}
 
-	const returnToViewMode = (mode) => {
-		setMode(mode)
-	}
-
 	return (
 		<>
 			{activeNomination ? (
@@ -133,7 +129,6 @@ const NominationPage = ({
 					<ApplicationStages />
 					{/* Sends click state data to all NominationInfo children */}
 					<ApplicationForm
-					  returnToViewMode={returnToViewMode}
 						formData={formData}
 						mode={mode}
 						editHasBeenClicked={editHasBeenClicked}
