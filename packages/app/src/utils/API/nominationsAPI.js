@@ -24,6 +24,9 @@ const nominationsAPI = {
   syncNominations: function () {
     return axios.get(`${cleanURL(API_URL)}/api/syncnominations`);
   },
+  validateEmail: function (token) {
+    return axios.get(`${cleanURL(API_URL)}/api/confirmation/${token}`);
+  }
 };
 
 export default nominationsAPI;

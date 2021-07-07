@@ -167,6 +167,7 @@ const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
     const { nomination: id } = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(nomination, '-----nomination------');
     await db.Nomination.update({ emailValidated: true }, { where: { id } });
     return res.status(200).json({ status: 'ok' });
   } catch (error) {

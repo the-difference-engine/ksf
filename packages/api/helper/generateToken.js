@@ -10,3 +10,5 @@ const generateToken = (nomination) => {
 module.exports = {
   generateToken,
 };
+
+
