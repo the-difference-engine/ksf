@@ -22,6 +22,7 @@ const NominationPage = ({
 	const [error, setError] = useState();
 	const [editHasBeenClicked, setEditHasBeenClicked] = useState(false);
 	const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);
+	// const [validationFailed, setValidationFailed] = useState(false)
 
 	const [mode, setMode] = useState('view');
 
@@ -46,11 +47,19 @@ const NominationPage = ({
 	} = activeNomination;
 	const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
+	// const admissionDateObject = new Date(admissionDate);
+	// const dischargeDateObject = new Date(activeNomination.dischargeDate); 
+	// const properDateFormat = admissionDateObject.toLocaleDateString();
+
+	// const newDate = new Date(dischargeDate);
+
+	// 
 	const admissionDateObject = new Date(admissionDate);
+	const dischargeDateObject = new Date(dischargeDate);
 
-	const properDateFormat = admissionDateObject.toLocaleDateString();
+	const admissionDateStr = admissionDateObject.toLocaleDateString();
 
-	const dischargeDateObject = new Date(activeNomination.dischargeDate);
+	const dischargeDateStr = dischargeDateObject.toLocaleDateString();
 
 	const diffDays =
 		Math.round(
@@ -61,8 +70,7 @@ const NominationPage = ({
 			? 'Yes'
 			: 'No'; /* <- hours*minutes*seconds*milliseconds */
 
-	const newDate = new Date(dischargeDate);
-	const dischargeDateStr = newDate.toLocaleDateString();
+
 
 	let spanishRepString;
 	if (activeNomination.representativeSpanishRequested) {
@@ -75,20 +83,20 @@ const NominationPage = ({
 		'Patient Information': '',
 		'Patient Name': `${activeNomination.patientName}`,
 		'Patient Age': `${activeNomination.patientAge}`,
-		'Admission Date': `${properDateFormat}`,
+		'Admission Date': `${admissionDateStr}`,
 		'Discharge Date': `${dischargeDateStr}`,
 		'Hospitalized for at least 21 days?': `${diffDays}`,
 		'Diagnosis/case information': `${activeNomination.patientDiagnosis}`,
 		'Family Member Information': '',
 		'Representative Name': `${activeNomination.representativeName}`,
 		'Representative Email Address': `${activeNomination.representativeEmailAddress}`,
-		'Phone Number': `${activeNomination.representativePhoneNumber}`,
+		'Representative Phone Number': `${activeNomination.representativePhoneNumber}`,
 		Relationship: `${activeNomination.representativeRelationship}`,
 		'Request to communicate in Spanish?': `${spanishRepString}`,
 		'Health Provider Information': '',
 		'Provider Name': `${activeNomination.providerName}`,
 		'Provider Email Address': `${activeNomination.providerEmailAddress}`,
-		'Phone Number': `${activeNomination.providerPhoneNumber}`,
+		'Provider Phone Number': `${activeNomination.providerPhoneNumber}`,
 		Title: `${activeNomination.providerTitle}`,
 		'Name of Hospital': `${activeNomination.providerTitle}`,
 		'Hospital URL': `${activeNomination.providerTitle}`,
@@ -107,10 +115,18 @@ const NominationPage = ({
 
 	function handleSaveHasBeenClicked() {
 		setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
-		setMode('view');
+		// setMode('view');
 		console.log(
 			`Nomination Page - handleSaveHasBeenClicked: ${saveHasBeenClicked}, ${mode}`
 		);
+	}
+
+	// function handleFailedValidation() {
+
+	// }
+
+	function revertMode(mode) {
+		setMode(mode)
 	}
 
 	return (
@@ -136,6 +152,7 @@ const NominationPage = ({
 						nomination={activeNomination}
 						gridContent={true}
 						id={id}
+						revertMode={revertMode}
 					/>
 				</div>
 			) : (

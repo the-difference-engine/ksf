@@ -16,6 +16,12 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 // 5. red highlighting of input box
 // 6. add testing
 
+// Taylor and Somers' TODO:
+// show previous/default values of dates when edit is clicked - date will not show up until after you've done one edit/save, then if you hit edit again the dates will populate
+// red text for validation errors/message, red input box
+//  dates displayed once edited are one day prior to the dates inputted - is that on purpose or not?
+// figure out formatting of phone number
+
 const ApplicationForm = props => {
 	const firstUpdate = useRef(true);
 
@@ -63,7 +69,7 @@ const ApplicationForm = props => {
 		'Admission Date': Yup.date().required('Required'),
 		'Discharge Date': Yup.date()
 			.min(
-				Yup.ref('admissionDate'),
+				Yup.ref('Admission Date'),
 				'Discharge date cannot be before admission date.'
 			)
 			.required('Required'),
@@ -71,10 +77,10 @@ const ApplicationForm = props => {
 			.min(3, 'Must be 3 characters or more.')
 			.max(30, 'Must be 30 characters or less.')
 			.required('Required'),
-		'Email Address': Yup.string()
+		'Representative Email Address': Yup.string()
 			.email('Invalid email address.')
 			.required('Required'), // This handles email validation with no regex.
-		'Phone Number': Yup.string()
+		'Representative Phone Number': Yup.string()
 			.matches(phoneRegex, 'Please enter a valid phone number.')
 			.required('Required'),
 		Relationship: Yup.string()
@@ -91,7 +97,7 @@ const ApplicationForm = props => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		// resolver: yupResolver(validationSchema),
+		resolver: yupResolver(validationSchema),
 	});
 
 	const submitForm = async data => {
@@ -104,7 +110,8 @@ const ApplicationForm = props => {
 					nomination.dischargeDate = data['Discharge Date'];
 					nomination.representativeEmailAddress =
 						data['Representative Email Address'];
-					nomination.representativePhoneNumber = data['Phone Number'];
+					nomination.representativePhoneNumber =
+						data['Representative Phone Number'];
 					nomination.representativeRelationship = data['Relationship'];
 					nomination.representativeName = data['Representative Name'];
 					if (data['Request to communicate in Spanish?'] === 'Yes') {
@@ -135,6 +142,8 @@ const ApplicationForm = props => {
 				props.id,
 				requestBody
 			);
+			// check status, validation passed before changing to view
+			props.revertMode('view');
 			console.log(response);
 			setNominationsData(newNominationData);
 			setActiveNomination(newActiveNomination);
@@ -145,7 +154,7 @@ const ApplicationForm = props => {
 		// editable family info:
 		'Representative Name',
 		'Representative Email Address',
-		'Phone Number',
+		'Representative Phone Number',
 		'Relationship',
 		// 'Request to communicate in Spanish?',
 	];
@@ -167,6 +176,7 @@ const ApplicationForm = props => {
 	const modes = {
 		view: () => {
 			let keys = Object.keys(props.formData);
+			console.log('Errors: ', errors);
 			return (
 				<div className={styles.main}>
 					<div className={styles.header}>
@@ -200,6 +210,10 @@ const ApplicationForm = props => {
 		},
 		edit: () => {
 			let keys = Object.keys(props.formData);
+			console.log('Errors: ', errors);
+			console.log('admission date: ', props.nomination.admissionDate);
+			console.log('Discharge date: ', props.nomination.dischargeDate);
+
 			return (
 				<form>
 					<div className={styles.main}>
@@ -281,7 +295,3 @@ const ApplicationForm = props => {
 };
 
 export default ApplicationForm;
-
-// Taylor and Somers' TODO:
-// show previous/default values of dates when edit is clicked
-// red text for validation errors/message, red input box
