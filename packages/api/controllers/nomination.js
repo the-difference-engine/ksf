@@ -11,6 +11,14 @@ const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
 
+const NOMINATION_STATUS = {
+  received: 'received',
+  awaiting: 'Awaiting HIPAA',
+  verified: 'HIPAA Verified',
+  document_review: 'Document Review',
+  board_review: 'Ready for Board Review',
+  declined: 'Declined',
+}
 
 const getNominationById = async (req, res) => {
   try {
@@ -92,11 +100,21 @@ const updateNomination = async (req, res) => {
         console.error('Was not able to change reminderSent bool', error);
       }
 
-      if (nomination.status === 'Decline') {
-        sendDeclineEmail(nomination);
+      if (nomination.status === NOMINATION_STATUS.declined) {
+        try {
+          nomination.update(
+            { declinedTimestamp: Date() }
+            )
+          } 
+        catch (error) {
+          console.log("Error declining nomination. Could not record readyForBoardReviewTimestamp ", error)
+        }
+        finally {
+          sendDeclineEmail(nomination);
+        } 
       }
 
-      if (nomination.status === 'Awaiting HIPAA') {
+      if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
 
@@ -117,7 +135,7 @@ const updateNomination = async (req, res) => {
         }
       }
 
-      if (nomination.status === 'HIPAA Verified') {
+      if (nomination.status === NOMINATION_STATUS.verified) {
         try {
           nomination.update({ hipaaTimestamp: Date() });
         } catch (err) {
@@ -127,11 +145,8 @@ const updateNomination = async (req, res) => {
           sendSurveyEmail(nomination);
         }
       }
-      if (nomination.status === 'Ready for Board Review') {
+      if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
-          // find the active nomination id
-          
-          // const grant =  await findActive(); //did not work
           const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
           
           nomination.update({ 
