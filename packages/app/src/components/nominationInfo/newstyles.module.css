@@ -17,14 +17,14 @@
 #editBtn {
 	background-color: white;
 	color: green;
-  color: var(--brand);
-  border-color: var(--light-background);
-  border-radius: 4rem;
-} 
+	color: var(--brand);
+	border-color: var(--light-background);
+	border-radius: 4rem;
+}
 
 #saveBtn {
-  background-color: green;
-  color: white;
+	background-color: green;
+	color: white;
 }
 
 /*********************************/
@@ -56,6 +56,20 @@
 input[type='text'],
 input[type='date'] {
 	width: 75%;
+}
+
+/*********************************/
+/************ errors ************/
+/*********************************/
+
+.yupError {
+	color: red;
+	font-size: 14px;
+}
+
+input[type='text'].inputError,
+input[type='date'].inputError {
+	border: red solid 2px;
 }
 
 @media screen and (min-width: 700px) {

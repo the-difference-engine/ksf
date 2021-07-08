@@ -243,8 +243,9 @@ const ApplicationForm = props => {
 													type='date'
 													defaultValue={props.formData[label]}
 													{...register(label)}
+													className={errors[label]?.message ? styles.inputError : ''}
 												/>
-												<p>{errors[label]?.message}</p>
+												<p className={styles.yupError}>{errors[label]?.message}</p>
 											</div>
 										);
 									case editablePlainText.includes(label):
@@ -256,8 +257,9 @@ const ApplicationForm = props => {
 													type='text'
 													defaultValue={props.formData[label]}
 													{...register(label)}
+													className={errors[label]?.message ? styles.inputError : ''}
 												/>
-												<p>{errors[label]?.message}</p>
+												<p className={styles.yupError}>{errors[label]?.message}</p>
 											</div>
 										);
 									case spanishDropdown === label:
