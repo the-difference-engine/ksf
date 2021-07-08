@@ -2,6 +2,7 @@ import style from './style.css';
 import React, { useEffect, useState, useContext } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI'
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+import declineNominationModal from '../modals/declineNomination/declineNomination';
 const states = require('us-state-codes');
 
 const NominationBanner = ({ nomination }) => {
@@ -52,7 +53,7 @@ const NominationBanner = ({ nomination }) => {
               </span>
             </div>
             <div className="column name">
-              <button className=" decline-button" onClick={declineApplication} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
+              <button className=" decline-button" onClick={declineNominationModal} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
                 Decline Application
               </button>
             </div>
