@@ -7,6 +7,7 @@ import SearchBar from '../../SearchBar';
 import NominationInfo from '../../nominationInfo';
 import ApplicationUpdateDetail from '../../nominationInfo/applicationUpdateDetail';
 import ApplicationForm from '../../nominationInfo/ApplicationForm';
+import { format } from 'date-fns';
 
 const NominationPage = ({
 	match: {
@@ -47,15 +48,16 @@ const NominationPage = ({
 	} = activeNomination;
 	const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
-	// const admissionDateObject = new Date(admissionDate);
-	// const dischargeDateObject = new Date(activeNomination.dischargeDate); 
-	// const properDateFormat = admissionDateObject.toLocaleDateString();
 
-	// const newDate = new Date(dischargeDate);
+	// look at format and DatePicker
 
-	// 
+	// const admissionDateObject = admissionDate ? format(new Date(admissionDate), 'MM/dd/yyyy') : '';
+	
+	// const dischargeDateObject = dischargeDate ? format(new Date(dischargeDate), 'MM/dd/yyyy') : '';
+
 	const admissionDateObject = new Date(admissionDate);
 	const dischargeDateObject = new Date(dischargeDate);
+	
 
 	const admissionDateStr = admissionDateObject.toLocaleDateString();
 

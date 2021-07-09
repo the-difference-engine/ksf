@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useContext } from 'react';
 // import styles from './styles.module.css';
 import styles from './newstyles.module.css';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+import DatePicker from 'react-datepicker';
+import { format } from 'date-fns';
 
 // TODO:
 // 1. Get original dates to display when edit is clicked
@@ -95,6 +97,7 @@ const ApplicationForm = props => {
 	const {
 		register,
 		handleSubmit,
+		control,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(validationSchema),
@@ -176,7 +179,7 @@ const ApplicationForm = props => {
 	const modes = {
 		view: () => {
 			let keys = Object.keys(props.formData);
-			console.log('Errors: ', errors);
+			console.log(typeof props.nomination.admissionDate);
 			return (
 				<div className={styles.main}>
 					<div className={styles.header}>
@@ -213,6 +216,7 @@ const ApplicationForm = props => {
 			console.log('Errors: ', errors);
 			console.log('admission date: ', props.nomination.admissionDate);
 			console.log('Discharge date: ', props.nomination.dischargeDate);
+			console.log(typeof props.nomination.admissionDate);
 
 			return (
 				<form>
@@ -238,14 +242,31 @@ const ApplicationForm = props => {
 										return (
 											<div>
 												<label className={styles.label}>{label}</label>
-												<input
+												{/* <input
 													name={label}
 													type='date'
 													defaultValue={props.formData[label]}
 													{...register(label)}
-													className={errors[label]?.message ? styles.inputError : ''}
+													className={
+														errors[label]?.message ? styles.inputError : ''
+													}
+												/> */}
+												<Controller
+													control={control}
+													name={label}
+													render={({ field }) => (
+														<DatePicker
+															// startDate={props.formData[label]}
+															dateFormat="MM-dd-yyyy"
+															selected={format(props.formData[label], 'MM/dd/yyyy')}
+															onChange={date => field.onChange(date)}
+															// selected={field.value}
+														/>
+													)}
 												/>
-												<p className={styles.yupError}>{errors[label]?.message}</p>
+												<p className={styles.yupError}>
+													{errors[label]?.message}
+												</p>
 											</div>
 										);
 									case editablePlainText.includes(label):
@@ -257,9 +278,13 @@ const ApplicationForm = props => {
 													type='text'
 													defaultValue={props.formData[label]}
 													{...register(label)}
-													className={errors[label]?.message ? styles.inputError : ''}
+													className={
+														errors[label]?.message ? styles.inputError : ''
+													}
 												/>
-												<p className={styles.yupError}>{errors[label]?.message}</p>
+												<p className={styles.yupError}>
+													{errors[label]?.message}
+												</p>
 											</div>
 										);
 									case spanishDropdown === label:
