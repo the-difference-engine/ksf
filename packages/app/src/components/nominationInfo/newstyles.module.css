@@ -69,7 +69,7 @@ input[type='date'] {
 
 input[type='text'].inputError,
 input[type='date'].inputError {
-	border: red solid 2px;
+	border: red solid 1px;
 }
 
 @media screen and (min-width: 700px) {
