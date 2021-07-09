@@ -8,7 +8,6 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import DatePicker from 'react-datepicker';
-import { format } from 'date-fns';
 
 // TODO:
 // 1. Get original dates to display when edit is clicked
@@ -214,8 +213,10 @@ const ApplicationForm = props => {
 		edit: () => {
 			let keys = Object.keys(props.formData);
 			console.log('Errors: ', errors);
-			console.log('admission date: ', props.nomination.admissionDate);
-			console.log('Discharge date: ', props.nomination.dischargeDate);
+			console.log('Admission date: ', props.formData["Admission Date"]);
+		//	console.dir(props.formData.admissionDate)
+			console.log('Discharge date: ', props.formData["Discharge Date"]);
+		//	console.dir(props.formData.dischargeDate)
 			console.log(typeof props.nomination.admissionDate);
 
 			return (
@@ -252,15 +253,13 @@ const ApplicationForm = props => {
 													}
 												/> */}
 												<Controller
-													control={control}
 													name={label}
-													render={({ field }) => (
+													control={control}
+													render={({ onChange, value }) => (
 														<DatePicker
-															// startDate={props.formData[label]}
-															dateFormat="MM-dd-yyyy"
-															selected={format(props.formData[label], 'MM/dd/yyyy')}
-															onChange={date => field.onChange(date)}
-															// selected={field.value}
+															selected={props.formData[label] ? new Date(props.formData[label]) : null}
+															onChange={onChange}
+															dateFormat="MM/dd/yyyy"
 														/>
 													)}
 												/>

@@ -7,7 +7,7 @@ import SearchBar from '../../SearchBar';
 import NominationInfo from '../../nominationInfo';
 import ApplicationUpdateDetail from '../../nominationInfo/applicationUpdateDetail';
 import ApplicationForm from '../../nominationInfo/ApplicationForm';
-import { format } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz'
 
 const NominationPage = ({
 	match: {
@@ -49,19 +49,72 @@ const NominationPage = ({
 	const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
 
+	// const getUTCDate = (dateString) => {
+	// 	const date = new Date(dateString);
+	  
+	// 	return new Date(
+	// 	  date.getUTCFullYear(),
+	// 	  date.getUTCMonth(),
+	// 	  date.getUTCDate(),
+	// 	  date.getUTCHours(),
+	// 	  date.getUTCMinutes(),
+	// 	  date.getUTCSeconds(),
+	// 	);
+	//   };
+
 	// look at format and DatePicker
 
-	// const admissionDateObject = admissionDate ? format(new Date(admissionDate), 'MM/dd/yyyy') : '';
+	//	const admissionDateStr = admissionDate ? format(getUTCDate(admissionDate), 'MM/dd/yyyy') : '';
 	
-	// const dischargeDateObject = dischargeDate ? format(new Date(dischargeDate), 'MM/dd/yyyy') : '';
+//	const dischargeDateStr = dischargeDate ? format(getUTCDate(dischargeDate), 'MM/dd/yyyy') : '';
 
+const admissionDate2 = new Date(admissionDate)
+const dischargeDate2 = new Date(dischargeDate)
+
+
+// const date = getDatePickerValue() // e.g. 2014-06-25 10:00:00 (picked in any time zone)
+const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone // e.g. America/Los_Angeles
+
+// const utcDate = zonedTimeToUtc(date, timeZone)
+	// let admissionDateUTC
+	// if (admissionDate) {
+	//     admissionDateUTC = zonedTimeToUtc(admissionDate2, timeZone).toUTCString()
+	// }
+	// let dischargeDateUTC
+	// if (dischargeDate) {
+	// 	dischargeDateUTC = zonedTimeToUtc(dischargeDate2, timeZone).toUTCString()
+	// }
+
+	// const admissionDate2 = new Date(admissionDate)
+	// const dischargeDate2 = new Date(dischargeDate)
+	// const convertToUTC = (date) => {
+	// 	const nowUTC = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+	// 	date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())
+
+	// 	return new Date(nowUTC)
+	// }
+	// let admissionDateUTC
+	// if (admissionDate) {
+	//     admissionDateUTC = convertToUTC(admissionDate2)
+	// }
+	// let dischargeDateUTC
+	// if (dischargeDate) {
+	// 	dischargeDateUTC = convertToUTC(dischargeDate2)
+	// }
 	const admissionDateObject = new Date(admissionDate);
 	const dischargeDateObject = new Date(dischargeDate);
-	
-
-	const admissionDateStr = admissionDateObject.toLocaleDateString();
-
-	const dischargeDateStr = dischargeDateObject.toLocaleDateString();
+	// console.log("this is admissionDateUTC", admissionDateUTC)
+	// console.log("this is dischargeDateUTC", dischargeDateUTC)
+	let admissionDateActualObject
+	if (admissionDate) {
+		admissionDateActualObject = new Date(Date.parse(admissionDate))
+	}
+	let dischargeDateActualObject
+	if (dischargeDate) {
+		dischargeDateActualObject = new Date(Date.parse(dischargeDate))
+	}
+    
+     
 
 	const diffDays =
 		Math.round(
@@ -85,8 +138,8 @@ const NominationPage = ({
 		'Patient Information': '',
 		'Patient Name': `${activeNomination.patientName}`,
 		'Patient Age': `${activeNomination.patientAge}`,
-		'Admission Date': `${admissionDateStr}`,
-		'Discharge Date': `${dischargeDateStr}`,
+		'Admission Date': `${admissionDateActualObject}`,
+		'Discharge Date': `${dischargeDateActualObject}`,
 		'Hospitalized for at least 21 days?': `${diffDays}`,
 		'Diagnosis/case information': `${activeNomination.patientDiagnosis}`,
 		'Family Member Information': '',
