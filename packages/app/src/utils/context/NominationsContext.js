@@ -27,6 +27,7 @@ export const NominationsDataProvider = (props) => {
           nomination.dateReceived = new Date(
             nomination.dateReceived
           ).toLocaleDateString();
+          
         });
         setNominationsData(nominations);
       })

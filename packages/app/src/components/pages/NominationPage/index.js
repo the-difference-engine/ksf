@@ -7,7 +7,7 @@ import SearchBar from '../../SearchBar';
 import NominationInfo from '../../nominationInfo';
 import ApplicationUpdateDetail from '../../nominationInfo/applicationUpdateDetail';
 import ApplicationForm from '../../nominationInfo/ApplicationForm';
-import { zonedTimeToUtc } from 'date-fns-tz'
+// import { zonedTimeToUtc } from 'date-fns-tz'
 
 const NominationPage = ({
 	match: {
@@ -68,12 +68,8 @@ const NominationPage = ({
 	
 //	const dischargeDateStr = dischargeDate ? format(getUTCDate(dischargeDate), 'MM/dd/yyyy') : '';
 
-const admissionDate2 = new Date(admissionDate)
-const dischargeDate2 = new Date(dischargeDate)
-
-
 // const date = getDatePickerValue() // e.g. 2014-06-25 10:00:00 (picked in any time zone)
-const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone // e.g. America/Los_Angeles
+// const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone // e.g. America/Los_Angeles
 
 // const utcDate = zonedTimeToUtc(date, timeZone)
 	// let admissionDateUTC
@@ -101,25 +97,23 @@ const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone // e.g. Americ
 	// if (dischargeDate) {
 	// 	dischargeDateUTC = convertToUTC(dischargeDate2)
 	// }
-	const admissionDateObject = new Date(admissionDate);
-	const dischargeDateObject = new Date(dischargeDate);
+	// const admissionDateObject = new Date(admissionDate);
+	// const dischargeDateObject = new Date(dischargeDate);
+
+
+	const admissionDateObject2 = new Date(admissionDate);
+	admissionDateObject2.setTime(admissionDateObject2.getTime() + admissionDateObject2.getTimezoneOffset()*60*1000)
+	
+	const dischargeDateObject2 = new Date(dischargeDate);
+	dischargeDateObject2.setTime(dischargeDateObject2.getTime() + dischargeDateObject2.getTimezoneOffset()*60*1000)
+
 	// console.log("this is admissionDateUTC", admissionDateUTC)
 	// console.log("this is dischargeDateUTC", dischargeDateUTC)
-	let admissionDateActualObject
-	if (admissionDate) {
-		admissionDateActualObject = new Date(Date.parse(admissionDate))
-	}
-	let dischargeDateActualObject
-	if (dischargeDate) {
-		dischargeDateActualObject = new Date(Date.parse(dischargeDate))
-	}
-    
-     
 
 	const diffDays =
 		Math.round(
 			Math.abs(
-				(admissionDateObject - dischargeDateObject) / (24 * 60 * 60 * 1000)
+				(admissionDateObject2 - dischargeDateObject2) / (24 * 60 * 60 * 1000)
 			)
 		) >= 21
 			? 'Yes'
@@ -138,8 +132,8 @@ const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone // e.g. Americ
 		'Patient Information': '',
 		'Patient Name': `${activeNomination.patientName}`,
 		'Patient Age': `${activeNomination.patientAge}`,
-		'Admission Date': `${admissionDateActualObject}`,
-		'Discharge Date': `${dischargeDateActualObject}`,
+		'Admission Date': admissionDateObject2,
+		'Discharge Date': dischargeDateObject2,
 		'Hospitalized for at least 21 days?': `${diffDays}`,
 		'Diagnosis/case information': `${activeNomination.patientDiagnosis}`,
 		'Family Member Information': '',

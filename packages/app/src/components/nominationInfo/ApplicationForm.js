@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext, useState } from 'react';
 // import styles from './styles.module.css';
 import styles from './newstyles.module.css';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,7 +7,8 @@ import * as Yup from 'yup';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import DatePicker from 'react-datepicker';
+import DatePicker, { CalendarContainer } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // TODO:
 // 1. Get original dates to display when edit is clicked
@@ -33,6 +34,21 @@ const ApplicationForm = props => {
 	const [activeNomination, setActiveNomination] = useContext(
 		ActiveNominationContext
 	);
+
+	const [admissionDate, setAdmissionDate] = useState(new Date());
+	const [dischargeDate, setDischargeDate] = useState(new Date());
+
+	useEffect(() => {
+		if (props.formData['Admission Date'] != 'Invalid Date') {
+			setAdmissionDate(props.formData['Admission Date']);
+		}
+	}, [props.formData['Admission Date']]);
+
+	useEffect(() => {
+		if (props.formData['Discharge Date'] != 'Invalid Date') {
+			setDischargeDate(props.formData['Discharge Date']);
+		}
+	}, [props.formData['Discharge Date']]);
 
 	const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 	const yesNoRegex = /^(?:Yes\b|No\b)/;
@@ -99,7 +115,7 @@ const ApplicationForm = props => {
 		control,
 		formState: { errors },
 	} = useForm({
-		resolver: yupResolver(validationSchema),
+		// resolver: yupResolver(validationSchema),
 	});
 
 	const submitForm = async data => {
@@ -178,7 +194,6 @@ const ApplicationForm = props => {
 	const modes = {
 		view: () => {
 			let keys = Object.keys(props.formData);
-			console.log(typeof props.nomination.admissionDate);
 			return (
 				<div className={styles.main}>
 					<div className={styles.header}>
@@ -213,12 +228,10 @@ const ApplicationForm = props => {
 		edit: () => {
 			let keys = Object.keys(props.formData);
 			console.log('Errors: ', errors);
-			console.log('Admission date: ', props.formData["Admission Date"]);
-		//	console.dir(props.formData.admissionDate)
-			console.log('Discharge date: ', props.formData["Discharge Date"]);
-		//	console.dir(props.formData.dischargeDate)
-			console.log(typeof props.nomination.admissionDate);
-
+			console.log('Admission date: ', props.formData['Admission Date']);
+			//	console.dir(props.formData.admissionDate)
+			console.log('Discharge date: ', props.formData['Discharge Date']);
+			console.log(admissionDate, 'admission date');
 			return (
 				<form>
 					<div className={styles.main}>
@@ -240,6 +253,25 @@ const ApplicationForm = props => {
 											</div>
 										);
 									case editableDates.includes(label):
+										{
+											/* const MyContainer = ({ className, children }) => {
+											return (
+												<div
+													style={{
+														padding: '16px',
+														background: '#216ba5',
+														color: '#fff',
+													}}
+												>
+													<CalendarContainer className={className}>
+														<div style={{ position: 'relative' }}>
+															{children}
+														</div>
+													</CalendarContainer>
+												</div>
+											);
+										}; */
+										}
 										return (
 											<div>
 												<label className={styles.label}>{label}</label>
@@ -257,11 +289,26 @@ const ApplicationForm = props => {
 													control={control}
 													render={({ onChange, value }) => (
 														<DatePicker
-															selected={props.formData[label] ? new Date(props.formData[label]) : null}
-															onChange={onChange}
-															dateFormat="MM/dd/yyyy"
+															// selected={props.formData[label]}
+															selected={
+																admissionDate && dischargeDate
+																	? label === 'Admission Date'
+																		? new Date(admissionDate)
+																		: new Date(dischargeDate)
+																	: null
+															}
+															onChange={date =>
+																label === 'Admission Date'
+																	? setAdmissionDate(date)
+																	: setDischargeDate(date)
+															}
+															dateFormat='MM/dd/yyyy'
+															// calendarContainer={MyContainer}
 														/>
 													)}
+													// onChange={([selected]) => {
+													// 	return { value: selected };
+													// }}
 												/>
 												<p className={styles.yupError}>
 													{errors[label]?.message}
