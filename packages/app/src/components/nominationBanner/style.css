@@ -76,3 +76,59 @@
 .hippa-column {
   white-space: nowrap;
 }
+
+
+/* modal style */
+
+.modal-background{
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s case-in-out ;
+  position: absolute;
+  left: 200px;
+  right: 0;
+  bottom: 0;
+  top:0;
+  width: 300px;
+  height: 200px;
+  background: white;
+  display: flex;
+  border: 2px solid #128b3e;
+}
+
+
+.modalShowing-true {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.modal-text {
+  padding-left: 20px;
+  font-size: larger;
+  color: black;
+}
+
+.exit-button {
+ background-color: transparent;
+}
+
+.modal-buttons {
+  position: relative;
+  display: flex;
+}
+.button-yes{
+  background-color: #f72314;
+  border: none;
+  margin: 20px;
+}
+
+.button-no{
+  background-color: #128b3e;
+  border: none;
+  margin: 20px;
+}
+.exit-button {
+  background-color: transparent;
+  color: black;
+  border: none;
+}
