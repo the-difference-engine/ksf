@@ -14,6 +14,7 @@ const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
 
+
 const getNominationById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -118,10 +119,11 @@ const updateNomination = async (req, res) => {
       }
       if (nomination.status === 'Ready for Board Review') {
         try {
-          // find the active nomination id
+          // find the active nomination id       
           // const grant =  await findActive(); //did not work
           const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
-          nomination.update({
+          
+          nomination.update({ 
               readyForBoardReviewTimestamp: Date(),
               grantCycleId: grant.id
             }
