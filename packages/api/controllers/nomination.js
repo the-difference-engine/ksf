@@ -4,6 +4,7 @@ const { ValidationError, where } = require('sequelize');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
+const {listLabels} = require('../helper/gmailSetup');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
@@ -101,6 +102,7 @@ const updateNomination = async (req, res) => {
           );
           const applicationName = `${lastName}-${state}`;
           createFolder(applicationName);
+          listLabels();
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
@@ -119,11 +121,11 @@ const updateNomination = async (req, res) => {
       }
       if (nomination.status === 'Ready for Board Review') {
         try {
-          // find the active nomination id       
+          // find the active nomination id
           // const grant =  await findActive(); //did not work
           const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
-          
-          nomination.update({ 
+
+          nomination.update({
               readyForBoardReviewTimestamp: Date(),
               grantCycleId: grant.id
             }
