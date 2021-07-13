@@ -13,12 +13,13 @@ const SearchResultsCard = () => {
       <section className="search-result-card">
         <table className="search-result-table">
           <thead>
-            <tr className="search-result-exit">
-              <th>Search Results
-              </th>
-              <Link to="/">
-                <button> X </button>
-              </Link>
+            <tr>
+              {SearchResultData.length > 0 ?<th> Search Results</th>: <th>No Applications Found</th>}
+              <th></th>
+              <th></th>
+              <th><div  className ="search-result-exit"><Link to="/">
+                <button className ="search-result-exit-button"> X </button>
+              </Link></div></th>
             </tr>
           </thead>
 
@@ -31,16 +32,16 @@ const SearchResultsCard = () => {
             </tr>
 
             {SearchResultData?.map((result) => (
-              <tr key={result.id}>
-                <td>
-                  <Link to={`/nomination/${result.id}`} className="green">{result.nominationName}</Link>
-                </td>
-                <td>{result.providerName}</td>
-                <td>{result.patientName}</td>
-                <td>{result.dateReceived}</td>
-              </tr>
-            ))
-            }
+                  <tr key={result.id}>
+                    <td >
+                      <Link className="search-result-nomination-link" target="_blank" to={`/nomination/${result.id} `}>{result.nominationName}</Link>
+                    </td>
+                    <td>{result.providerName}</td>
+                    <td>{result.patientName}</td>
+                    <td>{result.dateReceived}</td>
+                  </tr>
+                ))
+              }
           </tbody>
         </table>
       </section>

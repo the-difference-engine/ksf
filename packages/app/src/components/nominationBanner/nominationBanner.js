@@ -1,5 +1,7 @@
 import style from './style.css';
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import nominationsAPI from '../../utils/API/nominationsAPI'
+import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 const states = require('us-state-codes');
 
 const NominationBanner = ({ nomination }) => {
@@ -14,6 +16,23 @@ const NominationBanner = ({ nomination }) => {
   const time = newDate.toLocaleDateString();
   const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const finalDate = `${time} – ${minutes}`;
+  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+  const declineStatus = 'Declined'
+
+  function declineApplication() {
+    activeNomination.status = declineStatus
+    setActiveNomination({ ...activeNomination })
+    
+    return updateNomination(declineStatus);
+  }
+
+  function updateNomination(s) {
+    try {
+       nominationsAPI.updateNomination(nomination.id, s);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="nomination-banner-container">
@@ -32,9 +51,9 @@ const NominationBanner = ({ nomination }) => {
                 </h1>
               </span>
             </div>
-            <div className="column center">
-              <button className="decline-button button-center button">
-                <span>Decline Application</span>
+            <div className="column name">
+              <button className=" decline-button" onClick={declineApplication} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
+                Decline Application
               </button>
             </div>
           </div>

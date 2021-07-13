@@ -1,15 +1,24 @@
 const { validate: uuidValidate } = require('uuid');
+const sequelize = require('sequelize')
 const { ValidationError, where } = require('sequelize');
 const db = require('../models');
-const { sendSurveyEmail } = require('../helper/mailer');
+const { sendSurveyEmail, sendHIPAAEmail, sendSurveyReminder, sendHIPAAReminder, sendHIPAAProvider } = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
-const { sendSurveyReminder } = require('../helper/mailer');
-const { sendHIPAAReminder } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
+const Op = sequelize.Op;
+
+const NOMINATION_STATUS = {
+  received: 'received',
+  awaiting: 'Awaiting HIPAA',
+  verified: 'HIPAA Verified',
+  document_review: 'Document Review',
+  board_review: 'Ready for Board Review',
+  declined: 'Declined',
+}
 
 const getNominationById = async (req, res) => {
   try {
@@ -91,11 +100,21 @@ const updateNomination = async (req, res) => {
         console.error('Was not able to change reminderSent bool', error);
       }
 
-      if (nomination.status === 'Decline') {
-        sendDeclineEmail(nomination);
+      if (nomination.status === NOMINATION_STATUS.declined) {
+        try {
+          nomination.update(
+            { declinedTimestamp: Date() }
+            )
+          } 
+        catch (error) {
+          console.log("Error declining nomination. Could not record readyForBoardReviewTimestamp ", error)
+        }
+        finally {
+          sendDeclineEmail(nomination);
+        } 
       }
 
-      if (nomination.status === 'Awaiting HIPAA') {
+      if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
 
@@ -110,10 +129,13 @@ const updateNomination = async (req, res) => {
           createFolder(applicationName);
         } catch (err) {
           console.error('Could not create a folder', err);
+        } finally {
+          sendHIPAAEmail(nomination);
+          sendHIPAAProvider(nomination);
         }
       }
 
-      if (nomination.status === 'HIPAA Verified') {
+      if (nomination.status === NOMINATION_STATUS.verified) {
         try {
           nomination.update({ hipaaTimestamp: Date() });
         } catch (err) {
@@ -121,6 +143,20 @@ const updateNomination = async (req, res) => {
           return res.status(400);
         } finally {
           sendSurveyEmail(nomination);
+        }
+      }
+      if (nomination.status === NOMINATION_STATUS.board_review) {
+        try {
+          const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
+          
+          nomination.update({ 
+              readyForBoardReviewTimestamp: Date(),
+              grantCycleId: grant.id
+
+            }
+          );
+        } catch (error) {
+          console.log("Could not record readyForBoardReviewTimestamp ", error)
         }
       }
       return res.status(200).json(nomination);
