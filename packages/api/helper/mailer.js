@@ -35,7 +35,6 @@ const email = new emailTemplate({
 });
 
 function sendDeclineEmail(nomination) {
-
   email
     .send({
       template: 'decline',
@@ -54,23 +53,21 @@ function sendDeclineEmail(nomination) {
 }
 
 function sendSurveyEmail(nomination) {
-  email
-    .send({
-      template: 'survey',
-      attachments: './survey/header.jpg',
-      message: {
-        from: adminEmail,
-        to: nomination.representativeEmailAddress,
-      },
-      locals: {
-        name: nomination.representativeName,
-        patientName: nomination.patientName,
-        email: nomination.representativeEmailAddress,
-        imgUrl,
-      },
-    })
-    .catch((err) => console.log(err))
-    .then(() => console.log('email has been sent!'));
+  email.send({
+    template: 'survey',
+    attachments: './survey/header.jpg',
+    message: {
+      from: adminEmail,
+      to: nomination.representativeEmailAddress
+    },
+    locals: {
+      name: nomination.representativeName,
+      patientName: nomination.patientName,
+      email: nomination.representativeEmailAddress,
+      imgUrl
+    }
+  }).catch((err) => console.log(err))
+  .then(() => console.log('email has been sent!'));
 }
 
 function verifyHcEmail(nomination) {

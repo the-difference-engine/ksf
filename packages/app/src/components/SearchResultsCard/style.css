@@ -13,6 +13,13 @@
   background-color: white;
 }
 
+
+.search-result-exit {
+  display: flex;
+
+}
+
+
 .nom-name a {
   color: var(--brand);
 }
