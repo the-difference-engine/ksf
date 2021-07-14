@@ -14,26 +14,30 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
       setIsOpen(false);
     }   
 
-    return (
-      <div>
-        <button className="button next" onClick={openModal}>
-          <span>&#10003;</span>Mark Stage as Complete
-        </button>
-        <Modal
-            className="modal-style"
-            overlayClassName="modal-overlay"
-            isOpen={isOpen}
-            onRequestClose={closeModal}
-            contentLabel="Mark Stage as Complete"
-        ><h3>Do You Want to Mark Stage as Complete?</h3>
-        <button className='button-modal-next' onClick={() => {
+  return (
+    <>
+      <button className="button next" onClick={openModal}>
+        <span>&#10003;</span>Mark Stage as Complete
+      </button>
+      <Modal
+        className="modal-container"
+        overlayClassName="modal-overlay"
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        contentLabel="Mark Stage as Complete"
+      >
+        <div className='modal-close-button' onClick={closeModal}>&times;</div>
+          <h3 className='modal-content-text'>Do you want to mark stage as complete?</h3>
+        <div className='modal-footer'> 
+          <button className='modal-button-yes' onClick={() => {
             advanceStage(currentStatus);
             closeModal();
-          }}>Yes</button>
-        <button className="button-modal-decline" onClick={closeModal}>No</button>
-        </Modal>
-      </div>
-    );
+          }}>Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button className="modal-button-no" onClick={closeModal}>No</button>
+        </div>
+      </Modal>
+    </>
+  );
 };
 
 export default MarkStageAsCompleteModal;
