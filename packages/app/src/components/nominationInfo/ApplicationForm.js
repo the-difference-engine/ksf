@@ -10,20 +10,6 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import DatePicker, { CalendarContainer } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-// TODO:
-// 1. Get original dates to display when edit is clicked
-// 2. figure out set view for when API call fails
-// 3. Look at back end and write the rest (res.status etc.)
-// 4. red text for validation errors
-// 5. red highlighting of input box
-// 6. add testing
-
-// Taylor and Somers' TODO:
-// show previous/default values of dates when edit is clicked - date will not show up until after you've done one edit/save, then if you hit edit again the dates will populate
-// red text for validation errors/message, red input box
-//  dates displayed once edited are one day prior to the dates inputted - is that on purpose or not?
-// figure out formatting of phone number
-
 const ApplicationForm = props => {
 	const firstUpdate = useRef(true);
 
@@ -55,32 +41,10 @@ const ApplicationForm = props => {
 
 	useEffect(() => {
 		if (!firstUpdate.current) {
-			console.log(`THIS IS MODE IN ApplicationForm ${props.mode}`);
-		}
-	}, [props.mode]);
-
-	useEffect(() => {
-		if (!firstUpdate.current) {
-			console.log(
-				`props.saveHasBeenClicked in Application Form: ${props.saveHasBeenClicked}`
-			);
 			handleSubmit(submitForm)();
 		}
 		firstUpdate.current = false;
 	}, [props.saveHasBeenClicked]);
-
-	// const functionRequestBody = nomination => {
-	// 	const requestBody = {
-	// 		admissionDate: nomination.admissionDate,
-	// 		dischargeDate: nomination.dischargeDate,
-	// 		representativeEmailAddress: nomination.representativeEmailAddress,
-	// 		representativePhoneNumber: nomination.representativePhoneNumber,
-	// 		representativeRelationship: nomination.representativeRelationship,
-	// 		representativeName: nomination.representativeName,
-	// 		representativeSpanishRequested: nomination.representativeSpanishRequested,
-	// 	};
-	// 	return requestBody;
-	// };
 
 	const validationSchema = Yup.object({
 		'Admission Date': Yup.date().required('Required'),
@@ -115,13 +79,11 @@ const ApplicationForm = props => {
 		control,
 		formState: { errors },
 	} = useForm({
-		// resolver: yupResolver(validationSchema),
+		resolver: yupResolver(validationSchema),
 	});
 
 	const submitForm = async data => {
-		console.log('Data', data);
 		if (NominationsData) {
-			let counter = 0;
 			let newActiveNomination = {};
 			const newNominationData = NominationsData.map(nomination => {
 				if (nomination.id === props.id) {
@@ -148,7 +110,6 @@ const ApplicationForm = props => {
 					}
 					newActiveNomination = nomination;
 				}
-				counter++;
 				return nomination;
 			});
 			const requestBody = {
@@ -171,7 +132,6 @@ const ApplicationForm = props => {
 			);
 			// check status, validation passed before changing to view
 			props.revertMode('view');
-			console.log(response);
 			setNominationsData(newNominationData);
 			setActiveNomination(newActiveNomination);
 		}
@@ -183,7 +143,6 @@ const ApplicationForm = props => {
 		'Representative Email Address',
 		'Representative Phone Number',
 		'Relationship',
-		// 'Request to communicate in Spanish?',
 	];
 
 	const spanishDropdown = 'Request to communicate in Spanish?';
@@ -271,37 +230,9 @@ const ApplicationForm = props => {
 											</div>
 										);
 									case editableDates.includes(label):
-										{
-											/* const MyContainer = ({ className, children }) => {
-											return (
-												<div
-													style={{
-														padding: '16px',
-														background: '#216ba5',
-														color: '#fff',
-													}}
-												>
-													<CalendarContainer className={className}>
-														<div style={{ position: 'relative' }}>
-															{children}
-														</div>
-													</CalendarContainer>
-												</div>
-											);
-										}; */
-										}
 										return (
 											<div>
 												<label className={styles.label}>{label}</label>
-												{/* <input
-													name={label}
-													type='date'
-													defaultValue={props.formData[label]}
-													{...register(label)}
-													className={
-														errors[label]?.message ? styles.inputError : ''
-													}
-												/> */}
 												<Controller
 													name={label}
 													control={control}
@@ -312,26 +243,13 @@ const ApplicationForm = props => {
 																: new Date(dischargeDate)
 															: null
 													}
-													render={({
-														field: { onChange, onBlur, value, ref },
-													}) => (
+													render={({ field: { onChange, value } }) => (
 														<DatePicker
-															// selected={
-															// 	admissionDate && dischargeDate
-															// 		? label === 'Admission Date'
-															// 			? (value = new Date(admissionDate))
-															// 			: (value = new Date(dischargeDate))
-															// 		: null
-															// }
 															selected={value}
 															onChange={onChange}
 															dateFormat='MM/dd/yyyy'
-															// calendarContainer={MyContainer}
 														/>
 													)}
-													// onChange={([selected]) => {
-													// 	return { value: selected };
-													// }}
 												/>
 												<p className={styles.yupError}>
 													{errors[label]?.message}

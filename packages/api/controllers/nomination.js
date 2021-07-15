@@ -153,7 +153,6 @@ const updateActiveNomData = async (req, res) => {
 		const nomination = await db.Nomination.findOne({
 			where: { id },
 		});
-		console.dir(req.body);
 
 		await nomination.update(
 			{ ...req.body },
@@ -163,8 +162,7 @@ const updateActiveNomData = async (req, res) => {
 		);
 		return res.status(200).json({ message: 'updated' });
 	} catch (err) {
-		console.log(err);
-		return res.status(400).json({ error: error.message });
+		return res.status(400).json({ error: err.message });
 	}
 };
 

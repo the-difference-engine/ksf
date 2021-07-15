@@ -4,7 +4,6 @@ import styles from '../nominationInfo/newstyles.module.css';
 const EditOrSaveButton = props => {
 	switch (props.mode) {
 		case 'view':
-			console.log(`Props Mode in Button view: ${props.mode}`);
 			return (
 				<button
 					className='button button-outline'
@@ -21,14 +20,12 @@ const EditOrSaveButton = props => {
 				</button>
 			);
 		case 'edit':
-			console.log(`Props Mode in Button edit: ${props.mode}`);
 			return (
 				<button
 					className='button button-outline'
 					type='submit'
 					onClick={() => {
 						props.handleSaveHasBeenClicked();
-						console.log(`Button Click: ${props.mode}`);
 					}}
 					id={styles.saveBtn}
 				>
