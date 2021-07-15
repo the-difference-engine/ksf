@@ -14,7 +14,14 @@ Object {
               class="add-padding-left new-files-title"
             >
               <h1>
-                New Files To Review
+                New Files To Review 
+              </h1>
+              <h1
+                class="new-files-length"
+              >
+                [
+                0
+                ]
               </h1>
             </td>
             <td />
@@ -99,7 +106,14 @@ Object {
             class="add-padding-left new-files-title"
           >
             <h1>
-              New Files To Review
+              New Files To Review 
+            </h1>
+            <h1
+              class="new-files-length"
+            >
+              [
+              0
+              ]
             </h1>
           </td>
           <td />
