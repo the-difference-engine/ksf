@@ -15,7 +15,7 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
     }   
 
   return (
-    <>
+    <div>
       <button className="button next" onClick={openModal}>
         <span>&#10003;</span>Mark Stage as Complete
       </button>
@@ -36,7 +36,7 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
           <button className="modal-button-no" onClick={closeModal}>No</button>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
 
