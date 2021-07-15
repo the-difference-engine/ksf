@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
 
