@@ -13,6 +13,7 @@
   background-color: white;
 }
 
+
 .search-result-span {
   width: 100%;
   display: flex;
@@ -30,10 +31,12 @@
   width: 300%
 }
 
+
 .search-result-exit {
   display: flex;
 
 }
+
 
 .nom-name a {
   color: var(--brand);
