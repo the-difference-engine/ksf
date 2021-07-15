@@ -4,7 +4,10 @@ import { SearchResultDataContext } from "../../utils/context/SearchResultsContex
 import "./style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+
+
 const SearchResultsCard = () => {
+
   const [SearchResultData, _] = useContext(SearchResultDataContext);
 
   const [sortedSearchResults, setSortedSearchResults] = useState([]);
@@ -23,6 +26,7 @@ const SearchResultsCard = () => {
       })
     );
   }, [SearchResultData]);
+
 
   return (
     <>
@@ -56,7 +60,9 @@ const SearchResultsCard = () => {
               </th>
             </tr>
           </thead>
+
           <tbody>
+
             {sortedSearchResults.length > 0 && (
               <tr className="search-result-header">
                 <td>
@@ -101,6 +107,7 @@ const SearchResultsCard = () => {
                 <td>{result.dateReceived}</td>
               </tr>
             ))}
+
           </tbody>
         </table>
       </section>
