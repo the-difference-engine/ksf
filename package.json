@@ -11,10 +11,5 @@
   },
   "devDependencies": {
     "lerna": "^3.22.1"
-  },
-  "dependencies": {
-    "formik": "^2.2.6",
-    "jsonwebtoken": "^8.5.1",
-    "yup": "^0.32.9"
   }
 }
