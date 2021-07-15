@@ -109,6 +109,7 @@ const NominationBanner = props => {
 				<div className='column column-10'>
 					<EditOrSaveButton
 						mode={props.mode}
+						revertMode={props.revertMode}
 						handleEditHasBeenClicked={props.handleEditHasBeenClicked}
 						handleSaveHasBeenClicked={props.handleSaveHasBeenClicked}
 					/>

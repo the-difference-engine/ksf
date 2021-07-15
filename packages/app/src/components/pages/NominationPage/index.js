@@ -117,6 +117,7 @@ const NominationPage = ({
 					<SearchBar />
 					<NominationBanner
 						mode={mode}
+						revertMode={revertMode}
 						editHasBeenClicked={editHasBeenClicked}
 						saveHasBeenClicked={saveHasBeenClicked}
 						handleSaveHasBeenClicked={handleSaveHasBeenClicked}

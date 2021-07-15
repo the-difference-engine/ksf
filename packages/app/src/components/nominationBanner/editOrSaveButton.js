@@ -8,12 +8,7 @@ const EditOrSaveButton = props => {
 				<button
 					className='button button-outline'
 					onClick={props.handleEditHasBeenClicked}
-					style={{
-						'background-color': 'white',
-						color: 'green',
-						'border-color': 'var(--light-background)',
-						'border-radius': '4rem',
-					}}
+					id={styles.editBtn}
 					type='submit'
 				>
 					Edit
@@ -21,16 +16,28 @@ const EditOrSaveButton = props => {
 			);
 		case 'edit':
 			return (
-				<button
-					className='button button-outline'
-					type='submit'
-					onClick={() => {
-						props.handleSaveHasBeenClicked();
-					}}
-					id={styles.saveBtn}
-				>
-					Save
-				</button>
+				<>
+					<button
+						className='button button-outline'
+						type='submit'
+						onClick={() => {
+							props.handleSaveHasBeenClicked();
+						}}
+						id={styles.saveBtn}
+					>
+						Save
+					</button>
+					<button
+						className='button button-outline'
+						onClick={() => {
+							props.revertMode('view');
+						}}
+						id={styles.cancelBtn}
+						type='submit'
+					>
+						Cancel
+					</button>
+				</>
 			);
 		default:
 			return <h1></h1>;

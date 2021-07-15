@@ -25,6 +25,15 @@
 #saveBtn {
 	background-color: green;
 	color: white;
+	border-color: var(--light-background);
+	border-radius: 4rem;
+}
+
+#cancelBtn {
+	background-color: white;
+	color: red;
+	border-color: var(--light-background);
+	border-radius: 4rem;
 }
 
 /*********************************/
@@ -59,13 +68,17 @@ input[type='date'] {
 }
 
 /*********************************/
-/************ errors ************/
+/************ errors *************/
 /*********************************/
 
 .yupError {
 	color: red;
 	font-size: 14px;
 }
+
+/*********************************/
+/************ datepicker *********/
+/*********************************/
 
 input[type='text'].inputError,
 input[type='date'].inputError {

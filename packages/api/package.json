@@ -9,8 +9,8 @@
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
     "lint": "npx eslint .",
     "migrate": "npx sequelize-cli db:migrate",
-    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate"
-
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "pretest": "cross-env NODE_ENV=test npm run migrate:reset"
   },
   "author": "",
   "license": "ISC",
