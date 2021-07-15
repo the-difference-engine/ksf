@@ -27,7 +27,7 @@ const NominationBanner = ({ nomination }) => {
 
 
   function declineApplication() {
-    const declineStatus = 'Rejected'
+    const declineStatus = 'Decline'
     activeNomination.status = declineStatus
     setActiveNomination({ ...activeNomination })
     
@@ -70,7 +70,7 @@ const NominationBanner = ({ nomination }) => {
                 
                 <h3 className="modal-text">Do you want to decline the application?</h3>
                 <div className="modal-buttons">
-                  <button className="button-yes" onClick={()=>{toggleModalState(); declineApplication() }}>Yes</button>
+                  <button className="button-yes" onClick={()=>{declineApplication(); toggleModalState()}}>Yes</button>
                   <button className ="button-no"onClick={toggleModalState} >No</button>
                 </div>
             </div>
