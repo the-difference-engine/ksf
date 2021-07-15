@@ -85,14 +85,10 @@
   pointer-events: none;
   transition: opacity 0.4s case-in-out ;
   position: absolute;
-  left: 200px;
-  right: 0;
-  bottom: 0;
-  top:0;
-  width: 300px;
+  margin-left: 350px;
+  width: 400px;
   height: 200px;
   background: white;
-  display: flex;
   border: 2px solid #128b3e;
 }
 
@@ -102,19 +98,20 @@
   pointer-events: visible;
 }
 
+.modal-inner{
+  display: block;
+}
+
 .modal-text {
-  padding-left: 20px;
+  margin-left: 35px;
   font-size: larger;
   color: black;
 }
 
-.exit-button {
- background-color: transparent;
-}
-
 .modal-buttons {
-  position: relative;
   display: flex;
+  justify-content: center;
+  
 }
 .button-yes{
   background-color: #f72314;
@@ -128,7 +125,14 @@
   margin: 20px;
 }
 .exit-button {
+  margin-left: 340px;
   background-color: transparent;
   color: black;
   border: none;
+  
+}
+
+.exit-button:hover{
+  background-color: transparent;
+  color: #f72314;
 }
