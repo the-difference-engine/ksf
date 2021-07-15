@@ -7,7 +7,9 @@ import SearchBar from '../../SearchBar';
 import NominationInfo from '../../nominationInfo';
 import ApplicationUpdateDetail from '../../nominationInfo/applicationUpdateDetail';
 import ApplicationForm from '../../nominationInfo/ApplicationForm';
-// import { zonedTimeToUtc } from 'date-fns-tz'
+import { DateTime } from "luxon";
+
+
 
 const NominationPage = ({
 	match: {
@@ -99,7 +101,7 @@ const NominationPage = ({
 	// }
 	// const admissionDateObject = new Date(admissionDate);
 	// const dischargeDateObject = new Date(dischargeDate);
-
+    const luxonDate = DateTime.now().toISO()
 
 	const admissionDateObject2 = new Date(admissionDate);
 	admissionDateObject2.setTime(admissionDateObject2.getTime() + admissionDateObject2.getTimezoneOffset()*60*1000)
