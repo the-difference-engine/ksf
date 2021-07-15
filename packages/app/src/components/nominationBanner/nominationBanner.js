@@ -2,7 +2,7 @@ import style from './style.css';
 import React, { useEffect, useState, useContext } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI'
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import DeclineNominationModal from '../modals/declineNomination';
+
 const states = require('us-state-codes');
 
 const NominationBanner = ({ nomination }) => {
@@ -65,11 +65,10 @@ const NominationBanner = ({ nomination }) => {
               </button>
             </div>
             <div className={`modal-background modalShowing-${modalState}`}>
-              <div className="modal-inner">
+              <div className="modal-container">
+                <button className= "exit-button" onClick={toggleModalState} >&times;</button>
                 
-                <button className= "exit-button" onClick={toggleModalState} >X</button>
-                
-                <p className="modal-text">Do you want to decline the application?</p>
+                <h3 className="modal-text">Do you want to decline the application?</h3>
                 <div className="modal-buttons">
                   <button className="button-yes" onClick={()=>{toggleModalState(); declineApplication() }}>Yes</button>
                   <button className ="button-no"onClick={toggleModalState} >No</button>
