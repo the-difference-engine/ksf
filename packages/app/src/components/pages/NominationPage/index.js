@@ -4,12 +4,7 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
 import SearchBar from '../../SearchBar';
-import NominationInfo from '../../nominationInfo';
-import ApplicationUpdateDetail from '../../nominationInfo/applicationUpdateDetail';
 import ApplicationForm from '../../nominationInfo/ApplicationForm';
-import { DateTime } from "luxon";
-
-
 
 const NominationPage = ({
 	match: {
@@ -25,7 +20,6 @@ const NominationPage = ({
 	const [error, setError] = useState();
 	const [editHasBeenClicked, setEditHasBeenClicked] = useState(false);
 	const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);
-	// const [validationFailed, setValidationFailed] = useState(false)
 
 	const [mode, setMode] = useState('view');
 
@@ -50,67 +44,17 @@ const NominationPage = ({
 	} = activeNomination;
 	const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
-
-	// const getUTCDate = (dateString) => {
-	// 	const date = new Date(dateString);
-	  
-	// 	return new Date(
-	// 	  date.getUTCFullYear(),
-	// 	  date.getUTCMonth(),
-	// 	  date.getUTCDate(),
-	// 	  date.getUTCHours(),
-	// 	  date.getUTCMinutes(),
-	// 	  date.getUTCSeconds(),
-	// 	);
-	//   };
-
-	// look at format and DatePicker
-
-	//	const admissionDateStr = admissionDate ? format(getUTCDate(admissionDate), 'MM/dd/yyyy') : '';
-	
-//	const dischargeDateStr = dischargeDate ? format(getUTCDate(dischargeDate), 'MM/dd/yyyy') : '';
-
-// const date = getDatePickerValue() // e.g. 2014-06-25 10:00:00 (picked in any time zone)
-// const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone // e.g. America/Los_Angeles
-
-// const utcDate = zonedTimeToUtc(date, timeZone)
-	// let admissionDateUTC
-	// if (admissionDate) {
-	//     admissionDateUTC = zonedTimeToUtc(admissionDate2, timeZone).toUTCString()
-	// }
-	// let dischargeDateUTC
-	// if (dischargeDate) {
-	// 	dischargeDateUTC = zonedTimeToUtc(dischargeDate2, timeZone).toUTCString()
-	// }
-
-	// const admissionDate2 = new Date(admissionDate)
-	// const dischargeDate2 = new Date(dischargeDate)
-	// const convertToUTC = (date) => {
-	// 	const nowUTC = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
-	// 	date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())
-
-	// 	return new Date(nowUTC)
-	// }
-	// let admissionDateUTC
-	// if (admissionDate) {
-	//     admissionDateUTC = convertToUTC(admissionDate2)
-	// }
-	// let dischargeDateUTC
-	// if (dischargeDate) {
-	// 	dischargeDateUTC = convertToUTC(dischargeDate2)
-	// }
-	// const admissionDateObject = new Date(admissionDate);
-	// const dischargeDateObject = new Date(dischargeDate);
-    const luxonDate = DateTime.now().toISO()
-
 	const admissionDateObject2 = new Date(admissionDate);
-	admissionDateObject2.setTime(admissionDateObject2.getTime() + admissionDateObject2.getTimezoneOffset()*60*1000)
-	
-	const dischargeDateObject2 = new Date(dischargeDate);
-	dischargeDateObject2.setTime(dischargeDateObject2.getTime() + dischargeDateObject2.getTimezoneOffset()*60*1000)
+	admissionDateObject2.setTime(
+		admissionDateObject2.getTime() +
+			admissionDateObject2.getTimezoneOffset() * 60 * 1000
+	);
 
-	// console.log("this is admissionDateUTC", admissionDateUTC)
-	// console.log("this is dischargeDateUTC", dischargeDateUTC)
+	const dischargeDateObject2 = new Date(dischargeDate);
+	dischargeDateObject2.setTime(
+		dischargeDateObject2.getTime() +
+			dischargeDateObject2.getTimezoneOffset() * 60 * 1000
+	);
 
 	const diffDays =
 		Math.round(
@@ -123,9 +67,9 @@ const NominationPage = ({
 
 	let spanishRepString;
 	if (activeNomination.representativeSpanishRequested) {
-		spanishRepString = 'Yes'
+		spanishRepString = 'Yes';
 	} else {
-		spanishRepString = 'No'
+		spanishRepString = 'No';
 	}
 
 	const formData = {
@@ -155,27 +99,15 @@ const NominationPage = ({
 
 	function handleEditHasBeenClicked() {
 		setEditHasBeenClicked(editHasBeenClicked => !editHasBeenClicked);
-		console.log(`Nomination Page - handleEditHasBeenClicked: ${editHasBeenClicked}, ${mode}`);
-
 		setMode('edit');
-
-		console.log(`THIS IS MODE IN PARENT COMPONENT: ${mode}`);
 	}
 
 	function handleSaveHasBeenClicked() {
 		setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
-		// setMode('view');
-		console.log(
-			`Nomination Page - handleSaveHasBeenClicked: ${saveHasBeenClicked}, ${mode}`
-		);
 	}
 
-	// function handleFailedValidation() {
-
-	// }
-
 	function revertMode(mode) {
-		setMode(mode)
+		setMode(mode);
 	}
 
 	return (
@@ -184,7 +116,7 @@ const NominationPage = ({
 				<div className='nomination-show-page'>
 					<SearchBar />
 					<NominationBanner
-					  mode={mode}
+						mode={mode}
 						editHasBeenClicked={editHasBeenClicked}
 						saveHasBeenClicked={saveHasBeenClicked}
 						handleSaveHasBeenClicked={handleSaveHasBeenClicked}
@@ -192,7 +124,6 @@ const NominationPage = ({
 						nomination={activeNomination}
 					/>
 					<ApplicationStages />
-					{/* Sends click state data to all NominationInfo children */}
 					<ApplicationForm
 						formData={formData}
 						mode={mode}
@@ -212,18 +143,3 @@ const NominationPage = ({
 };
 
 export default NominationPage;
-
-// <>
-// {activeNomination
-//   ?
-//   <div className="nomination-show-page">
-//     <SearchBar />
-//     <NominationBanner hasBeenClicked={hasBeenClicked} handleSaveHasBeenClicked={handleSaveHasBeenClicked} handleClick={handleClick} nomination={activeNomination} />
-//     <ApplicationStages />
-//     {/* Sends click state data to all NominationInfo children */}
-//     <NominationInfo hasBeenClicked={hasBeenClicked} saveHasBeenClicked={saveHasBeenClicked}/>
-//   </div>
-//   :
-//   <div>{error}</div>
-// }
-// </>
