@@ -68,7 +68,7 @@ const SearchResultsCard = () => {
                 </td>
                 <td>
                   <h1>
-                    <strong>Provider's Name</strong>
+                    <strong>HP Name</strong>
                   </h1>
                 </td>
                 <td>
