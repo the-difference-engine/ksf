@@ -119,8 +119,6 @@ const NominationPage = ({
 			? 'Yes'
 			: 'No'; /* <- hours*minutes*seconds*milliseconds */
 
-
-
 	let spanishRepString;
 	if (activeNomination.representativeSpanishRequested) {
 		spanishRepString = 'Yes'

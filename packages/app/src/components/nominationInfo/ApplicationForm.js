@@ -119,13 +119,22 @@ const ApplicationForm = props => {
 	});
 
 	const submitForm = async data => {
+		console.log('Data', data);
 		if (NominationsData) {
 			let counter = 0;
 			let newActiveNomination = {};
 			const newNominationData = NominationsData.map(nomination => {
 				if (nomination.id === props.id) {
-					nomination.admissionDate = data['Admission Date'];
-					nomination.dischargeDate = data['Discharge Date'];
+					data['Admission Date']
+						? (nomination.admissionDate = data[
+								'Admission Date'
+						  ].toLocaleDateString())
+						: (nomination.admissionDate = data['Admission Date']);
+					data['Discharge Date']
+						? (nomination.dischargeDate = data[
+								'Discharge Date'
+						  ].toLocaleDateString())
+						: (nomination.dischargeDate = data['Discharge Date']);
 					nomination.representativeEmailAddress =
 						data['Representative Email Address'];
 					nomination.representativePhoneNumber =
@@ -205,33 +214,42 @@ const ApplicationForm = props => {
 							props.gridContent && styles['grid-container'],
 						].join(' ')}
 					>
-						{keys.map(label =>
-							label === 'Patient Information' ||
-							label === 'Family Member Information' ||
-							label === 'Health Provider Information' ? (
-								<div key={label} className={styles.title}>
-									{label}
-								</div>
-							) : (
-								<div>
-									<label className={styles.label}>{label}</label>
-									<span className={styles.value}>
-										{String(props.formData[label])}
-									</span>
-								</div>
-							)
-						)}
+						{keys.map(label => {
+							switch (true) {
+								case label === 'Patient Information' ||
+									label === 'Family Member Information' ||
+									label === 'Health Provider Information':
+									return (
+										<div key={label} className={styles.title}>
+											{label}
+										</div>
+									);
+								case editableDates.includes(label):
+									return (
+										<div>
+											<label className={styles.label}>{label}</label>
+											<span className={styles.value}>
+												{props.formData[label].toLocaleDateString()}
+											</span>
+										</div>
+									);
+								default:
+									return (
+										<div>
+											<label className={styles.label}>{label}</label>
+											<span className={styles.value}>
+												{String(props.formData[label])}
+											</span>
+										</div>
+									);
+							}
+						})}
 					</div>
 				</div>
 			);
 		},
 		edit: () => {
 			let keys = Object.keys(props.formData);
-			console.log('Errors: ', errors);
-			console.log('Admission date: ', props.formData['Admission Date']);
-			//	console.dir(props.formData.admissionDate)
-			console.log('Discharge date: ', props.formData['Discharge Date']);
-			console.log(admissionDate, 'admission date');
 			return (
 				<form>
 					<div className={styles.main}>
@@ -287,21 +305,26 @@ const ApplicationForm = props => {
 												<Controller
 													name={label}
 													control={control}
-													render={({ onChange, value }) => (
+													defaultValue={
+														admissionDate && dischargeDate
+															? label === 'Admission Date'
+																? new Date(admissionDate)
+																: new Date(dischargeDate)
+															: null
+													}
+													render={({
+														field: { onChange, onBlur, value, ref },
+													}) => (
 														<DatePicker
-															// selected={props.formData[label]}
-															selected={
-																admissionDate && dischargeDate
-																	? label === 'Admission Date'
-																		? new Date(admissionDate)
-																		: new Date(dischargeDate)
-																	: null
-															}
-															onChange={date =>
-																label === 'Admission Date'
-																	? setAdmissionDate(date)
-																	: setDischargeDate(date)
-															}
+															// selected={
+															// 	admissionDate && dischargeDate
+															// 		? label === 'Admission Date'
+															// 			? (value = new Date(admissionDate))
+															// 			: (value = new Date(dischargeDate))
+															// 		: null
+															// }
+															selected={value}
+															onChange={onChange}
 															dateFormat='MM/dd/yyyy'
 															// calendarContainer={MyContainer}
 														/>
