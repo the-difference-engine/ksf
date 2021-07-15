@@ -1,6 +1,3 @@
-//- head
-//-   style
-//-     include hipaa.css
 style(type="text/css").
   .text__underline {
     text-decoration: underline;
@@ -18,6 +15,12 @@ style(type="text/css").
   .mb3 {
   margin-bottom: 3rem;
   }
+  hr {
+  height: 2px;
+  border-width: 0;
+  color: grey;
+  background-color: grey;
+  }
 
 div.main
   img(src=`${imgUrl}/email/header.jpg` alt='header' style='width:100%; height:auto; margin-bottom: 1rem;')
@@ -30,7 +33,7 @@ div.main
   p.mb3
     | Before Keep Swimming Foundation can fully process your application, a signed HIPAA Authorization
     | Form must be completed and sent to Keep Swimming Foundation as soon as possible. This form
-    | authorizes the hospital at which your loved one is treatment to provide information on the patient&apos;s
+    | authorizes the hospital at which your loved one is receiving treatment to provide information on the patient&apos;s
     | hospitalization to Keep Swimming Foundation.
   h2.text__underline.text__bold
     | HOW TO AQUIRE A HIPAA AUTHORIZATION FORM:
@@ -45,20 +48,20 @@ div.main
     | If the patient is younger than 18 years of age, a legal guardian must sign the HIPAA Authorization Form
     | on their behalf.
   p
-    span.text__bold Please Note: 
-    | Due to the large volume of applications that Keep Swimming Foundation receives, we will
+    span.text__bold Please Note:
+    |  Due to the large volume of applications that Keep Swimming Foundation receives, we will
     | not follow-up with any nominating party regarding this step. Please understand that you are fully
     | accountable for acquiring and submitting the completed HIPAA Authorization Form in a timely fashion. To
-    | submit a completed HIPAA Authorization Form, send the form to us as an 
-    span.text__bold unsecured attachment 
-    | at: 
-    a.text__bold(href="mailto:info@keepswimmingfoundation.org") info@keepswimmingfoundation.org
+    | submit a completed HIPAA Authorization Form, send the form to us as an
+    | unsecured attachment
+    |  at:
+    a.text__bold(href="mailto:info@keepswimmingfoundation.org")  info@keepswimmingfoundation.org
     | . We do not accept any submissions via standard mail.
   p
     | If you need help with this step, please contact a social worker at your hospital.
-  p 
-    | Keep Swimming Foundation selects recipients on a monthly basis. The deadline for all 
-    | documents is the final day of the month. However, your family is only eligible for a grant if their 
+  p
+    | Keep Swimming Foundation selects recipients on a monthly basis. The deadline for all
+    | documents is the final day of the month. However, your family is only eligible for a grant if their
     | extended hospital stay continues to meet qualifications and extends into the month in which you
     | submit your information.
   p
@@ -66,30 +69,31 @@ div.main
     | that you meet our provided deadlines. To give every nominee an equal chance, all deadlines are firm and
     | will not be extended.
   p
-    | Lastly, please understand that this application process 
-    span.text__bold does not guarantee the nominated individual/family will receive a grant from Keep Swimming Foundation. 
+    | Lastly, please understand that this application process
+    | does not guarantee that the nominated individual/family will receive a grant from Keep Swimming Foundation.
     | It is imperative that the
     | nominated individual/family does not rely on these funds and that the nominated individual/family
-    | understands that they will only be contacted by Keep Swimming Foundation 
-    span.text__bold after the nearest quarterly
-    | deadline regarding the outcome of their application.
+    | understands that they will only be contacted by Keep Swimming Foundation
+    | after the nearest quarterly
+    |  deadline regarding the outcome of their application.
   p
     | We send our best to your loved one during this troubling time and we look forward to receiving your
     | completed HIPAA Authorization Form in the near future.
-  p 
+  p
     | -Keep Swimming Foundation
 
-  hr(style='height:2px;border-width:0;color:gray;background-color:gray')
+  hr
+
 
   p  Hola #{name},
   p
-    | Un miembro de su equipo médico nominó recientemente a su familia para una subvención de la Fundación Keep Swimming
-    | este trimestre. Si no conoce la Fundación Keep Swimming y esta nominación, hable con el trabajador social
+    | Un miembro de su equipo médico nominó recientemente a su familia para una subvención de Keep Swimming Foundation
+    | este trimestre. Si no conoce Keep Swimming Foundation y esta nominación, hable con el trabajador social
     | de su hospital que está asignado al plan de atención de su familia.
   p.mb3
-    | Antes de que Keep Swimming Foundation pueda procesar completamente su solicitud, se debe completar un Formulario de 
+    | Antes de que Keep Swimming Foundation pueda procesar completamente su solicitud, se debe completar un Formulario de
     | autorización de HIPAA firmado y enviarlo a Keep Swimming Foundation lo antes posible. Este formulario autoriza al hospital
-    | en el que se trata a su ser querido a proporcionar información sobre la 
+    | en el que se trata a su ser querido a proporcionar información sobre la
     | hospitalización del paciente a Keep Swimming Foundation.
   h2.text__underline.text__bold
     | CÓMO ADQUIRIR UN FORMULARIO DE AUTORIZACIÓN DE HIPAA:
@@ -97,44 +101,44 @@ div.main
     | Cada hospital tiene su propio Formulario de autorización de HIPAA (también conocido como Formulario de divulgación de información).
     | La mejor manera de obtener este formulario es hablar con su enfermera, médico o trabajador social del hospital.
   p
-    | Si el paciente tiene 18 años o más, debe firmar el formulario de autorización de HIPAA del hospital.
-    | Sin embargo, en algunos casos, si el paciente no puede firmar documentos, es posible que un ser querido 
+    | Si el paciente tiene 18 años o más, debe firmar el Formulario de autorización de HIPAA del hospital.
+    | Sin embargo, en algunos casos, si el paciente no puede firmar documentos, es posible que un ser querido
     | pueda hacerlo en su nombre. El trabajador social de su hospital puede ayudarlo con esto.
   p
     | Si el paciente es menor de 18 años, un tutor legal debe firmar el Formulario de autorización
     | de HIPAA en su nombre.
   p
-    span.text__bold Please Note: 
+    span.text__bold
     | Tenga en cuenta: Debido al gran volumen de solicitudes que recibe Keep Swimming
-    | Foundation, no daremos seguimiento a ninguna de las partes nominadoras con respecto a este 
+    | Foundation, no daremos seguimiento a ninguna de las partes nominadoras con respecto a este
     | paso. Por favor, comprenda que es completamente responsable de adquirir y enviar el
-    | Formulario de autorización de HIPAA completo de manera oportuna. Para enviar un formulario 
+    | Formulario de autorización de HIPAA completo de manera oportuna. Para enviar un Formulario
     | de autorización de HIPAA completo, envíenos el formulario como un archivo adjunto no seguro
-    span.text__bold unsecured attachment 
-    | a: 
-    a.text__bold(href="mailto:info@keepswimmingfoundation.org") info@keepswimmingfoundation.org
+    span.text__bold
+    |  a:
+    a.text__bold(href="mailto:info@keepswimmingfoundation.org")  info@keepswimmingfoundation.org
     | . No aceptamos envíos por correo estándar.
   p
     | Si necesita ayuda con este paso, comuníquese con un trabajador social de su hospital.
-  p 
+  p
     | Keep Swimming Foundation selecciona a los destinatarios mensualmente. La fecha límite para
-    | todos los documentos es el último día del mes. Sin embargo, su familia solo es elegible para 
+    | todos los documentos es el último día del mes. Sin embargo, su familia solo es elegible para
     | una subvención si su estadía prolongada en el hospital continúa cumpliendo con los requisitos
     | y se extiende hasta el mes en que envía su información.
   p
-    | Se le pedirá que proporcione información adicional, así que asegúrese de actuar lo antes 
-    | posible para cumplir con los plazos establecidos. Para que todos los candidatos tengan las 
+    | Se le pedirá que proporcione información adicional, así que asegúrese de actuar lo antes
+    | posible para cumplir con los plazos establecidos. Para que todos los candidatos tengan las
     | mismas oportunidades, todos los plazos son firmes y no se ampliarán.
   p
-    | Por último, comprenda que este proceso de solicitud 
-    span.text__bold no garantiza que la persona / familia nominada recibe una subvención de Keep Swimming Foundation. 
+    | Por último, comprenda que este proceso de solicitud
+    | no garantiza que la persona / familia nominada recibe una subvención de Keep Swimming Foundation.
     | Es imperativo que el
-    | individuo / familia nominado no dependa de estos fondos y que el individuo / familia 
+    | individuo / familia nominado no dependa de estos fondos y que el individuo / familia
     | nominado entienda que solo será contactado por Keep Swimming Foundation
-    span.text__bold después de la fecha límite más cercana
-    | con respecto al resultado de su solicitud.
+    | después de la fecha límite más cercana
+    |  con respecto al resultado de su solicitud.
   p
-    | Enviamos lo mejor a su ser querido durante este momento problemático y esperamos recibir su 
-    | formulario de autorización de HIPAA completo en un futuro próximo.
-  p 
+    | Enviamos lo mejor a su ser querido durante este momento problemático y esperamos recibir su
+    | Formulario de autorización de HIPAA completo en un futuro próximo.
+  p
     | -Keep Swimming Foundation
