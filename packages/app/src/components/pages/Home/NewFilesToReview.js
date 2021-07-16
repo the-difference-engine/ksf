@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from './styles.css';
 import useSort from './useSort';
+import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 
 const NewFilesToReview = () => {
+  const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
   const [showAll, setShowAll] = useState(false);
-  const { sortedNoms, requestSort, sortConfig } = useSort();
+  const { sortedNoms, requestSort, sortConfig } = useSort(NominationsData);
   const sortedNominations = sortedNoms ? sortedNoms.filter((nominations) => nominations.status === 'received') : [];
 
   const handleClick = () => {
@@ -41,7 +43,8 @@ const NewFilesToReview = () => {
         <tr>
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
-            <h1>New Files To Review</h1>
+            <h1>New Files To Review </h1>
+            <h1 className="new-files-length">[{ sortedNominations.length }]</h1>
           </td>
           <td></td>
           <td></td>
