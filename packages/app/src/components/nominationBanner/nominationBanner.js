@@ -22,7 +22,7 @@ const NominationBanner = ({ nomination }) => {
 
   const [modalState, setModalState] = useState(false);
   const toggleModalState = () => {
-      setModalState(!modalState)
+    setModalState(modalState => !modalState)
   }
 
 
