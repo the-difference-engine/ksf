@@ -56,6 +56,7 @@ const SearchResultsCard = () => {
               </th>
             </tr>
           </thead>
+
           <tbody>
             {sortedSearchResults.length > 0 && (
               <tr className="search-result-header">

@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NewNomination from './NewNomination';
 import styles from './styles.css';
 import useSort from './useSort';
 import { SORT_DIRECTION } from '../../enum.js';
+import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 
 const ApplicationViewByStages = () => {
+  const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
   const [currentlyViewing, setCurrentlyViewing] = useState('Ready for Board Review');
-  const { sortedNoms, requestSort, sortConfig } = useSort();
-
-  const conditionalNominationRender = () => {
-    if (sortedNoms) {
-      return sortedNoms.filter((nominations) => nominations.status === currentlyViewing);
-    }
-  };
-
+  const { sortedNoms, requestSort, sortConfig } = useSort(NominationsData);
+  
   function renderOptionList() {
     const statuses = ['Awaiting HIPAA', 'HIPAA Verified', 'Document Review', 'Ready for Board Review'];
     return statuses.map((status, index) => (
@@ -37,10 +33,19 @@ const ApplicationViewByStages = () => {
     );
   };
 
+  
   const handleViewStageChange = (evt) => {
     setCurrentlyViewing(evt.currentTarget.value);
     requestSort('dateReceived', true);
   };
+
+  const conditionalNominationRender = () => {
+    if (sortedNoms) {
+      return sortedNoms.filter((nominations) => nominations.status === currentlyViewing);
+    }
+  };
+
+  
 
   return (
     <table className="new-files-table">
