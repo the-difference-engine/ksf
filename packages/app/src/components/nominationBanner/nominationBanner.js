@@ -27,7 +27,7 @@ const NominationBanner = ({ nomination }) => {
 
 
   function declineApplication() {
-    const declineStatus = 'Decline'
+    const declineStatus = 'Declined'
     activeNomination.status = declineStatus
     setActiveNomination({ ...activeNomination })
     
