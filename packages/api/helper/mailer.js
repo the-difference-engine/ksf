@@ -40,7 +40,7 @@ function sendDeclineEmail(nomination) {
       template: 'decline',
       message: {
         from: 'formmaster@keepswimmingfoundation.org',
-        to: nomination.providerEmailAddress,
+        to: nomination.representativeEmailAddress,
       },
       locals: {
         name: nomination.providerName,
