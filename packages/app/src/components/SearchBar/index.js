@@ -17,7 +17,7 @@ const SearchBar = () => {
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
-  
+
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
@@ -27,13 +27,19 @@ const SearchBar = () => {
 
   function findSearchResults(searchTerm) {
     let filteredNoms = []
+
     if(NominationsData) {
       filteredNoms = NominationsData.filter((nomination) => {
         return [
           formatSearch(nomination.providerName),
           formatSearch(nomination.patientName),
           formatSearch(nomination.nominationName),
-          formatSearch(nomination.representativeName),
+
+           //  The Representative name(called Family Member name on the fronted) 
+           // is not included as one of columns in the search result. Therefore the is confusion when search results don't seem to macth the search term.
+           // Waiting to hear from Bill if the line in question (formatSearch(nomination.representativeName)) should stay or not
+
+          formatSearch(nomination.representativeName),       
         ].some((nom) => nom.includes(searchTerm));
       });
       setSearchResultData(filteredNoms); 
@@ -63,7 +69,7 @@ const SearchBar = () => {
   }
 
   function formatSearch(str) {
-    return str.toLowerCase().replace(/ /g, '');
+    return str.toLowerCase();     
   }
 
   function searchResultRedirect() {
@@ -130,6 +136,7 @@ const SearchBar = () => {
             </form>
           
           </div>
+
           <div className="cog-container">
             <FontAwesomeIcon 
               onClick={() => setModalIsOpen(true)}
@@ -137,6 +144,7 @@ const SearchBar = () => {
               className="cog-icon"
               size="3x"/>
           </div>
+
         <div data-id="error-message">
           {showErrorMessage ? <Redirect to="/searchresults" />: null}
         </div>

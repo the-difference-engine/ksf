@@ -35,13 +35,12 @@ const email = new emailTemplate({
 });
 
 function sendDeclineEmail(nomination) {
-
   email
     .send({
       template: 'decline',
       message: {
-        from: adminEmail,
-        to: nomination.providerEmailAddress,
+        from: 'formmaster@keepswimmingfoundation.org',
+        to: nomination.representativeEmailAddress,
       },
       locals: {
         name: nomination.providerName,
@@ -54,23 +53,21 @@ function sendDeclineEmail(nomination) {
 }
 
 function sendSurveyEmail(nomination) {
-  email
-    .send({
-      template: 'survey',
-      attachments: './survey/header.jpg',
-      message: {
-        from: adminEmail,
-        to: nomination.representativeEmailAddress,
-      },
-      locals: {
-        name: nomination.representativeName,
-        patientName: nomination.patientName,
-        email: nomination.representativeEmailAddress,
-        imgUrl,
-      },
-    })
-    .catch((err) => console.log(err))
-    .then(() => console.log('email has been sent!'));
+  email.send({
+    template: 'survey',
+    attachments: './survey/header.jpg',
+    message: {
+      from: adminEmail,
+      to: nomination.representativeEmailAddress
+    },
+    locals: {
+      name: nomination.representativeName,
+      patientName: nomination.patientName,
+      email: nomination.representativeEmailAddress,
+      imgUrl
+    }
+  }).catch((err) => console.log(err))
+  .then(() => console.log('email has been sent!'));
 }
 
 function verifyHcEmail(nomination) {
@@ -154,11 +151,32 @@ function sendHIPAAReminder(nomination) {
     .catch((err) => console.log(err))
 }
 
+function sendHIPAAProvider(nomination) {
+  email
+  .send(
+    {
+      template: 'hipaaProvider',
+      message: {
+        from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+        replyTo: 'info@keepswimmingfoundation.org',
+        to: nomination.providerEmailAddress,
+      },
+      locals: {
+        name: nomination.patientName,
+        providerName: nomination.providerName,
+      }
+    }
+  )
+  .then(console.log('the provider has been notified about HIPAA Authorization process'))
+  .catch((err) => console.log(err))
+}
+
 module.exports = {
   sendDeclineEmail,
   sendSurveyEmail,
   verifyHcEmail,
   sendHIPAAEmail,
   sendHIPAAReminder,
-  sendSurveyReminder
+  sendSurveyReminder,
+  sendHIPAAProvider
 };

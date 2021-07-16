@@ -3,6 +3,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 // importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
+import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
 
 const ApplicationStages = () => {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
@@ -45,16 +46,6 @@ const ApplicationStages = () => {
     }
   }
 
-  function closeApplication(value) {
-    let index = status.indexOf(value);
-    if (index >= 0 && index < status.length - 1) {
-      let closeItem = status[status.length - 1];
-      activeNomination.status = closeItem;
-      setCurrentStatus(closeItem);
-      return updateNom(closeItem);
-    }
-  }
-
   function updateNom(currentStatus) {
     try {
       nominationsAPI.updateNomination(activeNomination.id, currentStatus);
@@ -74,11 +65,11 @@ const ApplicationStages = () => {
         <div className="wrapper">
           {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
           <div className="button-next-wrapper">
-            <div className="button next" onClick={() => advanceStage(currentStatus)}>
-              <span>&#10003;</span>Mark Stage as Complete
-            </div>
-            <div className="button next" onClick={() => closeApplication(currentStatus)}>
-              Close Application
+          <div className="modal-wrapper">
+            <MarkStageAsComplete
+              advanceStage={advanceStage}
+              currentStatus={currentStatus}
+            />
             </div>
           </div>
         </div>
