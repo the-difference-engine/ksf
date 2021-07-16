@@ -44,7 +44,7 @@ const NewFilesToReview = () => {
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
             <h1>New Files To Review </h1>
-            <h1 className="new-files-length">[{ sortedNominations.length }]</h1>
+            <h1 className="new-files-length">({ sortedNominations.length })</h1>
           </td>
           <td></td>
           <td></td>
