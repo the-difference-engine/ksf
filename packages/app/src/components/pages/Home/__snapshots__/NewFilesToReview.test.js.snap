@@ -19,9 +19,9 @@ Object {
               <h1
                 class="new-files-length"
               >
-                [
+                (
                 0
-                ]
+                )
               </h1>
             </td>
             <td />
@@ -111,9 +111,9 @@ Object {
             <h1
               class="new-files-length"
             >
-              [
+              (
               0
-              ]
+              )
             </h1>
           </td>
           <td />
