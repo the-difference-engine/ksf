@@ -7,19 +7,42 @@
 }
 
 .main {
-  border-radius: 10px;
   background-color: #ffffff;
   text-align: left;
+  background: rgb(255, 255, 255);
+  margin: 1rem;
+  padding: 2rem;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  border-radius: 1rem;
+}
+
+.value {
+  font-weight: bold;
+}
+
+#rowOverride {
+  margin-left: 0;
+  width: 100%;
+}
+
+.label {
+  font-weight: normal;
+}
+
+.title {
+  font-weight: bold;
+  font-size: large;
 }
 
 /* Buttons */
 
 #editBtn {
   background-color: white;
-  color: green;
   color: var(--brand);
   border-color: var(--light-background);
   border-radius: 4rem;
+  padding: 0 30px;
 }
 
 #saveBtn {
@@ -34,6 +57,7 @@
   color: red;
   border-color: var(--light-background);
   border-radius: 4rem;
+  padding: 0 20px;
 }
 
 /*********************************/
@@ -85,24 +109,13 @@ input[type='date'].inputError {
   border: red solid 1px;
 }
 
-@media screen and (min-width: 700px) {
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
-  }
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+}
 
-  .title {
-    font-weight: bold;
-    font-size: large;
-    grid-column: 1/-1;
-    /* padding-top: 15px; */
-  }
-
-  .value {
-    font-weight: bold;
-  }
-
-  .label {
-    font-weight: normal;
-  }
+.title {
+  font-weight: bold;
+  font-size: large;
+  grid-column: 1/-1;
 }
