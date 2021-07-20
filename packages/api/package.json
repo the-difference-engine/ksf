@@ -47,5 +47,9 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
+  },
+  "engines": {
+    "node": ">=16 <17",
+    "npm": ">= 7 <8"
   }
 }
