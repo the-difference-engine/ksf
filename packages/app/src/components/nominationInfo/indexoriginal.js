@@ -6,6 +6,8 @@ import ApplicationStages from '../../applicationStages/ApplicationStages';
 import SearchBar from '../../SearchBar';
 import ApplicationForm2 from '../../nominationInfo/ApplicationForm2';
 
+// DO NOT EDIT - ORIGINAL
+
 const NominationPage = ({
   match: {
     params: { id },
@@ -97,37 +99,6 @@ const NominationPage = ({
     'How did you hear about KSF?': '',
   };
 
-  const patientInformationData = {
-    'Patient Information': '',
-    'Patient Name': `${activeNomination.patientName}`,
-    'Patient Age': `${activeNomination.patientAge}`,
-    'Diagnosis/case information': `${activeNomination.patientDiagnosis}`,
-    'Admission Date': admissionDateObject2,
-    'Discharge Date': dischargeDateObject2,
-    'Hospitalized for at least 21 days?': `${diffDays}`,
-  };
-
-  const healthProviderData = {
-    'Health Provider Information': '',
-    'Provider Name': `${activeNomination.providerName}`,
-    'Provider Email Address': `${activeNomination.providerEmailAddress}`,
-    'Provider Phone Number': `${activeNomination.providerPhoneNumber}`,
-    Title: `${activeNomination.providerTitle}`,
-    'Name of Hospital': `${activeNomination.providerTitle}`,
-    'Hospital URL': `${activeNomination.providerTitle}`,
-    'Hospital Address': `${hospitalAddress}`,
-    'How did you hear about KSF?': '',
-  };
-
-  const familyMemberData = {
-    'Family Member Information': '',
-    'Representative Name': `${activeNomination.representativeName}`,
-    'Representative Email Address': `${activeNomination.representativeEmailAddress}`,
-    'Representative Phone Number': `${activeNomination.representativePhoneNumber}`,
-    Relationship: `${activeNomination.representativeRelationship}`,
-    'Request to communicate in Spanish?': `${spanishRepString}`,
-  };
-
   function handleEditHasBeenClicked() {
     setEditHasBeenClicked(editHasBeenClicked => !editHasBeenClicked);
     setMode('edit');
@@ -157,14 +128,12 @@ const NominationPage = ({
           />
           <ApplicationStages />
           <ApplicationForm2
-            patientInformationData={patientInformationData}
-            familyMemberData={familyMemberData}
-            healthProviderData={healthProviderData}
             formData={formData}
             mode={mode}
             editHasBeenClicked={editHasBeenClicked}
             saveHasBeenClicked={saveHasBeenClicked}
             nomination={activeNomination}
+            gridContent={true}
             id={id}
             revertMode={revertMode}
           />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import EditOrSaveButton from './editOrSaveButton';
+import styles from '../../components/nominationInfo/newstyles.module.css';
 
 const states = require('us-state-codes');
 
@@ -31,7 +32,7 @@ const NominationBanner = props => {
 
   return (
     <div className='nomination-banner-container'>
-      <div className='row'>
+      <div className='row' id={styles.rowOverride}>
         <div className='column column-10 icon-container'>
           <img src='/ksflogo.png' alt='other' />
         </div>
@@ -106,7 +107,7 @@ const NominationBanner = props => {
             </div>
           </div>
         </div>
-        <div className='column column-10'>
+        <div>
           <EditOrSaveButton
             mode={props.mode}
             revertMode={props.revertMode}

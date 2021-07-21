@@ -1,20 +1,54 @@
 .layout {
-  display: grid;
-  grid-template-columns: 1fr;
+  /* display: grid;
+  grid-template-columns: 1fr; */
   background-color: var(--light-background);
   grid-gap: 2em;
   padding: 2em;
 }
 
-.main {
+.dataContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* grid-template-rows: repeat(3, 1fr); */
+}
+
+.calendar {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+
+/* .main {
   background-color: #ffffff;
   text-align: left;
   background: rgb(255, 255, 255);
   margin: 1rem;
-  padding: 2rem;
-  padding-top: 2rem;
-  padding-left: 2rem;
   border-radius: 1rem;
+} */
+
+select {
+  width: 35%;
+}
+
+.card {
+  background-color: #ffffff;
+  text-align: left;
+  background: rgb(255, 255, 255);
+  margin: 1rem;
+  border-radius: 1rem;
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr); */
+}
+
+/*********************************/
+/************ header *************/
+/*********************************/
+
+.header {
+  border-bottom: 1px solid var(--light-background);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  grid-column: 1/-1;
 }
 
 .value {
@@ -33,6 +67,7 @@
 .title {
   font-weight: bold;
   font-size: large;
+  margin: 0;
 }
 
 /* Buttons */
@@ -61,16 +96,6 @@
 }
 
 /*********************************/
-/************ header *************/
-/*********************************/
-
-.header {
-  font-size: 1.2em;
-  border-bottom: 1px solid var(--light-background);
-  padding: 1rem 2rem;
-}
-
-/*********************************/
 /************ content ************/
 /*********************************/
 
@@ -78,6 +103,15 @@
   margin: 1rem 2rem;
   padding-bottom: 1rem;
 }
+
+.empty {
+  border-bottom: none;
+}
+
+.diagnosis {
+  grid-column: 1/-1;
+}
+
 .content > div:not(:last-child) {
   border-bottom: 1px solid var(--light-background);
 }
@@ -109,13 +143,9 @@ input[type='date'].inputError {
   border: red solid 1px;
 }
 
-.grid-container {
+.gridContainer {
   display: grid;
-  grid-template-columns: repeat(2, 50%);
-}
-
-.title {
-  font-weight: bold;
-  font-size: large;
-  grid-column: 1/-1;
+  grid-template-columns: repeat(2, 1fr);
+  /* margin: 1rem 2rem; */
+  padding-bottom: 1rem;
 }

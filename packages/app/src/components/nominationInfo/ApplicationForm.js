@@ -7,8 +7,10 @@ import * as Yup from 'yup';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import DatePicker, { CalendarContainer } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
+// DO NOT EDIT - ORIGINAL
 
 const ApplicationForm = props => {
   const firstUpdate = useRef(true);
