@@ -160,9 +160,9 @@ const ApplicationForm = props => {
     'Health Provider Information',
   ];
 
-  const modes = {
-    view: () => {
-      return (
+  return () => {
+    switch (props.mode) {
+    case 'view': 
         <div className={styles.dataContainer}>
           <div>
             <ViewCard
@@ -192,54 +192,49 @@ const ApplicationForm = props => {
             />
           </div>
         </div>
-      );
-    },
-    edit: () => {
-      return (
+    default:
         <form>
-        <div className={styles.dataContainer}>
-        <div>
-          <EditCard
-            register={register}
-            control={control}
-            errors={errors}
-            titleLabels={titleLabels}
-            editablePlainText={editablePlainText}
-            editableDates={editableDates}
-            spanishDropdown={spanishDropdown}
-            formData={props.patientInformationData}
-          />
-          </div>
-          <div>
-          <EditCard
-            register={register}
-            control={control}
-            errors={errors}
-            titleLabels={titleLabels}
-            editablePlainText={editablePlainText}
-            editableDates={editableDates}
-            spanishDropdown={spanishDropdown}
-            formData={props.familyMemberData}
-          />
-          </div>
-          <div>
-          <EditCard
-            register={register}
-            control={control}
-            errors={errors}
-            titleLabels={titleLabels}
-            editablePlainText={editablePlainText}
-            editableDates={editableDates}
-            spanishDropdown={spanishDropdown}
-            formData={props.healthProviderData}
-          />
-          </div>
+          <div className={styles.dataContainer}>
+            <div>
+              <EditCard
+                register={register}
+                control={control}
+                errors={errors}
+                titleLabels={titleLabels}
+                editablePlainText={editablePlainText}
+                editableDates={editableDates}
+                spanishDropdown={spanishDropdown}
+                formData={props.patientInformationData}
+              />
+            </div>
+            <div>
+              <EditCard
+                register={register}
+                control={control}
+                errors={errors}
+                titleLabels={titleLabels}
+                editablePlainText={editablePlainText}
+                editableDates={editableDates}
+                spanishDropdown={spanishDropdown}
+                formData={props.familyMemberData}
+              />
+            </div>
+            <div>
+              <EditCard
+                register={register}
+                control={control}
+                errors={errors}
+                titleLabels={titleLabels}
+                editablePlainText={editablePlainText}
+                editableDates={editableDates}
+                spanishDropdown={spanishDropdown}
+                formData={props.healthProviderData}
+              />
+            </div>
           </div>
         </form>
-      );
-    },
+    }
   };
-  return modes[props.mode]?.() ?? 'Modes DNE';
 };
 
 export default ApplicationForm;
