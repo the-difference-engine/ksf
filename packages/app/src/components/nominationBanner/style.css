@@ -81,7 +81,7 @@
 /* modal style */
 
 .modal-background{
-  opacity: 0;
+  opacity: 1;
   pointer-events: none;
   transition: opacity 0.4s case-in-out ;
   position: absolute; 
@@ -96,10 +96,10 @@
 }
 
 
-.modalShowing-true {
+/* .modalShowing-true {
   opacity: 1;
   pointer-events: visible;
-}
+} */
 
 .modal-container{
   z-index: 999;

@@ -20,9 +20,9 @@ const NominationBanner = ({ nomination }) => {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
   
 
-  const [modalState, setModalState] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModalState = () => {
-    setModalState(modalState => !modalState)
+    setIsModalVisible(isModalVisible => !isModalVisible)
   }
 
 
@@ -64,7 +64,8 @@ const NominationBanner = ({ nomination }) => {
                 Decline Application
               </button>
             </div>
-            <div className={`modal-background modalShowing-${modalState}`}>
+            {isModalVisible &&
+            <div className="modal-background">
               <div className="modal-container">
                 <button className= "exit-button" onClick={toggleModalState} >&times;</button>
                 
@@ -74,8 +75,9 @@ const NominationBanner = ({ nomination }) => {
                     toggleModalState()}}>Yes</button>
                   <button className ="button-no"onClick={toggleModalState} >No</button>
                 </div>
+              </div>
             </div>
-        </div>
+            }
           </div>
           <div className="row">
             <div className="column hp-name">
