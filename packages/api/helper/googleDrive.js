@@ -1,22 +1,22 @@
 const { google } = require('googleapis');
 const parsePrivateKey = require('./parsePrivateKey');
-const parentFolderId = process.env.APPLICATION_FOLDER_ID
-const clientEmail = process.env.SERVICE_CLIENT_EMAIL
-const privateKey = parsePrivateKey(process.env.SERVICE_PRIVATE_KEY)
+const parentFolderId = process.env.APPLICATION_FOLDER_ID;
+const clientEmail = process.env.SERVICE_CLIENT_EMAIL;
+const privateKey = parsePrivateKey(process.env.SERVICE_PRIVATE_KEY);
 const scopes = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/drive.appdata',
   'https://www.googleapis.com/auth/drive.file'
 ];
 
-module.exports = function createFolder(applicationName) {
+const auth = new google.auth.JWT(
+  clientEmail, null,
+  privateKey, scopes
+);
 
-  const auth = new google.auth.JWT(
-    clientEmail, null,
-    privateKey, scopes
-  );
+const drive = google.drive({ version: 'v3', auth });
 
-  const drive = google.drive({ version: 'v3', auth });
+function createFolder(applicationName) {
   let fileMetadata = {
     'name': applicationName,
     'parents': [parentFolderId],
@@ -32,3 +32,5 @@ module.exports = function createFolder(applicationName) {
     }
   })
 }
+
+module.exports = { createFolder }

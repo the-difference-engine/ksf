@@ -13,7 +13,20 @@
 }
 
 .decline-button {
-  border-radius: 4rem;
+  background-color: #f72314;
+  color: #ffffff;
+  border: #8a8a8a;
+}
+
+.button-center {
+  position: absolute;
+  top: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.decline-button:hover {
+  background-color: #d4190c;
 }
 
 .banner-top {
@@ -42,4 +55,15 @@
 
 .nom-name {
   font-size: 2.5rem;
+}
+
+.center {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hippa-column {
+  white-space: nowrap;
 }
