@@ -31,7 +31,7 @@ const ApplicationStages = () => {
           <div className="step complete">
             <span className="checkmark">✓</span>
           </div>
-        ) : null}
+        ) : null }
       </>
     ));
   }
