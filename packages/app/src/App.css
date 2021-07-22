@@ -1,12 +1,13 @@
 /* theme colors */
 :root {
-  --brand:#128B3E;
-  --light-background: #EEF1F6;
-  --dark-icon:#54698D;
-  --secondary-dark:#6D7278;
-  --body-text:#000;
-  --search-input:#F7F9FC;
-  --input-placeholder:#A1AABA;
+  --brand: #128b3e;
+  --light-background: #eef1f6;
+  --dark-icon: #54698d;
+  --secondary-dark: #6d7278;
+  --body-text: #000;
+  --search-input: #f7f9fc;
+  --input-placeholder: #a1aaba;
+
 }
 
 /*This has been lost from the when it was switched over from index.css,*/
@@ -14,9 +15,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #eef1f6;
@@ -24,8 +23,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 h1 {
@@ -51,4 +49,20 @@ select {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   font-size: 1.5rem;
+}
+
+
+.green {
+  color: #128b3e;
+  font-weight: bold;
+}
+
+.button {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0px 10px 10px 10px;
+  height: 35px;
+  border-radius: 4rem;
+  cursor: pointer;
+  text-transform: none;
 }

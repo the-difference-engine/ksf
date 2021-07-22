@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": " node ./helper/checkNodeVersion.js && node index.js",
+    "dev": " node ./helper/checkNodeVersion.js && nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
     "lint": "npx eslint .",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
-    "pretest": "cross-env NODE_ENV=test npm run migrate:reset"
+    "pretest": "cross-env NODE_ENV=test npm run migrate:reset",
+    "reminder-emails": "node helper/reminderEmails.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,12 +23,14 @@
     "faker": "^5.5.3",
     "googleapis": "^59.0.0",
     "jsonwebtoken": "^8.5.1",
+    "luxon": "^1.27.0",
     "nodemailer": "^6.4.14",
     "nodemailer-smtp-transport": "^2.7.4",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
     "pug": "^3.0.2",
-    "sequelize": "^6.3.4",
+    "semver": "^5.7.1",
+    "sequelize": "^6.6.2",
     "us-state-codes": "^1.1.2",
     "uuid": "^8.3.0"
   },

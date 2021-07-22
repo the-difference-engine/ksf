@@ -1,0 +1,81 @@
+doctype html
+html
+    //- added
+    head
+        style(type='text/css').
+            body {
+                width: 600px;
+                margin: 0;
+                font-family: sans-serif;
+                -webkit-font-smoothing: antialiased;
+                //- -moz-osx-font-smoothing: grayscale;
+                background: white;
+            }
+            .container {
+                padding: 20px;
+            }
+            a {
+                text-decoration: none;
+            }
+            p {
+                font-size: 0.875rem;
+                margin-bottom: 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            h2, h2 a {
+                text-decoration: none;
+                font-size: 1.5rem;
+                color: #6D7278;
+                text-align: center;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                color: #128B3E;
+            }
+
+            td {
+                border: none;
+                padding: 1.5rem 2rem;
+            }
+            .f0 {
+                text-align: center;
+            }
+            .f1 h6, .f1 p {
+                margin-bottom: 0px;
+                margin-top: 0px;
+                color: red;
+            }
+            .f1 {
+                margin-top: 50px;
+            }
+
+    body
+        img(src= `${imgUrl}/email/header.jpg` alt='header' style='width:100%; height:auto;')
+        div(class="container")
+            h1 REMINDER: Your Application is Incomplete
+            
+            p Hi #{providerName},
+            
+            p You are receiving this message because your application for #{name} at The Difference Engine is incomplete and has been awaiting documentation for over seven days.
+            
+            p Please reply to this email with your completed HIPAA authorization form.  
+            p We look forward to finalizing this nomination process with you. Thank you for your time.
+            
+            p Sincerely,
+
+            p -Keep Swimming Foundation
+            
+            h2 
+                | <a href="https://www.dropbox.com/?_hp=c">DOWNLOAD THE SUPPORTING SURVEY</a>
+            div(class="f0")
+                p Keep Swimming Foundation |
+                    | <a href="https://goo.gl/maps/rBQrsB3VHb4bji4z8"> N9W30025 Lang Udsigt Cir., Waukesha, WI 53188 </a>
+                    //- unsure of where to direct the bellow link unsubscribe
+                p <a href="#">  Unsubscribe #{ email } 
+                

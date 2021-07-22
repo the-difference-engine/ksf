@@ -5,9 +5,9 @@ const grantCycleController = require('../controllers/grantCycle.js');
 
 const router = Router();
 
-// nomintation endpoints
+// nomination endpoints
 router.get('/api/nominations/:id', nominationController.getNominationById);
-router.get('/api/nominations', nominationController.findAllNominataions);
+router.get('/api/nominations', nominationController.findAllNominations);
 router.post('/api/nominations', nominationController.createNomination);
 router.put('/api/nominations/:id', nominationController.updateNomination);
 
@@ -15,7 +15,7 @@ router.put('/api/nominations/:id', nominationController.updateNomination);
 router.patch('/api/nominations/:id', nominationController.updateActiveNomData);
 
 router.get('/api/syncnominations', nominationController.syncNominations);
-router.get('/api/confirmation/:token', nominationController.emailVerifiction);
+router.get('/api/confirmation/:token', nominationController.emailVerification);
 
 // user endpoints
 router.get('/api/user/:id', userController.getUserById);
@@ -23,9 +23,9 @@ router.post('/api/user', userController.create);
 
 // grant cycle endpoints
 router.get('/api/grantcycles', grantCycleController.findAll);
-router.get('/api/grantcycle/findactive', grantCycleController.findActive);
-router.get('/api/grantcycle/findbyname/:name', grantCycleController.findByName);
-router.post('/api/grantcycle', grantCycleController.create);
-router.put('/api/grantcycle/:id', grantCycleController.update);
+router.get('/api/grantcycles/findactive', grantCycleController.findActive);
+router.post('/api/grantcycles', grantCycleController.create);
+router.get('/api/grantcycles/findbyname/:name', grantCycleController.findByName);
+router.put('/api/grantcycles/:id', grantCycleController.update);
 
 module.exports = router;

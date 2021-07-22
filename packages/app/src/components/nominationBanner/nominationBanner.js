@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import EditOrSaveButton from './editOrSaveButton';
 import styles from '../../components/nominationInfo/newstyles.module.css';
 
+import style from './style.css';
+import React, { useEffect, useState, useContext } from 'react';
+import nominationsAPI from '../../utils/API/nominationsAPI'
+import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 const states = require('us-state-codes');
 
 //export const
@@ -27,8 +31,25 @@ const NominationBanner = props => {
   const valid = new Date(hipaaDate).getTime() > 0;
   let newDate = new Date(hipaaDate);
   const time = newDate.toLocaleDateString();
-  const minutes = newDate.toLocaleTimeString();
+  const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const finalDate = `${time} – ${minutes}`;
+  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+  const declineStatus = 'Declined'
+
+  function declineApplication() {
+    activeNomination.status = declineStatus
+    setActiveNomination({ ...activeNomination })
+    
+    return updateNomination(declineStatus);
+  }
+
+  function updateNomination(s) {
+    try {
+       nominationsAPI.updateNomination(nomination.id, s);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className='nomination-banner-container'>
@@ -47,16 +68,8 @@ const NominationBanner = props => {
                 </h1>
               </span>
             </div>
-            <div className='column name'>
-              <button
-                className=' decline-button'
-                style={{
-                  background: '#f72314',
-                  color: '#ffffff',
-                  border: '#929292',
-                  fontWeight: 'bold',
-                }}
-              >
+            <div className="column name">
+              <button className=" decline-button" onClick={declineApplication} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
                 Decline Application
               </button>
             </div>
