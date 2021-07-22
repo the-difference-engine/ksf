@@ -24,8 +24,7 @@ const NominationBanner = ({ nomination }) => {
   const toggleModalState = () => {
     setIsModalVisible(isModalVisible => !isModalVisible)
   }
-
-
+  
   function declineApplication() {
     const declineStatus = 'Declined'
     activeNomination.status = declineStatus
@@ -68,7 +67,6 @@ const NominationBanner = ({ nomination }) => {
             <div className="modal-background">
               <div className="modal-container">
                 <button className= "exit-button" onClick={toggleModalState} >&times;</button>
-                
                 <h3 className="modal-text">Do you want to decline the application?</h3>
                 <div className="modal-buttons">
                   <button className="button-yes" onClick={()=>{declineApplication(); 
