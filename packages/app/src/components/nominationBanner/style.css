@@ -76,16 +76,12 @@
 .hippa-column {
   white-space: nowrap;
 }
-
-
 /* modal style */
-
 .modal-background{
   opacity: 1;
   pointer-events: none;
   transition: opacity 0.4s case-in-out ;
   position: absolute; 
-  
   z-index: 1000;
   position: fixed;
   top: 0;
@@ -94,12 +90,6 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.75);
 }
-
-
-/* .modalShowing-true {
-  opacity: 1;
-  pointer-events: visible;
-} */
 
 .modal-container{
   z-index: 999;
@@ -129,7 +119,6 @@
   padding: 40px 40px;
   font-weight: 300;
   letter-spacing: .01em;
-
 }
 
 .modal-buttons {
@@ -141,11 +130,9 @@
 }
 
 
-.button-yes{
-  background-color: #128b3e;
+.modal-buttons > button {
   color: white;
   border: #999;
-  font-size: 15px;
   font-weight: bold;
   padding: 10px 40px 10px 40px;
   margin-right: 10px;
@@ -154,23 +141,16 @@
   font-size: 1rem;
   letter-spacing: .01em;
   line-height: 1rem;
+}
 
+.button-yes{
+  background-color: #128b3e;
 }
 
 .button-no{
   background-color: #f72314;
-  color: #ffffff;
-  border: #8a8a8a;
-  font-size: 15px;
-  padding: 10px 40px 10px 40px;
-  margin-left: 10px ;
-  height: 35px;
-  border-radius: 4rem;
-  cursor: pointer;
-  font-size: 1rem;
-  letter-spacing: .01em;
-  line-height: 1rem;
 }
+
 .exit-button {
   cursor: pointer;
   font-size: 30px;
@@ -181,11 +161,9 @@
   font-weight: bold;
   border: none;
   background-color: transparent;
-  
 }
 
 .exit-button:hover{
   color: darkgray;
   background-color: transparent;
-
 }
