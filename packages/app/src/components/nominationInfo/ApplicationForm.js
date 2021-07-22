@@ -1,19 +1,24 @@
 import React, { useEffect, useRef, useContext, useState } from 'react';
-// import styles from './styles.module.css';
 import styles from './newstyles.module.css';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
-// DO NOT EDIT - ORIGINAL
+import ViewCard from './ViewCard';
+import EditCard from './EditCard';
+import 'yup-phone';
+import { useParams } from 'react-router-dom';
 
 const ApplicationForm = props => {
   const firstUpdate = useRef(true);
+
+  const { id } = useParams();
+
+  const openWindow = val => {
+    window.open(`/searchhealthprovider/${val}`);
+  };
 
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
@@ -27,19 +32,18 @@ const ApplicationForm = props => {
   const [dischargeDate, setDischargeDate] = useState(new Date());
 
   useEffect(() => {
-    if (props.formData['Admission Date'] != 'Invalid Date') {
-      setAdmissionDate(props.formData['Admission Date']);
+    if (props.patientInformationData['Admission Date'] != 'Invalid Date') {
+      setAdmissionDate(props.patientInformationData['Admission Date']);
     }
-  }, [props.formData['Admission Date']]);
+  }, [props.patientInformationData['Admission Date']]);
 
   useEffect(() => {
-    if (props.formData['Discharge Date'] != 'Invalid Date') {
-      setDischargeDate(props.formData['Discharge Date']);
+    if (props.patientInformationData['Discharge Date'] != 'Invalid Date') {
+      setDischargeDate(props.patientInformationData['Discharge Date']);
     }
-  }, [props.formData['Discharge Date']]);
+  }, [props.patientInformationData['Discharge Date']]);
 
   const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-  const yesNoRegex = /^(?:Yes\b|No\b)/;
 
   useEffect(() => {
     if (!firstUpdate.current) {
@@ -63,15 +67,12 @@ const ApplicationForm = props => {
     'Representative Email Address': Yup.string()
       .email('Invalid email address.')
       .required('Required'), // This handles email validation with no regex.
-    'Representative Phone Number': Yup.string()
+      'Representative Phone Number': Yup.string()
       .matches(phoneRegex, 'Please enter a valid phone number.')
       .required('Required'),
     Relationship: Yup.string()
       .min(3, 'Must be at least 3 characters.')
       .max(20, 'Must be no more than 20 characters.')
-      .required('Required'),
-    'Request to communicate in Spanish?': Yup.string()
-      .matches(yesNoRegex, 'Please enter yes or no.')
       .required('Required'),
   });
 
@@ -114,25 +115,12 @@ const ApplicationForm = props => {
         }
         return nomination;
       });
-      const requestBody = {
-        admissionDate: newActiveNomination.admissionDate,
-        dischargeDate: newActiveNomination.dischargeDate,
-        representativeEmailAddress:
-          newActiveNomination.representativeEmailAddress,
-        representativePhoneNumber:
-          newActiveNomination.representativePhoneNumber,
-        representativeRelationship:
-          newActiveNomination.representativeRelationship,
-        representativeName: newActiveNomination.representativeName,
-        representativeSpanishRequested:
-          newActiveNomination.representativeSpanishRequested,
-      };
 
       const response = await nominationsAPI.updateActiveNomData(
         props.id,
-        requestBody
+        newActiveNomination
       );
-      // check status, validation passed before changing to view
+
       props.revertMode('view');
       setNominationsData(newNominationData);
       setActiveNomination(newActiveNomination);
@@ -161,153 +149,95 @@ const ApplicationForm = props => {
     'Health Provider Information',
   ];
 
-  const modes = {
-    view: () => {
-      let keys = Object.keys(props.formData);
+  switch (props.mode) {
+    case 'view':
       return (
-        <div className={styles.main}>
-          <div className={styles.header}>
-            <label className={styles.bold}>{props.title}</label>
+        <div className={styles.dataContainer}>
+          <div>
+            <ViewCard
+              titleLabels={titleLabels}
+              editablePlainText={editablePlainText}
+              editableDates={editableDates}
+              spanishDropdown={spanishDropdown}
+              formData={props.patientInformationData}
+              id={id}
+              openWindow={openWindow}
+            />
           </div>
-          <div
-            className={[
-              styles.content,
-              props.gridContent && styles['grid-container'],
-            ].join(' ')}
-          >
-            {keys.map(label => {
-              switch (true) {
-                case label === 'Patient Information' ||
-                  label === 'Family Member Information' ||
-                  label === 'Health Provider Information':
-                  return (
-                    <div key={label} className={styles.title}>
-                      {label}
-                    </div>
-                  );
-                case editableDates.includes(label):
-                  return (
-                    <div>
-                      <label className={styles.label}>{label}</label>
-                      <span className={styles.value}>
-                        {props.formData[label].toLocaleDateString()}
-                      </span>
-                    </div>
-                  );
-                default:
-                  return (
-                    <div>
-                      <label className={styles.label}>{label}</label>
-                      <span className={styles.value}>
-                        {String(props.formData[label])}
-                      </span>
-                    </div>
-                  );
-              }
-            })}
+          <div>
+            <ViewCard
+              titleLabels={titleLabels}
+              editablePlainText={editablePlainText}
+              editableDates={editableDates}
+              spanishDropdown={spanishDropdown}
+              formData={props.familyMemberData}
+              id={id}
+              openWindow={openWindow}
+            />
+          </div>
+          <div>
+            <ViewCard
+              titleLabels={titleLabels}
+              editablePlainText={editablePlainText}
+              editableDates={editableDates}
+              spanishDropdown={spanishDropdown}
+              formData={props.healthProviderData}
+              id={id}
+              openWindow={openWindow}
+            />
           </div>
         </div>
       );
-    },
-    edit: () => {
-      let keys = Object.keys(props.formData);
+    default:
       return (
         <form>
-          <div className={styles.main}>
-            <div className={styles.header}>
-              <label className={styles.bold}>{props.title}</label>
+          <div className={styles.dataContainer}>
+            <div>
+              <EditCard
+                register={register}
+                control={control}
+                errors={errors}
+                titleLabels={titleLabels}
+                editablePlainText={editablePlainText}
+                editableDates={editableDates}
+                spanishDropdown={spanishDropdown}
+                formData={props.patientInformationData}
+                id={id}
+                openWindow={openWindow}
+              />
             </div>
-            <div
-              className={[
-                styles.content,
-                props.gridContent && styles['grid-container'],
-              ].join(' ')}
-            >
-              {keys.map(label => {
-                switch (true) {
-                  case titleLabels.includes(label):
-                    return (
-                      <div key={label} className={styles.title}>
-                        {label}
-                      </div>
-                    );
-                  case editableDates.includes(label):
-                    return (
-                      <div>
-                        <label className={styles.label}>{label}</label>
-                        <Controller
-                          name={label}
-                          control={control}
-                          defaultValue={
-                            admissionDate && dischargeDate
-                              ? label === 'Admission Date'
-                                ? new Date(admissionDate)
-                                : new Date(dischargeDate)
-                              : null
-                          }
-                          render={({ field: { onChange, value } }) => (
-                            <DatePicker
-                              selected={value}
-                              onChange={onChange}
-                              dateFormat='MM/dd/yyyy'
-                            />
-                          )}
-                        />
-                        <p className={styles.yupError}>
-                          {errors[label]?.message}
-                        </p>
-                      </div>
-                    );
-                  case editablePlainText.includes(label):
-                    return (
-                      <div>
-                        <label className={styles.label}>{label}</label>
-                        <input
-                          name={label}
-                          type='text'
-                          defaultValue={props.formData[label]}
-                          {...register(label)}
-                          className={
-                            errors[label]?.message ? styles.inputError : ''
-                          }
-                        />
-                        <p className={styles.yupError}>
-                          {errors[label]?.message}
-                        </p>
-                      </div>
-                    );
-                  case spanishDropdown === label:
-                    return (
-                      <div>
-                        <label className={styles.label}>{label}</label>
-                        <select
-                          name={label}
-                          defaultValue={props.formData[label]}
-                          {...register(label)}
-                        >
-                          <option value='Yes'>Yes</option>
-                          <option value='No'>No</option>
-                        </select>
-                      </div>
-                    );
-                  default:
-                    return (
-                      <div>
-                        <label className={styles.label}>{label}</label>
-                        <span className={styles.value}>
-                          {String(props.formData[label])}
-                        </span>
-                      </div>
-                    );
-                }
-              })}
+            <div>
+              <EditCard
+                register={register}
+                control={control}
+                errors={errors}
+                titleLabels={titleLabels}
+                editablePlainText={editablePlainText}
+                editableDates={editableDates}
+                spanishDropdown={spanishDropdown}
+                formData={props.familyMemberData}
+                id={id}
+                openWindow={openWindow}
+              />
+            </div>
+            <div>
+              <EditCard
+                register={register}
+                control={control}
+                errors={errors}
+                titleLabels={titleLabels}
+                editablePlainText={editablePlainText}
+                editableDates={editableDates}
+                spanishDropdown={spanishDropdown}
+                formData={props.healthProviderData}
+                id={id}
+                openWindow={openWindow}
+              />
             </div>
           </div>
         </form>
       );
-    },
-  };
-  return modes[props.mode]?.() ?? 'Modes DNE';
+  }
 };
 
 export default ApplicationForm;

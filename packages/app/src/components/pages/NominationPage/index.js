@@ -4,7 +4,7 @@ import { NominationsDataContext } from '../../../utils/context/NominationsContex
 import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
 import SearchBar from '../../SearchBar';
-import ApplicationForm2 from '../../nominationInfo/ApplicationForm2';
+import ApplicationForm from '../../nominationInfo/ApplicationForm';
 
 const NominationPage = ({
   match: {
@@ -44,26 +44,29 @@ const NominationPage = ({
   } = activeNomination;
   const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
-  const admissionDateObject2 = new Date(admissionDate);
-  admissionDateObject2.setTime(
-    admissionDateObject2.getTime() +
-      admissionDateObject2.getTimezoneOffset() * 60 * 1000
+  const admissionDateObjectReversedOffset = new Date(admissionDate);
+  admissionDateObjectReversedOffset.setTime(
+    admissionDateObjectReversedOffset.getTime() +
+      admissionDateObjectReversedOffset.getTimezoneOffset() * 60 * 1000
   );
 
-  const dischargeDateObject2 = new Date(dischargeDate);
-  dischargeDateObject2.setTime(
-    dischargeDateObject2.getTime() +
-      dischargeDateObject2.getTimezoneOffset() * 60 * 1000
+  const dischargeDateObjectReversedOffset = new Date(dischargeDate);
+  dischargeDateObjectReversedOffset.setTime(
+    dischargeDateObjectReversedOffset.getTime() +
+      dischargeDateObjectReversedOffset.getTimezoneOffset() * 60 * 1000
   );
 
   const diffDays =
     Math.round(
       Math.abs(
-        (admissionDateObject2 - dischargeDateObject2) / (24 * 60 * 60 * 1000)
+        (admissionDateObjectReversedOffset -
+          dischargeDateObjectReversedOffset) /
+          /* hours*minutes*seconds*milliseconds */
+          (24 * 60 * 60 * 1000)
       )
     ) >= 21
       ? 'Yes'
-      : 'No'; /* <- hours*minutes*seconds*milliseconds */
+      : 'No';
 
   let spanishRepString;
   if (activeNomination.representativeSpanishRequested) {
@@ -72,38 +75,13 @@ const NominationPage = ({
     spanishRepString = 'No';
   }
 
-  const formData = {
-    'Patient Information': '',
-    'Patient Name': `${activeNomination.patientName}`,
-    'Patient Age': `${activeNomination.patientAge}`,
-    'Admission Date': admissionDateObject2,
-    'Discharge Date': dischargeDateObject2,
-    'Hospitalized for at least 21 days?': `${diffDays}`,
-    'Diagnosis/case information': `${activeNomination.patientDiagnosis}`,
-    'Family Member Information': '',
-    'Representative Name': `${activeNomination.representativeName}`,
-    'Representative Email Address': `${activeNomination.representativeEmailAddress}`,
-    'Representative Phone Number': `${activeNomination.representativePhoneNumber}`,
-    Relationship: `${activeNomination.representativeRelationship}`,
-    'Request to communicate in Spanish?': `${spanishRepString}`,
-    'Health Provider Information': '',
-    'Provider Name': `${activeNomination.providerName}`,
-    'Provider Email Address': `${activeNomination.providerEmailAddress}`,
-    'Provider Phone Number': `${activeNomination.providerPhoneNumber}`,
-    Title: `${activeNomination.providerTitle}`,
-    'Name of Hospital': `${activeNomination.providerTitle}`,
-    'Hospital URL': `${activeNomination.providerTitle}`,
-    'Hospital Address': `${hospitalAddress}`,
-    'How did you hear about KSF?': '',
-  };
-
   const patientInformationData = {
     'Patient Information': '',
     'Patient Name': `${activeNomination.patientName}`,
     'Patient Age': `${activeNomination.patientAge}`,
     'Diagnosis/case information': `${activeNomination.patientDiagnosis}`,
-    'Admission Date': admissionDateObject2,
-    'Discharge Date': dischargeDateObject2,
+    'Admission Date': admissionDateObjectReversedOffset,
+    'Discharge Date': dischargeDateObjectReversedOffset,
     'Hospitalized for at least 21 days?': `${diffDays}`,
   };
 
@@ -156,11 +134,10 @@ const NominationPage = ({
             nomination={activeNomination}
           />
           <ApplicationStages />
-          <ApplicationForm2
+          <ApplicationForm
             patientInformationData={patientInformationData}
             familyMemberData={familyMemberData}
             healthProviderData={healthProviderData}
-            formData={formData}
             mode={mode}
             editHasBeenClicked={editHasBeenClicked}
             saveHasBeenClicked={saveHasBeenClicked}

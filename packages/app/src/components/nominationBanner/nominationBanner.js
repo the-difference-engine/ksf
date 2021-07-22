@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
 import EditOrSaveButton from './editOrSaveButton';
 import styles from '../../components/nominationInfo/newstyles.module.css';
-
 import style from './style.css';
 import React, { useEffect, useState, useContext } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI'
@@ -45,7 +43,7 @@ const NominationBanner = props => {
 
   function updateNomination(s) {
     try {
-       nominationsAPI.updateNomination(nomination.id, s);
+       nominationsAPI.updateNomination(props.nomination.id, s);
     } catch (error) {
       console.log(error);
     }

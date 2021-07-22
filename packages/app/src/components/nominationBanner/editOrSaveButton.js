@@ -6,7 +6,6 @@ const EditOrSaveButton = props => {
     case 'view':
       return (
         <button
-          className='button button-outline'
           onClick={props.handleEditHasBeenClicked}
           id={styles.editBtn}
           type='submit'
@@ -18,7 +17,6 @@ const EditOrSaveButton = props => {
       return (
         <>
           <button
-            className='button button-outline'
             type='submit'
             onClick={() => {
               props.handleSaveHasBeenClicked();
@@ -28,7 +26,6 @@ const EditOrSaveButton = props => {
             Save
           </button>
           <button
-            className='button button-outline'
             onClick={() => {
               props.revertMode('view');
             }}

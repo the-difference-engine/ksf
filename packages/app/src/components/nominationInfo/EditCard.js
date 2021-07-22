@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './newstyles.module.css';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 const EditCard = props => {
-  const [admissionDate, setAdmissionDate] = useState(new Date(props.formData['Admission Date']));
-  const [dischargeDate, setDischargeDate] = useState(new Date(props.formData['Discharge Date']));
+  const [admissionDate, setAdmissionDate] = useState(
+    new Date(props.formData['Admission Date'])
+  );
+  const [dischargeDate, setDischargeDate] = useState(
+    new Date(props.formData['Discharge Date'])
+  );
 
   // useEffect(() => {
   //   if (props.formData['Admission Date'] != 'Invalid Date') {
@@ -29,9 +34,9 @@ const EditCard = props => {
             case props.titleLabels.includes(label):
               return (
                 <div className={styles.header}>
-                <div key={label} className={styles.title}>
-                  {label}
-                </div>
+                  <div key={label} className={styles.title}>
+                    {label}
+                  </div>
                 </div>
               );
             case props.editableDates.includes(label):
@@ -41,7 +46,6 @@ const EditCard = props => {
                   <Controller
                     name={label}
                     control={props.control}
-                    
                     defaultValue={
                       admissionDate && dischargeDate
                         ? label === 'Admission Date'
@@ -58,7 +62,9 @@ const EditCard = props => {
                       />
                     )}
                   />
-                  <p className={styles.yupError}>{props.errors[label]?.message}</p>
+                  <p className={styles.yupError}>
+                    {props.errors[label]?.message}
+                  </p>
                 </div>
               );
             case props.editablePlainText.includes(label):
@@ -70,9 +76,13 @@ const EditCard = props => {
                     type='text'
                     defaultValue={props.formData[label]}
                     {...props.register(label)}
-                    className={props.errors[label]?.message ? styles.inputError : ''}
+                    className={
+                      props.errors[label]?.message ? styles.inputError : ''
+                    }
                   />
-                  <p className={styles.yupError}>{props.errors[label]?.message}</p>
+                  <p className={styles.yupError}>
+                    {props.errors[label]?.message}
+                  </p>
                 </div>
               );
             case props.spanishDropdown === label:
@@ -87,6 +97,24 @@ const EditCard = props => {
                     <option value='Yes'>Yes</option>
                     <option value='No'>No</option>
                   </select>
+                </div>
+              );
+            case label === 'Provider Name':
+              return (
+                <div>
+                  <label className={styles.label}>{label}</label>
+                  <Link
+                    to={`/nomination/${props.id}`}
+                    className={styles.linkStyle}
+                  >
+                    <span
+                      className={(styles.value, 'green')}
+                      onClick={() => props.openWindow(props.formData[label])}
+                      key={label}
+                    >
+                      {props.formData[label]}
+                    </span>
+                  </Link>
                 </div>
               );
             default:
