@@ -13,18 +13,6 @@ const EditCard = props => {
     new Date(props.formData['Discharge Date'])
   );
 
-  // useEffect(() => {
-  //   if (props.formData['Admission Date'] != 'Invalid Date') {
-  //     setAdmissionDate(props.formData['Admission Date']);
-  //   }
-  // }, [props.formData['Admission Date']]);
-
-  // useEffect(() => {
-  //   if (props.formData['Discharge Date'] != 'Invalid Date') {
-  //     setDischargeDate(props.formData['Discharge Date']);
-  //   }
-  // }, [props.formData['Discharge Date']]);
-
   let keys = Object.keys(props.formData);
   return (
     <div className={styles.card}>
