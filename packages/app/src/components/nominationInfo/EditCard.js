@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import styles from './newstyles.module.css';
 import { Controller } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import './calendar.css';
 
 const EditCard = props => {
   const [admissionDate, setAdmissionDate] = useState(
@@ -46,7 +46,6 @@ const EditCard = props => {
                         selected={value}
                         onChange={onChange}
                         dateFormat='MM/dd/yyyy'
-                        calendarClassName='calendar'
                       />
                     )}
                   />
