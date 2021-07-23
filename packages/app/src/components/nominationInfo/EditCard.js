@@ -6,19 +6,24 @@ import { Link } from 'react-router-dom';
 import './calendar.css';
 
 const EditCard = props => {
+  // state for React Datepicker
   const [admissionDate, setAdmissionDate] = useState(
     new Date(props.formData['Admission Date'])
   );
+
+  // state for React Datepicker
   const [dischargeDate, setDischargeDate] = useState(
     new Date(props.formData['Discharge Date'])
   );
 
+  // keys for our form data object (passed down from ApplicationForm.js)
   let keys = Object.keys(props.formData);
   return (
     <div className={styles.card}>
       <div className={[styles.gridContainer, styles.content].join(' ')}>
         {keys.map(label => {
           switch (true) {
+            // Render our titles in form
             case props.titleLabels.includes(label):
               return (
                 <div className={styles.header}>
@@ -27,14 +32,17 @@ const EditCard = props => {
                   </div>
                 </div>
               );
+            // Render dates
             case props.editableDates.includes(label):
               return (
                 <div>
                   <label className={styles.label}>{label}</label>
+                  {/* Controller Component needed for React Hook Form and React Datepicker Integration*/}
                   <Controller
                     name={label}
                     control={props.control}
                     defaultValue={
+                      // from useState hooks above
                       admissionDate && dischargeDate
                         ? label === 'Admission Date'
                           ? new Date(admissionDate)
@@ -54,6 +62,9 @@ const EditCard = props => {
                   </p>
                 </div>
               );
+              {
+                /* Renders the rest of the form */
+              }
             case props.editablePlainText.includes(label):
               return (
                 <div>
@@ -72,6 +83,9 @@ const EditCard = props => {
                   </p>
                 </div>
               );
+              {
+                /* Renders Spanish select dropdown */
+              }
             case props.spanishDropdown === label:
               return (
                 <div>
@@ -86,6 +100,9 @@ const EditCard = props => {
                   </select>
                 </div>
               );
+              {
+                /* Link opens up provider name's nominations */
+              }
             case label === 'Provider Name':
               return (
                 <div>
@@ -108,6 +125,7 @@ const EditCard = props => {
               return (
                 <div
                   className={
+                    // Styling for the large diagnosis information displayed in form
                     label === 'Diagnosis/case information'
                       ? styles.diagnosis
                       : ''

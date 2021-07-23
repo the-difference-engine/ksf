@@ -115,6 +115,7 @@ const NominationPage = ({
     setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
   }
 
+  // used by cancel button and onSubmit to change mode back to 'view' from 'edit'
   function revertMode(mode) {
     setMode(mode);
   }

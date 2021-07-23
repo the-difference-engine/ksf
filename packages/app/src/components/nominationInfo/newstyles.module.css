@@ -1,3 +1,11 @@
+/* Styling for Grid */
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 1rem;
+}
+
 .layout {
   background-color: var(--light-background);
   grid-gap: 2em;
@@ -9,9 +17,7 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-select {
-  width: 40%;
-}
+/* Card Component Styling */
 
 .card {
   background-color: #ffffff;
@@ -21,9 +27,7 @@ select {
   border-radius: 1rem;
 }
 
-/*********************************/
-/************ header *************/
-/*********************************/
+/* Header */
 
 .header {
   border-bottom: 1px solid var(--light-background);
@@ -31,6 +35,8 @@ select {
   padding-bottom: 10px;
   grid-column: 1/-1;
 }
+
+/* Form and Data Styling */
 
 .value {
   font-weight: bold;
@@ -76,9 +82,7 @@ select {
   padding: 0 20px;
 }
 
-/*********************************/
-/************ content ************/
-/*********************************/
+/* Content */
 
 .content > div {
   margin: 1rem 2rem;
@@ -97,38 +101,30 @@ select {
   border-bottom: 1px solid var(--light-background);
 }
 
-.mobileHide {
-  display: none;
-}
+/* Input Elements and Select */
 
 input[type='text'],
 input[type='date'] {
   width: 75%;
 }
 
-/*********************************/
-/************ errors *************/
-/*********************************/
+input[type='text'].inputError,
+input[type='date'].inputError {
+  border: red solid 1px;
+}
+
+select {
+  width: 40%;
+}
+
+/* Errors */
 
 .yupError {
   color: red;
   font-size: 14px;
 }
 
-/*********************************/
-/************ datepicker *********/
-/*********************************/
-
-input[type='text'].inputError,
-input[type='date'].inputError {
-  border: red solid 1px;
-}
-
-.gridContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding-bottom: 1rem;
-}
+/* Link Styling */
 
 .linkStyle {
   font-weight: bold;

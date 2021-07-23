@@ -12,31 +12,39 @@ import 'yup-phone';
 import { useParams } from 'react-router-dom';
 
 const ApplicationForm = props => {
+  // Stores state to ensure useEffects do not render on load
   const firstUpdate = useRef(true);
 
+  // passed down to card components for Link
   const { id } = useParams();
 
+  // passed down to card component for Link
   const openWindow = val => {
     window.open(`/searchhealthprovider/${val}`);
   };
 
+  // all nominations
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
 
+  // current nomination rendered on screen
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
 
+  // turn date into object for React Datepicker
   const [admissionDate, setAdmissionDate] = useState(new Date());
   const [dischargeDate, setDischargeDate] = useState(new Date());
 
+  // turn date into object for React Datepicker
   useEffect(() => {
     if (props.patientInformationData['Admission Date'] != 'Invalid Date') {
       setAdmissionDate(props.patientInformationData['Admission Date']);
     }
   }, [props.patientInformationData['Admission Date']]);
 
+  // turn date into object for React Datepicker
   useEffect(() => {
     if (props.patientInformationData['Discharge Date'] != 'Invalid Date') {
       setDischargeDate(props.patientInformationData['Discharge Date']);
@@ -45,7 +53,9 @@ const ApplicationForm = props => {
 
   const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
+  // watches for Save button click
   useEffect(() => {
+    // makes sure useEffects don't run on initial render
     if (!firstUpdate.current) {
       handleSubmit(submitForm)();
     }
@@ -67,7 +77,7 @@ const ApplicationForm = props => {
     'Representative Email Address': Yup.string()
       .email('Invalid email address.')
       .required('Required'), // This handles email validation with no regex.
-      'Representative Phone Number': Yup.string()
+    'Representative Phone Number': Yup.string()
       .matches(phoneRegex, 'Please enter a valid phone number.')
       .required('Required'),
     Relationship: Yup.string()
@@ -88,6 +98,7 @@ const ApplicationForm = props => {
   const submitForm = async data => {
     if (NominationsData) {
       let newActiveNomination = {};
+      // loops through all nomination data to find active nomination
       const newNominationData = NominationsData.map(nomination => {
         if (nomination.id === props.id) {
           data['Admission Date']
@@ -149,6 +160,7 @@ const ApplicationForm = props => {
     'Health Provider Information',
   ];
 
+  // mode either 'view' or 'edit' and is changed by Save, Edit, or Cancel buttons in editOrSaveButton.js
   switch (props.mode) {
     case 'view':
       return (

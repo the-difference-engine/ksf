@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../nominationInfo/newstyles.module.css';
 
+// Button Edit or Save depending on mode ('view' or 'edit')
 const EditOrSaveButton = props => {
   switch (props.mode) {
     case 'view':
