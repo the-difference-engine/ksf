@@ -14,26 +14,30 @@ const ApplicationStages = () => {
   useEffect(() => {
     setCurrentStatus(capitalize(activeNomination.status));
   }, [activeNomination, currentStatus]);
-
+ 
   function createStatusEl() {
     const activeStatusIndex = status.indexOf(currentStatus);
-    return status.map((stat, i) => (
-      <>
-        {activeStatusIndex === i ? (
-          <div className="step current">
-            <span>{stat}</span>
-          </div>
-        ) : activeStatusIndex < i ? (
-          <div className="step">
-            <span>{stat}</span>
-          </div>
-        ) : activeStatusIndex > i ? (
-          <div className="step complete">
-            <span className="checkmark">✓</span>
-          </div>
-        ) : null}
-      </>
-    ));
+    if (activeNomination.status == "Declined") {
+      return <div className="decline-red-status-bar"></div>
+    } else {
+        return status.map((stat, i) => (
+          <>
+            {activeStatusIndex === i ? (
+              <div className="step current">
+                <span>{stat}</span>
+              </div>
+            ) : activeStatusIndex < i ? (
+              <div className="step">
+                <span>{stat}</span>
+              </div>
+            ) : activeStatusIndex > i ? (
+              <div className="step complete">
+                <span className="checkmark">✓</span>
+              </div>
+            ) : null}
+          </>
+        ));
+        } 
   }
 
   function advanceStage(value) {

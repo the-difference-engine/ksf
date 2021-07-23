@@ -179,6 +179,13 @@ a:hover {
   color: #ffffff;
   border: #8a8a8a;
 }
+
+.decline-red-status-bar{
+  background-color: #f72314;
+  height: 35px;
+  width: 780px;
+  border-radius: 2rem;
+}
 .button-center {
   position: absolute;
   top: 40%;
