@@ -180,19 +180,12 @@ a:hover {
   border: #8a8a8a;
 }
 
-.decline-red-status-bar{
-  background-color: #f72314;
-  height: 35px;
-  width: 780px;
-  border-radius: 2rem;
-}
 .button-center {
   position: absolute;
   top: 40%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-
 
 /* modal styling */
 .modal-container {

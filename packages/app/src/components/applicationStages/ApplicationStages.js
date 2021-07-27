@@ -3,6 +3,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 // importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
+import './redStyle.css';
 import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
 
 const ApplicationStages = () => {
@@ -18,7 +19,11 @@ const ApplicationStages = () => {
   function createStatusEl() {
     const activeStatusIndex = status.indexOf(currentStatus);
     if (activeNomination.status == "Declined") {
-      return <div className="decline-red-status-bar"></div>
+      return status.map((stat) => (
+        <>
+          <div className="red-step" ></div>
+        </>
+      ));
     } else {
         return status.map((stat, i) => (
           <>
@@ -37,7 +42,7 @@ const ApplicationStages = () => {
             ) : null}
           </>
         ));
-        } 
+    } 
   }
 
   function advanceStage(value) {
@@ -67,7 +72,7 @@ const ApplicationStages = () => {
     <>
       <div className="nomination-bar-wrapper">
         <div className="wrapper">
-          {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
+          {currentStatus == "Declined" ?  <div className="status-bar red-arrow-steps clearfix">{createStatusEl()}</div> : <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
           <div className="button-next-wrapper">
           <div className="modal-wrapper">
             <MarkStageAsComplete
