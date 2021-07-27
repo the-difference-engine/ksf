@@ -90,9 +90,9 @@ const NominationPage = ({
     'Provider Name': `${activeNomination.providerName}`,
     'Provider Email Address': `${activeNomination.providerEmailAddress}`,
     'Provider Phone Number': `${activeNomination.providerPhoneNumber}`,
-    Title: `${activeNomination.providerTitle}`,
-    'Name of Hospital': `${activeNomination.providerTitle}`,
-    'Hospital URL': `${activeNomination.providerTitle}`,
+    'Title': `${activeNomination.providerTitle}`,
+    'Name of Hospital': `${activeNomination.hospitalName}`, 
+    'Hospital URL': `${activeNomination.hospitalURL}`, 
     'Hospital Address': `${hospitalAddress}`,
     'How did you hear about KSF?': '',
   };
@@ -102,7 +102,7 @@ const NominationPage = ({
     'Representative Name': `${activeNomination.representativeName}`,
     'Representative Email Address': `${activeNomination.representativeEmailAddress}`,
     'Representative Phone Number': `${activeNomination.representativePhoneNumber}`,
-    Relationship: `${activeNomination.representativeRelationship}`,
+    'Relationship': `${activeNomination.representativeRelationship}`,
     'Request to communicate in Spanish?': `${spanishRepString}`,
   };
 
@@ -142,7 +142,6 @@ const NominationPage = ({
             mode={mode}
             editHasBeenClicked={editHasBeenClicked}
             saveHasBeenClicked={saveHasBeenClicked}
-            nomination={activeNomination}
             id={id}
             revertMode={revertMode}
           />

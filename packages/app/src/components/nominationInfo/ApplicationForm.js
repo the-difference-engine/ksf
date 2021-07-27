@@ -9,14 +9,14 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import ViewCard from './ViewCard';
 import EditCard from './EditCard';
 import 'yup-phone';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 const ApplicationForm = props => {
   // Stores state to ensure useEffects do not render on load
   const firstUpdate = useRef(true);
 
-  // passed down to card components for Link
-  const { id } = useParams();
+  // // passed down to card components for Link
+  // const { id } = useParams();
 
   // passed down to card component for Link
   const openWindow = val => {
@@ -32,24 +32,6 @@ const ApplicationForm = props => {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-
-  // turn date into object for React Datepicker
-  const [admissionDate, setAdmissionDate] = useState(new Date());
-  const [dischargeDate, setDischargeDate] = useState(new Date());
-
-  // turn date into object for React Datepicker
-  useEffect(() => {
-    if (props.patientInformationData['Admission Date'] != 'Invalid Date') {
-      setAdmissionDate(props.patientInformationData['Admission Date']);
-    }
-  }, [props.patientInformationData['Admission Date']]);
-
-  // turn date into object for React Datepicker
-  useEffect(() => {
-    if (props.patientInformationData['Discharge Date'] != 'Invalid Date') {
-      setDischargeDate(props.patientInformationData['Discharge Date']);
-    }
-  }, [props.patientInformationData['Discharge Date']]);
 
   const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
@@ -80,7 +62,7 @@ const ApplicationForm = props => {
     'Representative Phone Number': Yup.string()
       .matches(phoneRegex, 'Please enter a valid phone number.')
       .required('Required'),
-    Relationship: Yup.string()
+    'Relationship': Yup.string()
       .min(3, 'Must be at least 3 characters.')
       .max(20, 'Must be no more than 20 characters.')
       .required('Required'),
@@ -172,7 +154,7 @@ const ApplicationForm = props => {
               editableDates={editableDates}
               spanishDropdown={spanishDropdown}
               formData={props.patientInformationData}
-              id={id}
+              id={props.id}
               openWindow={openWindow}
             />
           </div>
@@ -183,7 +165,7 @@ const ApplicationForm = props => {
               editableDates={editableDates}
               spanishDropdown={spanishDropdown}
               formData={props.familyMemberData}
-              id={id}
+              id={props.id}
               openWindow={openWindow}
             />
           </div>
@@ -194,7 +176,7 @@ const ApplicationForm = props => {
               editableDates={editableDates}
               spanishDropdown={spanishDropdown}
               formData={props.healthProviderData}
-              id={id}
+              id={props.id}
               openWindow={openWindow}
             />
           </div>
@@ -214,7 +196,7 @@ const ApplicationForm = props => {
                 editableDates={editableDates}
                 spanishDropdown={spanishDropdown}
                 formData={props.patientInformationData}
-                id={id}
+                id={props.id}
                 openWindow={openWindow}
               />
             </div>
@@ -228,7 +210,7 @@ const ApplicationForm = props => {
                 editableDates={editableDates}
                 spanishDropdown={spanishDropdown}
                 formData={props.familyMemberData}
-                id={id}
+                id={props.id}
                 openWindow={openWindow}
               />
             </div>
@@ -242,7 +224,7 @@ const ApplicationForm = props => {
                 editableDates={editableDates}
                 spanishDropdown={spanishDropdown}
                 formData={props.healthProviderData}
-                id={id}
+                id={props.id}
                 openWindow={openWindow}
               />
             </div>
