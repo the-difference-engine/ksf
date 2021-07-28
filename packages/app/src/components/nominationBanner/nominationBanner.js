@@ -4,6 +4,7 @@ import style from './style.css';
 import React, { useEffect, useState, useContext } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI'
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+
 const states = require('us-state-codes');
 
 //export const
@@ -32,9 +33,15 @@ const NominationBanner = props => {
   const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const finalDate = `${time} – ${minutes}`;
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
-  const declineStatus = 'Declined'
+  
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const toggleModalState = () => {
+    setIsModalVisible(isModalVisible => !isModalVisible)
+  }
+  
   function declineApplication() {
+    const declineStatus = 'Declined'
     activeNomination.status = declineStatus
     setActiveNomination({ ...activeNomination })
     
@@ -67,10 +74,23 @@ const NominationBanner = props => {
               </span>
             </div>
             <div className="column name">
-              <button className=" decline-button" onClick={declineApplication} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
+              <button className=" decline-button" onClick={toggleModalState} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
                 Decline Application
               </button>
             </div>
+            {isModalVisible &&
+            <div className="modal-background">
+              <div className="modal-container">
+                <button className= "exit-button" onClick={toggleModalState} >&times;</button>
+                <h3 className="modal-text">Do you want to decline the application?</h3>
+                <div className="modal-buttons">
+                  <button className="button-yes" onClick={()=>{declineApplication(); 
+                    toggleModalState()}}>Yes</button>
+                  <button className ="button-no"onClick={toggleModalState} >No</button>
+                </div>
+              </div>
+            </div>
+            }
           </div>
 
           <div className='row'>
