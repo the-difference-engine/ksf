@@ -9,15 +9,13 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import ViewCard from './ViewCard';
 import EditCard from './EditCard';
 import 'yup-phone';
-import { isValidPhoneNumber } from 'react-phone-number-input'
-// import { useParams } from 'react-router-dom';
+import { isValidPhoneNumber, formatPhoneNumber} from 'react-phone-number-input'
+
 
 const ApplicationForm = props => {
   // Stores state to ensure useEffects do not render on load
   const firstUpdate = useRef(true);
 
-  // // passed down to card components for Link
-  // const { id } = useParams();
 
   // passed down to card component for Link
   const openWindow = val => {
@@ -100,7 +98,7 @@ const ApplicationForm = props => {
           nomination.representativeEmailAddress =
             data['Representative Email Address'];
           nomination.representativePhoneNumber =
-            data['Representative Phone Number'];
+          formatPhoneNumber(`+1${data['Representative Phone Number']}`);
           nomination.representativeRelationship = data['Relationship'];
           nomination.representativeName = data['Representative Name'];
           if (data['Request to communicate in Spanish?'] === 'Yes') {
