@@ -3,7 +3,6 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 // importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
-import './redStyle.css';
 import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
 
 const ApplicationStages = () => {

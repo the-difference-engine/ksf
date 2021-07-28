@@ -155,6 +155,44 @@ a:hover {
   border-left: 17px solid #128b3e;
 }
 
+.red-arrow-steps .red-step {
+  height: 36px;
+  margin: 0 3px;
+  min-width: 150px;
+  float: left;
+  position: relative;
+  background-color: #EA9999 ;
+}
+
+.red-arrow-steps .red-step:after,
+.red-arrow-steps .red-step:before {
+content: ' ';
+position: absolute;
+right: -17px;
+border-top: 19px solid transparent;
+border-bottom: 17px solid transparent;
+border-left: 17px solid #EA9999;
+z-index: 2;
+}
+.red-arrow-steps .red-step:before {
+  left: 0;
+  border-left: 17px solid #fff;
+  z-index: 0;
+}
+.red-arrow-steps .red-step:first-child:before {
+border: none;
+}
+
+.red-arrow-steps .red-step:first-child {
+border-top-left-radius: 25px;
+border-bottom-left-radius: 25px;
+}
+
+.red-arrow-steps .red-step:last-child {
+border-top-left-radius: 4px;
+border-bottom-left-radius: 4px;
+}
+
 .next {
   background-color: #128b3e;
   color: white;
