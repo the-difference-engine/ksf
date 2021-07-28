@@ -9,6 +9,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import ViewCard from './ViewCard';
 import EditCard from './EditCard';
 import 'yup-phone';
+import { isValidPhoneNumber } from 'react-phone-number-input'
 // import { useParams } from 'react-router-dom';
 
 const ApplicationForm = props => {
@@ -60,7 +61,10 @@ const ApplicationForm = props => {
       .email('Invalid email address.')
       .required('Required'), // This handles email validation with no regex.
     'Representative Phone Number': Yup.string()
-      .matches(phoneRegex, 'Please enter a valid phone number.')
+      .test('test-name', 'must be valid phone number', 
+        function(value) {
+          return isValidPhoneNumber(`+1${value}`)
+        })
       .required('Required'),
     'Relationship': Yup.string()
       .min(3, 'Must be at least 3 characters.')
