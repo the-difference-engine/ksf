@@ -20,6 +20,14 @@
   background-color: #f72314;
   color: #ffffff;
   border: #8a8a8a;
+  text-transform: capitalize;
+}
+.decline-button:disabled {
+  background-color: #8a8a8a;
+}
+
+.decline-button:disabled:hover {
+  background-color: #8a8a8a;
 }
 
 .button-center {

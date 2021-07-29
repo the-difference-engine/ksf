@@ -216,6 +216,7 @@ border-bottom-left-radius: 4px;
   background-color: #f72314;
   color: #ffffff;
   border: #8a8a8a;
+  border-radius: 5rem;
 }
 
 .button-center {
