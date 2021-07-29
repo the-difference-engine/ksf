@@ -11,9 +11,5 @@
   },
   "devDependencies": {
     "lerna": "^3.22.1"
-  },
-  "engines": {
-    "node": ">=14 <15",
-    "npm": ">=6 <7"
   }
 }
