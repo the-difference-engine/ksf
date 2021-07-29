@@ -172,23 +172,21 @@ function sendHIPAAProvider(nomination) {
 }
 
 function sendSurveySocialWorker(nomination) {
-  email.send(
-    {
+  email
+    .send({
       template: 'surveySocialWorker',
       message: {
-        from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-        replyTo: 'info@keepswimmingfoundation.org',
-        to: nomination.providerEmailAddress,
+        from: 'formmaster@keepswimmingfoundation.org',
+        to: nomination.representativeEmailAddress,
       },
       locals: {
-        name:nomination.patientName,
-        providerName: nomination.providerName,
-        imgUrl
-      }
-    }
-  )
-  .then(console.log('the provider has been notified about Supporting Survey Sent to Family Representative'))
-  .catch((err) => console.log(err))
+        name: nomination.providerName,
+        patientName: nomination.patientName,
+        imgUrl,
+      },
+    })
+    .then(() => console.log('email has been sent!'))
+    .catch((err) => console.log(err))
 }
 
 module.exports = {

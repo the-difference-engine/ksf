@@ -140,6 +140,21 @@ const updateNomination = async (req, res) => {
           sendSurveyEmail(nomination);
         }
       }
+
+      if (nomination.status === NOMINATION_STATUS.document_review) {
+        try {
+          nomination.update(
+            { documentReviewTimestamp: Date() }
+            );
+        } catch (err) {
+          console.log('Nomination Not Found', err);
+          return res.status(400);
+        } finally {
+          sendSurveySocialWorker(nomination);
+        }
+      }
+
+
       if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
 
