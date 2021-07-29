@@ -200,6 +200,12 @@ border-bottom-left-radius: 4px;
   margin: 0px;
   margin-left: 10px;
 }
+.next:disabled{
+  background-color: #5a5959;
+}
+.next:disabled:hover{
+  background-color: #5a5959;
+}
 
 .next span {
   margin-right: 1rem;
@@ -211,12 +217,6 @@ border-bottom-left-radius: 4px;
   display: flex;
   justify-content: space-between;
   height: max-content;
-}
-.decline-button {
-  background-color: #f72314;
-  color: #ffffff;
-  border: #8a8a8a;
-  border-radius: 5rem;
 }
 
 .button-center {
