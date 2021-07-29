@@ -35,7 +35,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.16.x'
-          cache: 'npm'
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
