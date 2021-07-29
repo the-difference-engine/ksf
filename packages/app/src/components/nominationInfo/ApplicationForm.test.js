@@ -7,7 +7,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 
-test.afterEach(cleanup)
+afterEach(cleanup)
 
 test('renders ViewCards in ApplicationForm', () => {
   const patientInformationData = {
@@ -69,6 +69,7 @@ test('renders ViewCards in ApplicationForm', () => {
 
 });
 
+afterEach(cleanup)
 
 test('renders EditCards in ApplicationForm', () => {
   const patientInformationData = {
@@ -127,3 +128,5 @@ test('renders EditCards in ApplicationForm', () => {
   expect(patientName).toBeInTheDocument();
   
 });
+
+afterEach(cleanup)
