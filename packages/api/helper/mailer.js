@@ -171,6 +171,26 @@ function sendHIPAAProvider(nomination) {
   .catch((err) => console.log(err))
 }
 
+function sendSurveySocialWorker(nomination) {
+  email.send(
+    {
+      template: 'surveySocialWorker',
+      message: {
+        from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
+        replyTo: 'info@keepswimmingfoundation.org',
+        to: nomination.providerEmailAddress,
+      },
+      locals: {
+        name:nomination.patientName,
+        providerName: nomination.providerName,
+        imgUrl
+      }
+    }
+  )
+  .then(console.log('the provider has been notified about Supporting Survey Sent to Family Representative'))
+  .catch((err) => console.log(err))
+}
+
 module.exports = {
   sendDeclineEmail,
   sendSurveyEmail,
@@ -178,5 +198,6 @@ module.exports = {
   sendHIPAAEmail,
   sendHIPAAReminder,
   sendSurveyReminder,
-  sendHIPAAProvider
+  sendHIPAAProvider,
+  sendSurveySocialWorker
 };
