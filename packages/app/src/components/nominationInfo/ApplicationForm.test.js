@@ -7,9 +7,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 
-afterEach(() => {
-  cleanup()
- });
+test.afterEach(cleanup)
 
 test('renders ViewCards in ApplicationForm', () => {
   const patientInformationData = {
