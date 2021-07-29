@@ -1,11 +1,11 @@
-import React, { createContext, useState } from 'react';
-import { render } from '@testing-library/react';
-import ApplicationForm from './ApplicationForm';
-import dummyData from './dummyData';
-import { NominationsDataContext } from '../../utils/context/NominationsContext';
-import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
+// import React, { createContext, useState } from 'react';
+// import { render } from '@testing-library/react';
+// import ApplicationForm from './ApplicationForm';
+// import dummyData from './dummyData';
+// import { NominationsDataContext } from '../../utils/context/NominationsContext';
+// import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+// import { createMemoryHistory } from 'history'
+// import { Router } from 'react-router-dom'
 
 test('tests are commented out in [ApplicationForm.test.js', () => {
   const one = 1
