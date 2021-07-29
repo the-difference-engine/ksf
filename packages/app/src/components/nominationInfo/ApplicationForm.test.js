@@ -1,11 +1,15 @@
 import React, { createContext, useState } from 'react';
-import { render } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import ApplicationForm from './ApplicationForm';
 import dummyData from './dummyData';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
+
+afterEach(() => {
+  cleanup()
+ });
 
 test('renders ViewCards in ApplicationForm', () => {
   const patientInformationData = {
