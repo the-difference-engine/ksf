@@ -42,6 +42,7 @@
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.2",
+    "luxon": "^2.0.1",
     "mini-css-extract-plugin": "0.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.6.4",
@@ -76,15 +77,14 @@
     "webpack-dev-server": "^3.11.0",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "4.3.1",
-    "yup": "^0.32.9",
-    "yup-phone": "^1.2.19"
+    "yup": "^0.32.9"
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "node scripts/checkNodeVersion.js && node scripts/start.js",
     "build": "node scripts/build.js",
     "test:watch": "node scripts/test.js",
-    "test": "jest",
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
     "lint": "npx eslint ."
   },
   "eslintConfig": {
@@ -168,5 +168,9 @@
     "http-proxy-middleware": "^1.0.6",
     "milligram": "^1.4.1",
     "typescript": "^4.0.2"
+  },
+  "engines": {
+    "node": ">=16 <17",
+    "npm": ">=7 <8"
   }
 }

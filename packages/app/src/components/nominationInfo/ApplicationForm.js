@@ -8,7 +8,6 @@ import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ViewCard from './ViewCard';
 import EditCard from './EditCard';
-import 'yup-phone';
 import { isValidPhoneNumber, formatPhoneNumber} from 'react-phone-number-input'
 
 
