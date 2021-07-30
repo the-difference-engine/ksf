@@ -23,7 +23,7 @@ const EditCard = props => {
   console.log('THIS IS ADMISSIONDATE', admissionDate)
   console.log('THIS IS dischargeDate', dischargeDate)
 
-  if (String(admissionDate) != 'Invalid Date') {
+
   return (
     <div className={styles.card}>
       <div className={[styles.gridContainer, styles.content].join(' ')}>
@@ -49,7 +49,7 @@ const EditCard = props => {
                     control={props.control}
                     defaultValue={
                       // from useState hooks above
-                      admissionDate && dischargeDate
+                      String(admissionDate) != 'Invalid Date' && String(dischargeDate) != 'Invalid Date'
                         ? label === 'Admission Date'
                           ? new Date(admissionDate)
                           : new Date(dischargeDate)
@@ -148,9 +148,7 @@ const EditCard = props => {
       </div>
     </div>
   );
-} else {
-  return <div></div>
-}
+
 };
 
 export default EditCard;
