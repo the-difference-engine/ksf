@@ -75,7 +75,7 @@ const NominationBanner = props => {
               </span>
             </div>
             <div className="column name">
-              <button className=" decline-button" onClick={toggleModalState} style={{ background: '#f72314', color: '#ffffff', border: '#929292', fontWeight: 'bold' }}>
+              <button disabled = {activeNomination.status == "Declined"} className=" decline-button" onClick={toggleModalState} >
                 Decline Application
               </button>
             </div>
