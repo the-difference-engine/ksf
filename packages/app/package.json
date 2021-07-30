@@ -86,7 +86,7 @@
     "start": "node scripts/checkNodeVersion.js && node scripts/start.js",
     "build": "node scripts/build.js",
     "test:watch": "node scripts/test.js",
-    "test": "jest",
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
     "lint": "npx eslint ."
   },
   "eslintConfig": {
