@@ -14,26 +14,34 @@ const ApplicationStages = () => {
   useEffect(() => {
     setCurrentStatus(capitalize(activeNomination.status));
   }, [activeNomination, currentStatus]);
-
+ 
   function createStatusEl() {
     const activeStatusIndex = status.indexOf(currentStatus);
-    return status.map((stat, i) => (
-      <>
-        {activeStatusIndex === i ? (
-          <div className="step current">
-            <span>{stat}</span>
-          </div>
-        ) : activeStatusIndex < i ? (
-          <div className="step">
-            <span>{stat}</span>
-          </div>
-        ) : activeStatusIndex > i ? (
-          <div className="step complete">
-            <span className="checkmark">✓</span>
-          </div>
-        ) : null }
-      </>
-    ));
+    if (activeNomination.status == "Declined") {
+      return status.map((stat) => (
+        <>
+          <div className="red-step" ></div>
+        </>
+      ));
+    } else {
+        return status.map((stat, i) => (
+          <>
+            {activeStatusIndex === i ? (
+              <div className="step current">
+                <span>{stat}</span>
+              </div>
+            ) : activeStatusIndex < i ? (
+              <div className="step">
+                <span>{stat}</span>
+              </div>
+            ) : activeStatusIndex > i ? (
+              <div className="step complete">
+                <span className="checkmark">✓</span>
+              </div>
+            ) : null}
+          </>
+        ));
+    } 
   }
 
   function advanceStage(value) {
@@ -63,7 +71,7 @@ const ApplicationStages = () => {
     <>
       <div className="nomination-bar-wrapper">
         <div className="wrapper">
-          {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
+          {currentStatus == "Declined" ?  <div className="status-bar red-arrow-steps clearfix">{createStatusEl()}</div> : <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
           <div className="button-next-wrapper">
           <div className="modal-wrapper">
             <MarkStageAsComplete
