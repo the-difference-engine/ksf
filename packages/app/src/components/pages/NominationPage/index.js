@@ -120,6 +120,10 @@ const NominationPage = ({
     setMode(mode);
   }
 
+  const patientInformationDataKeys = Object.keys(patientInformationData)
+  const familyMemberDataKeys = Object.keys(familyMemberData)
+  const healthProviderDataKeys = Object.keys(healthProviderData)
+
   return (
     <>
       {activeNomination ? (
@@ -139,6 +143,9 @@ const NominationPage = ({
             patientInformationData={patientInformationData}
             familyMemberData={familyMemberData}
             healthProviderData={healthProviderData}
+            patientInformationDataKeys={patientInformationDataKeys}
+            familyMemberDataKeys={familyMemberDataKeys}
+            healthProviderDataKeys={healthProviderDataKeys}
             mode={mode}
             editHasBeenClicked={editHasBeenClicked}
             saveHasBeenClicked={saveHasBeenClicked}

@@ -140,7 +140,8 @@ const ApplicationForm = props => {
     'Family Member Information',
     'Health Provider Information',
   ];
-
+   
+if (props.patientInformationData) {
   // mode either 'view' or 'edit' and is changed by Save, Edit, or Cancel buttons in editOrSaveButton.js
   switch (props.mode) {
     case 'view':
@@ -154,6 +155,7 @@ const ApplicationForm = props => {
               spanishDropdown={spanishDropdown}
               formData={props.patientInformationData}
               id={props.id}
+              keys={props.patientInformationDataKeys}
               openWindow={openWindow}
             />
           </div>
@@ -165,6 +167,7 @@ const ApplicationForm = props => {
               spanishDropdown={spanishDropdown}
               formData={props.familyMemberData}
               id={props.id}
+              keys={props.familyMemberDataKeys}
               openWindow={openWindow}
             />
           </div>
@@ -176,6 +179,7 @@ const ApplicationForm = props => {
               spanishDropdown={spanishDropdown}
               formData={props.healthProviderData}
               id={props.id}
+              keys={props.healthProviderDataKeys}
               openWindow={openWindow}
             />
           </div>
@@ -196,6 +200,7 @@ const ApplicationForm = props => {
                 spanishDropdown={spanishDropdown}
                 formData={props.patientInformationData}
                 id={props.id}
+                keys={props.patientInformationDataKeys}
                 openWindow={openWindow}
               />
             </div>
@@ -210,6 +215,7 @@ const ApplicationForm = props => {
                 spanishDropdown={spanishDropdown}
                 formData={props.familyMemberData}
                 id={props.id}
+                keys={props.familyMemberDataKeys}
                 openWindow={openWindow}
               />
             </div>
@@ -224,6 +230,7 @@ const ApplicationForm = props => {
                 spanishDropdown={spanishDropdown}
                 formData={props.healthProviderData}
                 id={props.id}
+                keys={props.healthProviderDataKeys}
                 openWindow={openWindow}
               />
             </div>
@@ -231,6 +238,8 @@ const ApplicationForm = props => {
         </form>
       );
   }
+}
+
 };
 
 export default ApplicationForm;

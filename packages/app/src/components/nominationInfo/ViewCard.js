@@ -3,13 +3,10 @@ import styles from './newstyles.module.css';
 import { Link } from 'react-router-dom';
 
 const ViewCard = props => {
-  // keys for our form data object (passed down from ApplicationForm.js)
-  let keys = Object.keys(props.formData);
-
   return (
     <div className={styles.card}>
       <div className={[styles.gridContainer, styles.content].join(' ')}>
-        {keys.map(label => {
+        {props.keys.map(label => {
           switch (true) {
             // Render our titles in card
             case props.titleLabels.includes(label):
