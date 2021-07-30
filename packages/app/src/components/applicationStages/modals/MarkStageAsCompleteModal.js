@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { useContext } from 'react';
+import { ActiveNominationContext } from '../../../utils/context/ActiveNominationContext';
+
+
 
 Modal.setAppElement('#root');
 
 const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+    const [isOpen, setIsOpen] = useState(false);
+    
     
     function openModal() {
       setIsOpen(true);
@@ -16,7 +22,7 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
 
   return (
     <div>
-      <button className="button next" onClick={openModal}>
+      <button disabled = {activeNomination.status == "Declined"} className="button next" onClick={openModal}>
         <span>&#10003;</span>Mark Stage as Complete
       </button>
       <Modal
