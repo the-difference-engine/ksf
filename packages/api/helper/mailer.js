@@ -4,6 +4,8 @@ const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
 const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL;
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
+const formmasterEmail = 'formmaster@keepswimmingfoundation.org';
+const infoEmail = 'Keep Swimming Foundation <info@keepswimmingfoundation.org>';
 
 const transport = {
   port: 587,
@@ -39,7 +41,7 @@ function sendDeclineEmail(nomination) {
     .send({
       template: 'decline',
       message: {
-        from: 'formmaster@keepswimmingfoundation.org',
+        from: formmasterEmail,
         to: nomination.representativeEmailAddress,
       },
       locals: {
@@ -76,7 +78,7 @@ function verifyHcEmail(nomination) {
     .send({
       template: 'verifyHcEmail',
       message: {
-        from: 'formmaster@keepswimmingfoundation.org',
+        from: formmasterEmail,
         to: nomination.providerEmailAddress,
       },
       locals: {
@@ -95,8 +97,8 @@ function sendHIPAAEmail(nomination) {
       {
         template: 'hipaa',
         message: {
-          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-          replyTo: 'info@keepswimmingfoundation.org',
+          from: infoEmail,
+          replyTo: infoEmail,
           to: nomination.representativeEmailAddress,
         },
         locals: {
@@ -115,8 +117,8 @@ function sendSurveyReminder(nomination) {
       {
         template: 'surveyReminder',
         message: {
-          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-          replyTo: 'info@keepswimmingfoundation.org',
+          from: infoEmail,
+          replyTo: infoEmail,
           to: nomination.providerEmailAddress,
         },
         locals: {
@@ -136,8 +138,8 @@ function sendHIPAAReminder(nomination) {
       {
         template: 'hipaaReminder',
         message: {
-          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-          replyTo: 'info@keepswimmingfoundation.org',
+          from: infoEmail,
+          replyTo: infoEmail,
           to: nomination.providerEmailAddress,
         },
         locals: {
@@ -157,8 +159,8 @@ function sendHIPAAProvider(nomination) {
     {
       template: 'hipaaProvider',
       message: {
-        from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-        replyTo: 'info@keepswimmingfoundation.org',
+        from: infoEmail,
+        replyTo: infoEmail,
         to: nomination.providerEmailAddress,
       },
       locals: {
@@ -176,7 +178,7 @@ function sendSurveySocialWorker(nomination) {
     .send({
       template: 'surveySocialWorker',
       message: {
-        from: 'formmaster@keepswimmingfoundation.org',
+        from: formmasterEmail,
         to: nomination.representativeEmailAddress,
       },
       locals: {
