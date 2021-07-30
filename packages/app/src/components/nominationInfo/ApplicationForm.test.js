@@ -39,6 +39,10 @@ test('renders ViewCards in ApplicationForm', () => {
     'Request to communicate in Spanish?': `${dummyData.spanishRepString}`,
   };
 
+  const patientInformationDataKeys = Object.keys(patientInformationData)
+  const familyMemberDataKeys = Object.keys(familyMemberData)
+  const healthProviderDataKeys = Object.keys(healthProviderData)
+
   const history = createMemoryHistory()
 
     const { getByText } = render(
@@ -50,6 +54,9 @@ test('renders ViewCards in ApplicationForm', () => {
                 patientInformationData={patientInformationData}
                 familyMemberData={familyMemberData}
                 healthProviderData={healthProviderData}
+                patientInformationDataKeys={patientInformationDataKeys}
+                familyMemberDataKeys={familyMemberDataKeys}
+                healthProviderDataKeys={healthProviderDataKeys}
                 mode={'view'}
                 editHasBeenClicked={false}
                 saveHasBeenClicked={false}
@@ -100,6 +107,10 @@ test('renders EditCards in ApplicationForm', () => {
     'Request to communicate in Spanish?': `${dummyData.representativeSpanishRequested}`,
   };
 
+  const patientInformationDataKeys = Object.keys(patientInformationData)
+  const familyMemberDataKeys = Object.keys(familyMemberData)
+  const healthProviderDataKeys = Object.keys(healthProviderData)
+
   const history = createMemoryHistory()
 
   var { getByText } = render(
@@ -110,6 +121,9 @@ test('renders EditCards in ApplicationForm', () => {
                 patientInformationData={patientInformationData}
                 familyMemberData={familyMemberData}
                 healthProviderData={healthProviderData}
+                patientInformationDataKeys={patientInformationDataKeys}
+                familyMemberDataKeys={familyMemberDataKeys}
+                healthProviderDataKeys={healthProviderDataKeys}
                 mode={'edit'}
                 editHasBeenClicked={false}
                 saveHasBeenClicked={false}
