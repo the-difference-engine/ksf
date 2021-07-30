@@ -41,11 +41,9 @@ const EditCard = props => {
                     control={props.control}
                     defaultValue={
                       // from useState hooks above
-                      admissionDate && dischargeDate
-                        ? label === 'Admission Date'
+                          label === 'Admission Date'
                           ? new Date(admissionDate)
                           : new Date(dischargeDate)
-                        : null
                     }
                     render={({ field: { onChange, value } }) => (
                       <DatePicker
