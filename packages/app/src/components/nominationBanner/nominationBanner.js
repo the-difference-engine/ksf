@@ -4,6 +4,8 @@ import style from './style.css';
 import React, { useEffect, useState, useContext } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI'
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+import EditButton from './EditButton';
+import SaveButton from './SaveButton';
 
 const states = require('us-state-codes');
 
@@ -139,12 +141,16 @@ const NominationBanner = props => {
           </div>
         </div>
         <div>
-          <EditOrSaveButton
-            mode={props.mode}
-            revertMode={props.revertMode}
-            handleEditHasBeenClicked={props.handleEditHasBeenClicked}
-            handleSaveHasBeenClicked={props.handleSaveHasBeenClicked}
-          />
+         { props.mode == 'view' ?
+            <EditButton 
+                handleHasBeenClicked={props.handleEditHasBeenClicked}
+            />
+          :
+            <SaveButton 
+                revertMode={props.revertMode}
+                handleHasBeenClicked={props.handleSaveHasBeenClicked}
+            />
+          }
         </div>
       </div>
     </div>

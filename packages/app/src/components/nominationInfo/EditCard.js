@@ -7,15 +7,23 @@ import './calendar.css';
 
 const EditCard = props => {
   // state for React Datepicker
+
+  let date = new Date()
+  
   const [admissionDate, setAdmissionDate] = useState(
-    new Date(props.formData['Admission Date'])
+    props.formData['Admission Date'] && date ? new Date(props.formData['Admission Date']) : date
   );
 
   // state for React Datepicker
   const [dischargeDate, setDischargeDate] = useState(
-    new Date(props.formData['Discharge Date'])
+    props.formData['Discharge Date'] && date ? new Date(props.formData['Discharge Date']) : date
   );
-  
+
+  console.log("EDIT CARD IS RUNNING")
+  console.log('THIS IS ADMISSIONDATE', admissionDate)
+  console.log('THIS IS dischargeDate', dischargeDate)
+
+  if (String(admissionDate) != 'Invalid Date') {
   return (
     <div className={styles.card}>
       <div className={[styles.gridContainer, styles.content].join(' ')}>
@@ -41,9 +49,11 @@ const EditCard = props => {
                     control={props.control}
                     defaultValue={
                       // from useState hooks above
-                          label === 'Admission Date'
+                      admissionDate && dischargeDate
+                        ? label === 'Admission Date'
                           ? new Date(admissionDate)
                           : new Date(dischargeDate)
+                        : null
                     }
                     render={({ field: { onChange, value } }) => (
                       <DatePicker
@@ -138,6 +148,9 @@ const EditCard = props => {
       </div>
     </div>
   );
+} else {
+  return <div></div>
+}
 };
 
 export default EditCard;

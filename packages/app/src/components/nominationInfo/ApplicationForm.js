@@ -141,7 +141,7 @@ const ApplicationForm = props => {
     'Health Provider Information',
   ];
    
-if (props.patientInformationData) {
+
   // mode either 'view' or 'edit' and is changed by Save, Edit, or Cancel buttons in editOrSaveButton.js
   switch (props.mode) {
     case 'view':
@@ -238,7 +238,7 @@ if (props.patientInformationData) {
         </form>
       );
   }
-}
+
 
 };
 
