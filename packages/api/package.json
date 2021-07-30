@@ -6,7 +6,7 @@
   "scripts": {
     "start": " node ./helper/checkNodeVersion.js && node index.js",
     "dev": " node ./helper/checkNodeVersion.js && nodemon index.js",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --runInBand --detectOpenHandles --forceExit",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --runInBand",
     "lint": "npx eslint .",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",

@@ -8,6 +8,10 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import {createMemoryHistory} from 'history'
 import {Router} from 'react-router-dom'
 
+test('test that always fails', () => {
+  expect((1+1)).toBe(3)
+})
+
 test('renders ViewCards in ApplicationForm', () => {
   const patientInformationData = {
     'Patient Information': '',
