@@ -253,10 +253,10 @@ const Settings = props => {
           <table className='settings__table'>
             <thead className='settings__thead'>
               <tr>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Cycle Name</th>
-                <th className='settings__th-column'>Applications</th>
+                <th style={{ width: '10%' }}>Start Date</th>
+                <th style={{ width: '10%' }}>End Date</th>
+                <th style={{ width: '10%' }}>Cycle Name</th>
+                <th style={{ width: '10%' }}>Applications</th>
               </tr>
             </thead>
             <tbody className='settings__tbody'>
