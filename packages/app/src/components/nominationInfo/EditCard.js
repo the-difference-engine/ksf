@@ -11,12 +11,12 @@ const EditCard = props => {
   let date = new Date()
   
   const [admissionDate, setAdmissionDate] = useState(
-    props.formData['Admission Date'] && date ? new Date(props.formData['Admission Date']) : date
+    new Date(props.formData['Admission Date'])
   );
 
   // state for React Datepicker
   const [dischargeDate, setDischargeDate] = useState(
-    props.formData['Discharge Date'] && date ? new Date(props.formData['Discharge Date']) : date
+    new Date(props.formData['Discharge Date'])
   );
 
   console.log("EDIT CARD IS RUNNING")
