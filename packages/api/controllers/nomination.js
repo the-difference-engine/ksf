@@ -170,6 +170,7 @@ const emailVerification = async (req, res) => {
     console.log(nomination, '-----nomination------');
     await db.Nomination.update({ emailValidated: true }, { where: { id } });
     return res.status(200).json({ status: 'ok' });
+    // redirect to verification page
   } catch (error) {
     console.log('400 validation error', error);
     return res.status(400).json({ error: error.message });
