@@ -10,6 +10,7 @@ const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
 const { sendHIPAAEmail} = require('../helper/mailer');
+const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
@@ -139,6 +140,11 @@ const updateNomination = async (req, res) => {
           sendSurveyEmail(nomination);
         }
       }
+
+      if (nomination.status === NOMINATION_STATUS.document_review) {
+        sendSurveySocialWorker(nomination);
+      }
+
       if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
 

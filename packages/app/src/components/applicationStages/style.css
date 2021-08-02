@@ -155,12 +155,70 @@ a:hover {
   border-left: 17px solid #128b3e;
 }
 
+.red-arrow-steps .red-step {
+  height: 36px;
+  margin: 0 3px;
+  min-width: 150px;
+  float: left;
+  position: relative;
+  background-color: #EA9999 ;
+}
+
+.red-arrow-steps .red-step:after,
+.red-arrow-steps .red-step:before {
+  content: ' ';
+  position: absolute;
+  right: -17px;
+  border-top: 19px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-left: 17px solid #EA9999;
+  z-index: 2;
+}
+
+.red-arrow-steps .red-step:last-child:after {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-top: 19px #EA9999;;
+  border-bottom: 17px #EA9999;;
+  border-left: 17px #EA9999;
+}
+.red-arrow-steps .red-step:before {
+  left: 0;
+  border-left: 17px solid #fff;
+  z-index: 0;
+}
+.red-arrow-steps .red-step:first-child:before {
+  border: none;
+}
+
+.red-arrow-steps .red-step:first-child {
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+
+.red-arrow-steps .red-step.current:last-child:after {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.red-arrow-steps .red-step:last-child {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+
 .next {
   background-color: #128b3e;
   color: white;
   border: #999;
   margin: 0px;
   margin-left: 10px;
+}
+.next:disabled{
+  background-color: #5a5959;
+}
+.next:disabled:hover{
+  background-color: #5a5959;
 }
 
 .next span {
@@ -174,18 +232,13 @@ a:hover {
   justify-content: space-between;
   height: max-content;
 }
-.decline-button {
-  background-color: #f72314;
-  color: #ffffff;
-  border: #8a8a8a;
-}
+
 .button-center {
   position: absolute;
   top: 40%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-
 
 /* modal styling */
 .modal-container {

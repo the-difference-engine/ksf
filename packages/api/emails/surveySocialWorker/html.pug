@@ -1,0 +1,78 @@
+doctype html
+html
+    head
+        style(type='text/css').
+            body {
+                width: 600px;
+                margin: 0 auto;
+                font-family: sans-serif;
+                -webkit-font-smoothing: antialiased;
+                background: white;
+            }
+            .container {
+                padding: 20px;
+            }
+            a {
+                text-decoration: none;
+            }
+            p {
+                font-size: 0.875rem;
+                margin-bottom: 0.5rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            h2, h2 a {
+                text-decoration: underline;
+                text-decoration-color: blue;
+                font-size: 1.5rem;
+                color: #6D7278;
+                text-align: center;
+            }
+            h3 {
+                font-size: 1.25rem;
+                color: #128B3E;
+            }
+            td {
+                border: none;
+                padding: 1.5rem 2rem;
+            }
+
+            .f0 {
+                text-align: center;
+                padding: 2%;
+            }
+            .f1 h6, .f1 p {
+                margin-bottom: 0px;
+                margin-top: 0px;
+                color: red;
+            }
+            .f1 {
+                margin-top: 50px;
+            }
+
+
+    body
+        img(src= `${imgUrl}/email/header.jpg` alt='header' style='width:100%; height:auto;')
+        div(class="container")
+
+            p Hello,
+
+            p We have received the patient’s signed release of information form.
+
+            p The provided family representative has just received the Step 3 Supporting Survey.
+
+            p In this step, the family is asked to compile and provide the following information:
+            ol
+                li The completed Supporting Survey
+
+                li Annotated bank/credit card statements and/or receipts pertaining to expenses that Keep Swimming foundation supports. Families may submit expenses from the beginning of the hospital stay for which they were nominated
+
+                li Letters of recommendation
+
+                li An open letter from a member of the family detailing their current struggles and need for financial support
+
+            p Questions? Please view our <a href = "https://www.keepswimmingfoundation.org/nomination/faq">FAQ Page</a>.
+
+            p Or email us at info@keepswimmingfoundation.org
