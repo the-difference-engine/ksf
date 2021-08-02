@@ -8,7 +8,6 @@ import SaveButton from './SaveButton';
 
 const states = require('us-state-codes');
 
-//export const
 /**
  * Creates and renders the active nomination banner.
  *
