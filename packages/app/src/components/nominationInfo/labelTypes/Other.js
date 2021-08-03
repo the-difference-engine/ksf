@@ -6,7 +6,7 @@ const Other = props => {
         <div>
             <label className={styles.label}>{props.label}</label>
             <span className={styles.value}>
-            {String(props.formData[props.label])}
+            {props.formData[props.label]}
         </span>
       </div>
     )
