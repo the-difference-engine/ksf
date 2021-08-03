@@ -6,7 +6,7 @@ const Diagnosis = props => {
         <div className={styles.diagnosis}>
             <label className={styles.label}>{props.label}</label>
             <span className={styles.value}>
-            {String(props.formData[props.label])}
+            {props.formData[props.label]}
         </span>
       </div>
     )
