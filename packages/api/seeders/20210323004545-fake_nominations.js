@@ -1,17 +1,15 @@
 'use strict';
-const faker = require("faker");
+const faker = require('faker');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const generateRandomNoms = () => {
-
-      const arrayOfDictNom = []
-
-      for(let i = 0; i <= 100; i++) {
+      const arrayOfDictNom = [];
+      for (let i = 0; i <= 100; i++) {
         arrayOfDictNom.push({
           id: faker.datatype.uuid(),
           status: 'received',
-          dateReceived: new Date(),
+          dateReceived: faker.date.past(3, '2021-03-31'),
           providerName: `${faker.name.firstName()}${faker.name.lastName()}`,
           providerPhoneNumber: faker.phone.phoneNumber(),
           providerEmailAddress: `${faker.name.firstName()}${faker.name.lastName()}@provider.com`,
@@ -26,7 +24,7 @@ module.exports = {
           representativeName: `${faker.name.firstName()} ${faker.name.lastName()}`,
           representativeEmailAddress: `${faker.name.firstName()}${faker.name.lastName()}@representative.com`,
           representativeRelationship: 'representative',
-          patientName:`${faker.name.firstName()} ${faker.name.lastName()}`,
+          patientName: `${faker.name.firstName()} ${faker.name.lastName()}`,
           patientAge: Math.floor(Math.random() * 100),
           admissionDate: faker.date.past(),
           dischargeDate: faker.date.past(),
@@ -40,12 +38,11 @@ module.exports = {
         });
       }
       return arrayOfDictNom;
-    }
-    return queryInterface.bulkInsert(
-      'nominations', generateRandomNoms(),{})
+    };
+    return queryInterface.bulkInsert('nominations', generateRandomNoms(), {});
   },
 
   down: async (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('nominations', null, {});
-  }
+  },
 };
