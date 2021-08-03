@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from './newstyles.module.css';
-import { Link } from 'react-router-dom';
+import Title from './labelTypes/Title'
+import Other from './labelTypes/Other'
+import Provider from './labelTypes/Provider'
+import Diagnosis from './labelTypes/Diagnosis'
 
 const ViewCard = props => {
   return (
@@ -10,13 +13,7 @@ const ViewCard = props => {
           switch (true) {
             // Render our titles in card
             case props.titleLabels.includes(label):
-              return (
-                <div className={styles.header}>
-                  <div key={label} className={styles.title}>
-                    {label}
-                  </div>
-                </div>
-              );
+              return <Title label={label} />
             // Render dates
             case props.editableDates.includes(label):
               return (
@@ -29,39 +26,16 @@ const ViewCard = props => {
               );
             /* Link opens up provider name's nominations */
             case label === 'Provider Name':
-              return (
-                <div>
-                  <label className={styles.label}>{label}</label>
-                  <Link
-                    to={`/nomination/${props.id}`}
-                    className={styles.linkStyle}
-                  >
-                    <span
-                      className={(styles.value, 'green')}
-                      onClick={() => props.openWindow(props.formData[label])}
-                      key={label}
-                    >
-                      {props.formData[label]}
-                    </span>
-                  </Link>
-                </div>
-              );
+              return <Provider 
+                        id={props.id}
+                        formData={props.formData}
+                        openWindow={props.openWindow}
+                        label={label}
+                        />
+            case label === 'Diagnosis/case information':
+              return <Diagnosis label={label} formData={props.formData}/>
             default:
-              return (
-                <div
-                  className={
-                    // Styling for the large diagnosis information displayed in form
-                    label === 'Diagnosis/case information'
-                      ? styles.diagnosis
-                      : ''
-                  }
-                >
-                  <label className={styles.label}>{label}</label>
-                  <span className={styles.value}>
-                    {String(props.formData[label])}
-                  </span>
-                </div>
-              );
+              return <Other label={label} formData={props.formData}/>
           }
         })}
       </div>
