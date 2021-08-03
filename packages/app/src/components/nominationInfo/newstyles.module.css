@@ -1,0 +1,132 @@
+/* Styling for Grid */
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 1rem;
+}
+
+.layout {
+  background-color: var(--light-background);
+  grid-gap: 2em;
+  padding: 2em;
+}
+
+.dataContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Card Component Styling */
+
+.card {
+  background-color: #ffffff;
+  text-align: left;
+  background: rgb(255, 255, 255);
+  margin: 1rem;
+  border-radius: 1rem;
+}
+
+/* Header */
+
+.header {
+  border-bottom: 1px solid var(--light-background);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  grid-column: 1/-1;
+}
+
+/* Form and Data Styling */
+
+.value {
+  font-weight: bold;
+}
+
+#rowOverride {
+  margin-left: 0;
+  width: 100%;
+}
+
+.label {
+  font-weight: normal;
+}
+
+.title {
+  font-weight: bold;
+  font-size: large;
+  margin: 0;
+}
+
+/* Buttons */
+
+#editBtn {
+  background-color: white;
+  color: var(--brand);
+  border-color: var(--light-background);
+  border-radius: 4rem;
+  padding: 0 30px;
+}
+
+#saveBtn {
+  background-color: green;
+  color: white;
+  border-color: var(--light-background);
+  border-radius: 4rem;
+}
+
+#cancelBtn {
+  background-color: white;
+  color: red;
+  border-color: var(--light-background);
+  border-radius: 4rem;
+  padding: 0 20px;
+}
+
+/* Content */
+
+.content > div {
+  margin: 1rem 2rem;
+  padding-bottom: 1rem;
+}
+
+.empty {
+  border-bottom: none;
+}
+
+.diagnosis {
+  grid-column: 1/-1;
+}
+
+.content > div:not(:last-child) {
+  border-bottom: 1px solid var(--light-background);
+}
+
+/* Input Elements and Select */
+
+input[type='text'],
+input[type='date'] {
+  width: 75%;
+}
+
+input[type='text'].inputError,
+input[type='date'].inputError {
+  border: red solid 1px;
+}
+
+select {
+  width: 40%;
+}
+
+/* Errors */
+
+.yupError {
+  color: red;
+  font-size: 14px;
+}
+
+/* Link Styling */
+
+.linkStyle {
+  font-weight: bold;
+  text-decoration-line: underline;
+}

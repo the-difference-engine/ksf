@@ -12,14 +12,20 @@
   width: 60px;
 }
 
-.edit-button {
-  border-radius: 4rem;
-}
-
 .decline-button {
   background-color: #f72314;
   color: #ffffff;
   border: #8a8a8a;
+  text-transform: capitalize;
+  border: #8a8a8a;
+  border-radius: 5rem;
+}
+.decline-button:disabled {
+  background-color: #5a5959;
+}
+
+.decline-button:disabled:hover {
+  background-color: #5a5959;
 }
 
 .button-center {
@@ -31,11 +37,6 @@
 
 .decline-button:hover {
   background-color: #d4190c;
-}
-
-#edit-button {
-  color: var(--brand);
-  border-color: var(--light-background);
 }
 
 .banner-top {

@@ -1,8 +1,8 @@
 const { validate: uuidValidate } = require('uuid');
-const sequelize = require('sequelize')
+const sequelize = require('sequelize');
 const { ValidationError, where } = require('sequelize');
 const db = require('../models');
-const { sendSurveyEmail} = require('../helper/mailer');
+const { sendSurveyEmail } = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
@@ -10,6 +10,7 @@ const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
 const { sendHIPAAEmail} = require('../helper/mailer');
+const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
@@ -21,7 +22,7 @@ const NOMINATION_STATUS = {
   document_review: 'Document Review',
   board_review: 'Ready for Board Review',
   declined: 'Declined',
-}
+};
 
 const getNominationById = async (req, res) => {
   try {
@@ -98,16 +99,15 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
-          nomination.update(
-            { declinedTimestamp: Date() }
-            )
-          } 
-        catch (error) {
-          console.log("Error declining nomination. Could not record readyForBoardReviewTimestamp ", error)
-        }
-        finally {
+          nomination.update({ declinedTimestamp: Date() });
+        } catch (error) {
+          console.log(
+            'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
+            error
+          );
+        } finally {
           sendDeclineEmail(nomination);
-        } 
+        }
       }
 
       if (nomination.status === NOMINATION_STATUS.awaiting) {
@@ -139,18 +139,23 @@ const updateNomination = async (req, res) => {
           sendSurveyEmail(nomination);
         }
       }
+
+      if (nomination.status === NOMINATION_STATUS.document_review) {
+        sendSurveySocialWorker(nomination);
+      }
+
       if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
+          const grant = await db.GrantCycle.findOne({
+            where: { isActive: true },
+          });
 
-          const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
-          
-          nomination.update({ 
-              readyForBoardReviewTimestamp: Date(),
-              grantCycleId: grant.id
-            }
-          );
+          nomination.update({
+            readyForBoardReviewTimestamp: Date(),
+            grantCycleId: grant.id,
+          });
         } catch (error) {
-          console.log("Could not record readyForBoardReviewTimestamp ", error)
+          console.log('Could not record readyForBoardReviewTimestamp ', error);
         }
       }
       return res.status(200).json(nomination);
@@ -181,6 +186,33 @@ const emailVerification = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+/**
+ * Updates database with information from active application updates on front end.
+ *
+ * @param {*} req - updated props data object
+ * @param {*} res - response code
+ */
+
+const updateActiveNomData = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const nomination = await db.Nomination.findOne({
+      where: { id },
+    });
+
+    await nomination.update(
+      { ...req.body },
+      {
+        where: { id },
+      }
+    );
+    return res.status(200).json({ message: 'updated' });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
 async function searchAndSend(status, query) {
   const nominations = await db.Nomination.findAll(query);
   let nomination;
@@ -222,8 +254,7 @@ module.exports = {
   createNomination,
   updateNomination,
   syncNominations,
+  updateActiveNomData,
   emailVerification,
   searchAndSend,
 };
-
-

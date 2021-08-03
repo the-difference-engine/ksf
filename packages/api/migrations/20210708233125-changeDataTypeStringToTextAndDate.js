@@ -4,7 +4,11 @@ const sequelize = require('sequelize');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.query(
+<<<<<<< HEAD
       `ALTER TABLE nominations ALTER COLUMN "dischargeDate" SET DATA TYPE date USING case when length("dischargeDate") > 8 then to_date("dischargeDate", 'yyyy-mm-dd') else to_date("dischargeDate",'mm/dd/yy') end`
+=======
+      `ALTER TABLE nominations ALTER COLUMN "dischargeDate" SET DATA TYPE date USING to_date("dischargeDate", 'mm/dd/yyyy')`
+>>>>>>> 0f3c3adc89d76d2f7f2c8d5df9100cb6cf92ed8f
     );
     await queryInterface.sequelize.query(
       `ALTER TABLE nominations ALTER COLUMN "admissionDate" SET DATA TYPE date`
