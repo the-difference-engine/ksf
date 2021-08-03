@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import styles from './newstyles.module.css';
 import { Controller } from 'react-hook-form';
-import Title from './labelTypes/Title'
-import Other from './labelTypes/Other'
-import Provider from './labelTypes/Provider'
-import Diagnosis from './labelTypes/Diagnosis'
+import Title from './labelTypes/Title';
+import Other from './labelTypes/Other';
+import Provider from './labelTypes/Provider';
 import './calendar.css';
 
 
@@ -108,9 +107,9 @@ const EditCard = props => {
                         label={label}
                         />
             case label === 'Diagnosis/case information':
-              return <Diagnosis label={label} formData={props.formData}/>
+              return <Other label={label} formData={props.formData} style={styles.diagnosis}/>
             default:
-              return <Other label={label} formData={props.formData}/>
+              return <Other label={label} formData={props.formData} style={""}/>
           }
         })}
       </div>
