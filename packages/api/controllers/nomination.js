@@ -2,28 +2,35 @@ const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize')
 const { ValidationError, where } = require('sequelize');
 const db = require('../models');
-const { sendSurveyEmail } = require('../helper/mailer');
+const { sendSurveyEmail} = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
+const { sendHIPAAEmail} = require('../helper/mailer');
+const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
 
+const NOMINATION_STATUS = {
+  received: 'received',
+  awaiting: 'Awaiting HIPAA',
+  verified: 'HIPAA Verified',
+  document_review: 'Document Review',
+  board_review: 'Ready for Board Review',
+  declined: 'Declined',
+}
 
 const getNominationById = async (req, res) => {
   try {
     const { id } = req.params;
-
     if (!uuidValidate(id)) {
       return res.status(400).send('Provided ID is not a valid UUID');
     }
-
     const nomination = await db.Nomination.findByPk(id);
-
     if (nomination) {
       return res.status(200).json({ nomination });
     }
@@ -35,7 +42,6 @@ const getNominationById = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
-
 const findAllNominations = async (req, res) => {
   try {
     const nominations = await db.Nomination.findAll();
@@ -48,7 +54,6 @@ const findAllNominations = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
-
 const createNomination = async (req, res) => {
   try {
     const { providerEmailAddress } = req.body;
@@ -68,11 +73,9 @@ const createNomination = async (req, res) => {
       console.log('400 validation error', error);
       return res.status(400).json({ error: error.message });
     }
-
     return res.status(500).json({ error: error.message });
   }
 };
-
 const updateNomination = async (req, res) => {
   const { id } = req.params;
   try {
@@ -94,14 +97,23 @@ const updateNomination = async (req, res) => {
         console.error('Was not able to change reminderSent bool', error);
       }
 
-      if (nomination.status === 'Decline') {
-        sendDeclineEmail(nomination);
+      if (nomination.status === NOMINATION_STATUS.declined) {
+        try {
+          nomination.update(
+            { declinedTimestamp: Date() }
+            )
+          } 
+        catch (error) {
+          console.log("Error declining nomination. Could not record readyForBoardReviewTimestamp ", error)
+        }
+        finally {
+          sendDeclineEmail(nomination);
+        } 
       }
 
-      if (nomination.status === 'Awaiting HIPAA') {
+      if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
-
           const lastName = nomination.patientName
             ? nomination.patientName.split(' ')[1]
             : '';
@@ -109,14 +121,16 @@ const updateNomination = async (req, res) => {
             nomination.hospitalState
           );
           const applicationName = `${lastName}-${state}`;
-
           createFolder(applicationName);
         } catch (err) {
           console.error('Could not create a folder', err);
+        } finally {
+          sendHIPAAEmail(nomination);
+          sendHIPAAProvider(nomination);
         }
       }
 
-      if (nomination.status === 'HIPAA Verified') {
+      if (nomination.status === NOMINATION_STATUS.verified) {
         try {
           nomination.update({ hipaaTimestamp: Date() });
         } catch (err) {
@@ -126,17 +140,19 @@ const updateNomination = async (req, res) => {
           sendSurveyEmail(nomination);
         }
       }
-      if (nomination.status === 'Ready for Board Review') {
+
+      if (nomination.status === NOMINATION_STATUS.document_review) {
+        sendSurveySocialWorker(nomination);
+      }
+
+      if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
-          // find the active nomination id
-          
-          // const grant =  await findActive(); //did not work
+
           const grant = await db.GrantCycle.findOne({ where: { isActive: true } });
           
           nomination.update({ 
               readyForBoardReviewTimestamp: Date(),
               grantCycleId: grant.id
-
             }
           );
         } catch (error) {
@@ -150,7 +166,6 @@ const updateNomination = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
-
 const syncNominations = async (req, res) => {
   try {
     gsheetToDB();
@@ -158,11 +173,9 @@ const syncNominations = async (req, res) => {
     return res.status(200).json({ status: 'ok' });
   } catch (error) {
     console.log('error', error);
-
     return res.status(400).json({ error: error.message });
   }
 };
-
 const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
@@ -176,15 +189,12 @@ const emailVerification = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
-
 async function searchAndSend(status, query) {
   const nominations = await db.Nomination.findAll(query);
   let nomination;
   let ids = [];
-
   for (let i = 0; i < nominations.length; i++) {
     nomination = nominations[i];
-
     switch (status) {
       case 'HIPAA Verified':
         sendSurveyReminder(nomination);
@@ -214,7 +224,6 @@ async function searchAndSend(status, query) {
     console.log(error);
   }
 }
-
 module.exports = {
   getNominationById,
   findAllNominations,
@@ -224,3 +233,5 @@ module.exports = {
   emailVerification,
   searchAndSend,
 };
+
+

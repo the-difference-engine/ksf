@@ -4,6 +4,8 @@ const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
 const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL;
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
+const formmasterEmail = 'formmaster@keepswimmingfoundation.org';
+const infoEmail = 'Keep Swimming Foundation <info@keepswimmingfoundation.org>';
 
 const transport = {
   port: 587,
@@ -35,13 +37,12 @@ const email = new emailTemplate({
 });
 
 function sendDeclineEmail(nomination) {
-
   email
     .send({
       template: 'decline',
       message: {
-        from: adminEmail,
-        to: nomination.providerEmailAddress,
+        from: formmasterEmail,
+        to: nomination.representativeEmailAddress,
       },
       locals: {
         name: nomination.providerName,
@@ -54,23 +55,21 @@ function sendDeclineEmail(nomination) {
 }
 
 function sendSurveyEmail(nomination) {
-  email
-    .send({
-      template: 'survey',
-      attachments: './survey/header.jpg',
-      message: {
-        from: adminEmail,
-        to: nomination.representativeEmailAddress,
-      },
-      locals: {
-        name: nomination.representativeName,
-        patientName: nomination.patientName,
-        email: nomination.representativeEmailAddress,
-        imgUrl,
-      },
-    })
-    .catch((err) => console.log(err))
-    .then(() => console.log('email has been sent!'));
+  email.send({
+    template: 'survey',
+    attachments: './survey/header.jpg',
+    message: {
+      from: adminEmail,
+      to: nomination.representativeEmailAddress
+    },
+    locals: {
+      name: nomination.representativeName,
+      patientName: nomination.patientName,
+      email: nomination.representativeEmailAddress,
+      imgUrl
+    }
+  }).catch((err) => console.log(err))
+  .then(() => console.log('email has been sent!'));
 }
 
 function verifyHcEmail(nomination) {
@@ -81,7 +80,7 @@ function verifyHcEmail(nomination) {
     .send({
       template: 'verifyHcEmail',
       message: {
-        from: 'formmaster@keepswimmingfoundation.org',
+        from: formmasterEmail,
         to: nomination.providerEmailAddress,
       },
       locals: {
@@ -100,8 +99,8 @@ function sendHIPAAEmail(nomination) {
       {
         template: 'hipaa',
         message: {
-          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-          replyTo: 'info@keepswimmingfoundation.org',
+          from: infoEmail,
+          replyTo: infoEmail,
           to: nomination.representativeEmailAddress,
         },
         locals: {
@@ -120,8 +119,8 @@ function sendSurveyReminder(nomination) {
       {
         template: 'surveyReminder',
         message: {
-          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-          replyTo: 'info@keepswimmingfoundation.org',
+          from: infoEmail,
+          replyTo: infoEmail,
           to: nomination.providerEmailAddress,
         },
         locals: {
@@ -141,8 +140,8 @@ function sendHIPAAReminder(nomination) {
       {
         template: 'hipaaReminder',
         message: {
-          from: 'Keep Swimming Foundation <info@keepswimmingfoundation.org>',
-          replyTo: 'info@keepswimmingfoundation.org',
+          from: infoEmail,
+          replyTo: infoEmail,
           to: nomination.providerEmailAddress,
         },
         locals: {
@@ -156,11 +155,51 @@ function sendHIPAAReminder(nomination) {
     .catch((err) => console.log(err))
 }
 
+function sendHIPAAProvider(nomination) {
+  email
+  .send(
+    {
+      template: 'hipaaProvider',
+      message: {
+        from: infoEmail,
+        replyTo: infoEmail,
+        to: nomination.providerEmailAddress,
+      },
+      locals: {
+        name: nomination.patientName,
+        providerName: nomination.providerName,
+      }
+    }
+  )
+  .then(console.log('the provider has been notified about HIPAA Authorization process'))
+  .catch((err) => console.log(err))
+}
+
+function sendSurveySocialWorker(nomination) {
+  email
+    .send({
+      template: 'surveySocialWorker',
+      message: {
+        from: formmasterEmail,
+        to: nomination.representativeEmailAddress,
+      },
+      locals: {
+        name: nomination.providerName,
+        patientName: nomination.patientName,
+        imgUrl,
+      },
+    })
+    .then(() => console.log('email has been sent!'))
+    .catch((err) => console.log(err))
+}
+
 module.exports = {
   sendDeclineEmail,
   sendSurveyEmail,
   verifyHcEmail,
   sendHIPAAEmail,
   sendHIPAAReminder,
-  sendSurveyReminder
+  sendSurveyReminder,
+  sendHIPAAProvider,
+  sendSurveySocialWorker
 };

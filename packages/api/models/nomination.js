@@ -164,6 +164,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true
       },
+      declinedTimestamp: {
+        type: DataTypes.DATE,
+        allowNull: true
+      }
     },
     {
       hooks: {

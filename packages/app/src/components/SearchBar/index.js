@@ -17,7 +17,7 @@ const SearchBar = () => {
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
-  
+
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
   );
@@ -26,21 +26,27 @@ const SearchBar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function findSearchResults(searchTerm) {
-    let filteredNoms = []
-    if(NominationsData) {
-      filteredNoms = NominationsData.filter((nomination) => {
+    let filteredNoms = [];
+
+    if (NominationsData) {
+      filteredNoms = NominationsData.filter(nomination => {
         return [
           formatSearch(nomination.providerName),
           formatSearch(nomination.patientName),
           formatSearch(nomination.nominationName),
+
+          //  The Representative name(called Family Member name on the fronted)
+          // is not included as one of columns in the search result. Therefore the is confusion when search results don't seem to match the search term.
+          // Waiting to hear from Bill if the line in question (formatSearch(nomination.representativeName)) should stay or not
+
           formatSearch(nomination.representativeName),
-        ].some((nom) => nom.includes(searchTerm));
+        ].some(nom => nom.includes(searchTerm));
       });
-      setSearchResultData(filteredNoms); 
+      setSearchResultData(filteredNoms);
       filteredNoms.length < 1
-      ? setShowErrorMessage(true)
-      : setShowErrorMessage(false);
-    } 
+        ? setShowErrorMessage(true)
+        : setShowErrorMessage(false);
+    }
   }
 
   function handleInputChange(e) {
@@ -54,7 +60,7 @@ const SearchBar = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setStartEmpty(false)
+    setStartEmpty(false);
     if (!searchTerm) {
       return;
     } else {
@@ -63,17 +69,17 @@ const SearchBar = () => {
   }
 
   function formatSearch(str) {
-    return str.toLowerCase().replace(/ /g, '');
+    return str.toLowerCase();
   }
 
   function searchResultRedirect() {
     if (!startEmpty) {
       if (SearchResultData.length === 1) {
-        return <Redirect to={`/nomination/${SearchResultData[0].id}`} />
+        return <Redirect to={`/nomination/${SearchResultData[0].id}`} />;
       } else if (SearchResultData.length > 1) {
-        return <Redirect to="/searchresults" />
+        return <Redirect to='/searchresults' />;
       } else {
-        return null
+        return null;
       }
     }
   }
@@ -93,52 +99,64 @@ const SearchBar = () => {
   function handleGoBack() {
     setShowResults(false);
   }
-  
+
   return (
     <>
-      <SettingsModal 
+      <SettingsModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        className="modal"
-        overlayClassName="modal-overlay"
+        className='modal'
+        overlayClassName='modal-overlay'
       >
-        {showResults ? <GrantCycleNomsResults onClick={handleGoBack} results={settingsResults}/> : <Settings onResultsClick={handleShowingResults}/>}
-        <FontAwesomeIcon 
-              onClick={closeModal}
-              icon="times"
-              className="times-icon"
-              size="3x"/>
+        {showResults ? (
+          <GrantCycleNomsResults
+            onClick={handleGoBack}
+            results={settingsResults}
+          />
+        ) : (
+          <Settings onResultsClick={handleShowingResults} />
+        )}
+        <FontAwesomeIcon
+          onClick={closeModal}
+          icon='times'
+          className='times-icon'
+          size='3x'
+        />
       </SettingsModal>
-      <div className="search-bar-wrapper">
-        <div className="search-header-container">
-            <Link to="/home"><img className="ksf-logo " src="/ksflogo.png" alt="other" /></Link>
-            <div className="command-center-header">
+      <div className='search-bar-wrapper'>
+        <div className='search-header-container'>
+          <Link to='/home'>
+            <img className='ksf-logo ' src='/ksflogo.png' alt='other' />
+          </Link>
+          <div className='command-center-header'>
             <strong>Command Center</strong>
-            </div>
+          </div>
         </div>
-          <div className="form-container">
-            <form onSubmit={handleSubmit} className="search-form">
-              <input
-                className="search-input-class"
-                type="text"
-                name="search"
-                placeholder="  Search"
-                data-id="search-input"
-                onChange={handleInputChange}
-                aria-label="search-input"
-              />
-            </form>
-          
-          </div>
-          <div className="cog-container">
-            <FontAwesomeIcon 
-              onClick={() => setModalIsOpen(true)}
-              icon="cog"
-              className="cog-icon"
-              size="3x"/>
-          </div>
-        <div data-id="error-message">
-          {showErrorMessage ? <Redirect to="/searchresults" />: null}
+        <div className='form-container'>
+          <form onSubmit={handleSubmit} className='search-form'>
+            <input
+              className='search-input-class'
+              type='text'
+              name='search'
+              placeholder='  Search'
+              data-id='search-input'
+              onChange={handleInputChange}
+              aria-label='search-input'
+            />
+          </form>
+        </div>
+
+        <div className='cog-container'>
+          <FontAwesomeIcon
+            onClick={() => setModalIsOpen(true)}
+            icon='cog'
+            className='cog-icon'
+            size='3x'
+          />
+        </div>
+
+        <div data-id='error-message'>
+          {showErrorMessage ? <Redirect to='/searchresults' /> : null}
         </div>
       </div>
       {searchResultRedirect()}

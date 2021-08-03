@@ -3,6 +3,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 // importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
+import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
 
 const ApplicationStages = () => {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
@@ -13,26 +14,34 @@ const ApplicationStages = () => {
   useEffect(() => {
     setCurrentStatus(capitalize(activeNomination.status));
   }, [activeNomination, currentStatus]);
-
+ 
   function createStatusEl() {
     const activeStatusIndex = status.indexOf(currentStatus);
-    return status.map((stat, i) => (
-      <>
-        {activeStatusIndex === i ? (
-          <div className="step current">
-            <span>{stat}</span>
-          </div>
-        ) : activeStatusIndex < i ? (
-          <div className="step">
-            <span>{stat}</span>
-          </div>
-        ) : activeStatusIndex > i ? (
-          <div className="step complete">
-            <span className="checkmark">✓</span>
-          </div>
-        ) : null}
-      </>
-    ));
+    if (activeNomination.status == "Declined") {
+      return status.map((stat) => (
+        <>
+          <div className="red-step" ></div>
+        </>
+      ));
+    } else {
+        return status.map((stat, i) => (
+          <>
+            {activeStatusIndex === i ? (
+              <div className="step current">
+                <span>{stat}</span>
+              </div>
+            ) : activeStatusIndex < i ? (
+              <div className="step">
+                <span>{stat}</span>
+              </div>
+            ) : activeStatusIndex > i ? (
+              <div className="step complete">
+                <span className="checkmark">✓</span>
+              </div>
+            ) : null}
+          </>
+        ));
+    } 
   }
 
   function advanceStage(value) {
@@ -42,16 +51,6 @@ const ApplicationStages = () => {
       activeNomination.status = nextItem;
       setCurrentStatus(nextItem);
       return updateNom(nextItem);
-    }
-  }
-
-  function closeApplication(value) {
-    let index = status.indexOf(value);
-    if (index >= 0 && index < status.length - 1) {
-      let closeItem = status[status.length - 1];
-      activeNomination.status = closeItem;
-      setCurrentStatus(closeItem);
-      return updateNom(closeItem);
     }
   }
 
@@ -72,13 +71,13 @@ const ApplicationStages = () => {
     <>
       <div className="nomination-bar-wrapper">
         <div className="wrapper">
-          {currentStatus && <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
+          {currentStatus == "Declined" ?  <div className="status-bar red-arrow-steps clearfix">{createStatusEl()}</div> : <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
           <div className="button-next-wrapper">
-            <div className="button next" onClick={() => advanceStage(currentStatus)}>
-              <span>&#10003;</span>Mark Stage as Complete
-            </div>
-            <div className="button next" onClick={() => closeApplication(currentStatus)}>
-              Close Application
+          <div className="modal-wrapper">
+            <MarkStageAsComplete
+              advanceStage={advanceStage}
+              currentStatus={currentStatus}
+            />
             </div>
           </div>
         </div>
