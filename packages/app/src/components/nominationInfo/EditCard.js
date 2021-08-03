@@ -8,8 +8,6 @@ import './calendar.css';
 const EditCard = props => {
   // state for React Datepicker
 
-  let date = new Date()
-  
   const [admissionDate, setAdmissionDate] = useState(
     new Date(props.formData['Admission Date'])
   );
@@ -18,11 +16,6 @@ const EditCard = props => {
   const [dischargeDate, setDischargeDate] = useState(
     new Date(props.formData['Discharge Date'])
   );
-
-  console.log("EDIT CARD IS RUNNING")
-  console.log('THIS IS ADMISSIONDATE', admissionDate)
-  console.log('THIS IS dischargeDate', dischargeDate)
-
 
   return (
     <div className={styles.card}>
