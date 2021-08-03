@@ -232,7 +232,7 @@ const Settings = (props) => {
           className="settings__button"
           style={
             disableButton
-              ? { color: 'gray', 'border-color': 'gray', 'font-weight': 'bold' }
+              ? { color: 'gray', 'border-color': 'gray', 'font-weight': 'bold', 'opacity': '1' }
               : {
                   color: 'var(--brand)',
                   'background-color': '#fff',
