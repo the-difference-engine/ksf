@@ -296,3 +296,9 @@ button.icon-right-arrow-disabled:hover {
   border-color: white;
   color: white;
 }
+
+button[disabled], input[type='button'][disabled] {
+  opacity: 1;
+  color: gray;
+  border-color: gray;
+}
