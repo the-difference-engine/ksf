@@ -31,8 +31,10 @@ const ViewCard = props => {
                         openWindow={props.openWindow}
                         label={label}
                         />
+            // renders diagnosis accross two columns
             case label === 'Diagnosis/case information':
               return <Other label={label} formData={props.formData} style={styles.diagnosis}/>
+            // renders everything else  
             default:
               return <Other label={label} formData={props.formData} style={""}/>
           }
