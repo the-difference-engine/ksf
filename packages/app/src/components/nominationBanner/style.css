@@ -12,10 +12,6 @@
   width: 60px;
 }
 
-.edit-button {
-  border-radius: 4rem;
-}
-
 .decline-button {
   background-color: #f72314;
   color: #ffffff;
@@ -41,11 +37,6 @@
 
 .decline-button:hover {
   background-color: #d4190c;
-}
-
-#edit-button {
-  color: var(--brand);
-  border-color: var(--light-background);
 }
 
 .banner-top {

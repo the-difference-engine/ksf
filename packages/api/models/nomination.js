@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       status: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         defaultValue: 'received',
       },
       id: {
@@ -44,19 +44,19 @@ module.exports = (sequelize, DataTypes) => {
       },
       providerName: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       providerPhoneNumber: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       providerEmailAddress: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       providerTitle: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       emailValidated: {
         allowNull: false,
@@ -69,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       hospitalURL: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       hospitalAddress: {
         allowNull: false,
@@ -77,15 +77,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       hospitalCity: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       hospitalState: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       hospitalZipCode: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       representativeName: {
         allowNull: false,
@@ -93,27 +93,27 @@ module.exports = (sequelize, DataTypes) => {
       },
       representativeEmailAddress: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         defaultValue: 'unknown',
       },
       representativePhoneNumber: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       representativeRelationship: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       patientName: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       patientAge: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       admissionDate: DataTypes.DATE,
-      dischargeDate: DataTypes.STRING,
+      dischargeDate: DataTypes.DATE,
       patientDiagnosis: DataTypes.TEXT,
       amountRequestedCents: {
         allowNull: false,
@@ -131,14 +131,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       representativeSpanishRequested: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
       },
       referralOrigination: {
         type: DataTypes.TEXT,
       },
       hipaaTimestamp: {
         allowNull: true,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       awaitingHipaaTimestamp: {
         allowNull: true,
@@ -172,7 +172,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate: (nomination, option) => {
-          publicEmailDomains.forEach((domain) => {
+          publicEmailDomains.forEach(domain => {
             if (nomination.providerEmailAddress.includes(domain)) {
               nomination.publicEmailDomain = true;
             }

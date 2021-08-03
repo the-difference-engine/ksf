@@ -181,7 +181,7 @@ function sendSurveySocialWorker(nomination) {
       template: 'surveySocialWorker',
       message: {
         from: formmasterEmail,
-        to: nomination.representativeEmailAddress,
+        to: nomination.providerEmailAddress,
       },
       locals: {
         name: nomination.providerName,
