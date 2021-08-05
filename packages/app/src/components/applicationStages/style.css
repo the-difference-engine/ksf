@@ -241,27 +241,25 @@ a:hover {
 }
 
 /* modal styling */
-.modal-container {
+.modal-container-stages {
   z-index: 999;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-height: 90%;
+  /* max-height: 90%; */
   overflow: inherit;
   background: #fff;
   box-sizing: border-box;
-  padding: 20px;
+  /* padding: 20px; */
   box-shadow: 0 1px 5px rgba(0,0,0,0.7);
   border-radius: 4px;
-  width: 469px;
-  height: 250px;
+  width: 800px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  align-content: flex-start;
-  display: flex;
+  /* justify-content: space-evenly; */
+  /* align-content: flex-start; */
+  /* display: flex; */
   
 }
 .modal-overlay {
@@ -276,21 +274,22 @@ a:hover {
 .modal-close-button {
   cursor: pointer;
   font-size: 30px;
-  padding-left: 450px;
-  padding-top: 0px;
+  /* padding-left: 450px; */
+  /* text-align: right; */
+  /* padding-top: 0px; */
   float: right;
   color: grey;
   font-weight: bold;
+  padding-left: 770px;
 }
 .modal-close-button:hover {
   color: darkgray;
 }
 .modal-footer {
   display: flex;
-  justify-content: center;
-  align-items: center;
   line-height: 20px;
-  padding-bottom: 19px;
+  padding-bottom: 3px;
+  padding-left: 580px;
 }
 .modal-button-yes {
   background-color: #128b3e;
@@ -298,33 +297,31 @@ a:hover {
   border: #999;
   font-size: 15px;
   font-weight: bold;
-  padding: 10px 40px 10px 40px;
+  /* padding: 10px 40px 10px 40px; */
   height: 35px;
-  border-radius: 4rem;
+  border-radius: 1rem;
   font-size: 1rem;
   letter-spacing: .01em;
   line-height: 1rem;
+  text-transform: capitalize;
+  margin-right: 10px;
 }
 .modal-button-no {
-  background-color: #f72314;
+  background-color: #999;
   color: #ffffff;
   border: #8a8a8a;
   font-size: 15px;
-  padding: 10px 40px 10px 40px;
+  /* padding: 10px 40px 10px 40px; */
   height: 35px;
-  border-radius: 4rem;
+  border-radius: 1rem;
   cursor: pointer;
   font-size: 1rem;
   letter-spacing: .01em;
   line-height: 1rem;
+  text-transform: capitalize;
 } 
 .modal-content-text{
-  padding: 40px 40px;
+  padding: 20px;
   font-weight: 300;
   letter-spacing: .01em;
-}
-.modal-close{
-  text-align: right;
-  cursor: pointer;
-  color: darkgray;
 }
