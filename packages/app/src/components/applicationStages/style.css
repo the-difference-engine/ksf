@@ -301,6 +301,12 @@ a:hover {
   text-transform: capitalize;
   margin-right: 10px;
 }
+.modal-button-yes:hover {
+  background-color: #128b3e;
+}
+.modal-button-no:hover {
+  background-color: #5a5959;
+}
 .modal-button-no {
   background-color: #999;
   color: #ffffff;
