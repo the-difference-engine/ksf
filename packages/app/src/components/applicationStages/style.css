@@ -273,12 +273,11 @@ a:hover {
   font-weight: bold;
   position: relative;
   align-items: flex-end;
-  bottom: 14px;
+  bottom: 10px;
   justify-content: flex-end;
+  right: 10px;
 }
-.modal-close-button:hover {
-  color: darkgray;
-}
+
 .modal-footer {
   display: flex;
   line-height: 20px;
@@ -305,7 +304,7 @@ a:hover {
   background-color: #128b3e;
 }
 .modal-button-no:hover {
-  background-color: #5a5959;
+  background-color: #999;
 }
 .modal-button-no {
   background-color: #999;
