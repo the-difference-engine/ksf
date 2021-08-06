@@ -281,6 +281,9 @@ a:hover {
   color: grey;
   font-weight: bold;
   padding-left: 770px;
+  position: relative;
+  bottom: 10px;
+  left: 4px;
 }
 .modal-close-button:hover {
   color: darkgray;
