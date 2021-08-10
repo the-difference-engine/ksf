@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import styles from './newstyles.module.css';
 import { Controller } from 'react-hook-form';
@@ -11,6 +11,8 @@ import './calendar.css';
 const EditCard = props => {
   // state for React Datepicker
 
+  const firstUpdate = useRef(true);
+
   const [admissionDate, setAdmissionDate] = useState(
     new Date(props.formData['Admission Date'])
   );
@@ -19,6 +21,25 @@ const EditCard = props => {
   const [dischargeDate, setDischargeDate] = useState(
     new Date(props.formData['Discharge Date'])
   );
+
+  useEffect(() => {
+  //  if (!firstUpdate.current) {
+      forgetDate()
+      console.log("use effect for cancelHasBeenClicked is runnin'")
+    // }
+   // firstUpdate.current = false;
+   console.log("THIS IS CANCELHASBEENCLICKED IN THE USEEFFECT", props.cancelHasBeenClicked)
+  }, [props.cancelHasBeenClicked]);
+
+  const forgetDate = () => {
+    let admissionDate = new Date(props.formData['Admission Date'])
+    let dischargeDate = new Date(props.formData['Discharge Date'])
+    setAdmissionDate(admissionDate)
+    setDischargeDate(dischargeDate)
+    console.log("cancel is hit")
+    // console.log("DISCHARGE DATE", dischargeDate)
+    // console.log("ADMISSION DATE", admissionDate)
+  }
 
   return (
     <div className={styles.card}>

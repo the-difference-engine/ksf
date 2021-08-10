@@ -50,7 +50,7 @@ const ApplicationForm = props => {
       .required('Required'),
     'Representative Name': Yup.string()
       .min(3, 'Must be 3 characters or more.')
-      .max(30, 'Must be 30 characters or less.')
+      .max(50, 'Must be 50 characters or less.')
       .required('Required'),
     'Representative Email Address': Yup.string()
       .email('Invalid email address.')
@@ -145,6 +145,7 @@ const ApplicationForm = props => {
   // mode either 'view' or 'edit' and is changed by Save, Edit, or Cancel buttons in editOrSaveButton.js
   switch (props.mode) {
     case 'view':
+      console.log("THIS IS  CANCELHASBEENCLICKED IN VIEW MODE ", props.cancelHasBeenClicked)
       return (
         <div className={styles.dataContainer}>
           <div>
@@ -186,6 +187,7 @@ const ApplicationForm = props => {
         </div>
       );
     default:
+      console.log("THIS IS  CANCELHASBEENCLICKED IN EDIT MODE ", props.cancelHasBeenClicked)
       return (
         <form>
           <div className={styles.dataContainer}>
@@ -202,6 +204,7 @@ const ApplicationForm = props => {
                 id={props.id}
                 keys={props.patientInformationDataKeys}
                 openWindow={openWindow}
+                cancelHasBeenClicked={props.cancelHasBeenClicked}
               />
             </div>
             <div>
@@ -217,6 +220,7 @@ const ApplicationForm = props => {
                 id={props.id}
                 keys={props.familyMemberDataKeys}
                 openWindow={openWindow}
+                cancelHasBeenClicked={props.cancelHasBeenClicked}
               />
             </div>
             <div>
@@ -232,6 +236,7 @@ const ApplicationForm = props => {
                 id={props.id}
                 keys={props.healthProviderDataKeys}
                 openWindow={openWindow}
+                cancelHasBeenClicked={props.cancelHasBeenClicked}
               />
             </div>
           </div>

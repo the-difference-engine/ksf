@@ -147,6 +147,7 @@ const NominationBanner = props => {
             <SaveButton 
                 revertMode={props.revertMode}
                 handleHasBeenClicked={props.handleSaveHasBeenClicked}
+                handleCancelHasBeenClicked={props.handleCancelHasBeenClicked}
             />
           }
         </div>

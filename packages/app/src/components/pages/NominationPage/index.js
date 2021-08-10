@@ -20,6 +20,7 @@ const NominationPage = ({
   const [error, setError] = useState();
   const [editHasBeenClicked, setEditHasBeenClicked] = useState(false);
   const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);
+  const [cancelHasBeenClicked, setCancelHasBeenClicked] = useState(false);
 
   const [mode, setMode] = useState('view');
 
@@ -115,6 +116,11 @@ const NominationPage = ({
     setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
   }
 
+  function handleCancelHasBeenClicked() {
+    setCancelHasBeenClicked(cancelHasBeenClicked => !cancelHasBeenClicked)
+    console.log("HANDLE CANCEL HAS BEEN CLICKED IS RUNNIN'")
+  }
+
   // used by cancel button and onSubmit to change mode back to 'view' from 'edit'
   function revertMode(mode) {
     setMode(mode);
@@ -136,6 +142,7 @@ const NominationPage = ({
             saveHasBeenClicked={saveHasBeenClicked}
             handleSaveHasBeenClicked={handleSaveHasBeenClicked}
             handleEditHasBeenClicked={handleEditHasBeenClicked}
+            handleCancelHasBeenClicked={handleCancelHasBeenClicked}
             nomination={activeNomination}
           />
           <ApplicationStages />
@@ -149,6 +156,7 @@ const NominationPage = ({
             mode={mode}
             editHasBeenClicked={editHasBeenClicked}
             saveHasBeenClicked={saveHasBeenClicked}
+            cancelHasBeenClicked={cancelHasBeenClicked}
             id={id}
             revertMode={revertMode}
           />
