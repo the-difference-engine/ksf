@@ -1,23 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+import { NominationsContext } from '../../utils/context/NominationsContext';
+
 // importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
 
 const ApplicationStages = () => {
-  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+  const { nomination } = useContext(NominationsContext);
   const [currentStatus, setCurrentStatus] = useState();
   // status array is used as the param in
   const status = ['Received', 'Awaiting HIPAA', 'HIPAA Verified', 'Document Review', 'Ready for Board Review'];
 
   useEffect(() => {
-    setCurrentStatus(capitalize(activeNomination.status));
-  }, [activeNomination, currentStatus]);
+    setCurrentStatus(capitalize(nomination.status));
+  }, [nomination, currentStatus]);
  
   function createStatusEl() {
     const activeStatusIndex = status.indexOf(currentStatus);
-    if (activeNomination.status == "Declined") {
+    if (nomination.status == "Declined") {
       return status.map((stat) => (
         <>
           <div className="red-step" ></div>
@@ -48,7 +49,7 @@ const ApplicationStages = () => {
     let index = status.indexOf(value);
     if (index >= 0 && index < status.length - 1) {
       let nextItem = status[index + 1];
-      activeNomination.status = nextItem;
+      nomination.status = nextItem;
       setCurrentStatus(nextItem);
       return updateNom(nextItem);
     }
@@ -56,7 +57,7 @@ const ApplicationStages = () => {
 
   function updateNom(currentStatus) {
     try {
-      nominationsAPI.updateNomination(activeNomination.id, currentStatus);
+      nominationsAPI.updateNomination(nomination.id, currentStatus);
     } catch (err) {
       console.log(err);
     }

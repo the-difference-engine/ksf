@@ -7,15 +7,18 @@ export const NominationsDataContext = createContext();
 export const NominationsDataProvider = (props) => {
   const [NominationsData, setNominationsData] = useState();
 
+
   useEffect(() => {
     findAllNominations();
   }, []);
 
+  
   const nomName = (n) => {
     const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
     const geoState = states.getStateCodeByStateName(n.hospitalState);
     return `${lastName}-${geoState}`;
   };
+
 
   function findAllNominations() {
     nominationsAPI
@@ -33,6 +36,8 @@ export const NominationsDataProvider = (props) => {
       })
       .catch((err) => console.log(err));
   }
+
+
 
   return (
     <NominationsDataContext.Provider

@@ -27,7 +27,7 @@ const ApplicationForm = props => {
   );
 
   // current nomination rendered on screen
-  const [activeNomination, setActiveNomination] = useContext(
+  const { nomination, setNomination } = useContext(
     ActiveNominationContext
   );
 
@@ -115,7 +115,7 @@ const ApplicationForm = props => {
 
       props.revertMode('view');
       setNominationsData(newNominationData);
-      setActiveNomination(newActiveNomination);
+      setNomination(newActiveNomination);
     }
   };
 

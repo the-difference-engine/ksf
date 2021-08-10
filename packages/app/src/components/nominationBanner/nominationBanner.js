@@ -32,7 +32,7 @@ const NominationBanner = props => {
   const time = newDate.toLocaleDateString();
   const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const finalDate = `${time} – ${minutes}`;
-  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+  const { nomination, setNomination } = useContext(ActiveNominationContext);
   
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -42,8 +42,8 @@ const NominationBanner = props => {
   
   function declineApplication() {
     const declineStatus = 'Declined'
-    activeNomination.status = declineStatus
-    setActiveNomination({ ...activeNomination })
+    nomination.status = declineStatus
+    setNomination({ ...nomination })
     
     return updateNomination(declineStatus);
   }

@@ -8,7 +8,8 @@ import { ActiveNominationContext } from '../../../utils/context/ActiveNomination
 Modal.setAppElement('#root');
 
 const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
-    const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+   const { nomination } = useContext(ActiveNominationContext);
+   const {} = useContext()
     const [isOpen, setIsOpen] = useState(false);
     
     
@@ -22,7 +23,7 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
 
   return (
     <div>
-      <button disabled = {activeNomination.status == "Declined"} className="button next" onClick={openModal}>
+      <button disabled = {nomination.status == "Declined"} className="button next" onClick={openModal}>
         <span>&#10003;</span>Mark Stage as Complete
       </button>
       <Modal
