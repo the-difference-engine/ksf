@@ -49,19 +49,17 @@ const SearchHealthProvider = () => {
   return (
   <>
     <div className="search-bar-wrapper">
-      <section className="row">
         <div className=" column column-25">
-          <div className="search-header-container row">
+          <div className="search-header-container ">
             <Link to="/home">
               <img className="ksf-logo " src="/ksflogo.png" alt="other" />
             </Link>
-            <div className="comand-center-header column">
+            <div className="command-center-header ">
               <strong>Command Center</strong>
             </div>
           </div>
         </div>
         <div className="form-container column column-50"></div>
-      </section>
       <div data-id="error-message"></div>
     </div>
     
