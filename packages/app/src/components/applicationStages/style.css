@@ -214,6 +214,13 @@ a:hover {
   margin: 0px;
   margin-left: 10px;
 }
+.next:hover {
+  background-color: #128b3e;
+  color: white;
+  border: #999;
+  margin: 0px;
+  margin-left: 10px;
+}
 .next:disabled{
   background-color: #5a5959;
 }
