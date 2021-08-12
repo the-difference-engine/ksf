@@ -48,11 +48,11 @@ const EditCard = props => {
                     }
                     render={({ field: { onChange, value } }) => {
                       return (
-                      <DatePicker
-                        selected={value}
-                        onChange={onChange}
-                        dateFormat='MM/dd/yyyy'
-                      />
+                        <DatePicker
+                          selected={value}
+                          onChange={onChange}
+                          dateFormat='MM/dd/yyyy'
+                        />
                       )
                     }}
                   />
