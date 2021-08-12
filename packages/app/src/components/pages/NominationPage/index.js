@@ -118,7 +118,6 @@ const NominationPage = ({
 
   function handleCancelHasBeenClicked() {
     setCancelHasBeenClicked(cancelHasBeenClicked => !cancelHasBeenClicked)
-    console.log("HANDLE CANCEL HAS BEEN CLICKED IS RUNNIN'")
   }
 
   // used by cancel button and onSubmit to change mode back to 'view' from 'edit'

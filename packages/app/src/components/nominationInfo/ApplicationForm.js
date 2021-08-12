@@ -8,8 +8,9 @@ import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ViewCard from './ViewCard';
 import EditCard from './EditCard';
-import { isValidPhoneNumber, formatPhoneNumber} from 'react-phone-number-input'
-
+import { formatPhoneNumber } from 'react-phone-number-input'
+import "yup-phone";
+import emailExistence from "email-existence";
 
 const ApplicationForm = props => {
   // Stores state to ensure useEffects do not render on load
@@ -37,8 +38,17 @@ const ApplicationForm = props => {
     if (!firstUpdate.current) {
       handleSubmit(submitForm)();
     }
-    firstUpdate.current = false;
   }, [props.saveHasBeenClicked]);
+
+  useEffect(() => {
+    // makes sure useEffects don't run on initial render
+    if (!firstUpdate.current) {
+      reset()
+    }
+    firstUpdate.current = false;
+  }, [props.cancelHasBeenClicked]);
+
+
 
   const validationSchema = Yup.object({
     'Admission Date': Yup.date().required('Required'),
@@ -56,10 +66,7 @@ const ApplicationForm = props => {
       .email('Invalid email address.')
       .required('Required'), // This handles email validation with no regex.
     'Representative Phone Number': Yup.string()
-      .test('test-name', 'must be valid phone number', 
-        function(value) {
-          return isValidPhoneNumber(`+1${value}`)
-        })
+      .phone("US")
       .required('Required'),
     'Relationship': Yup.string()
       .min(3, 'Must be at least 3 characters.')
@@ -72,6 +79,7 @@ const ApplicationForm = props => {
     handleSubmit,
     control,
     formState: { errors },
+    reset
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -145,7 +153,6 @@ const ApplicationForm = props => {
   // mode either 'view' or 'edit' and is changed by Save, Edit, or Cancel buttons in editOrSaveButton.js
   switch (props.mode) {
     case 'view':
-      console.log("THIS IS  CANCELHASBEENCLICKED IN VIEW MODE ", props.cancelHasBeenClicked)
       return (
         <div className={styles.dataContainer}>
           <div>
@@ -187,7 +194,6 @@ const ApplicationForm = props => {
         </div>
       );
     default:
-      console.log("THIS IS  CANCELHASBEENCLICKED IN EDIT MODE ", props.cancelHasBeenClicked)
       return (
         <form>
           <div className={styles.dataContainer}>
@@ -204,7 +210,6 @@ const ApplicationForm = props => {
                 id={props.id}
                 keys={props.patientInformationDataKeys}
                 openWindow={openWindow}
-                cancelHasBeenClicked={props.cancelHasBeenClicked}
               />
             </div>
             <div>
@@ -220,7 +225,6 @@ const ApplicationForm = props => {
                 id={props.id}
                 keys={props.familyMemberDataKeys}
                 openWindow={openWindow}
-                cancelHasBeenClicked={props.cancelHasBeenClicked}
               />
             </div>
             <div>
@@ -236,7 +240,6 @@ const ApplicationForm = props => {
                 id={props.id}
                 keys={props.healthProviderDataKeys}
                 openWindow={openWindow}
-                cancelHasBeenClicked={props.cancelHasBeenClicked}
               />
             </div>
           </div>

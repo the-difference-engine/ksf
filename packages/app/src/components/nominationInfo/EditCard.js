@@ -22,25 +22,6 @@ const EditCard = props => {
     new Date(props.formData['Discharge Date'])
   );
 
-  useEffect(() => {
-  //  if (!firstUpdate.current) {
-      forgetDate()
-      console.log("use effect for cancelHasBeenClicked is runnin'")
-    // }
-   // firstUpdate.current = false;
-   console.log("THIS IS CANCELHASBEENCLICKED IN THE USEEFFECT", props.cancelHasBeenClicked)
-  }, [props.cancelHasBeenClicked]);
-
-  const forgetDate = () => {
-    let admissionDate = new Date(props.formData['Admission Date'])
-    let dischargeDate = new Date(props.formData['Discharge Date'])
-    setAdmissionDate(admissionDate)
-    setDischargeDate(dischargeDate)
-    console.log("cancel is hit")
-    // console.log("DISCHARGE DATE", dischargeDate)
-    // console.log("ADMISSION DATE", admissionDate)
-  }
-
   return (
     <div className={styles.card}>
       <div className={[styles.gridContainer, styles.content].join(' ')}>
@@ -66,13 +47,15 @@ const EditCard = props => {
                           : new Date(dischargeDate)
                         : null
                     }
-                    render={({ field: { onChange, value } }) => (
+                    render={({ field: { onChange, value } }) => {
+                      return (
                       <DatePicker
                         selected={value}
                         onChange={onChange}
                         dateFormat='MM/dd/yyyy'
                       />
-                    )}
+                      )
+                    }}
                   />
                   <p className={styles.yupError}>
                     {props.errors[label]?.message}
