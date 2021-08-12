@@ -49,7 +49,6 @@ const SearchHealthProvider = () => {
   return (
   <>
     <div className="search-bar-wrapper">
-      {/* <section className="row"> */}
         <div className=" column column-25">
           <div className="search-header-container ">
             <Link to="/home">
@@ -61,7 +60,6 @@ const SearchHealthProvider = () => {
           </div>
         </div>
         <div className="form-container column column-50"></div>
-      {/* </section> */}
       <div data-id="error-message"></div>
     </div>
     
