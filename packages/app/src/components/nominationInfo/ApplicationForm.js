@@ -10,7 +10,6 @@ import ViewCard from './ViewCard';
 import EditCard from './EditCard';
 import { formatPhoneNumber } from 'react-phone-number-input'
 import "yup-phone";
-import emailExistence from "email-existence";
 
 const ApplicationForm = props => {
   // Stores state to ensure useEffects do not render on load
