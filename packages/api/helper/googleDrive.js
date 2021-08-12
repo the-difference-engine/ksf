@@ -17,6 +17,7 @@ const auth = new google.auth.JWT(
 const drive = google.drive({ version: 'v3', auth });
 
 function createFolder(applicationName) {
+
   let fileMetadata = {
     'name': applicationName,
     'parents': [parentFolderId],
@@ -31,6 +32,8 @@ function createFolder(applicationName) {
       console.error(err);
     }
   })
+
+  console.log(`folder has been created for ${applicationName}!`);
 }
 
 module.exports = { createFolder }
