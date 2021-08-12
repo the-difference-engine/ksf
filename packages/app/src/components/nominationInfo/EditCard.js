@@ -9,9 +9,8 @@ import './calendar.css';
 
 
 const EditCard = props => {
-  // state for React Datepicker
 
-  const firstUpdate = useRef(true);
+  // state for React Datepicker
 
   const [admissionDate, setAdmissionDate] = useState(
     new Date(props.formData['Admission Date'])
