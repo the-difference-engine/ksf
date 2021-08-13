@@ -101,7 +101,7 @@
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-.modal-container-decline{
+.modal-container{
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -149,15 +149,21 @@
 .button-yes{
   background-color: #128b3e;
 }
+.button-yes:hover{
+  background-color: #128b3e;
+}
 
 .button-no{
   background-color: #999;
 }
 
+.button-no:hover{
+  background-color: #999;
+}
+
 .exit-button {
   position: relative;
-  bottom: 10px;
-  left: 30px;
+  left: 20px;
   align-items: flex-end;
   justify-content: flex-end;
   cursor: pointer;
