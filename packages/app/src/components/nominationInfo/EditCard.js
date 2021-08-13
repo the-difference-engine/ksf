@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import styles from './newstyles.module.css';
 import { Controller } from 'react-hook-form';
@@ -9,6 +9,7 @@ import './calendar.css';
 
 
 const EditCard = props => {
+
   // state for React Datepicker
 
   const [admissionDate, setAdmissionDate] = useState(
@@ -45,13 +46,15 @@ const EditCard = props => {
                           : new Date(dischargeDate)
                         : null
                     }
-                    render={({ field: { onChange, value } }) => (
-                      <DatePicker
-                        selected={value}
-                        onChange={onChange}
-                        dateFormat='MM/dd/yyyy'
-                      />
-                    )}
+                    render={({ field: { onChange, value } }) => {
+                      return (
+                        <DatePicker
+                          selected={value}
+                          onChange={onChange}
+                          dateFormat='MM/dd/yyyy'
+                        />
+                      )
+                    }}
                   />
                   <p className={styles.yupError}>
                     {props.errors[label]?.message}

@@ -13,6 +13,7 @@ const SaveButton = (props) => {
         </button>
         <button
             onClick={() => {
+                props.handleCancelHasBeenClicked()
                 props.revertMode('view')
             }}
             id={styles.cancelBtn}

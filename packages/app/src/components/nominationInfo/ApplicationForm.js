@@ -8,8 +8,8 @@ import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ViewCard from './ViewCard';
 import EditCard from './EditCard';
-import { isValidPhoneNumber, formatPhoneNumber} from 'react-phone-number-input'
-
+import { formatPhoneNumber } from 'react-phone-number-input'
+import "yup-phone";
 
 const ApplicationForm = props => {
   // Stores state to ensure useEffects do not render on load
@@ -37,8 +37,17 @@ const ApplicationForm = props => {
     if (!firstUpdate.current) {
       handleSubmit(submitForm)();
     }
-    firstUpdate.current = false;
   }, [props.saveHasBeenClicked]);
+
+  useEffect(() => {
+    // makes sure useEffects don't run on initial render
+    if (!firstUpdate.current) {
+      reset()
+    }
+    firstUpdate.current = false;
+  }, [props.cancelHasBeenClicked]);
+
+
 
   const validationSchema = Yup.object({
     'Admission Date': Yup.date().required('Required'),
@@ -50,16 +59,13 @@ const ApplicationForm = props => {
       .required('Required'),
     'Representative Name': Yup.string()
       .min(3, 'Must be 3 characters or more.')
-      .max(30, 'Must be 30 characters or less.')
+      .max(50, 'Must be 50 characters or less.')
       .required('Required'),
     'Representative Email Address': Yup.string()
       .email('Invalid email address.')
       .required('Required'), // This handles email validation with no regex.
     'Representative Phone Number': Yup.string()
-      .test('test-name', 'must be valid phone number', 
-        function(value) {
-          return isValidPhoneNumber(`+1${value}`)
-        })
+      .phone("US")
       .required('Required'),
     'Relationship': Yup.string()
       .min(3, 'Must be at least 3 characters.')
@@ -72,6 +78,7 @@ const ApplicationForm = props => {
     handleSubmit,
     control,
     formState: { errors },
+    reset
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
