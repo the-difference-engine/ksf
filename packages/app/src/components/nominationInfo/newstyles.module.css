@@ -103,13 +103,11 @@
 
 /* Input Elements and Select */
 
-input[type='text'],
-input[type='date'] {
+input[type='text'] {
   width: 75%;
 }
 
-input[type='text'].inputError,
-input[type='date'].inputError {
+input[type='text'].inputError {
   border: red solid 1px;
 }
 
