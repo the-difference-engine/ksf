@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
+import DatePicker from 'react-datepicker';
 
 const EditModal = ({
   show,
@@ -14,70 +15,94 @@ const EditModal = ({
     ? 'edit-modal edit-modal-display-block'
     : 'edit-modal edit-modal-display-none';
 
-  const disableDatePicker = d => {
-    // return moment().isAfter(moment(d));
-    const now = DateTime.now();
+  let openedOnInitial;
+  let closedOnInitial;
+  gc
+    ? (openedOnInitial = new Date(gc.openedOnInitial))
+    : (openedOnInitial = new Date());
+  gc ? (closedOnInitial = gc.closedOnInitial) : (closedOnInitial = new Date());
 
-    return now > d;
-  };
+  const [openedOn, setOpenedOn] = useState(openedOnInitial);
+  const [closedOn, setClosedOn] = useState(closedOnInitial);
 
-  const getMinDate = () => {
-    // return moment().format('YYYY-MM-DD');
-    return DateTime.now().toISODate();
-  };
+  useEffect(() => {
+    if (gc) {
+      let openedOnDate = new Date(gc.openedOn);
+      let closedOnDate = new Date(gc.closedOn);
+      openedOnDate.setTime(
+        openedOnDate.getTime() + openedOnDate.getTimezoneOffset() * 60 * 1000
+      );
+      setOpenedOn(openedOnDate);
+      closedOnDate.setTime(
+        closedOnDate.getTime() + closedOnDate.getTimezoneOffset() * 60 * 1000
+      );
+      setClosedOn(closedOnDate);
+    }
+  }, [gc]);
+
+  console.log(openedOnInitial);
 
   return (
     <div className={showHideClassName}>
-      <div className='edit-modal-main'>
+      <div className="edit-modal-main">
         {gc ? (
           <>
-            <h1 className='settings__heading'>Edit Cycle</h1>
-            <div className='settings__form'>
-              <div className='settings__input-block'>
-                <p className='settings__input-label'>Start Date:</p>
-                <span className='settings__input'>
-                  <input
-                    value={gc.openedOn}
-                    name='openedOn'
+            <h1 className="settings__heading">Edit Cycle</h1>
+            <div className="settings__form">
+              <div className="settings__input-block">
+                <p className="settings__input-label">Start Date:</p>
+                <span className="settings__input">
+                  <DatePicker
+                    selected={
+                      String(openedOn) !== 'Invalid Date'
+                        ? new Date(openedOn)
+                        : null
+                    }
                     onChange={handleChange}
-                    type='date'
                   />
+
+                  {/* <input
+                    value={gc.openedOn}
+                    name="openedOn"
+                    onChange={handleChange}
+                    type="date"
+                  /> */}
                 </span>
               </div>
-              <div className='settings__input-block'>
-                <p className='settings__input-label'>End Date:</p>
-                <span className='settings__input'>
+              <div className="settings__input-block">
+                <p className="settings__input-label">End Date:</p>
+                <span className="settings__input">
                   <input
                     value={gc.closedOn}
-                    name='closedOn'
+                    name="closedOn"
                     onChange={handleChange}
-                    type='date'
+                    type="date"
                   />
                 </span>
               </div>
-              <div className='settings__input-block' id='cycle__name'>
-                <p className='settings__input-label'>Name:</p>
-                <span className='settings__input'>
+              <div className="settings__input-block" id="cycle__name">
+                <p className="settings__input-label">Name:</p>
+                <span className="settings__input">
                   <input
                     value={gc.name}
-                    name='name'
+                    name="name"
                     onChange={handleChange}
-                    type='text'
+                    type="text"
                   />
                 </span>
               </div>
             </div>
             <button
-              className='edit-modal-button'
+              className="edit-modal-button"
               onClick={onSubmit}
               disabled={disableButton}
             >
               Update
             </button>
-            <button className='edit-modal-button-cancel' onClick={handleClose}>
+            <button className="edit-modal-button-cancel" onClick={handleClose}>
               Cancel
             </button>
-            <div className='edit-modal-errors'>{errors}</div>
+            <div className="edit-modal-errors">{errors}</div>
           </>
         ) : null}
       </div>
