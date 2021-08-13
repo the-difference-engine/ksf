@@ -1,4 +1,7 @@
+import {useState} from 'react'
+
 export default {
+  id: "12345",
   patientName: 'Bruce Wayne',
   patientAge: '25ish',
   admissionDate: '2020-06-05',
@@ -10,5 +13,16 @@ export default {
   providerTitle: 'Health Wizard',
   emailValidated: true,
   publicEmailDomain: true,
-  patientDiagnosis: 'Goosebumps',
+  admissionDate: new Date('2020-06-05'),
+  dischargeDate: new Date('2020-07-05'),
+  diffDays: 'Yes',
+  hospitalCity: "Little Rock",
+  hospitalState: "AR",
+  hospitalZipCode: "72202",
+  hospitalName: "Arkansas Children's Hospital",
+  representativeName: "jim bob",
+  representativeEmailAddress: "jimbob@gmail.com",
+  representativePhoneNumber: "556-777-9987",
+  representativeRelationship: "Parent",
+  representativeSpanishRequested: "No"
 };

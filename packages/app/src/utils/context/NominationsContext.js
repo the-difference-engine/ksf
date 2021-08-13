@@ -13,8 +13,8 @@ export const NominationsDataProvider = (props) => {
 
   const nomName = (n) => {
     const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
-    const state = states.getStateCodeByStateName(n.hospitalState);
-    return `${lastName}-${state}`;
+    const geoState = states.getStateCodeByStateName(n.hospitalState);
+    return `${lastName}-${geoState}`;
   };
 
   function findAllNominations() {
@@ -27,6 +27,7 @@ export const NominationsDataProvider = (props) => {
           nomination.dateReceived = new Date(
             nomination.dateReceived
           ).toLocaleDateString();
+          
         });
         setNominationsData(nominations);
       })
@@ -42,4 +43,3 @@ export const NominationsDataProvider = (props) => {
   );
 };
 
-// export default { findAllNominations }
