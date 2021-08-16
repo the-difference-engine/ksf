@@ -213,70 +213,73 @@ const Settings = (props) => {
         <div className="settings__form">
           <div className="settings__input-block">
             <p className="settings__input-label">Start Date:</p>
-            <span
-              className="settings__input"
-              style={
-                showEditModal
-                  ? {
-                      display: 'none',
-                    }
-                  : {
-                      position: 'relative',
-                    }
-              }
-            >
-              <DatePicker
-                name="openedOn"
-                value={newGrantCycle.openedOn}
-                selected={newGrantCycle.openedOn}
-                onChange={handleStartDateCreation}
-                placeholderText="mm/dd/yyyy"
-              />
+            <span className="settings__input">
+              <div
+                style={
+                  showEditModal
+                    ? {
+                        display: 'none',
+                      }
+                    : {
+                        position: 'relative',
+                      }
+                }
+              >
+                <DatePicker
+                  name="openedOn"
+                  value={newGrantCycle.openedOn}
+                  selected={newGrantCycle.openedOn}
+                  onChange={handleStartDateCreation}
+                  placeholderText="mm/dd/yyyy"
+                />
+              </div>
             </span>
           </div>
           <div className="settings__input-block">
             <p className="settings__input-label">End Date:</p>
-            <span
-              className="settings__input"
-              style={
-                showEditModal
-                  ? {
-                      display: 'none',
-                    }
-                  : {
-                      position: 'relative',
-                    }
-              }
-            >
-              <DatePicker
-                name="closedOn"
-                value={newGrantCycle.closedOn}
-                selected={newGrantCycle.closedOn}
-                onChange={handleEndDateCreation}
-                placeholderText="mm/dd/yyyy"
-              />
+            <span className="settings__input">
+              <div
+                style={
+                  showEditModal
+                    ? {
+                        display: 'none',
+                      }
+                    : {
+                        position: 'relative',
+                      }
+                }
+              >
+                <DatePicker
+                  name="closedOn"
+                  value={newGrantCycle.closedOn}
+                  selected={newGrantCycle.closedOn}
+                  onChange={handleEndDateCreation}
+                  placeholderText="mm/dd/yyyy"
+                />
+              </div>
             </span>
           </div>
           <div className="settings__input-block">
             <p className="settings__input-label">Cycle Name:</p>
-            <span
-              className="settings__input"
-              style={
-                showEditModal
-                  ? {
-                      display: 'none',
-                    }
-                  : {
-                      position: 'relative',
-                    }
-              }
-            >
-              <input
-                value={newGrantCycle.name}
-                name="name"
-                onChange={handleChange}
-                type="text"
-              />
+            <span className="settings__input">
+              <div
+                style={
+                  showEditModal
+                    ? {
+                        display: 'none',
+                      }
+                    : {
+                        position: 'relative',
+                      }
+                }
+              >
+                <input
+                  value={newGrantCycle.name}
+                  name="name"
+                  onChange={handleChange}
+                  type="text"
+                />
+              </div>
             </span>
           </div>
         </div>
