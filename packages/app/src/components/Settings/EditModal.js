@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { DateTime } from 'luxon';
 import DatePicker from 'react-datepicker';
 import '../nominationInfo/calendar.css';
 
@@ -42,8 +41,6 @@ const EditModal = ({
       setClosedOn(closedOnDate);
     }
   }, [gc]);
-
-  console.log(openedOnInitial);
 
   return (
     <div className={showHideClassName}>

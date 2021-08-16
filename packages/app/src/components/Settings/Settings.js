@@ -4,6 +4,8 @@ import TableRow from './TableRow';
 import grantCycleAPI from '../../utils/API/grantCycleAPI';
 import './styles.css';
 import EditModal from './EditModal';
+import DatePicker from 'react-datepicker';
+import '../nominationInfo/calendar.css';
 
 const Settings = (props) => {
   const [newGrantCycle, setNewGrantCycle] = useState({
@@ -48,17 +50,25 @@ const Settings = (props) => {
     setNewGrantCycle({ ...newGrantCycle, [input.name]: input.value });
   };
 
+  const handleStartDateCreation = (value) => {
+    setNewGrantCycle({ ...newGrantCycle, openedOn: value });
+  };
+
+  const handleEndDateCreation = (value) => {
+    setNewGrantCycle({ ...newGrantCycle, closedOn: value });
+  };
+
   const handleChangeForEdit = ({ currentTarget: input }) => {
     setGcToEdit({ ...gcToEdit, [input.name]: input.value });
   };
 
   const handleOpenedOnDateChanges = (value) => {
-    setGcToEdit({...gcToEdit, 'openedOn': value})
-  }
+    setGcToEdit({ ...gcToEdit, openedOn: value });
+  };
 
   const handleClosedOnDateChanges = (value) => {
-    setGcToEdit({...gcToEdit, 'closedOn': value})
-  }
+    setGcToEdit({ ...gcToEdit, closedOn: value });
+  };
 
   const handleCreate = async (e) => {
     try {
@@ -175,6 +185,8 @@ const Settings = (props) => {
     return now > DateTime.fromISO(d);
   };
 
+  console.log(showEditModal);
+
   return (
     <div className="settings__container">
       <EditModal
@@ -204,54 +216,130 @@ const Settings = (props) => {
           <div className="settings__input-block">
             <p className="settings__input-label">Start Date:</p>
             <span className="settings__input">
-              <input
+              {/* <input
                 value={newGrantCycle.openedOn}
                 name="openedOn"
                 onChange={handleChange}
                 type="date"
-              />
+              /> */}
+              <div
+                style={
+                  showEditModal
+                    ? {
+                        display: 'none',
+                      }
+                    : {
+                        position: 'relative',
+                      }
+                }
+              >
+                <DatePicker
+                  name="openedOn"
+                  value={newGrantCycle.openedOn}
+                  selected={newGrantCycle.openedOn}
+                  onChange={handleStartDateCreation}
+                  placeholderText="mm/dd/yyyy"
+                  // style={
+                  //   showEditModal
+                  //     ? {
+                  //         position: 'initial',
+                  //       }
+                  //     : {
+                  //         position: 'relative',
+                  //       }
+                  // }
+                />
+              </div>
             </span>
           </div>
           <div className="settings__input-block">
             <p className="settings__input-label">End Date:</p>
             <span className="settings__input">
-              <input
+              {/* <input
                 value={newGrantCycle.closedOn}
                 name="closedOn"
                 onChange={handleChange}
                 type="date"
-              />
+              /> */}
+              <div
+                style={
+                  showEditModal
+                    ? {
+                        display: 'none',
+                      }
+                    : {
+                        position: 'relative',
+                      }
+                }
+              >
+                <DatePicker
+                  name="closedOn"
+                  value={newGrantCycle.closedOn}
+                  selected={newGrantCycle.closedOn}
+                  onChange={handleEndDateCreation}
+                  placeholderText="mm/dd/yyyy"
+                />
+              </div>
             </span>
           </div>
           <div className="settings__input-block">
             <p className="settings__input-label">Cycle Name:</p>
             <span className="settings__input">
-              <input
-                value={newGrantCycle.name}
-                name="name"
-                onChange={handleChange}
-                type="text"
-              />
+              <div
+                style={
+                  showEditModal
+                    ? {
+                        display: 'none',
+                      }
+                    : {
+                        position: 'relative',
+                      }
+                }
+              >
+                <input
+                  value={newGrantCycle.name}
+                  name="name"
+                  onChange={handleChange}
+                  type="text"
+                />
+              </div>
             </span>
           </div>
         </div>
-        <button
-          ref={createButton}
-          disabled={disableButton}
-          onClick={handleCreate}
-          className="settings__button"
+        <div
           style={
-            disableButton
-              ? { color: 'gray', 'border-color': 'gray', 'font-weight': 'bold', 'opacity': '1' }
+            showEditModal
+              ? {
+                  display: 'none',
+                }
               : {
-                  color: 'var(--brand)',
-                  'background-color': '#fff',
-                  'border-color': 'var(--brand)',
+                  position: 'relative',
                 }
           }
         >
-          Create
-        </button>
+          <button
+            ref={createButton}
+            disabled={disableButton}
+            onClick={handleCreate}
+            className="settings__button"
+            style={
+              disableButton
+                ? {
+                    color: 'gray',
+                    borderColor: 'gray',
+                    fontWeight: 'bold',
+                    opacity: '1',
+                  }
+                : {
+                    color: 'var(--brand)',
+                    backgroundColor: '#fff',
+                    borderColor: 'var(--brand)',
+                  }
+            }
+          >
+            Create
+          </button>
+        </div>
         <div className="settings__form-errors">{errors}</div>
 
         <div>
