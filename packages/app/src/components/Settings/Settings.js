@@ -52,6 +52,14 @@ const Settings = (props) => {
     setGcToEdit({ ...gcToEdit, [input.name]: input.value });
   };
 
+  const handleOpenedOnDateChanges = (value) => {
+    setGcToEdit({...gcToEdit, 'openedOn': value})
+  }
+
+  const handleClosedOnDateChanges = (value) => {
+    setGcToEdit({...gcToEdit, 'closedOn': value})
+  }
+
   const handleCreate = async (e) => {
     try {
       const { data } = await grantCycleAPI.createGrantCycle(newGrantCycle);
@@ -177,6 +185,8 @@ const Settings = (props) => {
         errors={editErrors}
         handleChange={handleChangeForEdit}
         onSubmit={handleUpdate}
+        handleOpenedOnDateChanges={handleOpenedOnDateChanges}
+        handleClosedOnDateChanges={handleClosedOnDateChanges}
       />
       <header className="settings__header">
         <h1 className="settings__title">Settings</h1>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import DatePicker from 'react-datepicker';
+import '../nominationInfo/calendar.css';
 
 const EditModal = ({
   show,
@@ -9,6 +10,8 @@ const EditModal = ({
   errors,
   disableButton,
   handleChange,
+  handleOpenedOnDateChanges,
+  handleClosedOnDateChanges,
   onSubmit,
 }) => {
   const showHideClassName = show
@@ -53,12 +56,14 @@ const EditModal = ({
                 <p className="settings__input-label">Start Date:</p>
                 <span className="settings__input">
                   <DatePicker
+                    name="openedOn"
+                    // value=''
                     selected={
                       String(openedOn) !== 'Invalid Date'
                         ? new Date(openedOn)
                         : null
                     }
-                    onChange={handleChange}
+                    onChange={(value) => handleOpenedOnDateChanges(value)}
                   />
 
                   {/* <input
@@ -72,12 +77,20 @@ const EditModal = ({
               <div className="settings__input-block">
                 <p className="settings__input-label">End Date:</p>
                 <span className="settings__input">
-                  <input
+                  <DatePicker
+                    selected={
+                      String(closedOn) !== 'Invalid Date'
+                        ? new Date(closedOn)
+                        : null
+                    }
+                    onChange={(value) => handleClosedOnDateChanges(value)}
+                  />
+                  {/* <input
                     value={gc.closedOn}
                     name="closedOn"
                     onChange={handleChange}
                     type="date"
-                  />
+                  /> */}
                 </span>
               </div>
               <div className="settings__input-block" id="cycle__name">
