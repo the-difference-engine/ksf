@@ -73,7 +73,7 @@ function sendSurveyEmail(nomination) {
 }
 
 function verifyHcEmail(nomination) {
-  const emailToken = generateToken(nomination._id);
+  const emailToken = generateToken(nomination.id);
   console.log(emailToken, '------------');
   console.log('------------');
   email
@@ -86,7 +86,7 @@ function verifyHcEmail(nomination) {
       locals: {
         name: nomination.providerName,
         appUrl: process.env.APP_URL,
-        urlLink: `${process.env.APP_URL}/confirmation/${emailToken}`,
+        urlLink: `${process.env.APP_URL}/api/confirmation/${emailToken}`,
       },
     })
     .then(() => console.log('email has been sent!'))
