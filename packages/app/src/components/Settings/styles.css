@@ -239,6 +239,16 @@ button.icon-right-arrow-disabled:hover {
 
 .settings__results-link {
   color: var(--brand);
+  font-weight: 400;
+}
+
+.settings__results-link:visited {
+  color: var(--brand);
+}
+
+.settings__results-link:hover {
+  color: var(--brand);
+  font-weight: 600;
 }
 
 /* Edit Modal css */
@@ -296,4 +306,3 @@ button.icon-right-arrow-disabled:hover {
   border-color: white;
   color: white;
 }
-

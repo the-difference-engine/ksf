@@ -185,8 +185,6 @@ const Settings = (props) => {
     return now > DateTime.fromISO(d);
   };
 
-  console.log(showEditModal);
-
   return (
     <div className="settings__container">
       <EditModal
@@ -215,41 +213,25 @@ const Settings = (props) => {
         <div className="settings__form">
           <div className="settings__input-block">
             <p className="settings__input-label">Start Date:</p>
-            <span className="settings__input">
-              {/* <input
-                value={newGrantCycle.openedOn}
+            <span
+              className="settings__input"
+              style={
+                showEditModal
+                  ? {
+                      display: 'none',
+                    }
+                  : {
+                      position: 'relative',
+                    }
+              }
+            >
+              <DatePicker
                 name="openedOn"
-                onChange={handleChange}
-                type="date"
-              /> */}
-              <div
-                style={
-                  showEditModal
-                    ? {
-                        display: 'none',
-                      }
-                    : {
-                        position: 'relative',
-                      }
-                }
-              >
-                <DatePicker
-                  name="openedOn"
-                  value={newGrantCycle.openedOn}
-                  selected={newGrantCycle.openedOn}
-                  onChange={handleStartDateCreation}
-                  placeholderText="mm/dd/yyyy"
-                  // style={
-                  //   showEditModal
-                  //     ? {
-                  //         position: 'initial',
-                  //       }
-                  //     : {
-                  //         position: 'relative',
-                  //       }
-                  // }
-                />
-              </div>
+                value={newGrantCycle.openedOn}
+                selected={newGrantCycle.openedOn}
+                onChange={handleStartDateCreation}
+                placeholderText="mm/dd/yyyy"
+              />
             </span>
           </div>
           <div className="settings__input-block">
@@ -266,12 +248,6 @@ const Settings = (props) => {
                     }
               }
             >
-              {/* <input
-                value={newGrantCycle.closedOn}
-                name="closedOn"
-                onChange={handleChange}
-                type="date"
-              /> */}
               <DatePicker
                 name="closedOn"
                 value={newGrantCycle.closedOn}
