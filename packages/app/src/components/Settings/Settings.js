@@ -254,55 +254,53 @@ const Settings = (props) => {
           </div>
           <div className="settings__input-block">
             <p className="settings__input-label">End Date:</p>
-            <span className="settings__input">
+            <span
+              className="settings__input"
+              style={
+                showEditModal
+                  ? {
+                      display: 'none',
+                    }
+                  : {
+                      position: 'relative',
+                    }
+              }
+            >
               {/* <input
                 value={newGrantCycle.closedOn}
                 name="closedOn"
                 onChange={handleChange}
                 type="date"
               /> */}
-              <div
-                style={
-                  showEditModal
-                    ? {
-                        display: 'none',
-                      }
-                    : {
-                        position: 'relative',
-                      }
-                }
-              >
-                <DatePicker
-                  name="closedOn"
-                  value={newGrantCycle.closedOn}
-                  selected={newGrantCycle.closedOn}
-                  onChange={handleEndDateCreation}
-                  placeholderText="mm/dd/yyyy"
-                />
-              </div>
+              <DatePicker
+                name="closedOn"
+                value={newGrantCycle.closedOn}
+                selected={newGrantCycle.closedOn}
+                onChange={handleEndDateCreation}
+                placeholderText="mm/dd/yyyy"
+              />
             </span>
           </div>
           <div className="settings__input-block">
             <p className="settings__input-label">Cycle Name:</p>
-            <span className="settings__input">
-              <div
-                style={
-                  showEditModal
-                    ? {
-                        display: 'none',
-                      }
-                    : {
-                        position: 'relative',
-                      }
-                }
-              >
-                <input
-                  value={newGrantCycle.name}
-                  name="name"
-                  onChange={handleChange}
-                  type="text"
-                />
-              </div>
+            <span
+              className="settings__input"
+              style={
+                showEditModal
+                  ? {
+                      display: 'none',
+                    }
+                  : {
+                      position: 'relative',
+                    }
+              }
+            >
+              <input
+                value={newGrantCycle.name}
+                name="name"
+                onChange={handleChange}
+                type="text"
+              />
             </span>
           </div>
         </div>
@@ -344,7 +342,7 @@ const Settings = (props) => {
 
         <div>
           <h2 className="settings__heading">
-            Active Grant Cycle: &nbsp;&nbsp;&nbsp;&nbsp;
+            Active Grant Cycle: &nbsp;
             {activeGrantCycle ? (
               <span className="settings__activeGrantCycle">
                 {activeGrantCycle.name}
