@@ -27,20 +27,20 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
       </button>
       <Modal
         className="modal-container"
-        overlayClassName="modal-overlay"
+        overlayClassName="modal-background"
         isOpen={isOpen}
         onRequestClose={closeModal}
         contentLabel="Mark Stage as Complete"
       >
-        <div className='modal-close-button' onClick={closeModal}>&times;</div>
-          <h3 className='modal-content-text'>Do you want to mark stage as complete?</h3>
-        <div className='modal-footer'> 
-          <button className='modal-button-yes' onClick={() => {
-            advanceStage(currentStatus);
-            closeModal();
-          }}>Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button className="modal-button-no" onClick={closeModal}>No</button>
-        </div>
+      <button className='exit-button' onClick={closeModal}>&times;</button>
+      <h3 className='modal-text'>Are you sure you want to mark stage as complete?</h3>
+      <div className='modal-buttons'> 
+        <button className='button-yes' onClick={() => {
+          advanceStage(currentStatus);
+          closeModal();
+        }}>Confirm</button>
+        <button className="button-no" onClick={closeModal}>Cancel</button>
+      </div>
       </Modal>
     </div>
   );

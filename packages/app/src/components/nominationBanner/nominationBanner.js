@@ -82,11 +82,11 @@ const NominationBanner = props => {
             <div className="modal-background">
               <div className="modal-container">
                 <button className= "exit-button" onClick={toggleModalState} >&times;</button>
-                <h3 className="modal-text">Do you want to decline the application?</h3>
+                <h3 className="modal-text">Are you sure you want to decline the application?</h3>
                 <div className="modal-buttons">
                   <button className="button-yes" onClick={()=>{declineApplication(); 
-                    toggleModalState()}}>Yes</button>
-                  <button className ="button-no"onClick={toggleModalState} >No</button>
+                    toggleModalState()}}>Confirm</button>
+                  <button className ="button-no"onClick={toggleModalState} >Cancel</button>
                 </div>
               </div>
             </div>
