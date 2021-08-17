@@ -1,5 +1,10 @@
 /* Styling for React Datepicker Component */
 
+button.react-datepicker__navigation--next:hover,
+button.react-datepicker__navigation--previous:hover {
+  background-color: #504f4f;
+}
+
 .react-datepicker__navigation-icon::before,
 .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow,

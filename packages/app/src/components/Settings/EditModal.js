@@ -62,13 +62,6 @@ const EditModal = ({
                     }
                     onChange={(value) => handleOpenedOnDateChanges(value)}
                   />
-
-                  {/* <input
-                    value={gc.openedOn}
-                    name="openedOn"
-                    onChange={handleChange}
-                    type="date"
-                  /> */}
                 </span>
               </div>
               <div className="settings__input-block">
@@ -82,12 +75,6 @@ const EditModal = ({
                     }
                     onChange={(value) => handleClosedOnDateChanges(value)}
                   />
-                  {/* <input
-                    value={gc.closedOn}
-                    name="closedOn"
-                    onChange={handleChange}
-                    type="date"
-                  /> */}
                 </span>
               </div>
               <div className="settings__input-block" id="cycle__name">
