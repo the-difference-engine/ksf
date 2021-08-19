@@ -22,7 +22,10 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
   return (
     <div>
       <button
-        disabled={activeNomination.status === 'Declined'}
+        disabled={
+          activeNomination.status === 'Declined' ||
+          activeNomination.status === 'Ready for Board Review'
+        }
         className="button next"
         onClick={openModal}
       >
@@ -35,15 +38,26 @@ const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
         onRequestClose={closeModal}
         contentLabel="Mark Stage as Complete"
       >
-      <button className='exit-button' onClick={closeModal}>&times;</button>
-      <h3 className='modal-text'>Are you sure you want to mark stage as complete?</h3>
-      <div className='modal-buttons'> 
-        <button className='button-yes' onClick={() => {
-          advanceStage(currentStatus);
-          closeModal();
-        }}>Confirm</button>
-        <button className="button-no" onClick={closeModal}>Cancel</button>
-      </div>
+        <button className="exit-button" onClick={closeModal}>
+          &times;
+        </button>
+        <h3 className="modal-text">
+          Are you sure you want to mark stage as complete?
+        </h3>
+        <div className="modal-buttons">
+          <button
+            className="button-yes"
+            onClick={() => {
+              advanceStage(currentStatus);
+              closeModal();
+            }}
+          >
+            Confirm
+          </button>
+          <button className="button-no" onClick={closeModal}>
+            Cancel
+          </button>
+        </div>
       </Modal>
     </div>
   );
