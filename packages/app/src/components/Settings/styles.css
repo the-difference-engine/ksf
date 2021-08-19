@@ -162,6 +162,7 @@
 .settings__tbody tr .icon-right-arrow {
   transition: transform 0.3s;
 }
+
 .settings__tbody tr:hover .icon-right-arrow {
   font-weight: 700;
   font-size: 20px;
@@ -239,6 +240,16 @@ button.icon-right-arrow-disabled:hover {
 
 .settings__results-link {
   color: var(--brand);
+  font-weight: 400;
+}
+
+.settings__results-link:visited {
+  color: var(--brand);
+}
+
+.settings__results-link:hover {
+  color: var(--brand);
+  font-weight: 600;
 }
 
 /* Edit Modal css */
@@ -297,3 +308,19 @@ button.icon-right-arrow-disabled:hover {
   color: white;
 }
 
+.hidden {
+  display: none;
+}
+
+button.disabled-edit-btn,
+button[disabled].disabled-edit-btn:hover {
+  color: gray;
+  font-weight: bold;
+  border-color: gray;
+}
+
+button.enabled-edit-btn {
+  color: var(--brand);
+  background-color: #fff;
+  border-color: var(--brand);
+}
