@@ -161,7 +161,7 @@ a:hover {
   min-width: 150px;
   float: left;
   position: relative;
-  background-color: #EA9999 ;
+  background-color: #ea9999;
 }
 
 .red-arrow-steps .red-step:after,
@@ -171,16 +171,16 @@ a:hover {
   right: -17px;
   border-top: 19px solid transparent;
   border-bottom: 17px solid transparent;
-  border-left: 17px solid #EA9999;
+  border-left: 17px solid #ea9999;
   z-index: 2;
 }
 
 .red-arrow-steps .red-step:last-child:after {
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
-  border-top: 19px #EA9999;;
-  border-bottom: 17px #EA9999;;
-  border-left: 17px #EA9999;
+  border-top: 19px #ea9999;
+  border-bottom: 17px #ea9999;
+  border-left: 17px #ea9999;
 }
 .red-arrow-steps .red-step:before {
   left: 0;
@@ -206,17 +206,21 @@ a:hover {
   border-bottom-right-radius: 25px;
 }
 
-.next {
+button.button.next,
+button.button.next:hover,
+button.button.next:active {
   background-color: #128b3e;
   color: white;
   border: #999;
   margin: 0px;
   margin-left: 10px;
 }
-.next:disabled{
+
+button.button.next:disabled {
   background-color: #5a5959;
 }
-.next:disabled:hover{
+
+button.button.next:disabled:hover {
   background-color: #5a5959;
 }
 
