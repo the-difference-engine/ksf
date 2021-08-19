@@ -5,7 +5,7 @@ import '../nominationInfo/calendar.css';
 const EditModal = ({
   show,
   handleClose,
-  gc,
+  grantCycle,
   errors,
   disableButton,
   handleChange,
@@ -19,18 +19,20 @@ const EditModal = ({
 
   let openedOnInitial;
   let closedOnInitial;
-  gc
-    ? (openedOnInitial = new Date(gc.openedOnInitial))
+  grantCycle
+    ? (openedOnInitial = new Date(grantCycle.openedOnInitial))
     : (openedOnInitial = new Date());
-  gc ? (closedOnInitial = gc.closedOnInitial) : (closedOnInitial = new Date());
+  grantCycle
+    ? (closedOnInitial = grantCycle.closedOnInitial)
+    : (closedOnInitial = new Date());
 
   const [openedOn, setOpenedOn] = useState(openedOnInitial);
   const [closedOn, setClosedOn] = useState(closedOnInitial);
 
   useEffect(() => {
-    if (gc) {
-      let openedOnDate = new Date(gc.openedOn);
-      let closedOnDate = new Date(gc.closedOn);
+    if (grantCycle) {
+      let openedOnDate = new Date(grantCycle.openedOn);
+      let closedOnDate = new Date(grantCycle.closedOn);
       openedOnDate.setTime(
         openedOnDate.getTime() + openedOnDate.getTimezoneOffset() * 60 * 1000
       );
@@ -40,12 +42,12 @@ const EditModal = ({
       );
       setClosedOn(closedOnDate);
     }
-  }, [gc]);
+  }, [grantCycle]);
 
   return (
     <div className={showHideClassName}>
       <div className="edit-modal-main">
-        {gc ? (
+        {grantCycle ? (
           <>
             <h1 className="settings__heading">Edit Cycle</h1>
             <div className="settings__form">
@@ -54,7 +56,6 @@ const EditModal = ({
                 <span className="settings__input">
                   <DatePicker
                     name="openedOn"
-                    // value=''
                     selected={
                       String(openedOn) !== 'Invalid Date'
                         ? new Date(openedOn)
@@ -81,7 +82,7 @@ const EditModal = ({
                 <p className="settings__input-label">Name:</p>
                 <span className="settings__input">
                   <input
-                    value={gc.name}
+                    value={grantCycle.name}
                     name="name"
                     onChange={handleChange}
                     type="text"

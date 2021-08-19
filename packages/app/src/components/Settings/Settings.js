@@ -89,7 +89,6 @@ const Settings = (props) => {
 
   const handleUpdate = async (e) => {
     try {
-      console.log(gcToEdit);
       const { data } = await grantCycleAPI.updateGrantCycle(gcToEdit);
 
       setGcToEdit({ openedOn: '', closedOn: '', name: '' });
@@ -104,12 +103,12 @@ const Settings = (props) => {
     }
   };
 
-  const handleEdit = (gc) => {
+  const handleEdit = (grantCycle) => {
     setGcToEdit({
-      openedOn: gc.openedOn.split('T')[0],
-      closedOn: gc.closedOn.split('T')[0],
-      name: gc.name,
-      id: gc.id,
+      openedOn: grantCycle.openedOn.split('T')[0],
+      closedOn: grantCycle.closedOn.split('T')[0],
+      name: grantCycle.name,
+      id: grantCycle.id,
     });
     setShowEditModal(true);
   };
@@ -122,22 +121,22 @@ const Settings = (props) => {
     if (gcToEdit) handleDisableEditButton(gcToEdit);
   }, [gcToEdit]);
 
-  const isDateEditable = (gc) => {
+  const isDateEditable = (grantCycle) => {
     const millisecondsInADay = 86400000;
-    const startDate = new Date(gc.openedOn);
-    const endDate = new Date(gc.closedOn);
+    const startDate = new Date(grantCycle.openedOn);
+    const endDate = new Date(grantCycle.closedOn);
 
     return endDate - startDate >= millisecondsInADay ? false : true;
   };
 
-  const handleDisableButton = (gc) => {
-    if (gc.openedOn !== '' && gc.closedOn !== '') {
-      const editableDate = isDateEditable(gc);
+  const handleDisableButton = (grantCycle) => {
+    if (grantCycle.openedOn !== '' && grantCycle.closedOn !== '') {
+      const editableDate = isDateEditable(grantCycle);
 
       setDisableButton(editableDate);
       if (!editableDate) {
         setErrors('');
-        if (gc.name === '') {
+        if (grantCycle.name === '') {
           setDisableButton(true);
           setErrors('Please enter a name for the grant cycle');
         }
@@ -147,18 +146,18 @@ const Settings = (props) => {
     }
   };
 
-  const handleDisableEditButton = (gc) => {
-    if (gc.openedOn !== '' && gc.closedOn !== '') {
-      const editableDate = isDateEditable(gc);
+  const handleDisableEditButton = (grantCycle) => {
+    if (grantCycle.openedOn !== '' && grantCycle.closedOn !== '') {
+      const editableDate = isDateEditable(grantCycle);
 
       setDisableEditButton(editableDate);
       if (!editableDate) {
         setEditErrors('');
-        if (gc.name === '') {
+        if (grantCycle.name === '') {
           setDisableEditButton(true);
           setEditErrors('Please enter a name for the grant cycle');
         }
-        const closed = DateTime.fromISO(gc.closedOn);
+        const closed = DateTime.fromISO(grantCycle.closedOn);
         if (DateTime.now() > closed) {
           setDisableEditButton(true);
         }
@@ -169,7 +168,7 @@ const Settings = (props) => {
       setDisableEditButton(true);
     }
 
-    if (disableDatePicker(gc.closedOn)) {
+    if (disableDatePicker(grantCycle.closedOn)) {
       setEditErrors('Cannot set date earlier than today.');
       setDisableEditButton(true);
     }
@@ -185,12 +184,19 @@ const Settings = (props) => {
     return now > DateTime.fromISO(d);
   };
 
+  // to hide the input elements when edit cycle modal is open
+  const editModalHiddenClass = showEditModal ? 'hidden' : '';
+  // conditional styles for disabled button
+  const disableButtonStyle = disableButton
+    ? 'disabled-edit-btn'
+    : 'enabled-edit-btn';
+
   return (
     <div className="settings__container">
       <EditModal
         show={showEditModal}
         handleClose={closeEditModal}
-        gc={gcToEdit}
+        grantCycle={gcToEdit}
         disableButton={disableEditButton}
         errors={editErrors}
         handleChange={handleChangeForEdit}
@@ -214,17 +220,7 @@ const Settings = (props) => {
           <div className="settings__input-block">
             <p className="settings__input-label">Start Date:</p>
             <span className="settings__input">
-              <div
-                style={
-                  showEditModal
-                    ? {
-                        display: 'none',
-                      }
-                    : {
-                        position: 'relative',
-                      }
-                }
-              >
+              <div className={editModalHiddenClass}>
                 <DatePicker
                   name="openedOn"
                   value={newGrantCycle.openedOn}
@@ -238,17 +234,7 @@ const Settings = (props) => {
           <div className="settings__input-block">
             <p className="settings__input-label">End Date:</p>
             <span className="settings__input">
-              <div
-                style={
-                  showEditModal
-                    ? {
-                        display: 'none',
-                      }
-                    : {
-                        position: 'relative',
-                      }
-                }
-              >
+              <div className={editModalHiddenClass}>
                 <DatePicker
                   name="closedOn"
                   value={newGrantCycle.closedOn}
@@ -262,17 +248,7 @@ const Settings = (props) => {
           <div className="settings__input-block">
             <p className="settings__input-label">Cycle Name:</p>
             <span className="settings__input">
-              <div
-                style={
-                  showEditModal
-                    ? {
-                        display: 'none',
-                      }
-                    : {
-                        position: 'relative',
-                      }
-                }
-              >
+              <div className={editModalHiddenClass}>
                 <input
                   value={newGrantCycle.name}
                   name="name"
@@ -283,36 +259,12 @@ const Settings = (props) => {
             </span>
           </div>
         </div>
-        <div
-          style={
-            showEditModal
-              ? {
-                  display: 'none',
-                }
-              : {
-                  position: 'relative',
-                }
-          }
-        >
+        <div className={editModalHiddenClass}>
           <button
             ref={createButton}
             disabled={disableButton}
             onClick={handleCreate}
-            className="settings__button"
-            style={
-              disableButton
-                ? {
-                    color: 'gray',
-                    borderColor: 'gray',
-                    fontWeight: 'bold',
-                    opacity: '1',
-                  }
-                : {
-                    color: 'var(--brand)',
-                    backgroundColor: '#fff',
-                    borderColor: 'var(--brand)',
-                  }
-            }
+            className={`settings__button ${disableButtonStyle}`}
           >
             Create
           </button>
