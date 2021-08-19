@@ -24,17 +24,6 @@ const NOMINATION_STATUS = {
   declined: 'Declined',
 };
 
-const publicEmailDomains = [
-  'gmail.com',
-  'aol.com',
-  'outlook.com',
-  'zoho.com',
-  'mail.com',
-  'yahoo.com',
-  'protonmail.com',
-  'icloud.com',
-];
-
 const getNominationById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -68,10 +57,6 @@ const findAllNominations = async (req, res) => {
 const createNomination = async (req, res) => {
   try {
     const { providerEmailAddress } = req.body;
-    const providerDomain = providerEmailAddress.split('@')[1];
-    if (publicEmailDomains.includes(providerDomain)) {
-      //send email to provider to use workplace email
-    }
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
     const hasProviderBeenValidated = nominations.some(nom => {
