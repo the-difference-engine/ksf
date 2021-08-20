@@ -45,10 +45,13 @@ const NominationBanner = (props) => {
   };
 
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
+
   const toggleEmailModalState = () => {
     setResendEmailModalVisible(
       (resendEmailModalVisible) => !resendEmailModalVisible
     );
+    setRecipientChecked('');
+    setEmailTypeChecked('');
   };
 
   const [recipientChecked, setRecipientChecked] = useState('');
@@ -143,7 +146,7 @@ const NominationBanner = (props) => {
             )}
             {resendEmailModalVisible && (
               <div className="modal-background">
-                <div className="modal-container">
+                <div className="email-modal-container">
                   <button
                     className="exit-button"
                     onClick={toggleEmailModalState}
@@ -216,7 +219,7 @@ const NominationBanner = (props) => {
                     </fieldset>
                   </form>
 
-                  <div className="modal-buttons">
+                  <div className="email-modal-buttons">
                     <button
                       className="button-yes"
                       onClick={() => {

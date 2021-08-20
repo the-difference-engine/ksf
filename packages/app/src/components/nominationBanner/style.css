@@ -53,6 +53,53 @@
   background-color: #d4190c;
 }
 
+fieldset {
+  border: 1px solid black;  
+  box-shadow: 1px 1px 1px 1px gray; 
+}
+
+form {
+  display: flex;
+}
+
+.email-modal-buttons {
+  display: flex;
+  line-height: 20px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.email-modal-buttons > button {
+  color: white;
+  border: #999;
+  font-weight: bold;
+  margin-right: 10px;
+  height: 35px;
+  border-radius: 1rem;
+  font-size: 1rem;
+  letter-spacing: .01em;
+  line-height: 1rem;
+  text-transform: capitalize;
+}
+
+.email-modal-container{
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 90%;
+  overflow: inherit;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.7);
+  border-radius: 4px;
+  width: auto;
+  flex-direction: column;
+  display: flex;
+  pointer-events: visible;
+}
+
 .banner-top {
   border-bottom: 1px solid var(--light-background);
 }
