@@ -81,10 +81,6 @@ const NominationBanner = (props) => {
     }
   }
 
-  console.log(resendEmailModalVisible);
-  console.log(recipientChecked);
-  console.log(emailTypeChecked);
-
   return (
     <div className="nomination-banner-container">
       <div className="row" id={styles.rowOverride}>
@@ -111,13 +107,14 @@ const NominationBanner = (props) => {
                 Decline Application
               </button>
               <button
-                // disabled={activeNomination.status == 'Declined'}
+                disabled={activeNomination.status == 'Declined'}
                 className="resend-email-btn"
                 onClick={toggleEmailModalState}
               >
                 Resend Email
               </button>
             </div>
+            {/* Decline Application Modal */}
             {isModalVisible && (
               <div className="modal-background">
                 <div className="modal-container">
@@ -144,6 +141,7 @@ const NominationBanner = (props) => {
                 </div>
               </div>
             )}
+            {/* Resend Email Modal */}
             {resendEmailModalVisible && (
               <div className="modal-background">
                 <div className="email-modal-container">
@@ -157,7 +155,7 @@ const NominationBanner = (props) => {
                     <fieldset>
                       <legend>Recipient</legend>
                       <div>
-                        <label htmlFor="family-member">
+                        <label htmlFor="family-member" className="survey">
                           <input
                             type="radio"
                             name="family-member"
@@ -171,7 +169,7 @@ const NominationBanner = (props) => {
                         </label>
                       </div>
                       <div>
-                        <label htmlFor="healthcare-provider">
+                        <label htmlFor="healthcare-provider" className="survey">
                           <input
                             type="radio"
                             name="healthcare-provider"
@@ -189,7 +187,7 @@ const NominationBanner = (props) => {
                     <fieldset>
                       <legend>Email Type</legend>
                       <div>
-                        <label htmlFor="hipaa">
+                        <label htmlFor="hipaa" className="survey">
                           <input
                             type="radio"
                             name="hipaa"
@@ -203,7 +201,7 @@ const NominationBanner = (props) => {
                         </label>
                       </div>
                       <div>
-                        <label htmlFor="survey">
+                        <label htmlFor="survey" className="survey">
                           <input
                             type="radio"
                             name="survey"
@@ -223,13 +221,16 @@ const NominationBanner = (props) => {
                     <button
                       className="button-yes"
                       onClick={() => {
-                        declineApplication();
-                        toggleModalState();
+                        // declineApplication();
+                        toggleEmailModalState();
                       }}
                     >
-                      Confirm
+                      Submit
                     </button>
-                    <button className="button-no" onClick={toggleModalState}>
+                    <button
+                      className="button-no"
+                      onClick={toggleEmailModalState}
+                    >
                       Cancel
                     </button>
                   </div>

@@ -12,6 +12,8 @@
   width: 60px;
 }
 
+/* Decline App Button */
+
 .decline-button {
   background-color: #f72314;
   color: #ffffff;
@@ -20,6 +22,7 @@
   border: #8a8a8a;
   border-radius: 5rem;
 }
+
 .decline-button:disabled {
   background-color: #5a5959;
 }
@@ -31,6 +34,8 @@
 .decline-button:hover {
   background-color: #d4190c;
 }
+
+/* Resend Email Button */
 
 .resend-email-btn {
   text-transform: capitalize;
@@ -46,6 +51,14 @@
   background-color: #167c3d;
 }
 
+.resend-email-btn:disabled {
+  background-color: #5a5959;
+}
+
+.resend-email-btn:disabled:hover {
+  background-color: #5a5959;
+}
+
 .button-center {
   position: absolute;
   top: 40%;
@@ -53,20 +66,44 @@
   transform: translateY(-50%);
 }
 
+/* Resend Email Modal Styling */
+
+label.survey {
+  font-size: 20px;
+  letter-spacing: 0.01em;
+  align-items: center;
+  font-weight: 300;
+  padding: 0px 5px;
+}
+
+input[type='radio'] {
+  margin-right: 5px;
+}
+
 fieldset {
   border: 1px solid black;
   box-shadow: 1px 1px 1px 1px gray;
+  padding: 5px;
+  margin: 5px 10px;
+}
+
+legend {
+  font-weight: 500;
+  font-size: 26px;
 }
 
 form {
   display: flex;
+  margin: 10px 15px;
 }
 
 .email-modal-buttons {
   display: flex;
   line-height: 20px;
   align-items: flex-end;
-  justify-content: center;
+  /* justify-content: center; */
+  margin: 10px 0px;
+  justify-content: flex-end;
 }
 
 .email-modal-buttons > button {
