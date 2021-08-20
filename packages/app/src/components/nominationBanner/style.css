@@ -28,9 +28,13 @@
   background-color: #5a5959;
 }
 
+.decline-button:hover {
+  background-color: #d4190c;
+}
+
 .resend-email-btn {
   text-transform: capitalize;
-  border-radius: 5rem; 
+  border-radius: 5rem;
   background-color: #128b3e;
   color: white;
   border: #999;
@@ -39,7 +43,7 @@
 }
 
 .resend-email-btn:hover {
-  background-color: #128b3e;
+  background-color: #167c3d;
 }
 
 .button-center {
@@ -49,13 +53,9 @@
   transform: translateY(-50%);
 }
 
-.decline-button:hover {
-  background-color: #d4190c;
-}
-
 fieldset {
-  border: 1px solid black;  
-  box-shadow: 1px 1px 1px 1px gray; 
+  border: 1px solid black;
+  box-shadow: 1px 1px 1px 1px gray;
 }
 
 form {
@@ -77,12 +77,12 @@ form {
   height: 35px;
   border-radius: 1rem;
   font-size: 1rem;
-  letter-spacing: .01em;
+  letter-spacing: 0.01em;
   line-height: 1rem;
   text-transform: capitalize;
 }
 
-.email-modal-container{
+.email-modal-container {
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -92,7 +92,7 @@ form {
   overflow: inherit;
   background: #fff;
   box-sizing: border-box;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.7);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
   width: auto;
   flex-direction: column;
@@ -139,11 +139,11 @@ form {
   white-space: nowrap;
 }
 /* modal style */
-.modal-background{
+.modal-background {
   opacity: 1;
   pointer-events: none;
-  transition: opacity 0.4s case-in-out ;
-  position: absolute; 
+  transition: opacity 0.4s case-in-out;
+  position: absolute;
   z-index: 1000;
   position: fixed;
   top: 0;
@@ -153,7 +153,7 @@ form {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-.modal-container{
+.modal-container {
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -163,7 +163,7 @@ form {
   overflow: inherit;
   background: #fff;
   box-sizing: border-box;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.7);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
   width: auto;
   flex-direction: column;
@@ -174,7 +174,7 @@ form {
 .modal-text {
   padding: 20px 20px;
   font-size: 24px;
-  letter-spacing: .01em;
+  letter-spacing: 0.01em;
   align-items: center;
 }
 
@@ -193,23 +193,23 @@ form {
   height: 35px;
   border-radius: 1rem;
   font-size: 1rem;
-  letter-spacing: .01em;
+  letter-spacing: 0.01em;
   line-height: 1rem;
   text-transform: capitalize;
 }
 
-.button-yes{
+.button-yes {
   background-color: #128b3e;
 }
-.button-yes:hover{
+.button-yes:hover {
   background-color: #128b3e;
 }
 
-.button-no{
+.button-no {
   background-color: #999;
 }
 
-.button-no:hover{
+.button-no:hover {
   background-color: #999;
 }
 
@@ -227,7 +227,7 @@ form {
   margin-left: auto;
 }
 
-.exit-button:hover{
+.exit-button:hover {
   color: darkgray;
   background-color: transparent;
 }
