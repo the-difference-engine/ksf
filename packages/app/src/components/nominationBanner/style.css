@@ -108,6 +108,7 @@
   flex-direction: column;
   display: flex;
   pointer-events: visible;
+  outline: none;
 }
 
 .modal-text {
