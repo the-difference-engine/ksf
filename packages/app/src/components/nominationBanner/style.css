@@ -28,6 +28,20 @@
   background-color: #5a5959;
 }
 
+.resend-email-btn {
+  text-transform: capitalize;
+  border-radius: 5rem; 
+  background-color: #128b3e;
+  color: white;
+  border: #999;
+  margin: 0px;
+  margin-left: 10px;
+}
+
+.resend-email-btn:hover {
+  background-color: #128b3e;
+}
+
 .button-center {
   position: absolute;
   top: 40%;
