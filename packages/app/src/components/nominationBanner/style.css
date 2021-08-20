@@ -89,12 +89,12 @@ fieldset {
 
 legend {
   font-weight: 500;
-  font-size: 26px;
+  font-size: 24px;
 }
 
 form {
   display: flex;
-  margin: 10px 15px;
+  margin: 0px 25px;
 }
 
 .email-modal-buttons {
