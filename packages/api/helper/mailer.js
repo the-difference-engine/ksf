@@ -74,8 +74,6 @@ function sendSurveyEmail(nomination) {
 
 function verifyHcEmail(nomination) {
   const emailToken = generateToken(nomination.id);
-  console.log(emailToken, '------------');
-  console.log('------------');
   email
     .send({
       template: 'verifyHcEmail',
