@@ -82,7 +82,8 @@ input[type='radio'] {
 
 fieldset {
   border: 1px solid black;
-  box-shadow: 1px 1px 1px 1px gray;
+  border-radius: 5%;
+  /* box-shadow: 1px 1px 1px 1px gray; */
   padding: 5px;
   margin: 5px 10px;
 }
