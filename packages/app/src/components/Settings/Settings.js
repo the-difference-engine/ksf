@@ -254,20 +254,22 @@ const Settings = (props) => {
                   name="name"
                   onChange={handleChange}
                   type="text"
+                  className="settings__input"
                 />
               </div>
             </span>
           </div>
-        </div>
-        <div className={editModalHiddenClass}>
-          <button
-            ref={createButton}
-            disabled={disableButton}
-            onClick={handleCreate}
-            className={`settings__button ${disableButtonStyle}`}
-          >
-            Create
-          </button>
+          <div className={`${editModalHiddenClass} button-div`}>
+            {/* <p className="settings__input-label">End Date:</p> */}
+            <button
+              ref={createButton}
+              disabled={disableButton}
+              onClick={handleCreate}
+              className={`settings__button ${disableButtonStyle}`}
+            >
+              Create
+            </button>
+          </div>
         </div>
         <div className="settings__form-errors">{errors}</div>
 

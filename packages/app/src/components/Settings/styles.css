@@ -102,8 +102,11 @@
 }
 
 .settings__form {
+  /* display: flex;
+  flex-wrap: wrap; */
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  align-items: center;
 }
 
 .settings__form-errors {
@@ -297,6 +300,10 @@ button.icon-right-arrow-disabled:hover {
   text-transform: capitalize;
 }
 
+div.button-div {
+  margin-top: 2rem;
+}
+
 .edit-modal-button-cancel,
 .edit-modal-button-cancel:hover {
   background-color: red;
@@ -337,4 +344,12 @@ button.enabled-edit-btn {
   color: var(--brand);
   background-color: #fff;
   border-color: var(--brand);
+}
+
+@media (max-width: 800px) {
+
+  .settings__form {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
