@@ -314,7 +314,6 @@ button.icon-right-arrow-disabled:hover {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
-  margin-right: 46px;
 }
 
 .edit-modal-main button[disabled]:hover {
