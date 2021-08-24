@@ -90,16 +90,21 @@ const EditModal = ({
                 </span>
               </div>
             </div>
-            <button
-              className="edit-modal-button"
-              onClick={onSubmit}
-              disabled={disableButton}
-            >
-              Update
-            </button>
-            <button className="edit-modal-button-cancel" onClick={handleClose}>
-              Cancel
-            </button>
+            <div className='edit-button-div'>
+              <button
+                className="edit-modal-button"
+                onClick={onSubmit}
+                disabled={disableButton}
+              >
+                Update
+              </button>
+              <button
+                className="edit-modal-button-cancel"
+                onClick={handleClose}
+              >
+                Cancel
+              </button>
+            </div>
             <div className="edit-modal-errors">{errors}</div>
           </>
         ) : null}

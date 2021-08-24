@@ -86,6 +86,7 @@
   background-color: #fff;
   color: var(--brand);
   border-color: var(--brand);
+  text-transform: capitalize;
 }
 
 .settings__main button[disabled]:hover {
@@ -98,6 +99,11 @@
   background-color: var(--brand);
   border-color: white;
   color: white;
+}
+
+.settings__form {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .settings__form-errors {
@@ -288,6 +294,7 @@ button.icon-right-arrow-disabled:hover {
   border-color: white;
   color: white;
   margin-right: 3rem;
+  text-transform: capitalize;
 }
 
 .edit-modal-button-cancel,
@@ -295,11 +302,19 @@ button.icon-right-arrow-disabled:hover {
   background-color: red;
   border-color: white;
   color: white;
+  text-transform: capitalize;
 }
 
 .edit-modal-errors {
   position: absolute;
   color: red;
+}
+
+.edit-button-div {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 46px;
 }
 
 .edit-modal-main button[disabled]:hover {
