@@ -3,6 +3,7 @@ import styles from './newstyles.module.css';
 import Title from './labelTypes/Title';
 import Other from './labelTypes/Other';
 import Provider from './labelTypes/Provider';
+import Support from './labelTypes/Support';
 
 const ViewCard = props => {
   return (
@@ -35,6 +36,14 @@ const ViewCard = props => {
             case label === 'Diagnosis/case information':
               return <Other label={label} formData={props.formData} style={styles.diagnosis}/>
             // renders everything else  
+            case label === 'Grant Request Info':
+              return (<div>
+                     <Title label={"Grant Request Support"}/>
+                     <Support 
+                      // label= {label} 
+                      formData={props.formData[label]} />
+                      
+                      </div>)
             default:
               return <Other label={label} formData={props.formData} style={""}/>
           }

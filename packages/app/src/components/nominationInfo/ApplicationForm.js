@@ -146,7 +146,9 @@ const ApplicationForm = props => {
     'Patient Information',
     'Family Member Information',
     'Health Provider Information',
+    'Grant Request Support'
   ];
+  console.log(props.grantRequestInfoData, "application")
    
 
   // mode either 'view' or 'edit' and is changed by Save, Edit, or Cancel buttons in editOrSaveButton.js
@@ -187,6 +189,18 @@ const ApplicationForm = props => {
               formData={props.healthProviderData}
               id={props.id}
               keys={props.healthProviderDataKeys}
+              openWindow={openWindow}
+            />
+          </div>
+          <div>
+            <ViewCard
+              titleLabels={titleLabels}
+              editablePlainText={editablePlainText}
+              editableDates={editableDates}
+              spanishDropdown={spanishDropdown}
+              formData={props.grantRequestInfoData}
+              id={props.id}
+              keys={props.grantRequestInfoDataKeys}
               openWindow={openWindow}
             />
           </div>
