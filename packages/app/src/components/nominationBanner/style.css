@@ -81,21 +81,25 @@ input[type='radio'] {
 }
 
 fieldset {
-  border: 1px solid black;
+  border: 1px solid lightgray;
   border-radius: 5%;
-  /* box-shadow: 1px 1px 1px 1px gray; */
+  box-shadow: 0 8px 16px 0 gray;
   padding: 5px;
   margin: 5px 10px;
+  width: 80%;
 }
 
 legend {
   font-weight: 500;
   font-size: 24px;
+  background-color: white;
+  padding: 1rem;
 }
 
 form {
   display: flex;
   margin: 0px 25px;
+  justify-content: space-between;
 }
 
 .email-modal-buttons {
@@ -103,7 +107,7 @@ form {
   line-height: 20px;
   align-items: flex-end;
   /* justify-content: center; */
-  margin: 10px 0px;
+  margin: 20px 0 15px 0;
   justify-content: flex-end;
 }
 
@@ -136,6 +140,7 @@ form {
   flex-direction: column;
   display: flex;
   pointer-events: visible;
+  width: 40%;
 }
 
 .banner-top {
@@ -263,6 +268,7 @@ form {
   border: none;
   background-color: transparent;
   margin-left: auto;
+  margin-bottom: 0px;
 }
 
 .exit-button:hover {
