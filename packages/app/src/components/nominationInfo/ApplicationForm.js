@@ -47,9 +47,7 @@ const ApplicationForm = props => {
     firstUpdate.current = false;
   }, [props.cancelHasBeenClicked]);
 
-
-
-  const validationSchema = Yup.object({
+   const validationSchema = Yup.object({
     'Admission Date': Yup.date().required('Required'),
     'Discharge Date': Yup.date()
       .min(
@@ -192,13 +190,9 @@ const ApplicationForm = props => {
           <div>
             <ViewCard
               titleLabels={titleLabels}
-              editablePlainText={editablePlainText}
               editableDates={editableDates}
-              spanishDropdown={spanishDropdown}
               formData={props.grantRequestSupportData}
-              id={props.id}
               keys={props.grantRequestSupportDataKeys}
-              openWindow={openWindow}
             />
           </div>
         </div>

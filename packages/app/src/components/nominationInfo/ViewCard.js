@@ -11,7 +11,6 @@ const ViewCard = props => {
       <div className={[styles.gridContainer, styles.content].join(' ')}>
         
         {props.keys.map(label => {
-          console.log(props.keys.length, "View card")
           switch (true) {
             // Render our titles in card
             case props.titleLabels.includes(label):
@@ -36,10 +35,10 @@ const ViewCard = props => {
                         />
             // renders diagnosis accross two columns
             case label === 'Diagnosis/case information':
-              return <Other label={label} formData={props.formData} style={styles.diagnosis}/>
-            // renders everything else 
+              return <Other label={label} formData={props.formData} style={styles.diagnosis}/> 
             case label === "Grant List":
               return <Support formData={props.formData[label]}/>
+            // renders everything else
             default:
               return <Other label={label} formData={props.formData} style={""}/>
           }

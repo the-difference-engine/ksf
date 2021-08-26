@@ -165,7 +165,6 @@ const NominationPage = ({
             saveHasBeenClicked={saveHasBeenClicked}
             cancelHasBeenClicked={cancelHasBeenClicked}
             id={id}
-            
             revertMode={revertMode}
           />
         </div>

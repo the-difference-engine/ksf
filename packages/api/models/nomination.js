@@ -171,9 +171,7 @@ module.exports = (sequelize, DataTypes) => {
       grantRequestInfo: {
         type: DataTypes.TEXT,
         allowNull: true
-        
       }
-      
     },
     {
       hooks: {
