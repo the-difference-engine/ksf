@@ -151,7 +151,7 @@ const NominationBanner = (props) => {
                   >
                     &times;
                   </button>
-                  <form>
+                  <form className='email-form'>
                     <fieldset>
                       <legend>Recipient</legend>
                       <div>
@@ -185,7 +185,7 @@ const NominationBanner = (props) => {
                     </fieldset>
                     {/* SECOND FIELDSET */}
                     <fieldset>
-                      <legend>Email Type</legend>
+                      <legend className='email-legend'>Email Type</legend>
                       <div>
                         <label htmlFor="hipaa" className="survey">
                           <input

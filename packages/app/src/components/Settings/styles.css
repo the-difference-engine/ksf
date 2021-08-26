@@ -324,3 +324,13 @@ button.enabled-edit-btn {
   background-color: #fff;
   border-color: var(--brand);
 }
+
+@media only screen and (max-width: 800px) {
+  form.email-form {
+    flex-direction: column;
+  }
+
+  legend.email-legend {
+    background-color: transparent;
+  }
+}

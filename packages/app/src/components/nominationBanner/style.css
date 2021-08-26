@@ -83,8 +83,8 @@ input[type='radio'] {
 fieldset {
   border: 1px solid lightgray;
   border-radius: 5%;
-  box-shadow: 0 8px 16px 0 gray;
-  padding: 5px;
+  box-shadow: 0 8px 16px 0 lightgray;
+  padding: 0 5px;
   margin: 5px 10px;
   width: 80%;
 }
@@ -96,7 +96,7 @@ legend {
   padding: 1rem;
 }
 
-form {
+form.email-form {
   display: flex;
   margin: 0px 25px;
   justify-content: space-between;
@@ -140,7 +140,7 @@ form {
   flex-direction: column;
   display: flex;
   pointer-events: visible;
-  width: 40%;
+  width: 50%;
 }
 
 .banner-top {
