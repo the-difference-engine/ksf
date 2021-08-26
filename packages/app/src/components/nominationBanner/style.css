@@ -86,7 +86,7 @@ fieldset {
   box-shadow: 0 8px 16px 0 lightgray;
   padding: 0 5px;
   margin: 5px 10px;
-  width: 80%;
+  width: 50%;
 }
 
 legend {
@@ -99,7 +99,7 @@ legend {
 form.email-form {
   display: flex;
   margin: 0px 25px;
-  justify-content: space-between;
+  /* justify-content: space-evenly; */
 }
 
 .email-modal-buttons {
@@ -140,7 +140,7 @@ form.email-form {
   flex-direction: column;
   display: flex;
   pointer-events: visible;
-  width: 50%;
+  width: 40%;
 }
 
 .banner-top {
@@ -274,4 +274,11 @@ form.email-form {
 .exit-button:hover {
   color: darkgray;
   background-color: transparent;
+}
+
+@media only screen and (max-width: 800px) {
+  .email-modal-container {
+    width: 70%;
+    left: 43%;
+  }
 }
