@@ -9,8 +9,9 @@ const ViewCard = props => {
   return (
     <div className={styles.card}>
       <div className={[styles.gridContainer, styles.content].join(' ')}>
+        
         {props.keys.map(label => {
-          
+          console.log(props.keys.length, "View card")
           switch (true) {
             // Render our titles in card
             case props.titleLabels.includes(label):

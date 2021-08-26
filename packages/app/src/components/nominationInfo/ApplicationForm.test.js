@@ -39,9 +39,15 @@ test('renders ViewCards in ApplicationForm', () => {
     'Request to communicate in Spanish?': `${dummyData.spanishRepString}`,
   };
 
+  const grantRequestSupportData = {
+    'Grant Request Support': '',
+    'Grant List': `${dummyData.grantRequestInfo}`
+  }
+
   const patientInformationDataKeys = Object.keys(patientInformationData)
   const familyMemberDataKeys = Object.keys(familyMemberData)
   const healthProviderDataKeys = Object.keys(healthProviderData)
+  const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData)
 
   const history = createMemoryHistory()
 
@@ -54,9 +60,12 @@ test('renders ViewCards in ApplicationForm', () => {
                 patientInformationData={patientInformationData}
                 familyMemberData={familyMemberData}
                 healthProviderData={healthProviderData}
+                grantRequestSupportData={grantRequestSupportData}
                 patientInformationDataKeys={patientInformationDataKeys}
                 familyMemberDataKeys={familyMemberDataKeys}
                 healthProviderDataKeys={healthProviderDataKeys}
+                grantRequestSupportDataKeys={grantRequestSupportDataKeys}
+                
                 mode={'view'}
                 editHasBeenClicked={false}
                 saveHasBeenClicked={false}
