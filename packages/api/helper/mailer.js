@@ -102,7 +102,7 @@ function sendHIPAAEmail(nomination) {
           to: nomination.representativeEmailAddress,
         },
         locals: {
-          name: nomination.patientName,
+          name: nomination.representativeName,
           imgUrl,
         },
       }
