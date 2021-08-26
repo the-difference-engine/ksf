@@ -254,13 +254,11 @@ const Settings = (props) => {
                   name="name"
                   onChange={handleChange}
                   type="text"
-                  className="settings__input"
                 />
               </div>
             </span>
           </div>
           <div className={`${editModalHiddenClass} button-div`}>
-            {/* <p className="settings__input-label">End Date:</p> */}
             <button
               ref={createButton}
               disabled={disableButton}
