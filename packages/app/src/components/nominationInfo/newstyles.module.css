@@ -115,6 +115,7 @@ select {
   width: 40%;
 }
 
+
 /* Errors */
 
 .yupError {
@@ -127,4 +128,14 @@ select {
 .linkStyle {
   font-weight: bold;
   text-decoration-line: underline;
+}
+
+/* grant list styling */
+
+.grantList{
+  font-size: 1.6rem;
+  padding-left: 2rem;
+  grid-column: 1/-1;
+  font-weight: normal;
+  
 }

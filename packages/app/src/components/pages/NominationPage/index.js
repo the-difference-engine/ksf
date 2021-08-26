@@ -98,8 +98,9 @@ const NominationPage = ({
     'How did you hear about KSF?': '',
   };
 
-  const grantRequestInfoData = {
-    'Grant Request Info': `${activeNomination.grantRequestInfo}`
+  const grantRequestSupportData = {
+    'Grant Request Support': '',
+    'Grant List': `${activeNomination.grantRequestInfo}`
   }
 
   const familyMemberData = {
@@ -132,7 +133,8 @@ const NominationPage = ({
   const patientInformationDataKeys = Object.keys(patientInformationData)
   const familyMemberDataKeys = Object.keys(familyMemberData)
   const healthProviderDataKeys = Object.keys(healthProviderData)
-  const grantRequestInfoDataKeys = Object.keys(grantRequestInfoData)
+  const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData)
+  
   return (
     <>
       {activeNomination ? (
@@ -153,11 +155,11 @@ const NominationPage = ({
             patientInformationData={patientInformationData}
             familyMemberData={familyMemberData}
             healthProviderData={healthProviderData}
-            grantRequestInfoData = {grantRequestInfoData}
+            grantRequestSupportData = {grantRequestSupportData}
             patientInformationDataKeys={patientInformationDataKeys}
             familyMemberDataKeys={familyMemberDataKeys}
             healthProviderDataKeys={healthProviderDataKeys}
-            grantRequestInfoDataKeys = {grantRequestInfoDataKeys}
+            grantRequestSupportDataKeys = {grantRequestSupportDataKeys}
             mode={mode}
             editHasBeenClicked={editHasBeenClicked}
             saveHasBeenClicked={saveHasBeenClicked}
