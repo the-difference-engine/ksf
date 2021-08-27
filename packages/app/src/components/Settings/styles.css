@@ -324,3 +324,9 @@ button.enabled-edit-btn {
   background-color: #fff;
   border-color: var(--brand);
 }
+
+@media only screen and (max-width: 800px) {
+  legend.email-legend {
+    background-color: transparent;
+  }
+}
