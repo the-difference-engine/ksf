@@ -12,15 +12,20 @@
   width: 60px;
 }
 
-/* Decline App Button */
+/* Shared button class */
 
-.decline-button {
-  background-color: #f72314;
+.banner-buttons {
   color: #ffffff;
   border: #8a8a8a;
   text-transform: capitalize;
   border: #8a8a8a;
   border-radius: 5rem;
+}
+
+/* Decline App Button */
+
+.decline-button {
+  background-color: #f72314;
 }
 
 .decline-button:disabled {
@@ -38,12 +43,7 @@
 /* Resend Email Button */
 
 .resend-email-btn {
-  text-transform: capitalize;
-  border-radius: 5rem;
   background-color: #128b3e;
-  color: white;
-  border: #999;
-  margin: 0px;
   margin-left: 10px;
 }
 
@@ -76,24 +76,27 @@ label.survey {
   padding: 0px 5px;
 }
 
-input[type='radio'] {
+input[type='radio'].radio {
   margin-right: 5px;
 }
 
-fieldset {
-  border: 1px solid black;
+fieldset.resend-fieldset {
+  border: 1px solid lightgray;
   border-radius: 5%;
-  /* box-shadow: 1px 1px 1px 1px gray; */
-  padding: 5px;
+  box-shadow: 0 8px 16px 0 lightgray;
+  padding: 0 5px;
   margin: 5px 10px;
+  width: 50%;
 }
 
-legend {
+legend.resend-legend {
   font-weight: 500;
   font-size: 24px;
+  background-color: white;
+  padding: 1rem;
 }
 
-form {
+form.email-form {
   display: flex;
   margin: 0px 25px;
 }
@@ -102,40 +105,8 @@ form {
   display: flex;
   line-height: 20px;
   align-items: flex-end;
-  /* justify-content: center; */
-  margin: 10px 0px;
+  margin: 20px 0 15px 0;
   justify-content: flex-end;
-}
-
-.email-modal-buttons > button {
-  color: white;
-  border: #999;
-  font-weight: bold;
-  margin-right: 10px;
-  height: 35px;
-  border-radius: 1rem;
-  font-size: 1rem;
-  letter-spacing: 0.01em;
-  line-height: 1rem;
-  text-transform: capitalize;
-}
-
-.email-modal-container {
-  z-index: 999;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-height: 90%;
-  overflow: inherit;
-  background: #fff;
-  box-sizing: border-box;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
-  border-radius: 4px;
-  width: auto;
-  flex-direction: column;
-  display: flex;
-  pointer-events: visible;
 }
 
 .banner-top {
@@ -191,7 +162,8 @@ form {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-.modal-container {
+.modal-container,
+.email-modal-container {
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -223,7 +195,8 @@ form {
   justify-content: flex-end;
 }
 
-.modal-buttons > button {
+.modal-buttons > button,
+.email-modal-buttons > button {
   color: white;
   border: #999;
   font-weight: bold;
@@ -263,9 +236,17 @@ form {
   border: none;
   background-color: transparent;
   margin-left: auto;
+  margin-bottom: 0px;
 }
 
 .exit-button:hover {
   color: darkgray;
   background-color: transparent;
+}
+
+@media only screen and (max-width: 800px) {
+  .email-modal-container {
+    width: 70%;
+    left: 43%;
+  }
 }

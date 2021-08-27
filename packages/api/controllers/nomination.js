@@ -10,6 +10,7 @@ const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
 const { sendHIPAAEmail} = require('../helper/mailer');
+const { sendHIPAAProvider} = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');

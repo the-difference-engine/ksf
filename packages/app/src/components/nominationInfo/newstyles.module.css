@@ -128,3 +128,12 @@ select {
   font-weight: bold;
   text-decoration-line: underline;
 }
+
+/* grant list styling */
+
+.grantList{
+  font-size: 1.6rem;
+  padding-left: 2.5rem;
+  grid-column: 1/-1;
+  font-weight: normal;
+}

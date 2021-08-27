@@ -47,9 +47,7 @@ const ApplicationForm = props => {
     firstUpdate.current = false;
   }, [props.cancelHasBeenClicked]);
 
-
-
-  const validationSchema = Yup.object({
+   const validationSchema = Yup.object({
     'Admission Date': Yup.date().required('Required'),
     'Discharge Date': Yup.date()
       .min(
@@ -146,9 +144,8 @@ const ApplicationForm = props => {
     'Patient Information',
     'Family Member Information',
     'Health Provider Information',
+    'Grant Request Support'
   ];
-   
-
   // mode either 'view' or 'edit' and is changed by Save, Edit, or Cancel buttons in editOrSaveButton.js
   switch (props.mode) {
     case 'view':
@@ -188,6 +185,14 @@ const ApplicationForm = props => {
               id={props.id}
               keys={props.healthProviderDataKeys}
               openWindow={openWindow}
+            />
+          </div>
+          <div>
+            <ViewCard
+              titleLabels={titleLabels}
+              editableDates={editableDates}
+              formData={props.grantRequestSupportData}
+              keys={props.grantRequestSupportDataKeys}
             />
           </div>
         </div>

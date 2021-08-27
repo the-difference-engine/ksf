@@ -346,10 +346,13 @@ button.enabled-edit-btn {
   border-color: var(--brand);
 }
 
-@media (max-width: 800px) {
-
+@media only screen and (max-width: 800px) {
   .settings__form {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  legend.email-legend {
+    background-color: transparent;
   }
 }
