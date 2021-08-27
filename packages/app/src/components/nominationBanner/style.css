@@ -162,7 +162,8 @@ form.email-form {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-.modal-container, .email-modal-container {
+.modal-container,
+.email-modal-container {
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -178,7 +179,6 @@ form.email-form {
   flex-direction: column;
   display: flex;
   pointer-events: visible;
-  outline: none;
 }
 
 .modal-text {
@@ -195,7 +195,8 @@ form.email-form {
   justify-content: flex-end;
 }
 
-.modal-buttons > button, .email-modal-buttons > button {
+.modal-buttons > button,
+.email-modal-buttons > button {
   color: white;
   border: #999;
   font-weight: bold;

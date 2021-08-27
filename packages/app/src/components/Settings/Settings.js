@@ -258,16 +258,16 @@ const Settings = (props) => {
               </div>
             </span>
           </div>
-        </div>
-        <div className={editModalHiddenClass}>
-          <button
-            ref={createButton}
-            disabled={disableButton}
-            onClick={handleCreate}
-            className={`settings__button ${disableButtonStyle}`}
-          >
-            Create
-          </button>
+          <div className={`${editModalHiddenClass} button-div`}>
+            <button
+              ref={createButton}
+              disabled={disableButton}
+              onClick={handleCreate}
+              className={`settings__button ${disableButtonStyle}`}
+            >
+              Create
+            </button>
+          </div>
         </div>
         <div className="settings__form-errors">{errors}</div>
 
