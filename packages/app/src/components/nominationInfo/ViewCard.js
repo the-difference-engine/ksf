@@ -3,11 +3,13 @@ import styles from './newstyles.module.css';
 import Title from './labelTypes/Title';
 import Other from './labelTypes/Other';
 import Provider from './labelTypes/Provider';
+import Support from './labelTypes/Support';
 
 const ViewCard = props => {
   return (
     <div className={styles.card}>
       <div className={[styles.gridContainer, styles.content].join(' ')}>
+        
         {props.keys.map(label => {
           switch (true) {
             // Render our titles in card
@@ -33,8 +35,10 @@ const ViewCard = props => {
                         />
             // renders diagnosis accross two columns
             case label === 'Diagnosis/case information':
-              return <Other label={label} formData={props.formData} style={styles.diagnosis}/>
-            // renders everything else  
+              return <Other label={label} formData={props.formData} style={styles.diagnosis}/> 
+            case label === "Grant List":
+              return <Support formData={props.formData[label]}/>
+            // renders everything else
             default:
               return <Other label={label} formData={props.formData} style={""}/>
           }
