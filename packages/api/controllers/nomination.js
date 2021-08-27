@@ -180,14 +180,11 @@ const emailVerification = async (req, res) => {
     const { token } = req.params;
     const { data: id } = jwt.verify(token, process.env.JWT_SECRET);
     await db.Nomination.update({ emailValidated: true }, { where: { id } });
-    return res.send('Thank you for verifying your email!');
+    return res.redirect(`${process.env.APP_URL}/email-verification`);
   } catch (error) {
+    console.log('400 validation error', error);
     return res.status(400).json({ error: error.message });
   }
-};
-
-const emailMessage = async (req, res) => {
-  res.send('Thank you for verifying your email!');
 };
 
 /**
@@ -260,5 +257,4 @@ module.exports = {
   updateActiveNomData,
   emailVerification,
   searchAndSend,
-  emailMessage,
 };

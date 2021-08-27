@@ -29,6 +29,6 @@ router.get('/api/grantcycles/findbyname/:name', grantCycleController.findByName)
 router.put('/api/grantcycles/:id', grantCycleController.update);
 
 // email verification endpoint
-router.get('/api/emailMessage', nominationController.emailMessage);
+// router.get('/api/emailMessage', nominationController.emailMessage);
 
 module.exports = router;
