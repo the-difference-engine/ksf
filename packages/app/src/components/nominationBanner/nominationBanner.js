@@ -39,9 +39,9 @@ const NominationBanner = (props) => {
     ActiveNominationContext
   );
 
-  const [declineAppModalVisible, setdeclineAppModalVisible] = useState(false);
+  const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
   const toggleDeclineAppModalState = () => {
-    setdeclineAppModalVisible((declineAppModalVisible) => !declineAppModalVisible);
+    setDeclineAppModalVisible((declineAppModalVisible) => !declineAppModalVisible);
   };
 
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
