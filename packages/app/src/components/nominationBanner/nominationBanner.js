@@ -39,9 +39,9 @@ const NominationBanner = (props) => {
     ActiveNominationContext
   );
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const toggleModalState = () => {
-    setIsModalVisible((isModalVisible) => !isModalVisible);
+  const [declineAppModalVisible, setdeclineAppModalVisible] = useState(false);
+  const toggleDeclineAppModalState = () => {
+    setdeclineAppModalVisible((declineAppModalVisible) => !declineAppModalVisible);
   };
 
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
@@ -101,24 +101,24 @@ const NominationBanner = (props) => {
             <div className="column name">
               <button
                 disabled={activeNomination.status == 'Declined'}
-                className="decline-button"
-                onClick={toggleModalState}
+                className="decline-button banner-buttons"
+                onClick={toggleDeclineAppModalState}
               >
                 Decline Application
               </button>
               <button
                 disabled={activeNomination.status == 'Declined'}
-                className="resend-email-btn"
+                className="resend-email-btn banner-buttons"
                 onClick={toggleEmailModalState}
               >
                 Resend Email
               </button>
             </div>
             {/* Decline Application Modal */}
-            {isModalVisible && (
+            {declineAppModalVisible && (
               <div className="modal-background">
                 <div className="modal-container">
-                  <button className="exit-button" onClick={toggleModalState}>
+                  <button className="exit-button" onClick={toggleDeclineAppModalState}>
                     &times;
                   </button>
                   <h3 className="modal-text">
@@ -129,12 +129,12 @@ const NominationBanner = (props) => {
                       className="button-yes"
                       onClick={() => {
                         declineApplication();
-                        toggleModalState();
+                        toggleDeclineAppModalState();
                       }}
                     >
                       Confirm
                     </button>
-                    <button className="button-no" onClick={toggleModalState}>
+                    <button className="button-no" onClick={toggleDeclineAppModalState}>
                       Cancel
                     </button>
                   </div>
@@ -152,8 +152,8 @@ const NominationBanner = (props) => {
                     &times;
                   </button>
                   <form className='email-form'>
-                    <fieldset>
-                      <legend>Recipient</legend>
+                    <fieldset className='resend-fieldset'>
+                      <legend className= 'resend-legend'>Recipient</legend>
                       <div>
                         <label htmlFor="family-member" className="survey">
                           <input
@@ -163,7 +163,7 @@ const NominationBanner = (props) => {
                             id="family-member"
                             checked={recipientChecked === 'family-member'}
                             onChange={handleRecipientChange}
-                            className="family-member"
+                            className="family-member radio"
                           />
                           Family Member
                         </label>
@@ -177,15 +177,14 @@ const NominationBanner = (props) => {
                             id="healthcare-provider"
                             checked={recipientChecked === 'healthcare-provider'}
                             onChange={handleRecipientChange}
-                            className="healthcare-provider"
+                            className="healthcare-provider radio"
                           />
                           Healthcare Provider
                         </label>
                       </div>
                     </fieldset>
-                    {/* SECOND FIELDSET */}
-                    <fieldset>
-                      <legend className='email-legend'>Email Type</legend>
+                    <fieldset className='resend-fieldset'>
+                      <legend className='email-legend resend-legend'>Email Type</legend>
                       <div>
                         <label htmlFor="hipaa" className="survey">
                           <input
@@ -195,7 +194,7 @@ const NominationBanner = (props) => {
                             id="hipaa"
                             checked={emailTypeChecked === 'hipaa'}
                             onChange={handleEmailTypeChange}
-                            className="hipaa"
+                            className="hipaa radio"
                           />
                           HIPAA
                         </label>
@@ -209,7 +208,7 @@ const NominationBanner = (props) => {
                             id="survey"
                             checked={emailTypeChecked === 'survey'}
                             onChange={handleEmailTypeChange}
-                            className="survey"
+                            className="survey radio"
                           />
                           Survey
                         </label>
@@ -221,7 +220,6 @@ const NominationBanner = (props) => {
                     <button
                       className="button-yes"
                       onClick={() => {
-                        // declineApplication();
                         toggleEmailModalState();
                       }}
                     >
