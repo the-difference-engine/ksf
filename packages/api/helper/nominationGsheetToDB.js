@@ -65,6 +65,7 @@ module.exports = function gsheetToDB() {
             admissionDate: nomination[31],
             dischargeDate: nomination[32],
             patientDiagnosis: nomination[34],
+            grantRequestInfo: nomination[35],
             amountRequestedCents: parseInt(
               parseFloat(nomination[37].replace(/\$/g, '')) * 100
             ),

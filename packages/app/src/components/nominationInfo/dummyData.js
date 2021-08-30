@@ -24,5 +24,6 @@ export default {
   representativeEmailAddress: "jimbob@gmail.com",
   representativePhoneNumber: "556-777-9987",
   representativeRelationship: "Parent",
-  representativeSpanishRequested: "No"
+  representativeSpanishRequested: "No",
+  grantRequestInfo: "Bedside meals, Gas" 
 };

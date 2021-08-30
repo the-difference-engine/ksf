@@ -167,6 +167,10 @@ module.exports = (sequelize, DataTypes) => {
       declinedTimestamp: {
         type: DataTypes.DATE,
         allowNull: true
+      },
+      grantRequestInfo: {
+        type: DataTypes.TEXT,
+        allowNull: true
       }
     },
     {
