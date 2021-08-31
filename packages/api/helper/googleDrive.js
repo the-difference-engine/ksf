@@ -31,8 +31,6 @@ function createFolder(applicationName) {
       console.error(err);
     }
   })
-
-
 }
 
 module.exports = { createFolder }
