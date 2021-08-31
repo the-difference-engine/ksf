@@ -8,16 +8,15 @@ import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ViewCard from './ViewCard';
 import EditCard from './EditCard';
-import { formatPhoneNumber } from 'react-phone-number-input'
-import "yup-phone";
+import { formatPhoneNumber } from 'react-phone-number-input';
+import 'yup-phone';
 
-const ApplicationForm = props => {
+const ApplicationForm = (props) => {
   // Stores state to ensure useEffects do not render on load
   const firstUpdate = useRef(true);
 
-
   // passed down to card component for Link
-  const openWindow = val => {
+  const openWindow = (val) => {
     window.open(`/searchhealthprovider/${val}`);
   };
 
@@ -42,14 +41,31 @@ const ApplicationForm = props => {
   useEffect(() => {
     // makes sure useEffects don't run on initial render
     if (!firstUpdate.current) {
-      reset()
+      reset();
     }
     firstUpdate.current = false;
   }, [props.cancelHasBeenClicked]);
 
-   const validationSchema = Yup.object({
-    'Admission Date': Yup.date().required('Required'),
+  const validationSchema = Yup.object({
+    'Admission Date': Yup.date()
+      .test(
+        'proper-admission-date-formatting',
+        'Date must be in valid format: mm/dd/yyyy',
+        function (value) {
+          const year = value.getFullYear();
+          return year.toString().length === 4;
+        }
+      )
+      .required('Required'),
     'Discharge Date': Yup.date()
+      .test(
+        'proper-discharge-date-formatting',
+        'Date must be in valid format: mm/dd/yyyy',
+        function (value) {
+          const year = value.getFullYear();
+          return year.toString().length === 4;
+        }
+      )
       .min(
         Yup.ref('Admission Date'),
         'Discharge date cannot be before admission date.'
@@ -63,9 +79,9 @@ const ApplicationForm = props => {
       .email('Invalid email address.')
       .required('Required'), // This handles email validation with no regex.
     'Representative Phone Number': Yup.string()
-      .phone("US")
+      .phone('US')
       .required('Required'),
-    'Relationship': Yup.string()
+    Relationship: Yup.string()
       .min(3, 'Must be at least 3 characters.')
       .max(20, 'Must be no more than 20 characters.')
       .required('Required'),
@@ -76,16 +92,16 @@ const ApplicationForm = props => {
     handleSubmit,
     control,
     formState: { errors },
-    reset
+    reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  const submitForm = async data => {
+  const submitForm = async (data) => {
     if (NominationsData) {
       let newActiveNomination = {};
       // loops through all nomination data to find active nomination
-      const newNominationData = NominationsData.map(nomination => {
+      const newNominationData = NominationsData.map((nomination) => {
         if (nomination.id === props.id) {
           data['Admission Date']
             ? (nomination.admissionDate = data[
@@ -99,8 +115,9 @@ const ApplicationForm = props => {
             : (nomination.dischargeDate = data['Discharge Date']);
           nomination.representativeEmailAddress =
             data['Representative Email Address'];
-          nomination.representativePhoneNumber =
-          formatPhoneNumber(`+1${data['Representative Phone Number']}`);
+          nomination.representativePhoneNumber = formatPhoneNumber(
+            `+1${data['Representative Phone Number']}`
+          );
           nomination.representativeRelationship = data['Relationship'];
           nomination.representativeName = data['Representative Name'];
           if (data['Request to communicate in Spanish?'] === 'Yes') {
@@ -144,7 +161,7 @@ const ApplicationForm = props => {
     'Patient Information',
     'Family Member Information',
     'Health Provider Information',
-    'Grant Request Support'
+    'Grant Request Support',
   ];
   // mode either 'view' or 'edit' and is changed by Save, Edit, or Cancel buttons in editOrSaveButton.js
   switch (props.mode) {
@@ -250,8 +267,6 @@ const ApplicationForm = props => {
         </form>
       );
   }
-
-
 };
 
 export default ApplicationForm;
