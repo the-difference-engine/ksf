@@ -38,18 +38,12 @@ const EditCard = (props) => {
                     render={({ field: { onChange, value } }) => {
                       return (
                         <DatePicker
-                          selected={
-                            label === 'Admission Date'
-                              ? new Date(value)
-                              : new Date(value)
-                          }
+                          selected={new Date(value)}
                           onChange={(date) => {
                             const yearLength = date.getFullYear().toString()
                               .length;
                             if (yearLength === 4) {
-                              label === 'Admission Date'
-                                ? onChange(new Date(date))
-                                : onChange(new Date(date));
+                              onChange(new Date(date));
                             }
                           }}
                           dateFormat="MM/dd/yyyy"

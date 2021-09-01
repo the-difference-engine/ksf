@@ -225,7 +225,12 @@ const Settings = (props) => {
                   name="openedOn"
                   value={newGrantCycle.openedOn}
                   selected={newGrantCycle.openedOn}
-                  onChange={handleStartDateCreation}
+                  onChange={(value) => {
+                    const yearLength = value.getFullYear().toString().length;
+                    if (yearLength === 4) {
+                      handleStartDateCreation(value);
+                    }
+                  }}
                   placeholderText="mm/dd/yyyy"
                 />
               </div>
@@ -239,7 +244,12 @@ const Settings = (props) => {
                   name="closedOn"
                   value={newGrantCycle.closedOn}
                   selected={newGrantCycle.closedOn}
-                  onChange={handleEndDateCreation}
+                  onChange={(value) => {
+                    const yearLength = value.getFullYear().toString().length;
+                    if (yearLength === 4) {
+                      handleEndDateCreation(value);
+                    }
+                  }}
                   placeholderText="mm/dd/yyyy"
                 />
               </div>

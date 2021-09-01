@@ -61,7 +61,12 @@ const EditModal = ({
                         ? new Date(openedOn)
                         : null
                     }
-                    onChange={(value) => handleOpenedOnDateChanges(value)}
+                    onChange={(value) => {
+                      const yearLength = value.getFullYear().toString().length;
+                      if (yearLength === 4) {
+                        handleOpenedOnDateChanges(value);
+                      }
+                    }}
                   />
                 </span>
               </div>
@@ -74,7 +79,12 @@ const EditModal = ({
                         ? new Date(closedOn)
                         : null
                     }
-                    onChange={(value) => handleClosedOnDateChanges(value)}
+                    onChange={(value) => {
+                      const yearLength = value.getFullYear().toString().length;
+                      if (yearLength === 4) {
+                        handleClosedOnDateChanges(value);
+                      }
+                    }}
                   />
                 </span>
               </div>
@@ -90,7 +100,7 @@ const EditModal = ({
                 </span>
               </div>
             </div>
-            <div className='edit-button-div'>
+            <div className="edit-button-div">
               <button
                 className="edit-modal-button"
                 onClick={onSubmit}
