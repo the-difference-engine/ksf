@@ -225,10 +225,14 @@ const Settings = (props) => {
                   name="openedOn"
                   value={newGrantCycle.openedOn}
                   selected={newGrantCycle.openedOn}
-                  onChange={(value) => {
-                    const yearLength = value.getFullYear().toString().length;
-                    if (yearLength === 4) {
-                      handleStartDateCreation(value);
+                  onChange={(date) => {
+                    if (!date) {
+                      handleStartDateCreation(new Date());
+                    } else {
+                      const yearLength = date.getFullYear().toString().length;
+                      if (yearLength === 4) {
+                        handleStartDateCreation(date);
+                      }
                     }
                   }}
                   placeholderText="mm/dd/yyyy"
@@ -244,10 +248,14 @@ const Settings = (props) => {
                   name="closedOn"
                   value={newGrantCycle.closedOn}
                   selected={newGrantCycle.closedOn}
-                  onChange={(value) => {
-                    const yearLength = value.getFullYear().toString().length;
-                    if (yearLength === 4) {
-                      handleEndDateCreation(value);
+                  onChange={(date) => {
+                    if (!date) {
+                      handleEndDateCreation(new Date());
+                    } else {
+                      const yearLength = date.getFullYear().toString().length;
+                      if (yearLength === 4) {
+                        handleEndDateCreation(date);
+                      }
                     }
                   }}
                   placeholderText="mm/dd/yyyy"

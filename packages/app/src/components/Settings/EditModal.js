@@ -61,10 +61,15 @@ const EditModal = ({
                         ? new Date(openedOn)
                         : null
                     }
-                    onChange={(value) => {
-                      const yearLength = value.getFullYear().toString().length;
-                      if (yearLength === 4) {
-                        handleOpenedOnDateChanges(value);
+                    onChange={(date) => {
+                      if (!date) {
+                        handleOpenedOnDateChanges(new Date());
+                      } else {
+                        const yearLength = date.getFullYear().toString()
+                          .length;
+                        if (yearLength === 4) {
+                          handleOpenedOnDateChanges(date);
+                        }
                       }
                     }}
                   />
@@ -79,10 +84,15 @@ const EditModal = ({
                         ? new Date(closedOn)
                         : null
                     }
-                    onChange={(value) => {
-                      const yearLength = value.getFullYear().toString().length;
-                      if (yearLength === 4) {
-                        handleClosedOnDateChanges(value);
+                    onChange={(date) => {
+                      if (!date) {
+                        handleClosedOnDateChanges(new Date());
+                      } else {
+                        const yearLength = date.getFullYear().toString()
+                          .length;
+                        if (yearLength === 4) {
+                          handleClosedOnDateChanges(date);
+                        }
                       }
                     }}
                   />

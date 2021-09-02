@@ -6,8 +6,33 @@ import Title from './labelTypes/Title';
 import Other from './labelTypes/Other';
 import Provider from './labelTypes/Provider';
 import './calendar.css';
+import Select from 'react-select';
 
 const EditCard = (props) => {
+  const options = [
+    { value: 'Yes', label: 'Yes' },
+    { value: 'No', label: 'No' },
+  ];
+
+  // const styledDropdown = {
+  //   option: (provided, state) => ({
+  //     ...provided,
+  //     // fontWeight: state.isSelected ? 'bold' : 'normal',
+  //     color: state.isFocused ? 'var(--brand)' : 'black',
+  //     backgroundColor: state.data.color,
+  //     fontSize: state.selectProps.myFontSize,
+  //   }),
+  //   singleValue: (provided, state) => ({
+  //     ...provided,
+  //     color: state.data.color,
+  //     fontSize: state.selectProps.myFontSize,
+  //   }),
+  //   container: (provided, state) => ({
+  //     ...provided,
+  //     focus: 'pink',
+  //   }),
+  // };
+
   return (
     <div className={styles.card}>
       <div className={[styles.gridContainer, styles.content].join(' ')}>
@@ -40,10 +65,14 @@ const EditCard = (props) => {
                         <DatePicker
                           selected={new Date(value)}
                           onChange={(date) => {
-                            const yearLength = date.getFullYear().toString()
-                              .length;
-                            if (yearLength === 4) {
-                              onChange(new Date(date));
+                            if (!date) {
+                              onChange(new Date());
+                            } else {
+                              const yearLength = date.getFullYear().toString()
+                                .length;
+                              if (yearLength === 4) {
+                                onChange(new Date(date));
+                              }
                             }
                           }}
                           dateFormat="MM/dd/yyyy"
@@ -82,16 +111,42 @@ const EditCard = (props) => {
               }
             case props.spanishDropdown === label:
               return (
-                <div key={label}>
+                <div key={label} className="dropdown-div">
                   <label className={styles.label}>{label}</label>
-                  <select
+                  {/* <Dropdown
+                    options={options}
+                    // onChange={this._onSelect}
+                    value={props.formData[label]}
+                    {...props.register(label)}
+                    placeholder="Select an option"
+                  /> */}
+
+                  <Controller
+                    render={({ field: { onChange } }) => {
+                      return (
+                        <Select
+                          options={options}
+                          defaultValue={{
+                            value: props?.formData[label],
+                            label: props?.formData[label],
+                          }}
+                          onChange={(e) => onChange(e.value)}
+                          className="dropdown-container"
+                          classNamePrefix="dropdown"
+                        />
+                      );
+                    }}
+                    name={label}
+                    control={props.control}
+                  />
+                  {/* <select
                     name={label}
                     defaultValue={props.formData[label]}
                     {...props.register(label)}
                   >
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
-                  </select>
+                  </select> */}
                 </div>
               );
               {

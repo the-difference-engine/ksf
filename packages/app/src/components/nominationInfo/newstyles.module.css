@@ -27,6 +27,14 @@
   border-radius: 1rem;
 }
 
+.card input:focus {
+  border-color: var(--brand);
+}
+
+/* React Select */
+
+/* .dropdown- */
+
 /* Header */
 
 .header {
@@ -131,7 +139,7 @@ select {
 
 /* grant list styling */
 
-.grantList{
+.grantList {
   font-size: 1.6rem;
   padding-left: 2.5rem;
   grid-column: 1/-1;
