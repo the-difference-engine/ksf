@@ -8,9 +8,9 @@ const VerifyEmail = () => {
 
     return (
         <div>
-            <h2>Thank you for verifying your email!</h2>
+            <h4>Thank you for verifying your email!</h4>
         </div>
     )
 }
 
-export default VerifyEmail
+export default VerifyEmail;
