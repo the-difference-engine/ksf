@@ -11,7 +11,7 @@ if (dbUrl) {
     config.database,
     config.username,
     config.password,
-    config
+    config,
   );
 }
 
