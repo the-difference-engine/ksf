@@ -1,10 +1,7 @@
 import React from 'react'
-import nominationsAPI from '../../../utils/API/nominationsAPI';
+
 
 const VerifyEmail = () => {
-    function sendValidationEmail () {
-        nominationsAPI.validateEmail()
-    }
 
     return (
         <div>
