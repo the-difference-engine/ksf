@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import styles from './newstyles.module.css';
 import { Controller } from 'react-hook-form';
@@ -7,21 +7,27 @@ import Other from './labelTypes/Other';
 import Provider from './labelTypes/Provider';
 import './calendar.css';
 import Select from 'react-select';
-import './reactselect.css';
 
 const EditCard = (props) => {
+  // options for React-Select Dropdown
   const options = [
     { value: 'Yes', label: 'Yes' },
     { value: 'No', label: 'No' },
   ];
 
+  // styles for React-Select Dropdown
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
       color: 'black',
+      '&:active': {
+        backgroundColor: 'transparent',
+      },
       backgroundColor: 'transparent',
-      borderColor: state.isFocused ? 'var(--brand)' : 'black',
-      color: state.isSelected ? 'var(--brand)' : 'black',
+      backgroundColor: state.isFocused
+        ? 'var(--light-background)'
+        : 'transparent',
+      cursor: 'pointer',
     }),
     dropdownIndicator: (provided, state) => ({
       ...provided,
@@ -30,6 +36,9 @@ const EditCard = (props) => {
     menu: (provided) => ({
       ...provided,
       width: '50%',
+      cursor: 'pointer',
+      marginTop: 0,
+      marginBottom: 0,
     }),
     control: (base) => ({
       ...base,
@@ -41,6 +50,7 @@ const EditCard = (props) => {
       width: '50%',
       minHeight: '40px',
       height: '40px',
+      cursor: 'pointer',
     }),
     valueContainer: (provided) => ({
       ...provided,
@@ -137,14 +147,6 @@ const EditCard = (props) => {
               return (
                 <div key={label} className="dropdown-div">
                   <label className={styles.label}>{label}</label>
-                  {/* <Dropdown
-                    options={options}
-                    // onChange={this._onSelect}
-                    value={props.formData[label]}
-                    {...props.register(label)}
-                    placeholder="Select an option"
-                  /> */}
-
                   <Controller
                     render={({ field: { onChange } }) => {
                       return (
@@ -156,22 +158,12 @@ const EditCard = (props) => {
                           }}
                           onChange={(e) => onChange(e.value)}
                           styles={customStyles}
-                          // className="dropdown-container"
-                          // classNamePrefix="dropdown"
                         />
                       );
                     }}
                     name={label}
                     control={props.control}
                   />
-                  {/* <select
-                    name={label}
-                    defaultValue={props.formData[label]}
-                    {...props.register(label)}
-                  >
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </select> */}
                 </div>
               );
               {
