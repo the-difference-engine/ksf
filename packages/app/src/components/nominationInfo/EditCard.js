@@ -7,6 +7,7 @@ import Other from './labelTypes/Other';
 import Provider from './labelTypes/Provider';
 import './calendar.css';
 import Select from 'react-select';
+import './reactselect.css';
 
 const EditCard = (props) => {
   const options = [
@@ -14,24 +15,47 @@ const EditCard = (props) => {
     { value: 'No', label: 'No' },
   ];
 
-  // const styledDropdown = {
-  //   option: (provided, state) => ({
-  //     ...provided,
-  //     // fontWeight: state.isSelected ? 'bold' : 'normal',
-  //     color: state.isFocused ? 'var(--brand)' : 'black',
-  //     backgroundColor: state.data.color,
-  //     fontSize: state.selectProps.myFontSize,
-  //   }),
-  //   singleValue: (provided, state) => ({
-  //     ...provided,
-  //     color: state.data.color,
-  //     fontSize: state.selectProps.myFontSize,
-  //   }),
-  //   container: (provided, state) => ({
-  //     ...provided,
-  //     focus: 'pink',
-  //   }),
-  // };
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      color: 'black',
+      backgroundColor: 'transparent',
+      borderColor: state.isFocused ? 'var(--brand)' : 'black',
+      color: state.isSelected ? 'var(--brand)' : 'black',
+    }),
+    dropdownIndicator: (provided, state) => ({
+      ...provided,
+      borderColor: state.isFocused ? 'var(--brand)' : 'black',
+    }),
+    menu: (provided) => ({
+      ...provided,
+      width: '50%',
+    }),
+    control: (base) => ({
+      ...base,
+      border: '0.1px solid #d1d1d1',
+      boxShadow: 'none',
+      '&:hover': {
+        border: '1px solid var(--brand)',
+      },
+      width: '50%',
+      minHeight: '40px',
+      height: '40px',
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      height: '40px',
+      padding: '0 6px',
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: '1px',
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      height: '40px',
+    }),
+  };
 
   return (
     <div className={styles.card}>
@@ -131,8 +155,9 @@ const EditCard = (props) => {
                             label: props?.formData[label],
                           }}
                           onChange={(e) => onChange(e.value)}
-                          className="dropdown-container"
-                          classNamePrefix="dropdown"
+                          styles={customStyles}
+                          // className="dropdown-container"
+                          // classNamePrefix="dropdown"
                         />
                       );
                     }}
