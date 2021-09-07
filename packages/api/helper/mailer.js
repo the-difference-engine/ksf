@@ -33,7 +33,7 @@ const email = new emailTemplate({
   transport: transporter,
   send: true,
   //send status will eventually need to be updated to true
-  preview: true,
+  preview: false,
 });
 
 function sendDeclineEmail(nomination) {
@@ -83,11 +83,11 @@ function verifyHcEmail(nomination) {
       },
       locals: {
         name: nomination.providerName,
-        appUrl: process.env.APP_URL,
-        urlLink: `${process.env.APP_URL}/api/confirmation/${emailToken}`,
+        urlLink: `${process.env.APP_URL}/email-verification/${emailToken}`,
+        imgUrl,
       },
     })
-    .then(() => console.log('email has been sent!'))
+    .then(() => console.log('verify email has been sent!'))
     .catch(console.error);
 }
 

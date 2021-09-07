@@ -14,7 +14,7 @@ const nominationData = {
   hospitalCity: 'Gotham',
   hospitalState: 'New Jersey',
   hospitalZipCode: '07320',
-  emailValidated: true,
+  emailValidated: false,
   representativeName: 'Alfred Pennyworth',
   representativeEmailAddress: 'abeagle@dc.com',
   representativePhoneNumber: '222-222-2222',
@@ -150,10 +150,10 @@ describe('GET Email Validated Endpoint', () => {
   afterAll(() => {
     nomination.destroy();
   });
-  it('returns a 302 when token is valid / redirect to frontend email verification page', async () => {
+  it('returns a 200 when token is valid', async () => {
     const emailToken = generateToken(nomination.id);
     const res = await request(app).get(`/api/confirmation/${emailToken}`);
-    expect(res.statusCode).toBe(302);
+    expect(res.statusCode).toBe(200);
   });
 
   it('return a 400 when token is not valid', async () => {
