@@ -25,7 +25,7 @@ ReactDOM.render(
               <Route exact path={'/searchhealthprovider/:id'} component={SearchHealthProvider} />
               <Route exact path="/nomination/:id" component={NominationsPage} />
               <Route exact path={['/', '/home']} component={Home} />
-              <Route exact path={'/email-verification/'} component={VerifyEmail} />
+              <Route exact path={'/email-verification/:token'} component={VerifyEmail} />
               {/* <Route path={'*'} component={Home} /> */}
               {/* redirect nonavailable urls to home component */}
             </ActiveNominationProvider>
