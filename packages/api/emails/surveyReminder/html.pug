@@ -1,6 +1,5 @@
 doctype html
 html
-    //- added
     head
         style(type='text/css').
             body {
@@ -8,7 +7,6 @@ html
                 margin: 0;
                 font-family: sans-serif;
                 -webkit-font-smoothing: antialiased;
-                //- -moz-osx-font-smoothing: grayscale;
                 background: white;
             }
             .container {
@@ -21,30 +19,44 @@ html
                 font-size: 0.875rem;
                 margin-bottom: 0.5rem;
             }
-
             h1 {
                 font-size: 1.5rem;
                 text-align: center;
             }
-
             h2, h2 a {
-                text-decoration: none;
+                text-decoration: underline;
+                text-decoration-color: blue;
                 font-size: 1.5rem;
                 color: #6D7278;
                 text-align: center;
             }
-
             h3 {
                 font-size: 1.25rem;
                 color: #128B3E;
             }
-
             td {
                 border: none;
                 padding: 1.5rem 2rem;
             }
+
+            .button-styles {
+                background: #128b3e;
+                color: white;
+                font-weight: bold;
+                border-style: smooth;
+                border-radius: 1rem;
+                border-color: #128b3e;
+                padding: 1rem;
+
+            }
+
+            .button-styles:hover {
+                background: #6d7278;
+                transition: background 0.2s ease-in-out;
+            }
             .f0 {
                 text-align: center;
+                padding: 2%;
             }
             .f1 h6, .f1 p {
                 margin-bottom: 0px;
@@ -54,32 +66,58 @@ html
             .f1 {
                 margin-top: 50px;
             }
+            .deadline {
+                color: black;
+                text-decoration: underline;
+            }
+            .subheader {
+                color: red;
+                font-size: 1.25rem;  
+            }
+
 
     body
         img(src= `${imgUrl}/email/header.jpg` alt='header' style='width:100%; height:auto;')
         div(class="container")
-            h1 REMINDER: Your Application is Incomplete
-            
-            p Hi #{providerName},
-            
-            p You are receiving this message because your application for #{name} at The Difference Engine is incomplete.
-            p 
-                | This is the final step of the nomination process in which the patient’s family is involved. All future communications will occur between Keep Swimming Foundation and the member of your medical staff who nominated your family. The final decision regarding the families who will be provided grants will be announced at a later date.
-            p 
-                | Below you will find a link to Keep Swimming Foundation’s Supporting Survey. In order to be considered for a Keep Swimming Foundation grant, we need either the patient or a member of their Immediate Family to complete our Supporting Survey and submit it to Keep Swimming Foundation by the deadline, which is provided below. 
-                strong In addition, your nominating healthcare provider (social worker, nurse, physician) must sign off on your completed submission.
-            p While the survey is designed to be very simple, if you have any questions about our Supporting Survey, please do not hesitate to send us your questions via email at: info@keepswimmingfoundation.org. 
-            p The below link will take you to a Dropbox file. Simply click the "Download" box on the top right and then select "Direct Download" to complete the document on your computer.
-            p We look forward to finalizing this nomination process with you. Thank you for your time.
-            
-            p Sincerely,
+        
+        h1 REMINDER: Your Application is Incomplete
 
-            p -Keep Swimming Foundation
-            
-            h2 
-                | <a href="https://www.dropbox.com/?_hp=c">DOWNLOAD THE SUPPORTING SURVEY</a>
-            div(class="f0")
-                p Keep Swimming Foundation |
-                    | <a href="https://goo.gl/maps/rBQrsB3VHb4bji4z8"> N9W30025 Lang Udsigt Cir., Waukesha, WI 53188 </a>
-                    //- unsure of where to direct the bellow link unsubscribe
-                p <a href="#">  Unsubscribe #{ email } 
+        p.suheader This is a reminder regarding the next step in your application. We sent the below request 7 days ago.
+
+        p Hello,
+
+        p If you are receiving this message, both your online application and HIPAA Authorization Form have been processed in our system and we are interested in learning more about your family’s current medical circumstance.
+        p
+            | This is the final step of the nomination process in which the patient’s family is involved. All future communications will occur between Keep Swimming Foundation and the member of your medical staff who nominated your family. The final decision regarding the families who will be provided grants will be
+            strong  announced 2-3 weeks after the posted <a href="https://www.keepswimmingfoundation.org/monthly-application-deadlines">deadline</a>.
+        p
+            | Below you will find a link to Keep Swimming Foundation’s Supporting Survey. In order to be considered for a Keep Swimming Foundation grant, we need either the patient or a member of their Immediate Family to complete our Supporting Survey and submit it to Keep Swimming Foundation by the deadline, which is provided below.
+            strong  In addition, your nominating healthcare provider (social worker, nurse, physician) must sign off on your completed submission.
+        p
+            strong Please Note:
+            |  If you do not have the appropriate technology (scanner, computer, printer, etc.) to complete this submission, your hospital's social worker may be able to assist you.
+
+        p While the survey is designed to be very simple, if you have any questions about our Supporting Survey, please do not hesitate to send us your questions via email at: info@keepswimmingfoundation.org.
+
+        p The below link will take you to a Google Drive folder. Simply right click the file then select “Download” to download the file onto your computer. From there, you can fill out the document either on your computer or you may print and complete the document by hand.
+
+        p We look forward to finalizing this nomination process with you. Thank you for your time.
+
+        p -Keep Swimming Foundation
+
+        hr
+
+        strong(class="deadline") DEADLINE:
+
+        p
+        strong THIS MONTH'S DEADLINE CAN BE FOUND <a href="https://www.keepswimmingfoundation.org/monthly-application-deadlines">HERE</a>.
+
+        p All Supporting Surveys submitted after this time will not be considered. The completion of this Supporting Survey does not guarantee the nominated individual/family a Keep Swimming Foundation grant.
+
+        div(class="f0")
+            h3
+                strong <a href="https://drive.google.com/drive/folders/1_Gbsd5984_INfg4wcAVeIOn55TSHAUyM?usp=sharing" class="button-styles">DOWNLOAD THE SURVEY HERE</a>
+
+        div(class="f0")
+            p Keep Swimming Foundation |
+                | <a href="https://goo.gl/maps/rBQrsB3VHb4bji4z8"> N9W30025 Lang Udsigt Cir., Waukesha, WI 53188 </a>
