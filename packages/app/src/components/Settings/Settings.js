@@ -5,6 +5,7 @@ import grantCycleAPI from '../../utils/API/grantCycleAPI';
 import './styles.css';
 import EditModal from './EditModal';
 import DatePicker from 'react-datepicker';
+import handleYearValidation from '../../utils/handleYearValidation';
 import '../nominationInfo/calendar.css';
 
 const Settings = (props) => {
@@ -50,24 +51,36 @@ const Settings = (props) => {
     setNewGrantCycle({ ...newGrantCycle, [input.name]: input.value });
   };
 
-  const handleStartDateCreation = (value) => {
-    setNewGrantCycle({ ...newGrantCycle, openedOn: value });
+  const handleStartDateCreation = (date) => {
+    date = date ?? new Date();
+    if (handleYearValidation(date)) {
+      setNewGrantCycle({ ...newGrantCycle, openedOn: date });
+    }
   };
 
-  const handleEndDateCreation = (value) => {
-    setNewGrantCycle({ ...newGrantCycle, closedOn: value });
+  const handleEndDateCreation = (date) => {
+    date = date ?? new Date();
+    if (handleYearValidation(date)) {
+      setNewGrantCycle({ ...newGrantCycle, closedOn: date });
+    }
   };
 
   const handleChangeForEdit = ({ currentTarget: input }) => {
     setGcToEdit({ ...gcToEdit, [input.name]: input.value });
   };
 
-  const handleOpenedOnDateChanges = (value) => {
-    setGcToEdit({ ...gcToEdit, openedOn: value });
+  const handleOpenedOnDateChanges = (date) => {
+    date = date ?? new Date();
+    if (handleYearValidation(date)) {
+      setGcToEdit({ ...gcToEdit, openedOn: date });
+    }
   };
 
-  const handleClosedOnDateChanges = (value) => {
-    setGcToEdit({ ...gcToEdit, closedOn: value });
+  const handleClosedOnDateChanges = (date) => {
+    date = date ?? new Date();
+    if (handleYearValidation(date)) {
+      setGcToEdit({ ...gcToEdit, closedOn: date });
+    }
   };
 
   const handleCreate = async (e) => {
@@ -225,16 +238,7 @@ const Settings = (props) => {
                   name="openedOn"
                   value={newGrantCycle.openedOn}
                   selected={newGrantCycle.openedOn}
-                  onChange={(date) => {
-                    if (!date) {
-                      handleStartDateCreation(new Date());
-                    } else {
-                      const yearLength = date.getFullYear().toString().length;
-                      if (yearLength === 4) {
-                        handleStartDateCreation(date);
-                      }
-                    }
-                  }}
+                  onChange={handleStartDateCreation}
                   placeholderText="mm/dd/yyyy"
                 />
               </div>
@@ -248,16 +252,7 @@ const Settings = (props) => {
                   name="closedOn"
                   value={newGrantCycle.closedOn}
                   selected={newGrantCycle.closedOn}
-                  onChange={(date) => {
-                    if (!date) {
-                      handleEndDateCreation(new Date());
-                    } else {
-                      const yearLength = date.getFullYear().toString().length;
-                      if (yearLength === 4) {
-                        handleEndDateCreation(date);
-                      }
-                    }
-                  }}
+                  onChange={handleEndDateCreation}
                   placeholderText="mm/dd/yyyy"
                 />
               </div>

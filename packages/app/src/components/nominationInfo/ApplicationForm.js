@@ -47,25 +47,8 @@ const ApplicationForm = (props) => {
   }, [props.cancelHasBeenClicked]);
 
   const validationSchema = Yup.object({
-    'Admission Date': Yup.date()
-      .test(
-        'proper-admission-date-formatting',
-        'Date must be in valid format: mm/dd/yyyy',
-        function (value) {
-          const year = value.getFullYear();
-          return year.toString().length === 4;
-        }
-      )
-      .required('Required'),
+    'Admission Date': Yup.date().required('Required'),
     'Discharge Date': Yup.date()
-      .test(
-        'proper-discharge-date-formatting',
-        'Date must be in valid format: mm/dd/yyyy',
-        function (value) {
-          const year = value.getFullYear();
-          return year.toString().length === 4;
-        }
-      )
       .min(
         Yup.ref('Admission Date'),
         'Discharge date cannot be before admission date.'

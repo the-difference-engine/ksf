@@ -7,6 +7,7 @@ import Other from './labelTypes/Other';
 import Provider from './labelTypes/Provider';
 import './calendar.css';
 import Select from 'react-select';
+import handleYearValidation from '../../utils/handleYearValidation';
 
 const EditCard = (props) => {
   // options for React-Select Dropdown
@@ -99,14 +100,9 @@ const EditCard = (props) => {
                         <DatePicker
                           selected={new Date(value)}
                           onChange={(date) => {
-                            if (!date) {
-                              onChange(new Date());
-                            } else {
-                              const yearLength = date.getFullYear().toString()
-                                .length;
-                              if (yearLength === 4) {
-                                onChange(new Date(date));
-                              }
+                            date = date ?? onChange(new Date());
+                            if (handleYearValidation(date)) {
+                              onChange(new Date(date));
                             }
                           }}
                           dateFormat="MM/dd/yyyy"
