@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import utilsAPI from '../../../utils/API/nominationsAPI.js';
 
 const VerifyEmail = (props) => {
   
-    const token = useState(props.match.params.token)
+    const token = props.match.params.token
 
     useEffect(()=> {
         utilsAPI.validateEmail(token)
