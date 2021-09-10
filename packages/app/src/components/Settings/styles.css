@@ -102,10 +102,7 @@
 }
 
 .settings__form {
-  /* display: flex;
-  flex-wrap: wrap; */
   display: flex;
-  flex-flow: row wrap;
   align-items: center;
 }
 
@@ -346,12 +343,14 @@ button.enabled-edit-btn {
   border-color: var(--brand);
 }
 
-@media only screen and (max-width: 800px) {
-  .settings__form {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.cycle-name,
+.end-date,
+.start-date {
+  overflow: hidden;
+  white-space: nowrap;
+}
 
+@media only screen and (max-width: 800px) {
   legend.email-legend {
     background-color: transparent;
   }

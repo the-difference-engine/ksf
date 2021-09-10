@@ -5,6 +5,7 @@ import grantCycleAPI from '../../utils/API/grantCycleAPI';
 import './styles.css';
 import EditModal from './EditModal';
 import DatePicker from 'react-datepicker';
+import handleYearValidation from '../../utils/handleYearValidation';
 import '../nominationInfo/calendar.css';
 
 const Settings = (props) => {
@@ -50,24 +51,36 @@ const Settings = (props) => {
     setNewGrantCycle({ ...newGrantCycle, [input.name]: input.value });
   };
 
-  const handleStartDateCreation = (value) => {
-    setNewGrantCycle({ ...newGrantCycle, openedOn: value });
+  const handleStartDateCreation = (date) => {
+    date = date ?? new Date();
+    if (handleYearValidation(date)) {
+      setNewGrantCycle({ ...newGrantCycle, openedOn: date });
+    }
   };
 
-  const handleEndDateCreation = (value) => {
-    setNewGrantCycle({ ...newGrantCycle, closedOn: value });
+  const handleEndDateCreation = (date) => {
+    date = date ?? new Date();
+    if (handleYearValidation(date)) {
+      setNewGrantCycle({ ...newGrantCycle, closedOn: date });
+    }
   };
 
   const handleChangeForEdit = ({ currentTarget: input }) => {
     setGcToEdit({ ...gcToEdit, [input.name]: input.value });
   };
 
-  const handleOpenedOnDateChanges = (value) => {
-    setGcToEdit({ ...gcToEdit, openedOn: value });
+  const handleOpenedOnDateChanges = (date) => {
+    date = date ?? new Date();
+    if (handleYearValidation(date)) {
+      setGcToEdit({ ...gcToEdit, openedOn: date });
+    }
   };
 
-  const handleClosedOnDateChanges = (value) => {
-    setGcToEdit({ ...gcToEdit, closedOn: value });
+  const handleClosedOnDateChanges = (date) => {
+    date = date ?? new Date();
+    if (handleYearValidation(date)) {
+      setGcToEdit({ ...gcToEdit, closedOn: date });
+    }
   };
 
   const handleCreate = async (e) => {
@@ -218,7 +231,7 @@ const Settings = (props) => {
         <h2 className="settings__heading">Create Grant Cycle</h2>
         <div className="settings__form">
           <div className="settings__input-block">
-            <p className="settings__input-label">Start Date:</p>
+            <p className="settings__input-label start-date">Start Date:</p>
             <span className="settings__input">
               <div className={editModalHiddenClass}>
                 <DatePicker
@@ -232,7 +245,7 @@ const Settings = (props) => {
             </span>
           </div>
           <div className="settings__input-block">
-            <p className="settings__input-label">End Date:</p>
+            <p className="settings__input-label end-date">End Date:</p>
             <span className="settings__input">
               <div className={editModalHiddenClass}>
                 <DatePicker
@@ -246,7 +259,7 @@ const Settings = (props) => {
             </span>
           </div>
           <div className="settings__input-block">
-            <p className="settings__input-label">Cycle Name:</p>
+            <p className="settings__input-label cycle-name">Cycle Name:</p>
             <span className="settings__input">
               <div className={editModalHiddenClass}>
                 <input
