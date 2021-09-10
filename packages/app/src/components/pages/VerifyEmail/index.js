@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import utilsAPI from '../../../utils/API/nominationsAPI.js';
 
 const VerifyEmail = (props) => {
   
-    const apiUrl = useState(process.env.REACT_APP_API_URL)
     const token = useState(props.match.params.token)
 
     useEffect(()=> {
-        axios.get(`${apiUrl}/api/confirmation/${token}`)
+        utilsAPI.validateEmail(token)
     });
 
     return (
