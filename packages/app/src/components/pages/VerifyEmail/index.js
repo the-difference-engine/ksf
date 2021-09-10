@@ -1,24 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
-class VerifyEmail extends React.Component {
+const VerifyEmail = (props) => {
   
-    state = {
-        API_URL:  process.env.REACT_APP_API_URL,
-        token: this.props.match.params.token,
-    }
+    const apiUrl = useState(process.env.REACT_APP_API_URL)
+    const token = useState(props.match.params.token)
 
-    componentDidMount() {
-        axios.get(`${this.state.API_URL}/api/confirmation/${this.state.token}`)
-    }
+    useEffect(()=> {
+        axios.get(`${apiUrl}/api/confirmation/${token}`)
+    });
 
-    render() {
-        return (
-            <div>
-                <h4>Thank you for verifying your email!</h4>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <h4>Thank you for verifying your email!</h4>
+        </div>
+    )
 }    
 
 export default VerifyEmail;

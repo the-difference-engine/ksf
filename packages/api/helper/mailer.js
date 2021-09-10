@@ -87,7 +87,6 @@ function verifyHcEmail(nomination) {
         imgUrl,
       },
     })
-    .then(() => console.log('verify email has been sent!'))
     .catch(console.error);
 }
 

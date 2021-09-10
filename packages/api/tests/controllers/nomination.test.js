@@ -150,10 +150,10 @@ describe('GET Email Validated Endpoint', () => {
   afterAll(() => {
     nomination.destroy();
   });
-  it('returns a 200 when token is valid', async () => {
+  it('returns a 204 when token is valid', async () => {
     const emailToken = generateToken(nomination.id);
     const res = await request(app).get(`/api/confirmation/${emailToken}`);
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(204);
   });
 
   it('return a 400 when token is not valid', async () => {
