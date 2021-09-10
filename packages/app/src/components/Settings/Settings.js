@@ -231,7 +231,7 @@ const Settings = (props) => {
         <h2 className="settings__heading">Create Grant Cycle</h2>
         <div className="settings__form">
           <div className="settings__input-block">
-            <p className="settings__input-label">Start Date:</p>
+            <p className="settings__input-label start-date">Start Date:</p>
             <span className="settings__input">
               <div className={editModalHiddenClass}>
                 <DatePicker
@@ -245,7 +245,7 @@ const Settings = (props) => {
             </span>
           </div>
           <div className="settings__input-block">
-            <p className="settings__input-label">End Date:</p>
+            <p className="settings__input-label end-date">End Date:</p>
             <span className="settings__input">
               <div className={editModalHiddenClass}>
                 <DatePicker
@@ -259,7 +259,7 @@ const Settings = (props) => {
             </span>
           </div>
           <div className="settings__input-block">
-            <p className="settings__input-label">Cycle Name:</p>
+            <p className="settings__input-label cycle-name">Cycle Name:</p>
             <span className="settings__input">
               <div className={editModalHiddenClass}>
                 <input
