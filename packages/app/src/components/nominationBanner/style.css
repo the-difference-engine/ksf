@@ -84,7 +84,6 @@ input[type='radio'].radio {
 
 input[type='radio'] {
   height: 12px;
-  background-color: pink;
 }
 
 fieldset.resend-fieldset {
