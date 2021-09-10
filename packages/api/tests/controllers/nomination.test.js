@@ -152,12 +152,12 @@ describe('GET Email Validated Endpoint', () => {
   });
   it('returns a 204 when token is valid', async () => {
     const emailToken = generateToken(nomination.id);
-    const res = await request(app).get(`/api/confirmation/${emailToken}`);
+    const res = await request(app).post(`/api/confirmation/${emailToken}`);
     expect(res.statusCode).toBe(204);
   });
 
   it('return a 400 when token is not valid', async () => {
-    const res = await request(app).get(
+    const res = await request(app).post(
       '/api/confirmation/00000000-0000-0000-0000'
     );
     expect(res.statusCode).toBe(400);
