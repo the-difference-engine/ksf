@@ -61,7 +61,7 @@ const EditModal = ({
                         ? new Date(openedOn)
                         : null
                     }
-                    onChange={(value) => handleOpenedOnDateChanges(value)}
+                    onChange={handleOpenedOnDateChanges}
                   />
                 </span>
               </div>
@@ -74,7 +74,7 @@ const EditModal = ({
                         ? new Date(closedOn)
                         : null
                     }
-                    onChange={(value) => handleClosedOnDateChanges(value)}
+                    onChange={handleClosedOnDateChanges}
                   />
                 </span>
               </div>
@@ -90,7 +90,7 @@ const EditModal = ({
                 </span>
               </div>
             </div>
-            <div className='edit-button-div'>
+            <div className="edit-button-div">
               <button
                 className="edit-modal-button"
                 onClick={onSubmit}
