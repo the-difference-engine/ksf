@@ -6,10 +6,14 @@ import useSort from './useSort';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 
 const NewFilesToReview = () => {
-  const [NominationsData, setNominationsData] = useContext(NominationsDataContext)
+  const { NominationsData, setNominationsData } = useContext(
+    NominationsDataContext
+  );
   const [showAll, setShowAll] = useState(false);
   const { sortedNoms, requestSort, sortConfig } = useSort(NominationsData);
-  const sortedNominations = sortedNoms ? sortedNoms.filter((nominations) => nominations.status === 'received') : [];
+  const sortedNominations = sortedNoms
+    ? sortedNoms.filter((nominations) => nominations.status === 'received')
+    : [];
 
   const handleClick = () => {
     setShowAll(!showAll);
@@ -25,7 +29,16 @@ const NewFilesToReview = () => {
   };
 
   const renderSortArrow = (columnName) => {
-    return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'} />;
+    return (
+      sortConfig &&
+      sortConfig.key === columnName && (
+        <FontAwesomeIcon
+          icon={
+            sortConfig.direction === 'ascending' ? 'arrow-down' : 'arrow-up'
+          }
+        />
+      )
+    );
   };
 
   const renderSortableCell = (key, label) => {
@@ -44,23 +57,34 @@ const NewFilesToReview = () => {
           <td className="add-padding-left new-files-title">
             <FontAwesomeIcon icon="file-image" color="green" />
             <h1>New Files To Review </h1>
-            <h1 className="new-files-length">({ sortedNominations.length })</h1>
+            <h1 className="new-files-length">({sortedNominations.length})</h1>
           </td>
           <td></td>
           <td></td>
           <td></td>
           <td className="new-files-see-more">
             <div onClick={handleClick}>
-              <FontAwesomeIcon icon={showAll ? 'chevron-circle-up' : 'chevron-circle-down'} />
+              <FontAwesomeIcon
+                icon={showAll ? 'chevron-circle-up' : 'chevron-circle-down'}
+              />
             </div>
           </td>
         </tr>
       </thead>
       <tbody>
         <tr className="home-new-files-headers">
-          <td className="add-padding-left"> {renderSortableCell('nominationName', 'Application Name')} </td>
+          <td className="add-padding-left">
+            {' '}
+            {renderSortableCell('nominationName', 'Application Name')}{' '}
+          </td>
           <td> {renderSortableCell('providerName', 'HP Name')} </td>
-          <td> {renderSortableCell('representativeName', 'Family Member Name')} </td>
+          <td>
+            {' '}
+            {renderSortableCell(
+              'representativeName',
+              'Family Member Name'
+            )}{' '}
+          </td>
           <td> {renderSortableCell('dateReceived', 'Submission Date')} </td>
           <td>
             <h2>
@@ -69,7 +93,9 @@ const NewFilesToReview = () => {
           </td>
         </tr>
         {sortedNominations ? (
-          conditionalNominationRender().map((nomination) => <NewNomination nomination={nomination} key={nomination.id} />)
+          conditionalNominationRender().map((nomination) => (
+            <NewNomination nomination={nomination} key={nomination.id} />
+          ))
         ) : (
           <tr>
             <td className="add-padding-left new-files-title">

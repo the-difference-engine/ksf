@@ -14,7 +14,7 @@ const NominationPage = ({
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-  const [NominationsData, setNominationsData] = useContext(
+  const { NominationsData, setNominationsData } = useContext(
     NominationsDataContext
   );
   const [error, setError] = useState();
@@ -26,7 +26,7 @@ const NominationPage = ({
 
   useEffect(() => {
     if (NominationsData) {
-      NominationsData.forEach(nomination => {
+      NominationsData.forEach((nomination) => {
         if (nomination.id === id) {
           return setActiveNomination(nomination);
         } else {
@@ -91,38 +91,38 @@ const NominationPage = ({
     'Provider Name': `${activeNomination.providerName}`,
     'Provider Email Address': `${activeNomination.providerEmailAddress}`,
     'Provider Phone Number': `${activeNomination.providerPhoneNumber}`,
-    'Title': `${activeNomination.providerTitle}`,
-    'Name of Hospital': `${activeNomination.hospitalName}`, 
-    'Hospital URL': `${activeNomination.hospitalURL}`, 
+    Title: `${activeNomination.providerTitle}`,
+    'Name of Hospital': `${activeNomination.hospitalName}`,
+    'Hospital URL': `${activeNomination.hospitalURL}`,
     'Hospital Address': `${hospitalAddress}`,
     'How did you hear about KSF?': '',
   };
 
   const grantRequestSupportData = {
     'Grant Request Support': '',
-    'Grant List': `${activeNomination.grantRequestInfo}`
-  }
+    'Grant List': `${activeNomination.grantRequestInfo}`,
+  };
 
   const familyMemberData = {
     'Family Member Information': '',
     'Representative Name': `${activeNomination.representativeName}`,
     'Representative Email Address': `${activeNomination.representativeEmailAddress}`,
     'Representative Phone Number': `${activeNomination.representativePhoneNumber}`,
-    'Relationship': `${activeNomination.representativeRelationship}`,
+    Relationship: `${activeNomination.representativeRelationship}`,
     'Request to communicate in Spanish?': `${spanishRepString}`,
   };
 
   function handleEditHasBeenClicked() {
-    setEditHasBeenClicked(editHasBeenClicked => !editHasBeenClicked);
+    setEditHasBeenClicked((editHasBeenClicked) => !editHasBeenClicked);
     setMode('edit');
   }
 
   function handleSaveHasBeenClicked() {
-    setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
+    setSaveHasBeenClicked((saveHasBeenClicked) => !saveHasBeenClicked);
   }
 
   function handleCancelHasBeenClicked() {
-    setCancelHasBeenClicked(cancelHasBeenClicked => !cancelHasBeenClicked)
+    setCancelHasBeenClicked((cancelHasBeenClicked) => !cancelHasBeenClicked);
   }
 
   // used by cancel button and onSubmit to change mode back to 'view' from 'edit'
@@ -130,15 +130,15 @@ const NominationPage = ({
     setMode(mode);
   }
 
-  const patientInformationDataKeys = Object.keys(patientInformationData)
-  const familyMemberDataKeys = Object.keys(familyMemberData)
-  const healthProviderDataKeys = Object.keys(healthProviderData)
-  const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData)
-  
+  const patientInformationDataKeys = Object.keys(patientInformationData);
+  const familyMemberDataKeys = Object.keys(familyMemberData);
+  const healthProviderDataKeys = Object.keys(healthProviderData);
+  const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData);
+
   return (
     <>
       {activeNomination ? (
-        <div className='nomination-show-page'>
+        <div className="nomination-show-page">
           <SearchBar />
           <NominationBanner
             mode={mode}
@@ -155,11 +155,11 @@ const NominationPage = ({
             patientInformationData={patientInformationData}
             familyMemberData={familyMemberData}
             healthProviderData={healthProviderData}
-            grantRequestSupportData = {grantRequestSupportData}
+            grantRequestSupportData={grantRequestSupportData}
             patientInformationDataKeys={patientInformationDataKeys}
             familyMemberDataKeys={familyMemberDataKeys}
             healthProviderDataKeys={healthProviderDataKeys}
-            grantRequestSupportDataKeys = {grantRequestSupportDataKeys}
+            grantRequestSupportDataKeys={grantRequestSupportDataKeys}
             mode={mode}
             editHasBeenClicked={editHasBeenClicked}
             saveHasBeenClicked={saveHasBeenClicked}

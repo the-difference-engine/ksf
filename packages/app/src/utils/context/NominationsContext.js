@@ -27,7 +27,6 @@ export const NominationsDataProvider = (props) => {
           nomination.dateReceived = new Date(
             nomination.dateReceived
           ).toLocaleDateString();
-          
         });
         setNominationsData(nominations);
       })
@@ -36,10 +35,9 @@ export const NominationsDataProvider = (props) => {
 
   return (
     <NominationsDataContext.Provider
-      value={[NominationsData, setNominationsData]}
+      value={{ NominationsData, setNominationsData, findAllNominations }}
     >
       {props.children}
     </NominationsDataContext.Provider>
   );
 };
-

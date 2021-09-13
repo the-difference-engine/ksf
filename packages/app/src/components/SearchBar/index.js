@@ -18,7 +18,7 @@ const SearchBar = () => {
     SearchResultDataContext
   );
 
-  const [NominationsData, setNominationsData] = useContext(
+  const { NominationsData, setNominationsData } = useContext(
     NominationsDataContext
   );
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -29,7 +29,7 @@ const SearchBar = () => {
     let filteredNoms = [];
 
     if (NominationsData) {
-      filteredNoms = NominationsData.filter(nomination => {
+      filteredNoms = NominationsData.filter((nomination) => {
         return [
           formatSearch(nomination.providerName),
           formatSearch(nomination.patientName),
@@ -40,7 +40,7 @@ const SearchBar = () => {
           // Waiting to hear from Bill if the line in question (formatSearch(nomination.representativeName)) should stay or not
 
           formatSearch(nomination.representativeName),
-        ].some(nom => nom.includes(searchTerm));
+        ].some((nom) => nom.includes(searchTerm));
       });
       setSearchResultData(filteredNoms);
       filteredNoms.length < 1
@@ -77,7 +77,7 @@ const SearchBar = () => {
       if (SearchResultData.length === 1) {
         return <Redirect to={`/nomination/${SearchResultData[0].id}`} />;
       } else if (SearchResultData.length > 1) {
-        return <Redirect to='/searchresults' />;
+        return <Redirect to="/searchresults" />;
       } else {
         return null;
       }
@@ -105,8 +105,8 @@ const SearchBar = () => {
       <SettingsModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        className='modal'
-        overlayClassName='modal-overlay'
+        className="modal"
+        overlayClassName="modal-overlay"
       >
         {showResults ? (
           <GrantCycleNomsResults
@@ -118,45 +118,45 @@ const SearchBar = () => {
         )}
         <FontAwesomeIcon
           onClick={closeModal}
-          icon='times'
-          className='times-icon'
-          size='3x'
+          icon="times"
+          className="times-icon"
+          size="3x"
         />
       </SettingsModal>
-      <div className='search-bar-wrapper'>
-        <div className='search-header-container'>
-          <Link to='/home'>
-            <img className='ksf-logo ' src='/ksflogo.png' alt='other' />
+      <div className="search-bar-wrapper">
+        <div className="search-header-container">
+          <Link to="/home">
+            <img className="ksf-logo " src="/ksflogo.png" alt="other" />
           </Link>
-          <div className='command-center-header'>
+          <div className="command-center-header">
             <strong>Command Center</strong>
           </div>
         </div>
-        <div className='form-container'>
-          <form onSubmit={handleSubmit} className='search-form'>
+        <div className="form-container">
+          <form onSubmit={handleSubmit} className="search-form">
             <input
-              className='search-input-class'
-              type='text'
-              name='search'
-              placeholder='  Search'
-              data-id='search-input'
+              className="search-input-class"
+              type="text"
+              name="search"
+              placeholder="  Search"
+              data-id="search-input"
               onChange={handleInputChange}
-              aria-label='search-input'
+              aria-label="search-input"
             />
           </form>
         </div>
 
-        <div className='cog-container'>
+        <div className="cog-container">
           <FontAwesomeIcon
             onClick={() => setModalIsOpen(true)}
-            icon='cog'
-            className='cog-icon'
-            size='3x'
+            icon="cog"
+            className="cog-icon"
+            size="3x"
           />
         </div>
 
-        <div data-id='error-message'>
-          {showErrorMessage ? <Redirect to='/searchresults' /> : null}
+        <div data-id="error-message">
+          {showErrorMessage ? <Redirect to="/searchresults" /> : null}
         </div>
       </div>
       {searchResultRedirect()}
