@@ -83,7 +83,7 @@ function verifyHcEmail(nomination) {
       },
       locals: {
         name: nomination.providerName,
-        urlLink: `${process.env.APP_URL}/email-verification/${emailToken}`,
+        urlLink: `${process.env.IMG_BASE_URL}/email-verification/${emailToken}`,
         imgUrl,
       },
     })
