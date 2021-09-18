@@ -2,7 +2,7 @@ require('dotenv').config()
 const { searchAndSend } = require('../controllers/nomination');
 const { Op } = require('sequelize')
 
-function emailAgingApplications() {
+const emailAgingApplications = async(res, req) =>{
     const age = 86400000 * 7; // seven days in ms
     const hipaaVerified = {
         where:
