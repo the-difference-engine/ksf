@@ -123,12 +123,10 @@ function sendSurveyReminder(nomination) {
         },
         locals: {
           name: nomination.patientName,
-          providerName: nomination.providerName,
           imgUrl
         }
       }
     )
-    .then(console.log("reminder email has been sent to" + nomination.providerName))
     .catch((err) => console.log(err))
 }
 
@@ -144,12 +142,10 @@ function sendHIPAAReminder(nomination) {
         },
         locals: {
           name: nomination.patientName,
-          providerName: nomination.providerName,
           imgUrl
         }
       }
     )
-    .then(console.log("reminder email has been sent to" + nomination.providerName))
     .catch((err) => console.log(err))
 }
 
