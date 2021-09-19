@@ -179,15 +179,14 @@ const syncNominations = async (req, res) => {
 const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
-    const { nomination: id } = jwt.verify(token, process.env.JWT_SECRET);
+    const { data: id } = jwt.verify(token, process.env.JWT_SECRET);
     await db.Nomination.update({ emailValidated: true }, { where: { id } });
-    return res.status(200).json({ status: 'ok' });
+    return res.status(204).end();
   } catch (error) {
     console.log('400 validation error', error);
     return res.status(400).json({ error: error.message });
   }
 };
-
 /**
  * Updates database with information from active application updates on front end.
  *

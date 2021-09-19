@@ -10,6 +10,7 @@ import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 import SearchHealthProvider from './components/nominationInfo/healthProviderSearch/index';
 import { ActiveNominationProvider } from './utils/context/ActiveNominationContext';
 import NominationsPage from './components/pages/NominationPage';
+import VerifyEmail from './components/pages/VerifyEmail';
 import './App.css';
 
 ReactDOM.render(
@@ -24,6 +25,7 @@ ReactDOM.render(
               <Route exact path={'/searchhealthprovider/:id'} component={SearchHealthProvider} />
               <Route exact path="/nomination/:id" component={NominationsPage} />
               <Route exact path={['/', '/home']} component={Home} />
+              <Route exact path={'/email-verification/:token'} component={VerifyEmail} />
               {/* <Route path={'*'} component={Home} /> */}
               {/* redirect nonavailable urls to home component */}
             </ActiveNominationProvider>

@@ -15,7 +15,7 @@ router.put('/api/nominations/:id', nominationController.updateNomination);
 router.patch('/api/nominations/:id', nominationController.updateActiveNomData);
 
 router.get('/api/syncnominations', nominationController.syncNominations);
-router.get('/api/confirmation/:token', nominationController.emailVerification);
+router.post('/api/confirmation/:token', nominationController.emailVerification);
 
 // user endpoints
 router.get('/api/user/:id', userController.getUserById);
