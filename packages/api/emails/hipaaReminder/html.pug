@@ -26,13 +26,21 @@ style(type="text/css").
   }
   .subheader {
     color: red;
-    font-size: 1.25rem;  
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: arial;
+    margin-bottom: 2.25rem;   
+  }
+  .reminderHeader {
+    font-size: 1.5rem;
+    font-family: arial;   
+    text-align: center;
   }
 
 div.main
   img(src=`${imgUrl}/email/header.jpg` alt='header' style='width:100%; height:auto; margin-bottom: 1rem;')
 
-  h1 REMINDER: Your Application is Incomplete
+  h1.reminderHeader REMINDER: Your Application is Incomplete
 
   p.subheader This is a reminder regarding the next step in your application. We sent the below request 7 days ago.
 
@@ -47,7 +55,7 @@ div.main
     | authorizes the hospital at which your loved one is receiving treatment to provide information on the patient&apos;s
     | hospitalization to Keep Swimming Foundation.
   h2.text__underline.text__bold
-    | HOW TO AQUIRE A HIPAA AUTHORIZATION FORM:
+    | HOW TO ACQUIRE A HIPAA AUTHORIZATION FORM:
   p
     | Every hospital has their own HIPAA Authorization Form (also known as a Release of Information Form).
     | The best way to obtain this form is to speak with your nurse, physician or the hospital&apos;s social worker.

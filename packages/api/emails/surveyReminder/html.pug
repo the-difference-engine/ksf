@@ -72,7 +72,15 @@ html
             }
             .subheader {
                 color: red;
-                font-size: 1.25rem;  
+                font-size: 1rem;
+                font-weight: bold;
+                font-family: arial;
+                margin-bottom: 2.25rem;    
+            }
+            .reminderHeader {
+                font-size: 1.5rem;
+                font-family: arial; 
+                text-align: center;
             }
 
 
@@ -80,7 +88,7 @@ html
         img(src= `${imgUrl}/email/header.jpg` alt='header' style='width:100%; height:auto;')
         div(class="container")
         
-        h1 REMINDER: Your Application is Incomplete
+        h1.reminderHeader REMINDER: Your Application is Incomplete
 
         p.subheader This is a reminder regarding the next step in your application. We sent the below request 7 days ago.
 
