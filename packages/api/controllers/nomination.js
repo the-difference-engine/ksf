@@ -220,7 +220,8 @@ async function searchAndSend(status, query) {
     nomination = nominations[i];
     switch (status) {
       case 'HIPAA Verified':
-        sendSurveyReminder(nomination);
+        sendSurveyReminder(nomination.representativeEmailAddress, nomination.representativeName);
+        sendSurveyReminder(nomination.providerEmailAddress, nomination.providerName);
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
         } catch (err) {
@@ -228,7 +229,8 @@ async function searchAndSend(status, query) {
         }
         break;
       case 'Awaiting HIPAA':
-        sendHIPAAReminder(nomination);
+        sendHIPAAReminder(nomination.representativeEmailAddress, nomination.representativeName);
+        sendHIPAAReminder(nomination.providerEmailAddress, nomination.providerName);
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {

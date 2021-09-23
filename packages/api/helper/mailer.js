@@ -110,7 +110,7 @@ function sendHIPAAEmail(nomination) {
     .catch((err) => console.log(err))
 }
 
-function sendSurveyReminder(nomination) {
+function sendSurveyReminder(emailAddress, fullName) {
   email
     .send(
       {
@@ -118,10 +118,10 @@ function sendSurveyReminder(nomination) {
         message: {
           from: infoEmail,
           replyTo: infoEmail,
-          to: nomination.providerEmailAddress,
+          to: emailAddress,
         },
         locals: {
-          name: nomination.patientName,
+          name: fullName,
           imgUrl
         }
       }
@@ -129,7 +129,7 @@ function sendSurveyReminder(nomination) {
     .catch((err) => console.log(err))
 }
 
-function sendHIPAAReminder(nomination) {
+function sendHIPAAReminder(emailAddress, fullName) {
   email
     .send(
       {
@@ -137,10 +137,10 @@ function sendHIPAAReminder(nomination) {
         message: {
           from: infoEmail,
           replyTo: infoEmail,
-          to: nomination.providerEmailAddress,
+          to: emailAddress,
         },
         locals: {
-          name: nomination.patientName,
+          name: fullName,
           imgUrl
         }
       }
