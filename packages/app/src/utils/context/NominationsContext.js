@@ -7,8 +7,15 @@ export const NominationsDataContext = createContext();
 export const NominationsDataProvider = (props) => {
   const [NominationsData, setNominationsData] = useState();
 
+  const [apiCalled, setApiCall] = useState(false);
+
   useEffect(() => {
-    findAllNominations();
+    if (!apiCalled) {
+      console.log('use effect in nominationsDataContext');
+      findAllNominations();
+      setApiCall(true);
+    }
+    // findAllNominations();
   }, []);
 
   const nomName = (n) => {

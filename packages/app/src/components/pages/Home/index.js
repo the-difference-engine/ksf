@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import SearchBar from '../../SearchBar';
 import NewFilesToReview from './NewFilesToReview';
 import SyncNominations from '../../syncNominations/syncNominations';
@@ -35,12 +35,16 @@ library.add(
 );
 
 const Home = () => {
+  console.log('this is running');
   const {
     NominationsData,
     setNominationsData,
     findAllNominations,
   } = useContext(NominationsDataContext);
-  findAllNominations();
+  // useEffect(() => {
+  //   findAllNominations();
+  // }, []);
+  // findAllNominations();
   return (
     <>
       <div>
