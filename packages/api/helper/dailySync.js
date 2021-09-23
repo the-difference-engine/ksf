@@ -1,4 +1,4 @@
 require('dotenv').config()
-const { syncNominations } = require('../controllers/nomination.js')
+const gsheetToDB  = require('./nominationGsheetToDB.js')
 
-syncNominations()
+gsheetToDB()
