@@ -216,36 +216,30 @@ const updateActiveNomData = async (req, res) => {
 async function searchAndSend(status, query) {
   const nominations = await db.Nomination.findAll(query);
   let nomination;
-  let ids = [];
   for (let i = 0; i < nominations.length; i++) {
     nomination = nominations[i];
     switch (status) {
       case 'HIPAA Verified':
-        sendSurveyReminder(nomination);
+        sendSurveyReminder(nomination.representativeEmailAddress, nomination.representativeName);
+        sendSurveyReminder(nomination.providerEmailAddress, nomination.providerName);
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
         } catch (err) {
-          console.log('Unable to update record timestamp', err);
+          console.log('Unable to update record hipaa reminder timestamp', err);
         }
-        ids.push(nomination.id);
         break;
       case 'Awaiting HIPAA':
-        sendHIPAAReminder(nomination);
+        sendHIPAAReminder(nomination.representativeEmailAddress, nomination.representativeName);
+        sendHIPAAReminder(nomination.providerEmailAddress, nomination.providerName);
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
-          console.log('Unable to update record timestamp', err);
+          console.log('Unable to update record awaiting hipaa reminder timestamp', err);
         }
-        ids.push(nomination.id);
         break;
       default:
         console.log(status, ' is not a status');
     }
-  }
-  try {
-    db.Nomination.update({ reminderSent: true }, { where: { id: ids } });
-  } catch (error) {
-    console.log(error);
   }
 }
 module.exports = {
