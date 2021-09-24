@@ -234,6 +234,10 @@ div.email-form-container {
   background-color: #999;
 }
 
+button[disabled].button-yes:hover {
+  background-color: #128b3e;
+}
+
 .exit-button {
   position: relative;
   left: 20px;

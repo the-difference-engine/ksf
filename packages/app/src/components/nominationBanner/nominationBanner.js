@@ -87,7 +87,6 @@ const NominationBanner = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(props.nomination);
     nominationsAPI.resendEmail(
       props.nomination.id,
       recipientChecked,
@@ -129,7 +128,6 @@ const NominationBanner = (props) => {
                 Resend Email
               </button>
             </div>
-            {/* Decline Application Modal */}
             {declineAppModalVisible && (
               <div className="modal-background">
                 <div className="modal-container">
@@ -162,7 +160,6 @@ const NominationBanner = (props) => {
                 </div>
               </div>
             )}
-            {/* Resend Email Modal */}
             {resendEmailModalVisible && (
               <div className="modal-background">
                 <div className="email-modal-container">
@@ -180,7 +177,6 @@ const NominationBanner = (props) => {
                           <label htmlFor="family-member" className="survey">
                             <input
                               type="radio"
-                              // name="family-member"
                               value="family-member"
                               id="family-member"
                               checked={recipientChecked === 'family-member'}
@@ -197,7 +193,6 @@ const NominationBanner = (props) => {
                           >
                             <input
                               type="radio"
-                              // name="healthcare-provider"
                               value="healthcare-provider"
                               id="healthcare-provider"
                               checked={
@@ -219,7 +214,6 @@ const NominationBanner = (props) => {
                           <label htmlFor="hipaa" className="survey">
                             <input
                               type="radio"
-                              // name="hipaa"
                               value="hipaa"
                               id="hipaa"
                               checked={emailTypeChecked === 'hipaa'}
@@ -233,7 +227,6 @@ const NominationBanner = (props) => {
                           <label htmlFor="survey" className="survey">
                             <input
                               type="radio"
-                              // name="survey"
                               value="survey"
                               id="survey"
                               checked={emailTypeChecked === 'survey'}
@@ -246,7 +239,13 @@ const NominationBanner = (props) => {
                       </fieldset>
                     </div>
                     <div className="email-modal-buttons">
-                      <button className="button-yes" type="submit">
+                      <button
+                        className="button-yes"
+                        type="submit"
+                        disabled={
+                          recipientChecked === '' || emailTypeChecked === ''
+                        }
+                      >
                         Submit
                       </button>
                       <button

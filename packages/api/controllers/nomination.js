@@ -86,19 +86,21 @@ const resendEmail = async (req, res) => {
       where: { id },
     });
     if (recipient === 'family-member' && emailType === 'hipaa') {
-      console.log('email sent to: family member and hipaa');
+      console.log('email sent to: family member, email type sent: hipaa');
       sendHIPAAEmail(nomination);
     } else if (recipient === 'family-member' && emailType === 'survey') {
-      console.log('email sent to: family member and survey');
+      console.log('email sent to: family member, email type sent: survey');
       sendSurveyEmail(nomination);
     } else if (recipient === 'healthcare-provider' && emailType === 'hipaa') {
-      console.log('email sent to: healthcare provider and hipaa');
+      console.log('email sent to: healthcare provider, email type sent: hipaa');
       sendHIPAAProvider(nomination);
     } else if (recipient === 'healthcare-provider' && emailType === 'survey') {
-      console.log('email sent to: healthcare provider and survey');
+      console.log(
+        'email sent to: healthcare provider, email type sent: survey'
+      );
       sendSurveySocialWorker(nomination);
     } else {
-      return res.status(400).json({ error: 'error' });
+      return res.status(400).json({ error: '400 error' });
     }
   } catch {
     console.log('404 Not Found', error);
