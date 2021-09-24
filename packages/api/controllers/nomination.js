@@ -86,10 +86,8 @@ const resendEmail = async (req, res) => {
       where: { id },
     });
     console.log(
-      `email sent to: ${recipient.replace(
-        '-',
-        ' '
-      )}, email type sent: ${emailType}`
+      `email sent to: ${recipient.replace('-', ' ')}`,
+      `email type sent: ${emailType}`
     );
     if (recipient === 'family-member' && emailType === 'hipaa') {
       sendHIPAAEmail(nomination);
