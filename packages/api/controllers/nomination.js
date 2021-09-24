@@ -85,19 +85,19 @@ const resendEmail = async (req, res) => {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
+    console.log(
+      `email sent to: ${recipient.replace(
+        '-',
+        ' '
+      )}, email type sent: ${emailType}`
+    );
     if (recipient === 'family-member' && emailType === 'hipaa') {
-      console.log('email sent to: family member, email type sent: hipaa');
       sendHIPAAEmail(nomination);
     } else if (recipient === 'family-member' && emailType === 'survey') {
-      console.log('email sent to: family member, email type sent: survey');
       sendSurveyEmail(nomination);
     } else if (recipient === 'healthcare-provider' && emailType === 'hipaa') {
-      console.log('email sent to: healthcare provider, email type sent: hipaa');
       sendHIPAAProvider(nomination);
     } else if (recipient === 'healthcare-provider' && emailType === 'survey') {
-      console.log(
-        'email sent to: healthcare provider, email type sent: survey'
-      );
       sendSurveySocialWorker(nomination);
     } else {
       return res.status(400).json({ error: '400 error' });

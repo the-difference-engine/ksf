@@ -61,12 +61,10 @@ const NominationBanner = (props) => {
 
   const handleRecipientChange = (e) => {
     setRecipientChecked(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleEmailTypeChange = (e) => {
     setEmailTypeChecked(e.target.value);
-    console.log(e.target.value);
   };
 
   function declineApplication() {
