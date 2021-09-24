@@ -103,6 +103,10 @@ legend.resend-legend {
 }
 
 form.email-form {
+  margin: 0;
+}
+
+div.email-form-container {
   display: flex;
   margin: 0px 25px;
 }

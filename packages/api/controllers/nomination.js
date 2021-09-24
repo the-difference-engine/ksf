@@ -9,8 +9,8 @@ const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
-const { sendHIPAAEmail} = require('../helper/mailer');
-const { sendHIPAAProvider} = require('../helper/mailer');
+const { sendHIPAAEmail } = require('../helper/mailer');
+const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
@@ -60,7 +60,7 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
-    const hasProviderBeenValidated = nominations.some(nom => {
+    const hasProviderBeenValidated = nominations.some((nom) => {
       return (
         nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
       );
@@ -77,13 +77,42 @@ const createNomination = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+const resendEmail = async (req, res) => {
+  const { id } = req.params;
+  const { recipient, emailType } = req.body;
+  try {
+    const nomination = await db.Nomination.findOne({
+      where: { id },
+    });
+    if (recipient === 'family-member' && emailType === 'hipaa') {
+      console.log('email sent to: family member and hipaa');
+      sendHIPAAEmail(nomination);
+    } else if (recipient === 'family-member' && emailType === 'survey') {
+      console.log('email sent to: family member and survey');
+      sendSurveyEmail(nomination);
+    } else if (recipient === 'healthcare-provider' && emailType === 'hipaa') {
+      console.log('email sent to: healthcare provider and hipaa');
+      sendHIPAAProvider(nomination);
+    } else if (recipient === 'healthcare-provider' && emailType === 'survey') {
+      console.log('email sent to: healthcare provider and survey');
+      sendSurveySocialWorker(nomination);
+    } else {
+      return res.status(400).json({ error: 'error' });
+    }
+  } catch {
+    console.log('404 Not Found', error);
+    return res.status(404).json({ error: error.message });
+  }
+};
+
 const updateNomination = async (req, res) => {
   const { id } = req.params;
   try {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    nomination.update({ status: req.body.status }).catch(err => {
+    nomination.update({ status: req.body.status }).catch((err) => {
       console.log('Nomination Not Found', err);
       return res.status(400);
     });
@@ -257,4 +286,5 @@ module.exports = {
   updateActiveNomData,
   emailVerification,
   searchAndSend,
+  resendEmail,
 };
