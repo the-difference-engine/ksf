@@ -98,11 +98,15 @@ const resendEmail = async (req, res) => {
     } else if (recipient === 'healthcare-provider' && emailType === 'survey') {
       sendSurveySocialWorker(nomination);
     } else {
-      return res.status(400).json({ error: '400 error' });
+      return res
+        .status(400)
+        .json({
+          error: `invalid input, email for ${recipient} and ${emailType} unknown`,
+        });
     }
   } catch {
-    console.log('404 Not Found', error);
-    return res.status(404).json({ error: error.message });
+    console.log('500 Internal Server Error', error);
+    return res.status(500).json({ error: error.message });
   }
 };
 
