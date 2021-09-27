@@ -41,7 +41,9 @@ const NominationBanner = (props) => {
 
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
   const toggleDeclineAppModalState = () => {
-    setDeclineAppModalVisible((declineAppModalVisible) => !declineAppModalVisible);
+    setDeclineAppModalVisible(
+      (declineAppModalVisible) => !declineAppModalVisible
+    );
   };
 
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
@@ -81,6 +83,16 @@ const NominationBanner = (props) => {
     }
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    nominationsAPI.resendEmail(
+      props.nomination.id,
+      recipientChecked,
+      emailTypeChecked
+    );
+    toggleEmailModalState();
+  };
+
   return (
     <div className="nomination-banner-container">
       <div className="row" id={styles.rowOverride}>
@@ -114,11 +126,13 @@ const NominationBanner = (props) => {
                 Resend Email
               </button>
             </div>
-            {/* Decline Application Modal */}
             {declineAppModalVisible && (
               <div className="modal-background">
                 <div className="modal-container">
-                  <button className="exit-button" onClick={toggleDeclineAppModalState}>
+                  <button
+                    className="exit-button"
+                    onClick={toggleDeclineAppModalState}
+                  >
                     &times;
                   </button>
                   <h3 className="modal-text">
@@ -134,14 +148,16 @@ const NominationBanner = (props) => {
                     >
                       Confirm
                     </button>
-                    <button className="button-no" onClick={toggleDeclineAppModalState}>
+                    <button
+                      className="button-no"
+                      onClick={toggleDeclineAppModalState}
+                    >
                       Cancel
                     </button>
                   </div>
                 </div>
               </div>
             )}
-            {/* Resend Email Modal */}
             {resendEmailModalVisible && (
               <div className="modal-background">
                 <div className="email-modal-container">
@@ -151,87 +167,93 @@ const NominationBanner = (props) => {
                   >
                     &times;
                   </button>
-                  <form className='email-form'>
-                    <fieldset className='resend-fieldset'>
-                      <legend className= 'resend-legend'>Recipient</legend>
-                      <div>
-                        <label htmlFor="family-member" className="survey">
-                          <input
-                            type="radio"
-                            name="family-member"
-                            value="family-member"
-                            id="family-member"
-                            checked={recipientChecked === 'family-member'}
-                            onChange={handleRecipientChange}
-                            className="family-member radio"
-                          />
-                          Family Member
-                        </label>
-                      </div>
-                      <div>
-                        <label htmlFor="healthcare-provider" className="survey">
-                          <input
-                            type="radio"
-                            name="healthcare-provider"
-                            value="healthcare-provider"
-                            id="healthcare-provider"
-                            checked={recipientChecked === 'healthcare-provider'}
-                            onChange={handleRecipientChange}
-                            className="healthcare-provider radio"
-                          />
-                          Healthcare Provider
-                        </label>
-                      </div>
-                    </fieldset>
-                    <fieldset className='resend-fieldset'>
-                      <legend className='email-legend resend-legend'>Email Type</legend>
-                      <div>
-                        <label htmlFor="hipaa" className="survey">
-                          <input
-                            type="radio"
-                            name="hipaa"
-                            value="hipaa"
-                            id="hipaa"
-                            checked={emailTypeChecked === 'hipaa'}
-                            onChange={handleEmailTypeChange}
-                            className="hipaa radio"
-                          />
-                          HIPAA
-                        </label>
-                      </div>
-                      <div>
-                        <label htmlFor="survey" className="survey">
-                          <input
-                            type="radio"
-                            name="survey"
-                            value="survey"
-                            id="survey"
-                            checked={emailTypeChecked === 'survey'}
-                            onChange={handleEmailTypeChange}
-                            className="survey radio"
-                          />
-                          Survey
-                        </label>
-                      </div>
-                    </fieldset>
-                  </form>
+                  <form className="email-form" onSubmit={handleSubmit}>
+                    <div className="email-form-container">
+                      <fieldset className="resend-fieldset">
+                        <legend className="resend-legend">Recipient</legend>
+                        <div>
+                          <label htmlFor="family-member" className="survey">
+                            <input
+                              type="radio"
+                              value="family-member"
+                              id="family-member"
+                              checked={recipientChecked === 'family-member'}
+                              onChange={handleRecipientChange}
+                              className="family-member radio"
+                            />
+                            Family Member
+                          </label>
+                        </div>
+                        <div>
+                          <label
+                            htmlFor="healthcare-provider"
+                            className="survey"
+                          >
+                            <input
+                              type="radio"
+                              value="healthcare-provider"
+                              id="healthcare-provider"
+                              checked={
+                                recipientChecked === 'healthcare-provider'
+                              }
+                              onChange={handleRecipientChange}
+                              className="healthcare-provider radio"
+                            />
+                            Healthcare Provider
+                          </label>
+                        </div>
+                      </fieldset>
 
-                  <div className="email-modal-buttons">
-                    <button
-                      className="button-yes"
-                      onClick={() => {
-                        toggleEmailModalState();
-                      }}
-                    >
-                      Submit
-                    </button>
-                    <button
-                      className="button-no"
-                      onClick={toggleEmailModalState}
-                    >
-                      Cancel
-                    </button>
-                  </div>
+                      <fieldset className="resend-fieldset">
+                        <legend className="email-legend resend-legend">
+                          Email Type
+                        </legend>
+                        <div>
+                          <label htmlFor="hipaa" className="survey">
+                            <input
+                              type="radio"
+                              value="hipaa"
+                              id="hipaa"
+                              checked={emailTypeChecked === 'hipaa'}
+                              onChange={handleEmailTypeChange}
+                              className="hipaa radio"
+                            />
+                            HIPAA
+                          </label>
+                        </div>
+                        <div>
+                          <label htmlFor="survey" className="survey">
+                            <input
+                              type="radio"
+                              value="survey"
+                              id="survey"
+                              checked={emailTypeChecked === 'survey'}
+                              onChange={handleEmailTypeChange}
+                              className="survey radio"
+                            />
+                            Survey
+                          </label>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div className="email-modal-buttons">
+                      <button
+                        className="button-yes"
+                        type="submit"
+                        disabled={
+                          recipientChecked === '' || emailTypeChecked === ''
+                        }
+                      >
+                        Submit
+                      </button>
+                      <button
+                        className="button-no"
+                        onClick={toggleEmailModalState}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             )}
