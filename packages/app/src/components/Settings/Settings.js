@@ -24,6 +24,8 @@ const Settings = (props) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [gcToEdit, setGcToEdit] = useState();
 
+  // const [isToggled, setIsToggled] = useState(false);
+
   async function getGrantCycles() {
     try {
       const { data } = await grantCycleAPI.getGrantCycles();
@@ -87,7 +89,7 @@ const Settings = (props) => {
     try {
       const { data } = await grantCycleAPI.createGrantCycle(newGrantCycle);
 
-      setNewGrantCycle({ openedOn: '', closedOn: '', name: '' });
+      setNewGrantCycle({ openedOn: '', closedOn: '', name: '', isActive: false });
       createButton.current.blur();
       getGrantCycles();
     } catch (ex) {
@@ -104,7 +106,7 @@ const Settings = (props) => {
     try {
       const { data } = await grantCycleAPI.updateGrantCycle(gcToEdit);
 
-      setGcToEdit({ openedOn: '', closedOn: '', name: '' });
+      setGcToEdit({ openedOn: '', closedOn: '', name: '', isActive: '' });
       getGrantCycles();
       setShowEditModal(false);
     } catch (ex) {
@@ -122,6 +124,7 @@ const Settings = (props) => {
       closedOn: grantCycle.closedOn.split('T')[0],
       name: grantCycle.name,
       id: grantCycle.id,
+      isActive: grantCycle.isActive
     });
     setShowEditModal(true);
   };
@@ -306,6 +309,7 @@ const Settings = (props) => {
                 <th style={{ width: '10%' }}>End Date</th>
                 <th style={{ width: '10%' }}>Cycle Name</th>
                 <th style={{ width: '10%' }}>Applications</th>
+                <th style={{ width: '10%' }}>Active Cycle</th>
               </tr>
             </thead>
             <tbody className="settings__tbody">
@@ -315,6 +319,10 @@ const Settings = (props) => {
                   grantCycle={gc}
                   onResultsClick={props.onResultsClick}
                   onEdit={handleEdit}
+                  // isToggled={isToggled}
+                  // setIsToggled={setIsToggled}
+                  activeGrantCycle={activeGrantCycle}
+                  setActiveGrantCycle={setActiveGrantCycle}
                 />
               ))}
             </tbody>
@@ -326,3 +334,4 @@ const Settings = (props) => {
 };
 
 export default Settings;
+

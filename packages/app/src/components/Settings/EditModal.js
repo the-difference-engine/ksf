@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import '../nominationInfo/calendar.css';
+import ToggleActiveGrantCycle from './ToggleActiveGrantCycle';
 
 const EditModal = ({
   show,
