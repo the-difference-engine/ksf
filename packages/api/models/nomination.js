@@ -142,41 +142,45 @@ module.exports = (sequelize, DataTypes) => {
       },
       awaitingHipaaTimestamp: {
         allowNull: true,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       reminderSent: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
       },
       readyForBoardReviewTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
-      }, 
+        allowNull: true,
+      },
       hipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       awaitingHipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       grantCycleId: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       declinedTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       grantRequestInfo: {
         type: DataTypes.TEXT,
-        allowNull: true
-      }
+        allowNull: true,
+      },
+      driveFolderId: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       hooks: {
         beforeCreate: (nomination, option) => {
-          publicEmailDomains.forEach(domain => {
+          publicEmailDomains.forEach((domain) => {
             if (nomination.providerEmailAddress.includes(domain)) {
               nomination.publicEmailDomain = true;
             }
