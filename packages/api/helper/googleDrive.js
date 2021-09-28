@@ -6,31 +6,43 @@ const privateKey = parsePrivateKey(process.env.SERVICE_PRIVATE_KEY);
 const scopes = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/drive.appdata',
-  'https://www.googleapis.com/auth/drive.file'
+  'https://www.googleapis.com/auth/drive.file',
 ];
 
-const auth = new google.auth.JWT(
-  clientEmail, null,
-  privateKey, scopes
-);
+const auth = new google.auth.JWT(clientEmail, null, privateKey, scopes);
 
 const drive = google.drive({ version: 'v3', auth });
 
 function createFolder(applicationName) {
   let fileMetadata = {
-    'name': applicationName,
-    'parents': [parentFolderId],
-    'mimeType': 'application/vnd.google-apps.folder'
+    name: applicationName,
+    parents: [parentFolderId],
+    mimeType: 'application/vnd.google-apps.folder',
   };
-  drive.files.create({
-    resource: fileMetadata,
-    fields: 'id'
-  }, function (err, file) {
-    if (err) {
-      // Handle error
-      console.error(err);
-    }
-  })
+  drive.files
+    .create(
+      {
+        resource: fileMetadata,
+        fields: 'id',
+      },
+      function (err, file) {
+        if (err) {
+          // Handle error
+          console.error(err);
+        }
+      }
+    )
+    .then(function (response) {
+      switch (response.status) {
+        case 200:
+          var file = response.result;
+          console.log('Created Folder Id: ', file.id);
+          break;
+        default:
+          console.log('Error creating the folder, ' + response);
+          break;
+      }
+    });
 }
 
-module.exports = { createFolder }
+module.exports = { createFolder };
