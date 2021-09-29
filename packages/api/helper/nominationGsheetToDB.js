@@ -5,6 +5,7 @@ const rangePar = 'Sheet1';
 const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
 const privateKey = parsePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY)
 const scopes = ['https://www.googleapis.com/auth/spreadsheets']
+const { verifyHcEmail } = require('./mailer.js');
 
 module.exports = function gsheetToDB() {
   const client = new google.auth.JWT(
@@ -70,7 +71,14 @@ module.exports = function gsheetToDB() {
               parseFloat(nomination[37].replace(/\$/g, '')) * 100
             ),
           },
-        });
+        }).then((instance)=>{
+          //Returns a promise that when fullfilled returns an arrary, 
+          //the array contains two elments, the first constains the nomination data object  
+          //the second whether an entry was created, as a boolean
+          if(instance[1]) {
+            verifyHcEmail(instance[0].dataValues) 
+          }
+        })
       } catch (error) {
         console.error(error);
       }
