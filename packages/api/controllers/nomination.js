@@ -9,11 +9,12 @@ const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
-const { sendHIPAAEmail} = require('../helper/mailer');
-const { sendHIPAAProvider} = require('../helper/mailer');
+const { sendHIPAAEmail } = require('../helper/mailer');
+const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
+const { drive } = require('googleapis/build/src/apis/drive');
 const Op = sequelize.Op;
 
 const NOMINATION_STATUS = {
@@ -60,7 +61,7 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
-    const hasProviderBeenValidated = nominations.some(nom => {
+    const hasProviderBeenValidated = nominations.some((nom) => {
       return (
         nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
       );
@@ -83,7 +84,7 @@ const updateNomination = async (req, res) => {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    nomination.update({ status: req.body.status }).catch(err => {
+    nomination.update({ status: req.body.status }).catch((err) => {
       console.log('Nomination Not Found', err);
       return res.status(400);
     });
@@ -112,6 +113,8 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === NOMINATION_STATUS.awaiting) {
+        console.log('this is running~~~~~~~~~~~');
+        let driveId = '';
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
           const lastName = nomination.patientName
@@ -121,12 +124,27 @@ const updateNomination = async (req, res) => {
             nomination.hospitalState
           );
           const applicationName = `${lastName}-${state}`;
-          createFolder(applicationName);
+          driveId = createFolder(applicationName);
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
           sendHIPAAEmail(nomination);
           sendHIPAAProvider(nomination);
+        }
+
+        try {
+          nomination.update({ driveFolderId: driveId });
+        } catch {
+          console.log('cannot update driveFolderId');
+        } finally {
+          // const project = await Project.findOne({
+          //   where: { title: 'My Title' },
+          // });
+
+          let driveFolderUpdatedNomination = await db.Nomination.findOne({
+            where: { driveFolderId: driveId },
+          });
+          console.log(driveFolderUpdatedNomination);
         }
       }
 

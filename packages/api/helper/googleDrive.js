@@ -19,30 +19,24 @@ function createFolder(applicationName) {
     parents: [parentFolderId],
     mimeType: 'application/vnd.google-apps.folder',
   };
-  drive.files
-    .create(
-      {
-        resource: fileMetadata,
-        fields: 'id',
-      },
-      function (err, file) {
-        if (err) {
-          // Handle error
-          console.error(err);
-        }
+  drive.files.create(
+    {
+      resource: fileMetadata,
+      fields: 'id',
+    },
+    function (err, file) {
+      console.log(`This is file id: ${file.id}`);
+      console.log('this is file', file);
+      if (err) {
+        // Handle error
+        console.error(err);
+        console.log(err);
       }
-    )
-    .then(function (response) {
-      switch (response.status) {
-        case 200:
-          var file = response.result;
-          console.log('Created Folder Id: ', file.id);
-          break;
-        default:
-          console.log('Error creating the folder, ' + response);
-          break;
-      }
-    });
+      return file.id;
+    }
+  );
+
+  return '';
 }
 
 module.exports = { createFolder };
