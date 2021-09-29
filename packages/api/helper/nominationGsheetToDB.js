@@ -72,8 +72,8 @@ module.exports = function gsheetToDB() {
             ),
           },
         }).then((instance)=>{
-          //Returns a promise that when fullfilled returns an arrary, 
-          //the array contains two elments, the first constains the nomination data object  
+          //Returns a promise that when fullfilled returns an array, 
+          //the array contains two elments, the first contains the nomination data object  
           //the second whether an entry was created, as a boolean
           if(instance[1]) {
             verifyHcEmail(instance[0].dataValues) 
