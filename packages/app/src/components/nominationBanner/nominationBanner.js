@@ -49,11 +49,15 @@ const NominationBanner = (props) => {
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
 
   const toggleEmailModalState = () => {
-    setResendEmailModalVisible(
-      (resendEmailModalVisible) => !resendEmailModalVisible
-    );
-    setRecipientChecked('');
-    setEmailTypeChecked('');
+    console.log(activeNomination.status, '-----------------click')
+    if (activeNomination.status === 'received') {
+    } else {
+      setResendEmailModalVisible(
+        (resendEmailModalVisible) => !resendEmailModalVisible
+      );
+      setRecipientChecked('');
+      setEmailTypeChecked('');
+    }
   };
 
   const [recipientChecked, setRecipientChecked] = useState('');
@@ -119,7 +123,10 @@ const NominationBanner = (props) => {
                 Decline Application
               </button>
               <button
-                disabled={activeNomination.status == 'Declined'}
+                disabled={
+                  activeNomination.status === 'Declined' ||
+                  activeNomination.status === 'received'
+                }
                 className="resend-email-btn banner-buttons"
                 onClick={toggleEmailModalState}
               >
