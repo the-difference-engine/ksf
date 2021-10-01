@@ -13,6 +13,7 @@ const Settings = (props) => {
     openedOn: '',
     closedOn: '',
     name: '',
+    isActive: false,
   });
   const [allGrantCycles, setGrantCycles] = useState([]);
   const [disableButton, setDisableButton] = useState(true);
@@ -71,6 +72,12 @@ const Settings = (props) => {
     setGcToEdit({ ...gcToEdit, [input.name]: input.value });
   };
 
+  // useEffect(() => {
+  //   if (!isToggled) {
+  //     updateActiveGrantCycle(gcToEdit);
+  //   }
+  // }, [isToggled]);
+
   const handleOpenedOnDateChanges = (date) => {
     date = date ?? new Date();
     if (handleYearValidation(date)) {
@@ -89,7 +96,12 @@ const Settings = (props) => {
     try {
       const { data } = await grantCycleAPI.createGrantCycle(newGrantCycle);
 
-      setNewGrantCycle({ openedOn: '', closedOn: '', name: '', isActive: false });
+      setNewGrantCycle({
+        openedOn: '',
+        closedOn: '',
+        name: '',
+        isActive: false,
+      });
       createButton.current.blur();
       getGrantCycles();
     } catch (ex) {
@@ -124,7 +136,7 @@ const Settings = (props) => {
       closedOn: grantCycle.closedOn.split('T')[0],
       name: grantCycle.name,
       id: grantCycle.id,
-      isActive: grantCycle.isActive
+      isActive: grantCycle.isActive,
     });
     setShowEditModal(true);
   };
@@ -319,8 +331,6 @@ const Settings = (props) => {
                   grantCycle={gc}
                   onResultsClick={props.onResultsClick}
                   onEdit={handleEdit}
-                  // isToggled={isToggled}
-                  // setIsToggled={setIsToggled}
                   activeGrantCycle={activeGrantCycle}
                   setActiveGrantCycle={setActiveGrantCycle}
                 />
@@ -334,4 +344,3 @@ const Settings = (props) => {
 };
 
 export default Settings;
-

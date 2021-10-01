@@ -30,9 +30,9 @@ const update = async (req, res) => {
       return res.status(404).send('Grant does not exist for the given ID');
     }
 
-    if (grant.isActive) {
-      
-    }
+    // if (grant.isActive) {
+
+    // }
 
     if (name) grant.name = name;
     if (openedOn) grant.openedOn = openedOn;

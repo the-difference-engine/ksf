@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime } from 'luxon';
 import { formatDateString } from '../../utils/formatDateString';
@@ -9,8 +9,6 @@ const TableRow = (props) => {
     grantCycle,
     onEdit,
     onResultsClick,
-    // isToggled,
-    // setIsToggled,
     activeGrantCycle,
     setActiveGrantCycle,
   } = props;
@@ -20,12 +18,6 @@ const TableRow = (props) => {
     const now = DateTime.now().startOf('day');
 
     return date > now;
-  };
-
-  const handleChange = (toggle) => {
-    if (toggle) {
-      setActiveGrantCycle(grantCycle);
-    }
   };
 
   return (
@@ -68,8 +60,11 @@ const TableRow = (props) => {
       <td>
         <ToggleActiveGrantCycle
           id="toggleSwitch"
-          checked={activeGrantCycle.isActive === 'true'}
-          onChange={(e) => handleChange(e.target.value)}
+          // checked={isToggled}
+          // onToggle={(e) => setIsToggled(e.target.checked)}
+          grantCycle={grantCycle}
+          activeGrantCycle={activeGrantCycle}
+          setActiveGrantCycle={setActiveGrantCycle}
         />
       </td>
     </tr>
