@@ -75,32 +75,51 @@ const ResendEmailModal = (props) => {
                 <legend className="email-legend resend-legend">
                   Email Type
                 </legend>
-                <div>
-                  <label htmlFor="hipaa" className="survey">
-                    <input
-                      type="radio"
-                      value="hipaa"
-                      id="hipaa"
-                      checked={emailTypeChecked === 'hipaa'}
-                      onChange={handleEmailTypeChange}
-                      className="hipaa radio"
-                    />
-                    HIPAA
-                  </label>
-                </div>
-                <div>
-                  <label htmlFor="survey" className="survey">
-                    <input
+                {
+                  (props.status === 'Awaiting HIPAA' || props.status === 'HIPAA Verified') ? 
+                  (   <div>
+                    <label htmlFor="hipaa" className="survey">
+                      <input
+                        type="radio"
+                        value="hipaa"
+                        id="hipaa"
+                        checked={emailTypeChecked === 'hipaa'}
+                        onChange={handleEmailTypeChange}
+                        className="hipaa radio"
+                      />
+                      HIPAA
+                    </label>
+                  </div>) : (
+                    <div>
+                      <div>
+                    <label htmlFor="hipaa" className="survey">
+                      <input
+                        type="radio"
+                        value="hipaa"
+                        id="hipaa"
+                        checked={emailTypeChecked === 'hipaa'}
+                        onChange={handleEmailTypeChange}
+                        className="hipaa radio"
+                      />
+                      HIPAA
+                    </label>
+                    </div>
+                    <div>
+                      <label htmlFor="survey" className="survey">
+                      <input
                       type="radio"
                       value="survey"
                       id="survey"
                       checked={emailTypeChecked === 'survey'}
                       onChange={handleEmailTypeChange}
                       className="survey radio"
-                    />
-                    Survey
-                  </label>
-                </div>
+                      />
+                      Survey
+                    </label>
+                  </div>
+                  </div>
+                  )
+                }
               </fieldset>
             </div>
             <div className="email-modal-buttons">
