@@ -41,7 +41,6 @@ module.exports = function gsheetToDB() {
     }
 
     let nominations = data.data.values;
-    let isNewNomination;
 
     nominations.slice(1).forEach((nomination) => {
       try {
@@ -76,8 +75,7 @@ module.exports = function gsheetToDB() {
           //db.Nomination.findOrCreate returns a promise that when fullfilled returns an array with two elements 
           //the first element is the nomination instance object that contains the dataValues among other things  
           //the second element is a boolean that represents whether a nomination was created
-          isNewNomination = array[1]
-          if(isNewNomination) {
+          if(array[1]) {
             verifyHcEmail(array[0].dataValues) 
           }
         })
