@@ -98,11 +98,9 @@ const resendEmail = async (req, res) => {
     } else if (recipient === 'healthcare-provider' && emailType === 'survey') {
       sendSurveySocialWorker(nomination);
     } else {
-      return res
-        .status(400)
-        .json({
-          error: `invalid input, email for ${recipient} and ${emailType} unknown`,
-        });
+      return res.status(400).json({
+        error: `invalid input, email for ${recipient} and ${emailType} unknown`,
+      });
     }
   } catch {
     console.log('500 Internal Server Error', error);
@@ -171,11 +169,8 @@ const updateNomination = async (req, res) => {
           return res.status(400);
         } finally {
           sendSurveyEmail(nomination);
+          sendSurveySocialWorker(nomination);
         }
-      }
-
-      if (nomination.status === NOMINATION_STATUS.document_review) {
-        sendSurveySocialWorker(nomination);
       }
 
       if (nomination.status === NOMINATION_STATUS.board_review) {
@@ -253,8 +248,14 @@ async function searchAndSend(status, query) {
     nomination = nominations[i];
     switch (status) {
       case 'HIPAA Verified':
-        sendSurveyReminder(nomination.representativeEmailAddress, nomination.representativeName);
-        sendSurveyReminder(nomination.providerEmailAddress, nomination.providerName);
+        sendSurveyReminder(
+          nomination.representativeEmailAddress,
+          nomination.representativeName
+        );
+        sendSurveyReminder(
+          nomination.providerEmailAddress,
+          nomination.providerName
+        );
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
         } catch (err) {
@@ -262,12 +263,21 @@ async function searchAndSend(status, query) {
         }
         break;
       case 'Awaiting HIPAA':
-        sendHIPAAReminder(nomination.representativeEmailAddress, nomination.representativeName);
-        sendHIPAAReminder(nomination.providerEmailAddress, nomination.providerName);
+        sendHIPAAReminder(
+          nomination.representativeEmailAddress,
+          nomination.representativeName
+        );
+        sendHIPAAReminder(
+          nomination.providerEmailAddress,
+          nomination.providerName
+        );
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
-          console.log('Unable to update record awaiting hipaa reminder timestamp', err);
+          console.log(
+            'Unable to update record awaiting hipaa reminder timestamp',
+            err
+          );
         }
         break;
       default:
