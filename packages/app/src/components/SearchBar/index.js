@@ -9,11 +9,14 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
 import ApplicationViewByStages from '../pages/Home/ApplicationViewByStages';
+// import nomination from '../../../../api/models/nomination';
 // import { google } from 'googleapis';
 
 SettingsModal.setAppElement('#root');
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+  console.log('this is props.nomination in searchBar component');
+  console.dir(props.nomination);
   const [searchTerm, setSearchTerm] = useState();
   const [showResults, setShowResults] = useState(false);
   const [settingsResults, setSettingsResults] = useState({});
@@ -124,9 +127,7 @@ const SearchBar = () => {
 
   // const link =
 
-  useEffect(() => {
-    console.dir(ActiveNomination);
-  }, [ActiveNomination]);
+  // console.log(props.nomination);
 
   return (
     <>
@@ -174,7 +175,7 @@ const SearchBar = () => {
             />
           </form>
         </div>
-
+        {/* {props.nomination.driveFolderId} */}
         <div className="cog-container">
           {/* <a
             target="_blank"
@@ -184,7 +185,7 @@ const SearchBar = () => {
           </a> */}
           {ActiveNomination ? (
             <span>
-              <a></a>Foobar
+              <a>Foobar: {props.nomination?.driveFolderId}</a>
             </span>
           ) : (
             <span></span>

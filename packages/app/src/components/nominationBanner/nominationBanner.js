@@ -15,6 +15,8 @@ const states = require('us-state-codes');
  * @returns - nomination banner component
  */
 const NominationBanner = (props) => {
+  // console.log('this is running in nomination banner');
+  // console.log(props.nomination);
   const date = new Date(props.nomination.dateReceived).toLocaleDateString();
   const lastName = props.nomination.patientName
     ? props.nomination.patientName.split(' ')[1]
@@ -41,7 +43,9 @@ const NominationBanner = (props) => {
 
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
   const toggleDeclineAppModalState = () => {
-    setDeclineAppModalVisible((declineAppModalVisible) => !declineAppModalVisible);
+    setDeclineAppModalVisible(
+      (declineAppModalVisible) => !declineAppModalVisible
+    );
   };
 
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
@@ -118,7 +122,10 @@ const NominationBanner = (props) => {
             {declineAppModalVisible && (
               <div className="modal-background">
                 <div className="modal-container">
-                  <button className="exit-button" onClick={toggleDeclineAppModalState}>
+                  <button
+                    className="exit-button"
+                    onClick={toggleDeclineAppModalState}
+                  >
                     &times;
                   </button>
                   <h3 className="modal-text">
@@ -134,7 +141,10 @@ const NominationBanner = (props) => {
                     >
                       Confirm
                     </button>
-                    <button className="button-no" onClick={toggleDeclineAppModalState}>
+                    <button
+                      className="button-no"
+                      onClick={toggleDeclineAppModalState}
+                    >
                       Cancel
                     </button>
                   </div>
@@ -151,9 +161,9 @@ const NominationBanner = (props) => {
                   >
                     &times;
                   </button>
-                  <form className='email-form'>
-                    <fieldset className='resend-fieldset'>
-                      <legend className= 'resend-legend'>Recipient</legend>
+                  <form className="email-form">
+                    <fieldset className="resend-fieldset">
+                      <legend className="resend-legend">Recipient</legend>
                       <div>
                         <label htmlFor="family-member" className="survey">
                           <input
@@ -183,8 +193,10 @@ const NominationBanner = (props) => {
                         </label>
                       </div>
                     </fieldset>
-                    <fieldset className='resend-fieldset'>
-                      <legend className='email-legend resend-legend'>Email Type</legend>
+                    <fieldset className="resend-fieldset">
+                      <legend className="email-legend resend-legend">
+                        Email Type
+                      </legend>
                       <div>
                         <label htmlFor="hipaa" className="survey">
                           <input

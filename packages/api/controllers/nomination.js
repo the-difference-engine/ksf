@@ -114,7 +114,7 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === NOMINATION_STATUS.awaiting) {
         console.log('this is running~~~~~~~~~~~');
-        let driveId = '';
+
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
           const lastName = nomination.patientName
@@ -124,27 +124,13 @@ const updateNomination = async (req, res) => {
             nomination.hospitalState
           );
           const applicationName = `${lastName}-${state}`;
-          driveId = createFolder(applicationName);
+          let driveId = createFolder(applicationName, nomination);
+          // console.log(`This is driveId from createFolder call: ${driveId}`);
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
           sendHIPAAEmail(nomination);
           sendHIPAAProvider(nomination);
-        }
-
-        try {
-          nomination.update({ driveFolderId: driveId });
-        } catch {
-          console.log('cannot update driveFolderId');
-        } finally {
-          // const project = await Project.findOne({
-          //   where: { title: 'My Title' },
-          // });
-
-          let driveFolderUpdatedNomination = await db.Nomination.findOne({
-            where: { driveFolderId: driveId },
-          });
-          console.log(driveFolderUpdatedNomination);
         }
       }
 
