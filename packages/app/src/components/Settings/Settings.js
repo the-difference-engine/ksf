@@ -25,8 +25,6 @@ const Settings = (props) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [gcToEdit, setGcToEdit] = useState();
 
-  // const [isToggled, setIsToggled] = useState(false);
-
   async function getGrantCycles() {
     try {
       const { data } = await grantCycleAPI.getGrantCycles();
@@ -72,12 +70,6 @@ const Settings = (props) => {
     setGcToEdit({ ...gcToEdit, [input.name]: input.value });
   };
 
-  // useEffect(() => {
-  //   if (!isToggled) {
-  //     updateActiveGrantCycle(gcToEdit);
-  //   }
-  // }, [isToggled]);
-
   const handleOpenedOnDateChanges = (date) => {
     date = date ?? new Date();
     if (handleYearValidation(date)) {
@@ -118,7 +110,17 @@ const Settings = (props) => {
     try {
       const { data } = await grantCycleAPI.updateGrantCycle(gcToEdit);
 
-      setGcToEdit({ openedOn: '', closedOn: '', name: '', isActive: '' });
+      if (gcToEdit.isActive) {
+        setActiveGrantCycle(gcToEdit);
+      }
+
+      setGcToEdit({
+        id: '',
+        openedOn: '',
+        closedOn: '',
+        name: '',
+        isActive: '',
+      });
       getGrantCycles();
       setShowEditModal(false);
     } catch (ex) {
@@ -333,6 +335,7 @@ const Settings = (props) => {
                   onEdit={handleEdit}
                   activeGrantCycle={activeGrantCycle}
                   setActiveGrantCycle={setActiveGrantCycle}
+                  showEditModal={showEditModal}
                 />
               ))}
             </tbody>

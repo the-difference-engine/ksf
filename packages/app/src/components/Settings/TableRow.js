@@ -11,6 +11,7 @@ const TableRow = (props) => {
     onResultsClick,
     activeGrantCycle,
     setActiveGrantCycle,
+    showEditModal
   } = props;
 
   const timeDiff = (dateString) => {
@@ -60,11 +61,10 @@ const TableRow = (props) => {
       <td>
         <ToggleActiveGrantCycle
           id="toggleSwitch"
-          // checked={isToggled}
-          // onToggle={(e) => setIsToggled(e.target.checked)}
           grantCycle={grantCycle}
           activeGrantCycle={activeGrantCycle}
           setActiveGrantCycle={setActiveGrantCycle}
+          showEditModal={showEditModal}
         />
       </td>
     </tr>

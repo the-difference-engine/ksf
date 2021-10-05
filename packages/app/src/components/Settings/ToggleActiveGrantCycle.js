@@ -4,9 +4,9 @@ import './toggle.css';
 
 const ToggleActiveGrantCycle = ({
   grantCycle,
-  onToggle,
   activeGrantCycle,
   setActiveGrantCycle,
+  showEditModal,
 }) => {
   async function updateActiveGrantCycle() {
     grantCycle.isActive = true;
@@ -25,16 +25,18 @@ const ToggleActiveGrantCycle = ({
     }
   };
 
+  const hideToggle = showEditModal ? 'hidden' : '';
+
   return (
     <label className="toggle-switch">
       <input
         type="checkbox"
         name={grantCycle.name}
         className="toggle-active-grant"
-        checked={activeGrantCycle.name === grantCycle.name}
+        checked={activeGrantCycle.id === grantCycle.id}
         onChange={handleToggle}
       />
-      <span className="switch" />
+      <span className={`switch ${hideToggle}`} />
     </label>
   );
 };
