@@ -1,7 +1,6 @@
 import React from 'react';
 
 const DeclineAppModal = (props) => {
-
   return (
     <div className="modal-background">
       <div className="modal-container">
@@ -33,9 +32,7 @@ const DeclineAppModal = (props) => {
         </div>
       </div>
     </div>
-  )
-
-}
+  );
+};
 
 export default DeclineAppModal;
-

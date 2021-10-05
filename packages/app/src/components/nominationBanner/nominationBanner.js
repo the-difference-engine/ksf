@@ -5,10 +5,10 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import EditButton from './EditButton';
 import SaveButton from './SaveButton';
-import ResendEmailBtn from './resendEmailBtn.js'
-import ResendEmailModal from './resendEmailModal.js'
-import DeclineAppModal from './declineAppModal.js'
-import DeclineAppBtn from './declineAppBtn.js'
+import ResendEmailBtn from './resendEmailBtn.js';
+import ResendEmailModal from './resendEmailModal.js';
+import DeclineAppModal from './declineAppModal.js';
+import DeclineAppBtn from './declineAppBtn.js';
 
 const states = require('us-state-codes');
 
@@ -69,9 +69,9 @@ const NominationBanner = (props) => {
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
 
   const toggleEmailModalState = () => {
-      setResendEmailModalVisible(
-        (resendEmailModalVisible) => !resendEmailModalVisible
-      );
+    setResendEmailModalVisible(
+      (resendEmailModalVisible) => !resendEmailModalVisible
+    );
   };
 
   return (
@@ -96,23 +96,24 @@ const NominationBanner = (props) => {
                 status={activeNomination.status}
                 toggleDeclineAppModalState={toggleDeclineAppModalState}
               />
-              <ResendEmailBtn 
+              <ResendEmailBtn
                 status={activeNomination.status}
                 toggleEmailModalState={toggleEmailModalState}
               />
             </div>
-            {declineAppModalVisible && 
+            {declineAppModalVisible && (
               <DeclineAppModal
                 declineApplication={declineApplication}
                 toggleDeclineAppModalState={toggleDeclineAppModalState}
               />
-            }
-            {resendEmailModalVisible && 
-              <ResendEmailModal 
+            )}
+            {resendEmailModalVisible && (
+              <ResendEmailModal
                 status={activeNomination.status}
                 toggleEmailModalState={toggleEmailModalState}
                 nomination={props.nomination}
-            />}
+              />
+            )}
           </div>
 
           <div className="row">
