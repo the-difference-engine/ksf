@@ -129,6 +129,10 @@ const SearchBar = (props) => {
 
   // console.log(props.nomination);
 
+  const openWindow = (val) => {
+    window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
+  };
+
   return (
     <>
       <SettingsModal
@@ -185,7 +189,16 @@ const SearchBar = (props) => {
           </a> */}
           {ActiveNomination ? (
             <span>
-              <a>Foobar: {props.nomination?.driveFolderId}</a>
+              <FontAwesomeIcon
+                onClick={() => {
+                  openWindow(props.nomination?.driveFolderId);
+                }}
+                icon="fa-solid fa-arrow-up-right-from-square"
+                className=""
+                size="3x"
+              >
+                foobar
+              </FontAwesomeIcon>
             </span>
           ) : (
             <span></span>
