@@ -33,7 +33,7 @@ const ToggleActiveGrantCycle = ({
         type="checkbox"
         name={grantCycle.name}
         className="toggle-active-grant"
-        checked={activeGrantCycle.id === grantCycle.id}
+        checked={activeGrantCycle && activeGrantCycle.id === grantCycle.id}
         onChange={handleToggle}
       />
       <span className={`switch ${hideToggle}`} />
