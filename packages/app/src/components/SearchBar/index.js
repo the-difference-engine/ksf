@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef} from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SettingsModal from 'react-modal';
@@ -9,6 +9,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
 import ApplicationViewByStages from '../pages/Home/ApplicationViewByStages';
+import nominationsAPI from '../../utils/API/nominationsAPI';
 // import nomination from '../../../../api/models/nomination';
 // import { google } from 'googleapis';
 
@@ -133,6 +134,24 @@ const SearchBar = (props) => {
     window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
   };
 
+  const firstUpdate = useRef(true);
+  const fetchNomination = () => {
+    
+    nominationsAPI.fetchNomination(ActiveNomination?.id)
+    .then((res) => {
+      const nomination = res.data;
+      console.log("This is nomination")
+      console.dir(nomination);
+    })
+  }
+  useEffect(() => {
+    if (!firstUpdate.current) {
+      fetchNomination()
+    }
+
+    firstUpdate.current = false;
+  }, [props.nominationReloaded])
+
   return (
     <>
       <SettingsModal
@@ -188,18 +207,22 @@ const SearchBar = (props) => {
             Policies
           </a> */}
           {ActiveNomination ? (
-            <span>
+              // <span>
+
+              // </span>
+              <>
+                <span>{props.nomination?.driveFolderId}</span>
               <FontAwesomeIcon
                 onClick={() => {
                   openWindow(props.nomination?.driveFolderId);
                 }}
-                icon="fa-solid fa-arrow-up-right-from-square"
-                className=""
-                size="3x"
-              >
-                foobar
-              </FontAwesomeIcon>
-            </span>
+                // icon="fa-solid fa-arrow-up-right-from-square"
+                className="cog-icon"
+                icon="candy-cane"
+                // size="3x"
+                />
+
+              </>
           ) : (
             <span></span>
           )}

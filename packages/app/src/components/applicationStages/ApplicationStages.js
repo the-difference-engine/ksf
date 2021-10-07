@@ -5,7 +5,7 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
 
-const ApplicationStages = () => {
+const ApplicationStages = (props) => {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
   const [currentStatus, setCurrentStatus] = useState();
   // status array is used as the param in
@@ -55,8 +55,19 @@ const ApplicationStages = () => {
   }
 
   function updateNom(currentStatus) {
+    console.log("This is running")
     try {
-      nominationsAPI.updateNomination(activeNomination.id, currentStatus);
+
+      nominationsAPI.updateNomination(activeNomination.id, currentStatus).then((res) => {
+        if (res.status == 200){
+          let driveFolderId = res.data
+          activeNomination.driveFolderId = driveFolderId
+          console.log("Here is fuckers")
+          console.log("this is our driveFolderId from updateNom", driveFolderId)
+          // console.dir(activeNomination)
+          setActiveNomination(activeNomination)
+        }
+      });
     } catch (err) {
       console.log(err);
     }
@@ -77,6 +88,7 @@ const ApplicationStages = () => {
             <MarkStageAsComplete
               advanceStage={advanceStage}
               currentStatus={currentStatus}
+              reloadNomination={props.reloadNomination}
             />
             </div>
           </div>

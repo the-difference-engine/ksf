@@ -119,6 +119,10 @@ const NominationPage = ({
     setMode('edit');
   }
 
+  function reloadNomination(){
+    setNominationReloaded((nominationReloaded) => !nominationReloaded)
+  }
+
   function handleSaveHasBeenClicked() {
     setSaveHasBeenClicked((saveHasBeenClicked) => !saveHasBeenClicked);
   }
@@ -138,12 +142,15 @@ const NominationPage = ({
   const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData);
 
   // [driveFolderId, setDriveFolderId] = useState('');
+  const [nominationReloaded, setNominationReloaded] = useState(false)
+  
+
 
   return (
     <>
       {activeNomination ? (
         <div className="nomination-show-page">
-          <SearchBar nomination={activeNomination} />
+          <SearchBar nomination={activeNomination} nominationReloaded={nominationReloaded}/>
           <NominationBanner
             mode={mode}
             revertMode={revertMode}
@@ -154,7 +161,9 @@ const NominationPage = ({
             handleCancelHasBeenClicked={handleCancelHasBeenClicked}
             nomination={activeNomination}
           />
-          <ApplicationStages />
+          <ApplicationStages 
+            reloadNomination={reloadNomination}
+          />
           <ApplicationForm
             patientInformationData={patientInformationData}
             familyMemberData={familyMemberData}

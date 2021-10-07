@@ -79,7 +79,7 @@ const NominationBanner = (props) => {
 
   function updateNomination(s) {
     try {
-      nominationsAPI.updateNomination(props.nomination.id, s);
+      nominationsAPI.updateNomination(props.nomination.id, s)
     } catch (error) {
       console.log(error);
     }

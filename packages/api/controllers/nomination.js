@@ -117,7 +117,7 @@ const updateNomination = async (req, res) => {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    nomination.update({ status: req.body.status }).catch((err) => {
+    const response = nomination.update({ status: req.body.status }).catch((err) => {
       console.log('Nomination Not Found', err);
       return res.status(400);
     });
@@ -146,7 +146,7 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === NOMINATION_STATUS.awaiting) {
-        console.log('this is running~~~~~~~~~~~');
+        
 
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
@@ -157,8 +157,11 @@ const updateNomination = async (req, res) => {
             nomination.hospitalState
           );
           const applicationName = `${lastName}-${state}`;
-          let driveId = createFolder(applicationName, nomination);
+          let driveFolderId = await createFolder(applicationName, nomination);
           // console.log(`This is driveId from createFolder call: ${driveId}`);
+          console.log(`!!!!!This is driveFolderId in nomination: ${driveFolderId}`)
+          
+          return res.status(200).json(driveFolderId);
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {

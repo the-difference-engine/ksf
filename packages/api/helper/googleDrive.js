@@ -14,7 +14,7 @@ const auth = new google.auth.JWT(clientEmail, null, privateKey, scopes);
 
 const drive = google.drive({ version: 'v3', auth });
 
-function createFolder(applicationName, nomination) {
+async function createFolder(applicationName, nomination) {
   let fileMetadata = {
     name: applicationName,
     parents: [parentFolderId],
@@ -26,8 +26,8 @@ function createFolder(applicationName, nomination) {
       fields: 'id',
     },
     async function (err, res) {
-      console.log(`This is file id: ${res.data.id}`);
-      console.log(`This is res.data: ${res.data}`);
+      // console.log(`This is file id: ${res.data.id}`);
+      // console.log(`This is res.data: ${res.data}`);
       // console.log('this is file', res);
       if (err) {
         // Handle error
@@ -37,6 +37,7 @@ function createFolder(applicationName, nomination) {
       let driveId = res.data.id;
       // return res.data.id;
       nomination.update({ driveFolderId: driveId });
+      return driveId;
     }
   );
 
