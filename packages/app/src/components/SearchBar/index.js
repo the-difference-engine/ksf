@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef} from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SettingsModal from 'react-modal';
@@ -12,6 +12,7 @@ import ApplicationViewByStages from '../pages/Home/ApplicationViewByStages';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 // import nomination from '../../../../api/models/nomination';
 // import { google } from 'googleapis';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 SettingsModal.setAppElement('#root');
 
@@ -136,21 +137,19 @@ const SearchBar = (props) => {
 
   const firstUpdate = useRef(true);
   const fetchNomination = () => {
-    
-    nominationsAPI.fetchNomination(ActiveNomination?.id)
-    .then((res) => {
+    nominationsAPI.fetchNomination(ActiveNomination?.id).then((res) => {
       const nomination = res.data;
-      console.log("This is nomination")
+      console.log('This is nomination');
       console.dir(nomination);
-    })
-  }
+    });
+  };
   useEffect(() => {
     if (!firstUpdate.current) {
-      fetchNomination()
+      fetchNomination();
     }
 
     firstUpdate.current = false;
-  }, [props.nominationReloaded])
+  }, [props.nominationReloaded]);
 
   return (
     <>
@@ -207,22 +206,20 @@ const SearchBar = (props) => {
             Policies
           </a> */}
           {ActiveNomination ? (
-              // <span>
+            // <span>
 
-              // </span>
-              <>
-                <span>{props.nomination?.driveFolderId}</span>
+            // </span>
+            <>
               <FontAwesomeIcon
                 onClick={() => {
                   openWindow(props.nomination?.driveFolderId);
                 }}
                 // icon="fa-solid fa-arrow-up-right-from-square"
                 className="cog-icon"
-                icon="candy-cane"
+                icon={faExternalLinkAlt}
                 // size="3x"
-                />
-
-              </>
+              />
+            </>
           ) : (
             <span></span>
           )}
