@@ -1,3 +1,4 @@
+const { formatPhoneNumber } = require('react-phone-number-input');
 const { google } = require('googleapis');
 const db = require('../models');
 const parsePrivateKey = require('./parsePrivateKey');
@@ -47,8 +48,20 @@ module.exports = function gsheetToDB() {
         db.Nomination.findOrCreate({
           where: {
             dateReceived: nomination[0],
-            providerName: nomination[10],
-            providerPhoneNumber: nomination[11],
+            // providerName: nomination[10],
+            // providerPhoneNumber: nomination[11],
+            // providerEmailAddress: nomination[12],
+            // providerTitle: nomination[13],
+            // hospitalName: nomination[18],
+            // hospitalURL: nomination[19],
+            // hospitalAddress: nomination[20],
+            // hospitalCity: nomination[21],
+            // hospitalState: nomination[22],
+            // hospitalZipCode: nomination[23],
+            // representativeName: nomination[24],
+            // representativeEmailAddress: nomination[25],
+            // representativePhoneNumber: nomination[26],
+            providerPhoneNumber: formatPhoneNumber(`+1${nomination[11]}`),
             providerEmailAddress: nomination[12],
             providerTitle: nomination[13],
             hospitalName: nomination[18],
@@ -59,7 +72,7 @@ module.exports = function gsheetToDB() {
             hospitalZipCode: nomination[23],
             representativeName: nomination[24],
             representativeEmailAddress: nomination[25],
-            representativePhoneNumber: nomination[26],
+            representativePhoneNumber: formatPhoneNumber(`+1${nomination[26]}`),
             representativeRelationship: nomination[27],
             patientName: nomination[29],
             patientAge: nomination[30],
@@ -71,12 +84,12 @@ module.exports = function gsheetToDB() {
               parseFloat(nomination[37].replace(/\$/g, '')) * 100
             ),
           },
-        }).then((array)=>{
+        }).then((array) => {
           //db.Nomination.findOrCreate returns a promise that when fullfilled returns an array with two elements 
           //the first element is the nomination instance object that contains the dataValues among other things  
           //the second element is a boolean that represents whether a nomination was created
-          if(array[1]) {
-            verifyHcEmail(array[0].dataValues) 
+          if (array[1]) {
+            verifyHcEmail(array[0].dataValues)
           }
         })
       } catch (error) {
