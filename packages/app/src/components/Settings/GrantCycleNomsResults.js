@@ -11,19 +11,11 @@ const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
     return `${lastName}-${state}`;
   };
 
-  console.log(grantCycle.nominations);
-
-  // const declinedApps = grantCycle.nominations.map((nom) => {
-  //   const declinedArray = [];
-  //   if (nom.status === 'Declined') {
-  //     declinedArray.push(nom);
-  //   }
-  //   return declinedArray;
-  // });
-
-  // const declinedApp = grantCycle.nominations.status.map
-
-  // const redLink = declinedApp ? 'red-link' : '';
+  const redLinkHelper = (nomination) => {
+    if (nomination.status === 'Declined') {
+      return 'red-link';
+    }
+  };
 
   return (
     <div className="settings__container">
@@ -56,7 +48,7 @@ const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
               <tr key={n.id}>
                 <td>
                   <Link
-                    // className={`settings__results-link ${redLink}`}
+                    className={`settings__results-link ${redLinkHelper(n)}`}
                     target={'_blank'}
                     to={`/nomination/${n.id}`}
                   >

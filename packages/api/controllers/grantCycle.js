@@ -61,15 +61,10 @@ const findAll = async (req, res) => {
                     readyForBoardReviewTimestamp: {
                       [Op.between]: [g.openedOn, g.closedOn],
                     },
-                    // status: {
-                    //   [Op.or]: {
-                    //     [Op.eq]: 'Ready for Board Review',
-                    //     [Op.eq]: 'Declined',
-                    //   },
-                    // },
-                    // status: {
-                    //   [Op.eq]: 'Ready for Board Review',
-                    // },
+                    [Op.or]: [
+                      { status: 'Ready for Board Review' },
+                      { status: 'Declined' },
+                    ],
                   },
                 ],
               },
