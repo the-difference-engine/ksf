@@ -2,18 +2,24 @@ const { google } = require('googleapis');
 const db = require('../models');
 const parsePrivateKey = require('./parsePrivateKey');
 const rangePar = 'Sheet1';
-const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
-const privateKey = parsePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY)
-const scopes = ['https://www.googleapis.com/auth/spreadsheets']
+const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
+const privateKey = parsePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY);
+const scopes = ['https://www.googleapis.com/auth/spreadsheets'];
 const { verifyHcEmail } = require('./mailer.js');
 
+const publicEmailDomains = [
+  'gmail.com',
+  'aol.com',
+  'outlook.com',
+  'zoho.com',
+  'mail.com',
+  'yahoo.com',
+  'protonmail.com',
+  'icloud.com',
+];
+
 module.exports = function gsheetToDB() {
-  const client = new google.auth.JWT(
-    clientEmail,
-    null,
-    privateKey,
-    scopes
-  );
+  const client = new google.auth.JWT(clientEmail, null, privateKey, scopes);
 
   client.authorize(function (err, tokens) {
     if (err) {
@@ -43,44 +49,47 @@ module.exports = function gsheetToDB() {
     let nominations = data.data.values;
 
     nominations.slice(1).forEach((nomination) => {
-      try {
-        db.Nomination.findOrCreate({
-          where: {
-            dateReceived: nomination[0],
-            providerName: nomination[10],
-            providerPhoneNumber: nomination[11],
-            providerEmailAddress: nomination[12],
-            providerTitle: nomination[13],
-            hospitalName: nomination[18],
-            hospitalURL: nomination[19],
-            hospitalAddress: nomination[20],
-            hospitalCity: nomination[21],
-            hospitalState: nomination[22],
-            hospitalZipCode: nomination[23],
-            representativeName: nomination[24],
-            representativeEmailAddress: nomination[25],
-            representativePhoneNumber: nomination[26],
-            representativeRelationship: nomination[27],
-            patientName: nomination[29],
-            patientAge: nomination[30],
-            admissionDate: nomination[31],
-            dischargeDate: nomination[32],
-            patientDiagnosis: nomination[34],
-            grantRequestInfo: nomination[35],
-            amountRequestedCents: parseInt(
-              parseFloat(nomination[37].replace(/\$/g, '')) * 100
-            ),
-          },
-        }).then((array)=>{
-          //db.Nomination.findOrCreate returns a promise that when fullfilled returns an array with two elements 
-          //the first element is the nomination instance object that contains the dataValues among other things  
-          //the second element is a boolean that represents whether a nomination was created
-          if(array[1]) {
-            verifyHcEmail(array[0].dataValues) 
-          }
-        })
-      } catch (error) {
-        console.error(error);
+      let domain = nomination[12].split('@')[1];
+      if (!publicEmailDomains.includes(domain)) {
+        try {
+          db.Nomination.findOrCreate({
+            where: {
+              dateReceived: nomination[0],
+              providerName: nomination[10],
+              providerPhoneNumber: nomination[11],
+              providerEmailAddress: nomination[12],
+              providerTitle: nomination[13],
+              hospitalName: nomination[18],
+              hospitalURL: nomination[19],
+              hospitalAddress: nomination[20],
+              hospitalCity: nomination[21],
+              hospitalState: nomination[22],
+              hospitalZipCode: nomination[23],
+              representativeName: nomination[24],
+              representativeEmailAddress: nomination[25],
+              representativePhoneNumber: nomination[26],
+              representativeRelationship: nomination[27],
+              patientName: nomination[29],
+              patientAge: nomination[30],
+              admissionDate: nomination[31],
+              dischargeDate: nomination[32],
+              patientDiagnosis: nomination[34],
+              grantRequestInfo: nomination[35],
+              amountRequestedCents: parseInt(
+                parseFloat(nomination[37].replace(/\$/g, '')) * 100
+              ),
+            },
+          }).then((array) => {
+            //db.Nomination.findOrCreate returns a promise that when fullfilled returns an array with two elements
+            //the first element is the nomination instance object that contains the dataValues among other things
+            //the second element is a boolean that represents whether a nomination was created
+            if (array[1]) {
+              verifyHcEmail(array[0].dataValues);
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
       }
     });
 
