@@ -1,6 +1,7 @@
 const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize');
 const { ValidationError, where } = require('sequelize');
+const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
@@ -9,12 +10,12 @@ const { sendDeclineEmail } = require('../helper/mailer');
 const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
-const { sendHIPAAEmail} = require('../helper/mailer');
-const { sendHIPAAProvider} = require('../helper/mailer');
+const { sendHIPAAEmail } = require('../helper/mailer');
+const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
-const jwt = require('jsonwebtoken');
-const Op = sequelize.Op;
+
+const { Op } = sequelize;
 const gmailStart = require('../helper/gmailANDdrive');
 
 const NOMINATION_STATUS = {
@@ -61,11 +62,9 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
-    const hasProviderBeenValidated = nominations.some(nom => {
-      return (
-        nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
-      );
-    });
+    const hasProviderBeenValidated = nominations.some((nom) => (
+      nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
+    ));
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
     }
@@ -84,13 +83,13 @@ const updateNomination = async (req, res) => {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    nomination.update({ status: req.body.status }).catch(err => {
+    nomination.update({ status: req.body.status }).catch((err) => {
       console.log('Nomination Not Found', err);
       return res.status(400);
     });
-    //can continue using additional conditional to use other email functions,
-    //depending on status of application
-    //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
+    // can continue using additional conditional to use other email functions,
+    // depending on status of application
+    // current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
       try {
         // resets reminderSent bool every stage
@@ -105,7 +104,7 @@ const updateNomination = async (req, res) => {
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
-            error
+            error,
           );
         } finally {
           sendDeclineEmail(nomination);
@@ -119,7 +118,7 @@ const updateNomination = async (req, res) => {
             ? nomination.patientName.split(' ')[1]
             : '';
           const state = states.getStateCodeByStateName(
-            nomination.hospitalState
+            nomination.hospitalState,
           );
           const applicationName = `${lastName}-${state}`;
           createFolder(applicationName);
@@ -178,7 +177,6 @@ const syncNominations = async (req, res) => {
   }
 };
 
-
 const checkNominations = async (req, res) => {
   try {
     console.log('Calling GmailStart function....');
@@ -221,7 +219,7 @@ const updateActiveNomData = async (req, res) => {
       { ...req.body },
       {
         where: { id },
-      }
+      },
     );
     return res.status(200).json({ message: 'updated' });
   } catch (err) {
@@ -232,7 +230,7 @@ const updateActiveNomData = async (req, res) => {
 async function searchAndSend(status, query) {
   const nominations = await db.Nomination.findAll(query);
   let nomination;
-  let ids = [];
+  const ids = [];
   for (let i = 0; i < nominations.length; i++) {
     nomination = nominations[i];
     switch (status) {
@@ -265,55 +263,38 @@ async function searchAndSend(status, query) {
   }
 }
 
-
-
-
 // Added Find Awaiting Hipaa nominations for ticket 109
 
-const getAwaitingHipaa = async () =>{
-  const nominations = await db.Nomination.findAll({where: {status: 'Awaiting HIPAA'} });
-  let applicationsAwait = [];
+const getAwaitingHipaa = async () => {
+  const nominations = await db.Nomination.findAll({ where: { status: 'Awaiting HIPAA' } });
+  const applicationsAwait = [];
 
   if (nominations.length) {
-    console.log(`I made it and I'm waiting`);
-    // console.log(nominations);
+    nominations.forEach((nomination) => {
+      const lastName = nomination.patientName
+        ? nomination.patientName.split(' ')[1]
+        : '';
+      const state = states.getStateCodeByStateName(
+        nomination.hospitalState,
+      );
+      const applicationName = `${lastName}-${state}`;
 
-    nominations.forEach((nomination)=>{
-     const lastName = nomination.patientName
-      ? nomination.patientName.split(' ')[1]
-      : '';
-    const state = states.getStateCodeByStateName(
-      nomination.hospitalState
-    );
-    const applicationName = `${lastName}-${state}`;
-
-
-    applicationsAwait.push(applicationName)
-
-    console.log(applicationsAwait, 'repEmails')
-
-
+      applicationsAwait.push(applicationName);
     });
-
   }
 
-  console.log(`Awaiting Hipaa from`, applicationsAwait);
   return applicationsAwait;
 };
 
-
-
-
-
 module.exports = {
-getNominationById,
-findAllNominations,
-createNomination,
-updateNomination,
-syncNominations,
-emailVerification,
-searchAndSend,
-getAwaitingHipaa,
-updateActiveNomData,
-checkNominations
+  getNominationById,
+  findAllNominations,
+  createNomination,
+  updateNomination,
+  syncNominations,
+  emailVerification,
+  searchAndSend,
+  getAwaitingHipaa,
+  updateActiveNomData,
+  checkNominations,
 };
