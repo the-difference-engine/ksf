@@ -10,10 +10,12 @@ const { verifyHcEmail } = require('../helper/mailer');
 const { sendSurveyReminder } = require('../helper/mailer');
 const { sendHIPAAReminder } = require('../helper/mailer');
 const { sendHIPAAEmail} = require('../helper/mailer');
+const { sendHIPAAProvider} = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const Op = sequelize.Op;
+const gmailStart = require('../helper/gmailANDdrive');
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -175,6 +177,20 @@ const syncNominations = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+
+const checkNominations = async (req, res) => {
+  try {
+    console.log('Calling GmailStart function....');
+    gmailStart();
+    console.log('nominations check completed');
+    return res.status(200).json({ status: 'ok' });
+  } catch (error) {
+    console.log('errorjsdkfjskjnfskd', error);
+    return res.status(400).json({ error: error.message });
+  }
+};
+
 const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
@@ -248,13 +264,56 @@ async function searchAndSend(status, query) {
     console.log(error);
   }
 }
+
+
+
+
+// Added Find Awaiting Hipaa nominations for ticket 109
+
+const getAwaitingHipaa = async () =>{
+  const nominations = await db.Nomination.findAll({where: {status: 'Awaiting HIPAA'} });
+  let applicationsAwait = [];
+
+  if (nominations.length) {
+    console.log(`I made it and I'm waiting`);
+    // console.log(nominations);
+
+    nominations.forEach((nomination)=>{
+     const lastName = nomination.patientName
+      ? nomination.patientName.split(' ')[1]
+      : '';
+    const state = states.getStateCodeByStateName(
+      nomination.hospitalState
+    );
+    const applicationName = `${lastName}-${state}`;
+
+
+    applicationsAwait.push(applicationName)
+
+    console.log(applicationsAwait, 'repEmails')
+
+
+    });
+
+  }
+
+  console.log(`Awaiting Hipaa from`, applicationsAwait);
+  return applicationsAwait;
+};
+
+
+
+
+
 module.exports = {
-  getNominationById,
-  findAllNominations,
-  createNomination,
-  updateNomination,
-  syncNominations,
-  updateActiveNomData,
-  emailVerification,
-  searchAndSend,
+getNominationById,
+findAllNominations,
+createNomination,
+updateNomination,
+syncNominations,
+emailVerification,
+searchAndSend,
+getAwaitingHipaa,
+updateActiveNomData,
+checkNominations
 };

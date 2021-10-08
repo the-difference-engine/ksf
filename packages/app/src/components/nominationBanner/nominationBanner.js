@@ -1,12 +1,16 @@
 import styles from '../../components/nominationInfo/newstyles.module.css';
 import style from './style.css';
 import React, { useEffect, useState, useContext } from 'react';
-import nominationsAPI from '../../utils/API/nominationsAPI'
+import nominationsAPI from '../../utils/API/nominationsAPI';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import EditButton from './EditButton';
 import SaveButton from './SaveButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 const states = require('us-state-codes');
+
+const currentDate = new Date().getTime();
 
 /**
  * Creates and renders the active nomination banner.
@@ -14,7 +18,7 @@ const states = require('us-state-codes');
  * @param {*} props - active nomination props
  * @returns - nomination banner component
  */
-const NominationBanner = props => {
+const NominationBanner = (props) => {
   const date = new Date(props.nomination.dateReceived).toLocaleDateString();
   const lastName = props.nomination.patientName
     ? props.nomination.patientName.split(' ')[1]
@@ -23,132 +27,185 @@ const NominationBanner = props => {
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
     ? props.nomination.amountRequestedCents
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
   const hipaaDate = props.nomination.hipaaTimestamp;
+  const hippaReminder = props.nomination.awaitingHipaaReminderEmailTimestamp;
   const valid = new Date(hipaaDate).getTime() > 0;
   let newDate = new Date(hipaaDate);
   const time = newDate.toLocaleDateString();
-  const minutes = newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const minutes = newDate.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
   const finalDate = `${time} – ${minutes}`;
-  const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
-  
+  const [activeNomination, setActiveNomination] = useContext(
+    ActiveNominationContext
+  );
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModalState = () => {
-    setIsModalVisible(isModalVisible => !isModalVisible)
-  }
-  
+    setIsModalVisible((isModalVisible) => !isModalVisible);
+  };
+
   function declineApplication() {
-    const declineStatus = 'Declined'
-    activeNomination.status = declineStatus
-    setActiveNomination({ ...activeNomination })
-    
+    const declineStatus = 'Declined';
+    activeNomination.status = declineStatus;
+    setActiveNomination({ ...activeNomination });
+
     return updateNomination(declineStatus);
   }
 
   function updateNomination(s) {
     try {
-       nominationsAPI.updateNomination(props.nomination.id, s);
+      nominationsAPI.updateNomination(props.nomination.id, s);
     } catch (error) {
       console.log(error);
     }
   }
 
+  let hipaaStatus = hippaReminder ? 'Reminder Email Sent   ' : 'Awaiting HIPAA';
+
+  const getNumberOfDays = (start, end) => {
+    const date1 = new Date(start);
+    const date2 = new Date(end);
+    const dayConversion = 1000 * 60;
+    // Calculating the time difference Awaiting Hipaa Timestamp and current date
+    const diffInTime = date2.getTime() - date1.getTime();
+    // Calculating the no. of days between two dates
+    const diffInDays = Math.round(diffInTime / dayConversion);
+    // return diffInDays;
+    if (diffInDays >= 2) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
-    <div className='nomination-banner-container'>
-      <div className='row' id={styles.rowOverride}>
-        <div className='column column-10 icon-container'>
-          <img src='/ksflogo.png' alt='other' />
+    <div className="nomination-banner-container">
+      <div className="row" id={styles.rowOverride}>
+        <div className="column column-10 icon-container">
+          <img src="/ksflogo.png" alt="other" />
         </div>
 
-        <div className='column column-80 nomination-details'>
-          <div className='row banner-top'>
-            <div className='column name' style={{ width: '30%' }}>
+        <div className="column column-80 nomination-details">
+          <div className="row banner-top">
+            <div className="column name" style={{ width: '30%' }}>
               <p>Application</p>
               <span>
-                <h1 className='nom-name'>
+                <h1 className="nom-name">
                   <strong>{nominationName}</strong>
                 </h1>
               </span>
             </div>
             <div className="column name">
-              <button disabled = {activeNomination.status == "Declined"} className=" decline-button" onClick={toggleModalState} >
+              <button
+                disabled={activeNomination.status == 'Declined'}
+                className=" decline-button"
+                onClick={toggleModalState}
+              >
                 Decline Application
               </button>
             </div>
-            {isModalVisible &&
-            <div className="modal-background">
-              <div className="modal-container">
-                <button className= "exit-button" onClick={toggleModalState} >&times;</button>
-                <h3 className="modal-text">Do you want to decline the application?</h3>
-                <div className="modal-buttons">
-                  <button className="button-yes" onClick={()=>{declineApplication(); 
-                    toggleModalState()}}>Yes</button>
-                  <button className ="button-no"onClick={toggleModalState} >No</button>
+            {isModalVisible && (
+              <div className="modal-background">
+                <div className="modal-container">
+                  <button className="exit-button" onClick={toggleModalState}>
+                    &times;
+                  </button>
+                  <h3 className="modal-text">
+                    Do you want to decline the application?
+                  </h3>
+                  <div className="modal-buttons">
+                    <button
+                      className="button-yes"
+                      onClick={() => {
+                        declineApplication();
+                        toggleModalState();
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button className="button-no" onClick={toggleModalState}>
+                      No
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            }
+            )}
           </div>
 
-          <div className='row'>
-            <div className='column hp-name'>
-              <p className='secondary-dark'>HP Name</p>
+          <div className="row">
+            <div className="column hp-name">
+              <p className="secondary-dark">HP Name</p>
               <span>
-                <h2 className='body-font'>
+                <h2 className="body-font">
                   <strong>{props.nomination.providerName}</strong>
                 </h2>
               </span>
             </div>
-            <div className='column fam-name'>
-              <p className='secondary-dark'>Family Member Name</p>
+            <div className="column fam-name">
+              <p className="secondary-dark">Family Member Name</p>
               <span>
-                <h2 className='body-font'>
+                <h2 className="body-font">
                   <strong>{props.nomination.representativeName}</strong>
                 </h2>
               </span>
             </div>
-            <div className='column created-at'>
-              <p className='secondary-dark'>Submission Date</p>
+            <div className="column created-at">
+              <p className="secondary-dark">Submission Date</p>
               <span>
-                <h2 className='body-font'>
+                <h2 className="body-font">
                   <strong>{date}</strong>
                 </h2>
               </span>
             </div>
-            <div className='column amount'>
-              <p className='secondary-dark'>Grant Amount Requested</p>
+            <div className="column amount">
+              <p className="secondary-dark">Grant Amount Requested</p>
               <span>
-                <h2 className='body-font'>
+                <h2 className="body-font">
                   <strong>
                     {formattedAmount ? `$${formattedAmount}` : ''}
                   </strong>
                 </h2>
               </span>
             </div>
-            <div className='column hippa'>
-              <p className='secondary-dark'>HIPAA Date</p>
+            <div className="column hippa">
+              <p className="secondary-dark">HIPAA Date</p>
               <span>
-                <h2 className='body-font'>
-                  <strong>{valid ? finalDate : 'Awaiting HIPAA'}</strong>
+                <h2 className="body-font">
+                  <strong>
+                    {valid ? (
+                      finalDate
+                    ) : (
+                      <>
+                        {hipaaStatus}
+                        {getNumberOfDays(hipaaDate, currentDate) ? (
+                          <FontAwesomeIcon
+                            className="red"
+                            color="red"
+                            icon={faClock}
+                          />
+                        ) : null}
+                      </>
+                    )}
+                  </strong>
                 </h2>
               </span>
             </div>
           </div>
         </div>
         <div>
-         { props.mode == 'view' ?
-            <EditButton 
-                handleHasBeenClicked={props.handleEditHasBeenClicked}
+          {props.mode == 'view' ? (
+            <EditButton handleHasBeenClicked={props.handleEditHasBeenClicked} />
+          ) : (
+            <SaveButton
+              revertMode={props.revertMode}
+              handleHasBeenClicked={props.handleSaveHasBeenClicked}
             />
-          :
-            <SaveButton 
-                revertMode={props.revertMode}
-                handleHasBeenClicked={props.handleSaveHasBeenClicked}
-            />
-          }
+          )}
         </div>
       </div>
     </div>

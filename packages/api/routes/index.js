@@ -10,6 +10,7 @@ router.get('/api/nominations/:id', nominationController.getNominationById);
 router.get('/api/nominations', nominationController.findAllNominations);
 router.post('/api/nominations', nominationController.createNomination);
 router.put('/api/nominations/:id', nominationController.updateNomination);
+router.get('/api/checknominations', nominationController.checkNominations);
 
 // adding in new route for updateActiveNomination
 router.patch('/api/nominations/:id', nominationController.updateActiveNomData);
@@ -27,5 +28,7 @@ router.get('/api/grantcycles/findactive', grantCycleController.findActive);
 router.post('/api/grantcycles', grantCycleController.create);
 router.get('/api/grantcycles/findbyname/:name', grantCycleController.findByName);
 router.put('/api/grantcycles/:id', grantCycleController.update);
+
+
 
 module.exports = router;

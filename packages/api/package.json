@@ -31,6 +31,7 @@
     "pug": "^3.0.2",
     "semver": "^5.7.1",
     "sequelize": "^6.6.2",
+    "server-destroy": "^1.0.1",
     "us-state-codes": "^1.1.2",
     "uuid": "^8.3.0"
   },

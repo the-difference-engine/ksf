@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const cleanURL = str => {
+const cleanURL = (str) => {
   if (str && str.endsWith('/')) {
     return str.slice(0, -1);
   }
@@ -28,6 +28,10 @@ const nominationsAPI = {
   },
   syncNominations: function () {
     return axios.get(`${cleanURL(API_URL)}/api/syncnominations`);
+  },
+
+  checkNominations: function () {
+    return axios.get(`${cleanURL(API_URL)}/api/checknominations`);
   },
 };
 
