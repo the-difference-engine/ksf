@@ -21,7 +21,6 @@ const ToggleActiveGrantCycle = ({
     if (e.target.checked) {
       updateActiveGrantCycle();
       setActiveGrantCycle(grantCycle);
-    } else {
     }
   };
 
