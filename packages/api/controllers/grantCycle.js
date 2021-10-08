@@ -20,9 +20,7 @@ const update = async (req, res) => {
   if (!id) {
     return res.status(400).send('Missing Grant cycle ID');
   }
-  const {
-    name, openedOn, closedOn, isActive,
-  } = req.body;
+  const { name, openedOn, closedOn, isActive } = req.body;
   try {
     const grant = await db.GrantCycle.findByPk(id);
 
@@ -48,30 +46,41 @@ const update = async (req, res) => {
 
 const findAll = async (req, res) => {
   try {
-    const grants = await db.GrantCycle.findAll({ order: [['openedOn', 'DESC']], raw: true });
+    const grants = await db.GrantCycle.findAll({
+      order: [['openedOn', 'DESC']],
+      raw: true,
+    });
     if (grants.length) {
-      const result = await Promise.all(grants.map(async (g) => {
-        try {
-          const nominations = await db.Nomination.findAll({ 
-            where: {
-              [Op.and]: [{
-                readyForBoardReviewTimestamp: {
-                  [Op.between]: [g.openedOn, g.closedOn]
-                },
-                status: {
-                  [Op.eq]: 'Ready for Board Review'
-                }
-              }]
-            }, 
-            order: [
-              ['readyForBoardReviewTimestamp', 'DESC' ]
-          ]});
-          g.nominations = nominations;
-        }
-        catch (error) {
-          return res.status(404).send(error);
-        }
-      }));
+      const result = await Promise.all(
+        grants.map(async (g) => {
+          try {
+            const nominations = await db.Nomination.findAll({
+              where: {
+                [Op.and]: [
+                  {
+                    readyForBoardReviewTimestamp: {
+                      [Op.between]: [g.openedOn, g.closedOn],
+                    },
+                    // status: {
+                    //   [Op.or]: {
+                    //     [Op.eq]: 'Ready for Board Review',
+                    //     [Op.eq]: 'Declined',
+                    //   },
+                    // },
+                    // status: {
+                    //   [Op.eq]: 'Ready for Board Review',
+                    // },
+                  },
+                ],
+              },
+              order: [['readyForBoardReviewTimestamp', 'DESC']],
+            });
+            g.nominations = nominations;
+          } catch (error) {
+            return res.status(404).send(error);
+          }
+        })
+      );
       return res.status(200).json(grants);
     }
     return res.status(404).send('No grants found');
