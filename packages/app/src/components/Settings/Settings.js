@@ -222,9 +222,9 @@ const Settings = (props) => {
     : 'enabled-edit-btn';
 
   const [currentTab, setCurrentTab] = useState('Grant Cycle');
-  
+
   const changeTabView = (e) => {
-    setCurrentTab(e.target.textContent)
+    setCurrentTab(e.target.textContent);
   };
 
   return (
@@ -246,117 +246,118 @@ const Settings = (props) => {
 
       <aside className="settings__sidebar">
         <ul className="settings__list">
-          <li 
-            className="settings__list-item"
-            onClick={changeTabView}>
-            Grant Cycle</li>
-          <li 
-            className="settings__list-item"
-            onClick={changeTabView}>Blocked Domains</li>
+          <li className="settings__list-item" onClick={changeTabView}>
+            Grant Cycle
+          </li>
+          <li className="settings__list-item" onClick={changeTabView}>
+            Blocked Domains
+          </li>
         </ul>
       </aside>
 
-      {currentTab === 'Grant Cycle' && (<main className="settings__main">
-        <h2 className="settings__heading">Create Grant Cycle</h2>
-        <div className="settings__form">
-          <div className="settings__input-block">
-            <p className="settings__input-label start-date">Start Date:</p>
-            <span className="settings__input">
-              <div className={editModalHiddenClass}>
-                <DatePicker
-                  name="openedOn"
-                  value={newGrantCycle.openedOn}
-                  selected={newGrantCycle.openedOn}
-                  onChange={handleStartDateCreation}
-                  placeholderText="mm/dd/yyyy"
-                />
-              </div>
-            </span>
-          </div>
-          <div className="settings__input-block">
-            <p className="settings__input-label end-date">End Date:</p>
-            <span className="settings__input">
-              <div className={editModalHiddenClass}>
-                <DatePicker
-                  name="closedOn"
-                  value={newGrantCycle.closedOn}
-                  selected={newGrantCycle.closedOn}
-                  onChange={handleEndDateCreation}
-                  placeholderText="mm/dd/yyyy"
-                />
-              </div>
-            </span>
-          </div>
-          <div className="settings__input-block">
-            <p className="settings__input-label cycle-name">Cycle Name:</p>
-            <span className="settings__input">
-              <div className={editModalHiddenClass}>
-                <input
-                  value={newGrantCycle.name}
-                  name="name"
-                  onChange={handleChange}
-                  type="text"
-                />
-              </div>
-            </span>
-          </div>
-          <div className={`${editModalHiddenClass} button-div`}>
-            <button
-              ref={createButton}
-              disabled={disableButton}
-              onClick={handleCreate}
-              className={`settings__button ${disableButtonStyle}`}
-            >
-              Create
-            </button>
-          </div>
-        </div>
-        <div className="settings__form-errors">{errors}</div>
-
-        <div>
-          <h2 className="settings__heading">
-            Active Grant Cycle: &nbsp;
-            {activeGrantCycle ? (
-              <span className="settings__activeGrantCycle">
-                {activeGrantCycle.name}
+      {currentTab === 'Grant Cycle' && (
+        <main className="settings__main">
+          <h2 className="settings__heading">Create Grant Cycle</h2>
+          <div className="settings__form">
+            <div className="settings__input-block">
+              <p className="settings__input-label start-date">Start Date:</p>
+              <span className="settings__input">
+                <div className={editModalHiddenClass}>
+                  <DatePicker
+                    name="openedOn"
+                    value={newGrantCycle.openedOn}
+                    selected={newGrantCycle.openedOn}
+                    onChange={handleStartDateCreation}
+                    placeholderText="mm/dd/yyyy"
+                  />
+                </div>
               </span>
-            ) : (
-              <span className="settings__activeGrantCycle">None</span>
-            )}
-          </h2>
-        </div>
+            </div>
+            <div className="settings__input-block">
+              <p className="settings__input-label end-date">End Date:</p>
+              <span className="settings__input">
+                <div className={editModalHiddenClass}>
+                  <DatePicker
+                    name="closedOn"
+                    value={newGrantCycle.closedOn}
+                    selected={newGrantCycle.closedOn}
+                    onChange={handleEndDateCreation}
+                    placeholderText="mm/dd/yyyy"
+                  />
+                </div>
+              </span>
+            </div>
+            <div className="settings__input-block">
+              <p className="settings__input-label cycle-name">Cycle Name:</p>
+              <span className="settings__input">
+                <div className={editModalHiddenClass}>
+                  <input
+                    value={newGrantCycle.name}
+                    name="name"
+                    onChange={handleChange}
+                    type="text"
+                  />
+                </div>
+              </span>
+            </div>
+            <div className={`${editModalHiddenClass} button-div`}>
+              <button
+                ref={createButton}
+                disabled={disableButton}
+                onClick={handleCreate}
+                className={`settings__button ${disableButtonStyle}`}
+              >
+                Create
+              </button>
+            </div>
+          </div>
+          <div className="settings__form-errors">{errors}</div>
 
-        <h2 className="settings__heading">Grant Cycle History</h2>
-        <div className="settings__table-wrapper">
-          <table className="settings__table">
-            <thead className="settings__thead">
-              <tr>
-                <th style={{ width: '10%' }}>Start Date</th>
-                <th style={{ width: '10%' }}>End Date</th>
-                <th style={{ width: '10%' }}>Cycle Name</th>
-                <th style={{ width: '10%' }}>Applications</th>
-                <th style={{ width: '10%' }}>Active Cycle</th>
-              </tr>
-            </thead>
-            <tbody className="settings__tbody">
-              {allGrantCycles.map((gc) => (
-                <TableRow
-                  key={gc.id}
-                  grantCycle={gc}
-                  onResultsClick={props.onResultsClick}
-                  onEdit={handleEdit}
-                  activeGrantCycle={activeGrantCycle}
-                  setActiveGrantCycle={setActiveGrantCycle}
-                  showEditModal={showEditModal}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </main>)} 
-      {
-        currentTab === 'Blocked Domains' && (<header>Welcome to the header</header>)
-      }
+          <div>
+            <h2 className="settings__heading">
+              Active Grant Cycle: &nbsp;
+              {activeGrantCycle ? (
+                <span className="settings__activeGrantCycle">
+                  {activeGrantCycle.name}
+                </span>
+              ) : (
+                <span className="settings__activeGrantCycle">None</span>
+              )}
+            </h2>
+          </div>
+
+          <h2 className="settings__heading">Grant Cycle History</h2>
+          <div className="settings__table-wrapper">
+            <table className="settings__table">
+              <thead className="settings__thead">
+                <tr>
+                  <th style={{ width: '10%' }}>Start Date</th>
+                  <th style={{ width: '10%' }}>End Date</th>
+                  <th style={{ width: '10%' }}>Cycle Name</th>
+                  <th style={{ width: '10%' }}>Applications</th>
+                  <th style={{ width: '10%' }}>Active Cycle</th>
+                </tr>
+              </thead>
+              <tbody className="settings__tbody">
+                {allGrantCycles.map((gc) => (
+                  <TableRow
+                    key={gc.id}
+                    grantCycle={gc}
+                    onResultsClick={props.onResultsClick}
+                    onEdit={handleEdit}
+                    activeGrantCycle={activeGrantCycle}
+                    setActiveGrantCycle={setActiveGrantCycle}
+                    showEditModal={showEditModal}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </main>
+      )}
+      {currentTab === 'Blocked Domains' && (
+        <header>Welcome to the header</header>
+      )}
     </div>
   );
 };
