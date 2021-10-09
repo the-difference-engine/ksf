@@ -221,6 +221,12 @@ const Settings = (props) => {
     ? 'disabled-edit-btn'
     : 'enabled-edit-btn';
 
+  const [currentTab, setCurrentTab] = useState('Grant Cycle');
+  
+  const changeTabView = (e) => {
+    setCurrentTab(e.target.textContent)
+  };
+
   return (
     <div className="settings__container">
       <EditModal
@@ -240,11 +246,17 @@ const Settings = (props) => {
 
       <aside className="settings__sidebar">
         <ul className="settings__list">
-          <li className="settings__list-item">Grant Cycle</li>
+          <li 
+            className="settings__list-item"
+            onClick={changeTabView}>
+            Grant Cycle</li>
+          <li 
+            className="settings__list-item"
+            onClick={changeTabView}>Blocked Domains</li>
         </ul>
       </aside>
 
-      <main className="settings__main">
+      {currentTab === 'Grant Cycle' && (<main className="settings__main">
         <h2 className="settings__heading">Create Grant Cycle</h2>
         <div className="settings__form">
           <div className="settings__input-block">
@@ -341,7 +353,10 @@ const Settings = (props) => {
             </tbody>
           </table>
         </div>
-      </main>
+      </main>)} 
+      {
+        currentTab === 'Blocked Domains' && (<header>Welcome to the header</header>)
+      }
     </div>
   );
 };
