@@ -7,6 +7,7 @@ import EditModal from './EditModal';
 import DatePicker from 'react-datepicker';
 import handleYearValidation from '../../utils/handleYearValidation';
 import '../nominationInfo/calendar.css';
+import BlockedDomainsTab from './BlockedDomainsTab';
 
 const Settings = (props) => {
   const [newGrantCycle, setNewGrantCycle] = useState({
@@ -355,9 +356,7 @@ const Settings = (props) => {
           </div>
         </main>
       )}
-      {currentTab === 'Blocked Domains' && (
-        <header>Welcome to the header</header>
-      )}
+      {currentTab === 'Blocked Domains' && <BlockedDomainsTab/>}
     </div>
   );
 };
