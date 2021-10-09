@@ -227,6 +227,17 @@ const Settings = (props) => {
   const changeTabView = (e) => {
     setCurrentTab(e.target.textContent);
   };
+  const tabs = ['Grant Cycle', 'Blocked Domains'].map((tabName) => {
+    let active;
+    if (currentTab === tabName) {
+      active = 'active_tab';
+    }
+    return (
+      <li className={`settings__list-item ${active}`} onClick={changeTabView}>
+        {tabName}
+      </li>
+    );
+  });
 
   return (
     <div className="settings__container">
@@ -246,14 +257,7 @@ const Settings = (props) => {
       </header>
 
       <aside className="settings__sidebar">
-        <ul className="settings__list">
-          <li className="settings__list-item" onClick={changeTabView}>
-            Grant Cycle
-          </li>
-          <li className="settings__list-item" onClick={changeTabView}>
-            Blocked Domains
-          </li>
-        </ul>
+        <ul className="settings__list">{tabs}</ul>
       </aside>
 
       {currentTab === 'Grant Cycle' && (
@@ -356,7 +360,7 @@ const Settings = (props) => {
           </div>
         </main>
       )}
-      {currentTab === 'Blocked Domains' && <BlockedDomainsTab/>}
+      {currentTab === 'Blocked Domains' && <BlockedDomainsTab />}
     </div>
   );
 };
