@@ -10,8 +10,6 @@ import { SearchResultDataContext } from '../../utils/context/SearchResultsContex
 import './style.css';
 import ApplicationViewByStages from '../pages/Home/ApplicationViewByStages';
 import nominationsAPI from '../../utils/API/nominationsAPI';
-// import nomination from '../../../../api/models/nomination';
-// import { google } from 'googleapis';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 SettingsModal.setAppElement('#root');
@@ -120,25 +118,6 @@ const SearchBar = (props) => {
   function handleGoBack() {
     setShowResults(false);
   }
-
-  //   https://drive.google.com/drive/folders/156CbqGdickbnJwVw6j1UOkRAV_mefu_j?usp=sharing
-
-  // https://drive.google.com/drive/u/5/folders/1Uu04G0GGvJVaYE0S9hvc9_6lmtN5XQtQ
-
-  //   const getFolderIdWithApplicationName = async (name) => {
-  //    let folderName = nomination.name
-
-  //    let result = await drive.files.list({
-  //     q: "mimeType='application/vnd.google-apps.folder' and trashed=false",
-  //     fields: 'nextPageToken, files(id, name)',
-  //     spaces: 'drive',
-  // }).
-
-  //   }
-
-  // const link =
-
-  // console.log(props.nomination);
 
   const openWindow = (val) => {
     window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
