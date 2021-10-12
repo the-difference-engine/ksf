@@ -180,6 +180,7 @@ const syncNominations = async (req, res) => {
 const checkNominations = async (req, res) => {
   try {
     console.log('Calling GmailStart function....');
+
     gmailStart();
     console.log('nominations check completed');
     return res.status(200).json({ status: 'ok' });

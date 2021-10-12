@@ -2,6 +2,7 @@ const { Router } = require('express');
 const nominationController = require('../controllers/nomination.js');
 const userController = require('../controllers/user.js');
 const grantCycleController = require('../controllers/grantCycle.js');
+const gmailAuthController = require('../controllers/auth.js');
 
 const router = Router();
 
@@ -29,6 +30,7 @@ router.post('/api/grantcycles', grantCycleController.create);
 router.get('/api/grantcycles/findbyname/:name', grantCycleController.findByName);
 router.put('/api/grantcycles/:id', grantCycleController.update);
 
-
+// auth endpoints
+router.get('/api/auth', gmailAuthController.checkNominations);
 
 module.exports = router;
