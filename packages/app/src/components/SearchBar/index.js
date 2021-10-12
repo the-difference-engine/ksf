@@ -16,11 +16,7 @@ SettingsModal.setAppElement('#root');
 
 const SearchBar = (props) => {
   const firstUpdate = useRef(true);
-  useEffect(() => {
-    if (!firstUpdate.current) {
-      console.log('nomination RELOADED');
-    }
-  }, [props.nominationReloaded]);
+  const [load, reload] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState();
   const [showResults, setShowResults] = useState(false);
@@ -32,6 +28,14 @@ const SearchBar = (props) => {
   const [ActiveNomination, SetActiveNomination] = useContext(
     ActiveNominationContext
   );
+
+  useEffect(() => {
+    if (!firstUpdate.current) {
+      console.log('activenomination RELOADED');
+      reload((load) => !load);
+    }
+    firstUpdate.current = false;
+  }, [ActiveNomination]);
 
   // console.log('this is ActiveNomination in searchBar component');
   // // console.dir(props.nomination); // TODO CLEANUP
@@ -177,9 +181,11 @@ const SearchBar = (props) => {
           >
             Policies
           </a> */}
+          {/* ActiveNomination.driveFolderId != '' ? */}
           {console.log('this is active nomination in searchbar jsx')}
           {console.log(ActiveNomination)}
-          {ActiveNomination.driveFolderId != 'false' ? (
+          {ActiveNomination.driveFolderId}
+          {ActiveNomination.driveFolderId && (
             <>
               <FontAwesomeIcon
                 onClick={() => {
@@ -191,8 +197,6 @@ const SearchBar = (props) => {
                 // size="3x"
               />
             </>
-          ) : (
-            <span></span>
           )}
           <FontAwesomeIcon
             onClick={() => setModalIsOpen(true)}

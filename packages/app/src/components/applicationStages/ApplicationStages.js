@@ -78,12 +78,12 @@ const ApplicationStages = (props) => {
             );
             // console.dir(activeNomination)
             setActiveNomination(activeNomination);
+            console.log('before calling reload nomination');
+            props.reloadNomination();
           }
         });
     } catch (err) {
       console.log(err);
-    } finally {
-      props.reloadNomination();
     }
   }
 

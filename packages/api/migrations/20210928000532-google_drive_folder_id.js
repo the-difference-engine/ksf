@@ -5,7 +5,7 @@ module.exports = {
     return Promise.all([
       queryInterface.addColumn('nominations', 'driveFolderId', {
         type: Sequelize.TEXT,
-        defaultValue: false,
+        defaultValue: '',
       }),
     ]);
   },
