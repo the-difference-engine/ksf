@@ -102,7 +102,6 @@ const SearchBar = () => {
 
   return (
     <>
-    
       <SettingsModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -117,7 +116,6 @@ const SearchBar = () => {
         ) : (
           <Settings onResultsClick={handleShowingResults} />
         )}
-
         <FontAwesomeIcon
           onClick={closeModal}
           icon='times'
@@ -148,7 +146,6 @@ const SearchBar = () => {
           </form>
         </div>
 
-        <h1>Foobar</h1>
         <div className='cog-container'>
           <FontAwesomeIcon
             onClick={() => setModalIsOpen(true)}
