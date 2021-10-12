@@ -1,9 +1,8 @@
-require('dotenv').config({ path: '../.env' })
+require('dotenv').config()
 const { searchAndSend } = require('../controllers/nomination');
-const sequelize = require('sequelize')
-const Op = sequelize.Op;
+const { Op } = require('sequelize')
 
-function emailAgingApplications() {
+const emailAgingApplications = async(res, req) =>{
     const age = 86400000 * 7; // seven days in ms
     const hipaaVerified = {
         where:
@@ -12,7 +11,10 @@ function emailAgingApplications() {
             hipaaTimestamp: {
                 [Op.lte]: new Date(new Date() - age)
             },
-            reminderSent: false
+            //if this property is null, it should mean a reminder email hasn't been sent and that its ok to send one
+            hipaaReminderEmailTimestamp: {
+               [Op.is]: null 
+            },
         }
     };
     const awaitingHipaa = {
@@ -22,7 +24,10 @@ function emailAgingApplications() {
             awaitingHipaaTimestamp: {
                 [Op.lte]: new Date(new Date() - age)
             },
-            reminderSent: false
+            //if this property is null, it should mean a reminder email hasn't been sent and that its ok to send one
+            awaitingHipaaReminderEmailTimestamp: {
+                [Op.is]: null
+            },
         }
     };
     await searchAndSend('HIPAA Verified', hipaaVerified);

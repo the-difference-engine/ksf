@@ -73,7 +73,7 @@ function sendSurveyEmail(nomination) {
 }
 
 function verifyHcEmail(nomination) {
-  const emailToken = generateToken(nomination._id);
+  const emailToken = generateToken(nomination.id);
   email
     .send({
       template: 'verifyHcEmail',
@@ -83,11 +83,10 @@ function verifyHcEmail(nomination) {
       },
       locals: {
         name: nomination.providerName,
-        appUrl: process.env.APP_URL,
-        urlLink: `${process.env.APP_URL}/confirmation/${emailToken}`,
+        urlLink: `${process.env.APP_URL}/email-verification/${emailToken}`,
+        imgUrl,
       },
     })
-    .then(() => console.log('email has been sent!'))
     .catch(console.error);
 }
 
@@ -111,7 +110,7 @@ function sendHIPAAEmail(nomination) {
     .catch((err) => console.log(err))
 }
 
-function sendSurveyReminder(nomination) {
+function sendSurveyReminder(emailAddress, fullName) {
   email
     .send(
       {
@@ -119,20 +118,18 @@ function sendSurveyReminder(nomination) {
         message: {
           from: infoEmail,
           replyTo: infoEmail,
-          to: nomination.providerEmailAddress,
+          to: emailAddress,
         },
         locals: {
-          name: nomination.patientName,
-          providerName: nomination.providerName,
+          name: fullName,
           imgUrl
         }
       }
     )
-    .then(console.log("reminder email has been sent to" + nomination.providerName))
     .catch((err) => console.log(err))
 }
 
-function sendHIPAAReminder(nomination) {
+function sendHIPAAReminder(emailAddress, fullName) {
   email
     .send(
       {
@@ -140,16 +137,14 @@ function sendHIPAAReminder(nomination) {
         message: {
           from: infoEmail,
           replyTo: infoEmail,
-          to: nomination.providerEmailAddress,
+          to: emailAddress,
         },
         locals: {
-          name: nomination.patientName,
-          providerName: nomination.providerName,
+          name: fullName,
           imgUrl
         }
       }
     )
-    .then(console.log("reminder email has been sent to" + nomination.providerName))
     .catch((err) => console.log(err))
 }
 
