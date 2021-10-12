@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import blockedDomainsList from '../../utils/blockedDomainsList';
+import domainAPI from '../../utils/API/domainAPI';
 
 const BlockedDomainsTab = () => {
   const [domainValue, setDomainValue] = useState('');
@@ -10,7 +11,7 @@ const BlockedDomainsTab = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    blockedDomainsList.push(domainValue);
+    domainAPI.addDomain(domainValue)
     console.log('clicket----------');
   };
 
