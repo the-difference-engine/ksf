@@ -144,21 +144,6 @@ const SearchBar = (props) => {
     window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
   };
 
-  // const fetchNomination = () => {
-  //   nominationsAPI.fetchNomination(ActiveNomination?.id).then((res) => {
-  //     const nomination = res.data;
-  //     console.log('This is nomination');
-  //     console.dir(nomination);
-  //   });
-  // };
-  // useEffect(() => {
-  //   if (!firstUpdate.current) {
-  //     fetchNomination();
-  //   }
-
-  //   firstUpdate.current = false;
-  // }, [props.nominationReloaded]);
-
   return (
     <>
       <SettingsModal
