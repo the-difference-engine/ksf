@@ -140,13 +140,6 @@ const updateNomination = async (req, res) => {
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
-      try {
-        // resets reminderSent bool every stage
-        nomination.update({ reminderSent: false });
-      } catch (error) {
-        console.error('Was not able to change reminderSent bool', error);
-      }
-
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
           nomination.update({ declinedTimestamp: Date() });
@@ -196,11 +189,8 @@ const updateNomination = async (req, res) => {
           return res.status(400);
         } finally {
           sendSurveyEmail(nomination);
+          sendSurveySocialWorker(nomination);
         }
-      }
-
-      if (nomination.status === NOMINATION_STATUS.document_review) {
-        sendSurveySocialWorker(nomination);
       }
 
       if (nomination.status === NOMINATION_STATUS.board_review) {

@@ -168,13 +168,13 @@ describe('PUT /api/grantcycles', () => {
         done();
       });
   });
-  it('returns 400 if requesting to turn grant active when there is already an active grant', async (done) => {
+  it('returns 200 if requesting to turn grant active when there is already an active grant', async (done) => {
     const { id } = grants.secondGrant;
     request(app)
       .put(`/api/grantcycles/${id}`)
       .send({ isActive: true })
       .set('Content-Type', 'application/json')
-      .expect(400)
+      .expect(200)
       .end((error, res) => {
         console.log(res.text);
         if (error) return done(error);
@@ -201,7 +201,11 @@ describe('GET /grantcycles', () => {
     try {
       const [firstGrant, secondGrant] = await Promise.all([
         db.GrantCycle.create({ ...testGrant }),
-        db.GrantCycle.create({ ...testGrant, isActive: false, name: 'second grant' }),
+        db.GrantCycle.create({
+          ...testGrant,
+          isActive: false,
+          name: 'second grant',
+        }),
       ]);
       grants = { firstGrant, secondGrant };
     } catch (error) {
@@ -243,11 +247,18 @@ describe('GET /api/grantcycles/findbyname/:name', () => {
     try {
       const [firstGrant, secondGrant] = await Promise.all([
         db.GrantCycle.create({ ...testGrant }),
-        db.GrantCycle.create({ ...testGrant, isActive: false, name: 'second grant' }),
+        db.GrantCycle.create({
+          ...testGrant,
+          isActive: false,
+          name: 'second grant',
+        }),
       ]);
       grants = { firstGrant, secondGrant };
     } catch (error) {
-      console.error('error beforeAll @ GET /api/grantcycles/findbyname/:name', error);
+      console.error(
+        'error beforeAll @ GET /api/grantcycles/findbyname/:name',
+        error
+      );
     }
     return grants;
   });
@@ -255,7 +266,10 @@ describe('GET /api/grantcycles/findbyname/:name', () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.error('error afterEach @ GET /api/grantcycles/findbyname/:name', error);
+      console.error(
+        'error afterEach @ GET /api/grantcycles/findbyname/:name',
+        error
+      );
     }
   });
   it('returns 200 && grant cycle', (done) => {
@@ -267,8 +281,11 @@ describe('GET /api/grantcycles/findbyname/:name', () => {
         expect(res.statusCode).toEqual(200);
         // checks for the keys of res.body to be included in a new instance of GrantCycle
         // couldn't figure how to do this with only object comparison and keep it in one line
-        expect(Object.keys(res.body))
-          .toEqual(expect.arrayContaining(Object.keys(new db.GrantCycle(testGrant).dataValues)));
+        expect(Object.keys(res.body)).toEqual(
+          expect.arrayContaining(
+            Object.keys(new db.GrantCycle(testGrant).dataValues)
+          )
+        );
         if (error) {
           console.log(res.text);
           console.error('error @ GET /api/grantcycles/findbyname/:name', error);
@@ -299,14 +316,20 @@ describe('GET /api/grantcycles/findactive', () => {
     try {
       await db.GrantCycle.create(testGrant);
     } catch (error) {
-      console.error('error beforeAll @ GET /api/grantcycles/findactive', error.message);
+      console.error(
+        'error beforeAll @ GET /api/grantcycles/findactive',
+        error.message
+      );
     }
   });
   afterAll(async () => {
     try {
       await db.GrantCycle.destroy({ where: {} });
     } catch (error) {
-      console.error('error afterAll @ GET /api/grantcycles/findactive', error.message);
+      console.error(
+        'error afterAll @ GET /api/grantcycles/findactive',
+        error.message
+      );
     }
   });
   it('returns 200 && active grant', (done) => {
