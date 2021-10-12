@@ -17,8 +17,13 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 SettingsModal.setAppElement('#root');
 
 const SearchBar = (props) => {
-  console.log('this is props.nomination in searchBar component');
-  console.dir(props.nomination);
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (!firstUpdate.current) {
+      console.log('nomination RELOADED');
+    }
+  }, [props.nominationReloaded]);
+
   const [searchTerm, setSearchTerm] = useState();
   const [showResults, setShowResults] = useState(false);
   const [settingsResults, setSettingsResults] = useState({});
@@ -29,6 +34,10 @@ const SearchBar = (props) => {
   const [ActiveNomination, SetActiveNomination] = useContext(
     ActiveNominationContext
   );
+
+  // console.log('this is ActiveNomination in searchBar component');
+  // // console.dir(props.nomination); // TODO CLEANUP
+  // console.log(ActiveNomination);
 
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
@@ -135,21 +144,20 @@ const SearchBar = (props) => {
     window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
   };
 
-  const firstUpdate = useRef(true);
-  const fetchNomination = () => {
-    nominationsAPI.fetchNomination(ActiveNomination?.id).then((res) => {
-      const nomination = res.data;
-      console.log('This is nomination');
-      console.dir(nomination);
-    });
-  };
-  useEffect(() => {
-    if (!firstUpdate.current) {
-      fetchNomination();
-    }
+  // const fetchNomination = () => {
+  //   nominationsAPI.fetchNomination(ActiveNomination?.id).then((res) => {
+  //     const nomination = res.data;
+  //     console.log('This is nomination');
+  //     console.dir(nomination);
+  //   });
+  // };
+  // useEffect(() => {
+  //   if (!firstUpdate.current) {
+  //     fetchNomination();
+  //   }
 
-    firstUpdate.current = false;
-  }, [props.nominationReloaded]);
+  //   firstUpdate.current = false;
+  // }, [props.nominationReloaded]);
 
   return (
     <>
@@ -205,10 +213,9 @@ const SearchBar = (props) => {
           >
             Policies
           </a> */}
-          {ActiveNomination ? (
-            // <span>
-
-            // </span>
+          {console.log('this is active nomination in searchbar jsx')}
+          {console.log(ActiveNomination)}
+          {ActiveNomination.driveFolderId != 'false' ? (
             <>
               <FontAwesomeIcon
                 onClick={() => {

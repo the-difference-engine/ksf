@@ -8,7 +8,6 @@ const scopes = [
   'https://www.googleapis.com/auth/drive.appdata',
   'https://www.googleapis.com/auth/drive.file',
 ];
-const db = require('../models');
 
 const auth = new google.auth.JWT(clientEmail, null, privateKey, scopes);
 
@@ -20,28 +19,16 @@ async function createFolder(applicationName, nomination) {
     parents: [parentFolderId],
     mimeType: 'application/vnd.google-apps.folder',
   };
-  drive.files.create(
-    {
+
+  console.log('this is before files.create');
+  let err,
+    response = await drive.files.create({
       resource: fileMetadata,
       fields: 'id',
-    },
-    async function (err, res) {
-      // console.log(`This is file id: ${res.data.id}`);
-      // console.log(`This is res.data: ${res.data}`);
-      // console.log('this is file', res);
-      if (err) {
-        // Handle error
-        console.error(err);
-        console.log(err);
-      }
-      let driveId = res.data.id;
-      // return res.data.id;
-      nomination.update({ driveFolderId: driveId });
-      return driveId;
-    }
-  );
-
-  return '';
+    });
+  console.log('create Folder Is running');
+  console.log(response.data.id);
+  return response.data.id;
 }
 
 module.exports = { createFolder };

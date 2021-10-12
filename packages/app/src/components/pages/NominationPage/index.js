@@ -28,8 +28,6 @@ const NominationPage = ({
     if (NominationsData) {
       NominationsData.forEach((nomination) => {
         if (nomination.id === id) {
-          console.log('this is nomination in nomination page loop');
-          console.dir(nomination);
           return setActiveNomination(nomination);
         } else {
           return setError('Nomination does not exist');
@@ -119,8 +117,8 @@ const NominationPage = ({
     setMode('edit');
   }
 
-  function reloadNomination(){
-    setNominationReloaded((nominationReloaded) => !nominationReloaded)
+  function reloadNomination() {
+    setNominationReloaded((nominationReloaded) => !nominationReloaded);
   }
 
   function handleSaveHasBeenClicked() {
@@ -142,15 +140,16 @@ const NominationPage = ({
   const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData);
 
   // [driveFolderId, setDriveFolderId] = useState('');
-  const [nominationReloaded, setNominationReloaded] = useState(false)
-  
-
+  const [nominationReloaded, setNominationReloaded] = useState(false);
 
   return (
     <>
       {activeNomination ? (
         <div className="nomination-show-page">
-          <SearchBar nomination={activeNomination} nominationReloaded={nominationReloaded}/>
+          <SearchBar
+            nomination={activeNomination}
+            nominationReloaded={nominationReloaded}
+          />
           <NominationBanner
             mode={mode}
             revertMode={revertMode}
@@ -161,9 +160,7 @@ const NominationPage = ({
             handleCancelHasBeenClicked={handleCancelHasBeenClicked}
             nomination={activeNomination}
           />
-          <ApplicationStages 
-            reloadNomination={reloadNomination}
-          />
+          <ApplicationStages reloadNomination={reloadNomination} />
           <ApplicationForm
             patientInformationData={patientInformationData}
             familyMemberData={familyMemberData}

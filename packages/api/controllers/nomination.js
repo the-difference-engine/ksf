@@ -16,6 +16,21 @@ const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
 const { drive } = require('googleapis/build/src/apis/drive');
 const Op = sequelize.Op;
+const { google } = require('googleapis');
+const parsePrivateKey = require('../helper/parsePrivateKey');
+const { resolveContent } = require('nodemailer/lib/shared');
+const parentFolderId = process.env.APPLICATION_FOLDER_ID;
+const clientEmail = process.env.SERVICE_CLIENT_EMAIL;
+const privateKey = parsePrivateKey(process.env.SERVICE_PRIVATE_KEY);
+const scopes = [
+  'https://www.googleapis.com/auth/drive',
+  'https://www.googleapis.com/auth/drive.appdata',
+  'https://www.googleapis.com/auth/drive.file',
+];
+
+const auth = new google.auth.JWT(clientEmail, null, privateKey, scopes);
+
+const driveFolder = google.drive({ version: 'v3', auth });
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -99,11 +114,9 @@ const resendEmail = async (req, res) => {
     } else if (recipient === 'healthcare-provider' && emailType === 'survey') {
       sendSurveySocialWorker(nomination);
     } else {
-      return res
-        .status(400)
-        .json({
-          error: `invalid input, email for ${recipient} and ${emailType} unknown`,
-        });
+      return res.status(400).json({
+        error: `invalid input, email for ${recipient} and ${emailType} unknown`,
+      });
     }
   } catch {
     console.log('500 Internal Server Error', error);
@@ -117,10 +130,12 @@ const updateNomination = async (req, res) => {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    const response = nomination.update({ status: req.body.status }).catch((err) => {
-      console.log('Nomination Not Found', err);
-      return res.status(400);
-    });
+    const response = nomination
+      .update({ status: req.body.status })
+      .catch((err) => {
+        console.log('Nomination Not Found', err);
+        return res.status(400);
+      });
     //can continue using additional conditional to use other email functions,
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
@@ -146,8 +161,6 @@ const updateNomination = async (req, res) => {
       }
 
       if (nomination.status === NOMINATION_STATUS.awaiting) {
-        
-
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
           const lastName = nomination.patientName
@@ -156,11 +169,16 @@ const updateNomination = async (req, res) => {
           const state = states.getStateCodeByStateName(
             nomination.hospitalState
           );
+
           const applicationName = `${lastName}-${state}`;
           let driveFolderId = await createFolder(applicationName, nomination);
           // console.log(`This is driveId from createFolder call: ${driveId}`);
-          console.log(`!!!!!This is driveFolderId in nomination: ${driveFolderId}`)
-          
+          console.log(
+            `!!!!!This is driveFolderId in nomination: ${driveFolderId}`
+          );
+
+          nomination.update({ driveFolderId: driveFolderId });
+
           return res.status(200).json(driveFolderId);
         } catch (err) {
           console.error('Could not create a folder', err);
@@ -260,8 +278,14 @@ async function searchAndSend(status, query) {
     nomination = nominations[i];
     switch (status) {
       case 'HIPAA Verified':
-        sendSurveyReminder(nomination.representativeEmailAddress, nomination.representativeName);
-        sendSurveyReminder(nomination.providerEmailAddress, nomination.providerName);
+        sendSurveyReminder(
+          nomination.representativeEmailAddress,
+          nomination.representativeName
+        );
+        sendSurveyReminder(
+          nomination.providerEmailAddress,
+          nomination.providerName
+        );
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
         } catch (err) {
@@ -269,12 +293,21 @@ async function searchAndSend(status, query) {
         }
         break;
       case 'Awaiting HIPAA':
-        sendHIPAAReminder(nomination.representativeEmailAddress, nomination.representativeName);
-        sendHIPAAReminder(nomination.providerEmailAddress, nomination.providerName);
+        sendHIPAAReminder(
+          nomination.representativeEmailAddress,
+          nomination.representativeName
+        );
+        sendHIPAAReminder(
+          nomination.providerEmailAddress,
+          nomination.providerName
+        );
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
-          console.log('Unable to update record awaiting hipaa reminder timestamp', err);
+          console.log(
+            'Unable to update record awaiting hipaa reminder timestamp',
+            err
+          );
         }
         break;
       default:
