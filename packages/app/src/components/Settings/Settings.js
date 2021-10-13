@@ -13,6 +13,7 @@ const Settings = (props) => {
     openedOn: '',
     closedOn: '',
     name: '',
+    isActive: false,
   });
   const [allGrantCycles, setGrantCycles] = useState([]);
   const [disableButton, setDisableButton] = useState(true);
@@ -87,7 +88,12 @@ const Settings = (props) => {
     try {
       const { data } = await grantCycleAPI.createGrantCycle(newGrantCycle);
 
-      setNewGrantCycle({ openedOn: '', closedOn: '', name: '' });
+      setNewGrantCycle({
+        openedOn: '',
+        closedOn: '',
+        name: '',
+        isActive: false,
+      });
       createButton.current.blur();
       getGrantCycles();
     } catch (ex) {
@@ -104,7 +110,17 @@ const Settings = (props) => {
     try {
       const { data } = await grantCycleAPI.updateGrantCycle(gcToEdit);
 
-      setGcToEdit({ openedOn: '', closedOn: '', name: '' });
+      if (gcToEdit.isActive) {
+        setActiveGrantCycle(gcToEdit);
+      }
+
+      setGcToEdit({
+        id: '',
+        openedOn: '',
+        closedOn: '',
+        name: '',
+        isActive: '',
+      });
       getGrantCycles();
       setShowEditModal(false);
     } catch (ex) {
@@ -122,6 +138,7 @@ const Settings = (props) => {
       closedOn: grantCycle.closedOn.split('T')[0],
       name: grantCycle.name,
       id: grantCycle.id,
+      isActive: grantCycle.isActive,
     });
     setShowEditModal(true);
   };
@@ -306,6 +323,7 @@ const Settings = (props) => {
                 <th style={{ width: '10%' }}>End Date</th>
                 <th style={{ width: '10%' }}>Cycle Name</th>
                 <th style={{ width: '10%' }}>Applications</th>
+                <th style={{ width: '10%' }}>Active Cycle</th>
               </tr>
             </thead>
             <tbody className="settings__tbody">
@@ -315,6 +333,9 @@ const Settings = (props) => {
                   grantCycle={gc}
                   onResultsClick={props.onResultsClick}
                   onEdit={handleEdit}
+                  activeGrantCycle={activeGrantCycle}
+                  setActiveGrantCycle={setActiveGrantCycle}
+                  showEditModal={showEditModal}
                 />
               ))}
             </tbody>
