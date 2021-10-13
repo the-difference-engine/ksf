@@ -5,17 +5,18 @@ import states from 'us-state-codes';
 export const NominationsDataContext = createContext();
 
 export const NominationsDataProvider = (props) => {
-  const [NominationsData, setNominationsData] = useState();
+  const [NominationsData, setNominationsData] = useState([]);
+
+  const [activeNomination, setActiveNomination] = useState({});
 
   const [apiCalled, setApiCall] = useState(false);
 
   useEffect(() => {
     if (!apiCalled) {
-      console.log('use effect in nominationsDataContext');
+      console.log('find all nominations is running in use effect');
       findAllNominations();
       setApiCall(true);
     }
-    // findAllNominations();
   }, []);
 
   const nomName = (n) => {
@@ -24,7 +25,7 @@ export const NominationsDataProvider = (props) => {
     return `${lastName}-${geoState}`;
   };
 
-  function findAllNominations() {
+  const findAllNominations = () => {
     nominationsAPI
       .getNominations()
       .then((res) => {
@@ -38,11 +39,24 @@ export const NominationsDataProvider = (props) => {
         setNominationsData(nominations);
       })
       .catch((err) => console.log(err));
-  }
+  };
+
+  const getNominationById = (id) => {
+    nominationsAPI.fetchNomination(id).then((res) => {
+      nomination = res.data;
+      setActiveNomination(nomination);
+    });
+  };
 
   return (
     <NominationsDataContext.Provider
-      value={{ NominationsData, setNominationsData, findAllNominations }}
+      value={{
+        NominationsData,
+        setNominationsData,
+        activeNomination,
+        setActiveNomination,
+        getNominationById,
+      }}
     >
       {props.children}
     </NominationsDataContext.Provider>
