@@ -48,7 +48,7 @@ module.exports = function gsheetToDB() {
         db.Nomination.findOrCreate({
           where: {
             dateReceived: nomination[0],
-            // providerName: nomination[10],
+            providerName: nomination[10],
             // providerPhoneNumber: nomination[11],
             // providerEmailAddress: nomination[12],
             // providerTitle: nomination[13],
@@ -85,7 +85,7 @@ module.exports = function gsheetToDB() {
             ),
           },
         }).then((array) => {
-          //db.Nomination.findOrCreate returns a promise that when fullfilled returns an array with two elements 
+          //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements 
           //the first element is the nomination instance object that contains the dataValues among other things  
           //the second element is a boolean that represents whether a nomination was created
           if (array[1]) {
