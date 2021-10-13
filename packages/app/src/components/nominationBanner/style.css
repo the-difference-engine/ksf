@@ -103,6 +103,10 @@ legend.resend-legend {
 }
 
 form.email-form {
+  margin: 0;
+}
+
+div.email-form-container {
   display: flex;
   margin: 0px 25px;
 }
@@ -228,6 +232,10 @@ form.email-form {
 
 .button-no:hover {
   background-color: #999;
+}
+
+button[disabled].button-yes:hover {
+  background-color: #128b3e;
 }
 
 .exit-button {
