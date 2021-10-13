@@ -5,6 +5,10 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import EditButton from './EditButton';
 import SaveButton from './SaveButton';
+import ResendEmailBtn from './resendEmailBtn.js';
+import ResendEmailModal from './resendEmailModal.js';
+import DeclineAppModal from './declineAppModal.js';
+import DeclineAppBtn from './declineAppBtn.js';
 
 const states = require('us-state-codes');
 
@@ -48,27 +52,6 @@ const NominationBanner = (props) => {
     );
   };
 
-  const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
-
-  const toggleEmailModalState = () => {
-    setResendEmailModalVisible(
-      (resendEmailModalVisible) => !resendEmailModalVisible
-    );
-    setRecipientChecked('');
-    setEmailTypeChecked('');
-  };
-
-  const [recipientChecked, setRecipientChecked] = useState('');
-  const [emailTypeChecked, setEmailTypeChecked] = useState('');
-
-  const handleRecipientChange = (e) => {
-    setRecipientChecked(e.target.value);
-  };
-
-  const handleEmailTypeChange = (e) => {
-    setEmailTypeChecked(e.target.value);
-  };
-
   function declineApplication() {
     const declineStatus = 'Declined';
     activeNomination.status = declineStatus;
@@ -85,14 +68,12 @@ const NominationBanner = (props) => {
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    nominationsAPI.resendEmail(
-      props.nomination.id,
-      recipientChecked,
-      emailTypeChecked
+  const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
+
+  const toggleEmailModalState = () => {
+    setResendEmailModalVisible(
+      (resendEmailModalVisible) => !resendEmailModalVisible
     );
-    toggleEmailModalState();
   };
 
   return (
@@ -113,151 +94,27 @@ const NominationBanner = (props) => {
               </span>
             </div>
             <div className="column name">
-              <button
-                disabled={activeNomination.status == 'Declined'}
-                className="decline-button banner-buttons"
-                onClick={toggleDeclineAppModalState}
-              >
-                Decline Application
-              </button>
-              <button
-                disabled={activeNomination.status == 'Declined'}
-                className="resend-email-btn banner-buttons"
-                onClick={toggleEmailModalState}
-              >
-                Resend Email
-              </button>
+              <DeclineAppBtn
+                status={activeNomination.status}
+                toggleDeclineAppModalState={toggleDeclineAppModalState}
+              />
+              <ResendEmailBtn
+                status={activeNomination.status}
+                toggleEmailModalState={toggleEmailModalState}
+              />
             </div>
             {declineAppModalVisible && (
-              <div className="modal-background">
-                <div className="modal-container">
-                  <button
-                    className="exit-button"
-                    onClick={toggleDeclineAppModalState}
-                  >
-                    &times;
-                  </button>
-                  <h3 className="modal-text">
-                    Are you sure you want to decline the application?
-                  </h3>
-                  <div className="modal-buttons">
-                    <button
-                      className="button-yes"
-                      onClick={() => {
-                        declineApplication();
-                        toggleDeclineAppModalState();
-                      }}
-                    >
-                      Confirm
-                    </button>
-                    <button
-                      className="button-no"
-                      onClick={toggleDeclineAppModalState}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <DeclineAppModal
+                declineApplication={declineApplication}
+                toggleDeclineAppModalState={toggleDeclineAppModalState}
+              />
             )}
             {resendEmailModalVisible && (
-              <div className="modal-background">
-                <div className="email-modal-container">
-                  <button
-                    className="exit-button"
-                    onClick={toggleEmailModalState}
-                  >
-                    &times;
-                  </button>
-                  <form className="email-form" onSubmit={handleSubmit}>
-                    <div className="email-form-container">
-                      <fieldset className="resend-fieldset">
-                        <legend className="resend-legend">Recipient</legend>
-                        <div>
-                          <label htmlFor="family-member" className="survey">
-                            <input
-                              type="radio"
-                              value="family-member"
-                              id="family-member"
-                              checked={recipientChecked === 'family-member'}
-                              onChange={handleRecipientChange}
-                              className="family-member radio"
-                            />
-                            Family Member
-                          </label>
-                        </div>
-                        <div>
-                          <label
-                            htmlFor="healthcare-provider"
-                            className="survey"
-                          >
-                            <input
-                              type="radio"
-                              value="healthcare-provider"
-                              id="healthcare-provider"
-                              checked={
-                                recipientChecked === 'healthcare-provider'
-                              }
-                              onChange={handleRecipientChange}
-                              className="healthcare-provider radio"
-                            />
-                            Healthcare Provider
-                          </label>
-                        </div>
-                      </fieldset>
-
-                      <fieldset className="resend-fieldset">
-                        <legend className="email-legend resend-legend">
-                          Email Type
-                        </legend>
-                        <div>
-                          <label htmlFor="hipaa" className="survey">
-                            <input
-                              type="radio"
-                              value="hipaa"
-                              id="hipaa"
-                              checked={emailTypeChecked === 'hipaa'}
-                              onChange={handleEmailTypeChange}
-                              className="hipaa radio"
-                            />
-                            HIPAA
-                          </label>
-                        </div>
-                        <div>
-                          <label htmlFor="survey" className="survey">
-                            <input
-                              type="radio"
-                              value="survey"
-                              id="survey"
-                              checked={emailTypeChecked === 'survey'}
-                              onChange={handleEmailTypeChange}
-                              className="survey radio"
-                            />
-                            Survey
-                          </label>
-                        </div>
-                      </fieldset>
-                    </div>
-                    <div className="email-modal-buttons">
-                      <button
-                        className="button-yes"
-                        type="submit"
-                        disabled={
-                          recipientChecked === '' || emailTypeChecked === ''
-                        }
-                      >
-                        Submit
-                      </button>
-                      <button
-                        className="button-no"
-                        onClick={toggleEmailModalState}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
+              <ResendEmailModal
+                status={activeNomination.status}
+                toggleEmailModalState={toggleEmailModalState}
+                nomination={props.nomination}
+              />
             )}
           </div>
 
@@ -307,7 +164,7 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div>
-          {props.mode == 'view' ? (
+          {props.mode === 'view' ? (
             <EditButton handleHasBeenClicked={props.handleEditHasBeenClicked} />
           ) : (
             <SaveButton
