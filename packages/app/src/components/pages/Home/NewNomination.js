@@ -9,11 +9,9 @@ const getNumberOfDays = (start, end) => {
   const date1 = new Date(start);
   const date2 = new Date(end);
   const dayConversion = 1000 * 60;
-  // Calculating the time difference Awaiting Hipaa Timestamp and current date
   const diffInTime = date2.getTime() - date1.getTime();
-  // Calculating the no. of days between two dates
   const diffInDays = Math.round(diffInTime / dayConversion);
-  // return diffInDays;
+
   if (diffInDays >= 2) {
     return true;
   } else {
@@ -48,9 +46,6 @@ const NewNomination = ({ nomination }) => {
     } else {
       return (
         <tr className="landing-table" key={nomination.id}>
-          {/* <td>
-            <FontAwesomeIcon icon="file-image" color="green" />
-          </td> */}
           <td className="green new-files-application-name add-padding-left detail-font-size">
             <Link target={'_blank'} to={`/nomination/${nomination.id}`}>
               {nomination.nominationName}

@@ -1,7 +1,4 @@
-const http = require('http');
-const url = require('url');
 const opn = require('open');
-const destroyer = require('server-destroy');
 const { google } = require('googleapis');
 const stream = require('stream');
 const credentials = require('../helper/credentials.json');
@@ -59,48 +56,6 @@ async function uploadFile(nomName, img) {
   });
 }
 
-// function gmailStart() {
-//
-//   const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];
-//   const oauth2Client = new google.auth.OAuth2(
-//     credentials.installed.client_id,
-//     credentials.installed.client_secret,
-//     credentials.installed.redirect_uris[0],
-//   );
-//   google.options({ auth: oauth2Client });
-//   async function authenticate() {
-//     return new Promise((resolve, reject) => {
-//       const authorizeUrl = oauth2Client.generateAuthUrl({
-//         access_type: 'offline',
-//         scope: SCOPES,
-//       });
-
-//       const authServer = http
-//         .createServer(async (req, res) => {
-//           try {
-//             console.log('HERE IS THE URL', req.url);
-//             if (await req.url.indexOf('/?code') > -1) {
-//               const qs = await new url.URL(req.url, `http://localhost:${PORT}/auth`)
-//                 .searchParams;
-//               res.end('Authentication successful! Please return to the console. Redirecting...');
-//               authServer.destroy();
-//               const { tokens } = await oauth2Client.getToken(qs.get('code'));
-//               oauth2Client.credentials = tokens;
-//               resolve(oauth2Client);
-//               await getNewDocs(oauth2Client);
-//             } else {
-//               console.log('Authentication Error, could not create server');
-//             }
-//           } catch (error) {
-//             reject(error);
-//           }
-//         })
-//         .listen(PORT, () => {
-//           opn(authorizeUrl, { wait: true, newInstance: false }).then((cp) => cp.unref());
-//         });
-//       destroyer(authServer);
-//     });
-//   }
 async function getNewDocs(auth) {
   const gmail = google.gmail({ version: 'v1', auth });
   let query = '';
@@ -184,13 +139,9 @@ async function getNewDocs(auth) {
                   markAsRead(message.id);
                 });
               });
-            } else {
-              console.log('no attachments found');
             }
           });
         });
-      } else {
-        console.log('No labels found.');
       }
     });
   }
@@ -199,9 +150,7 @@ async function getNewDocs(auth) {
 
 const checkNominations = async (req, res) => {
   try {
-    console.log('did i make it to this auth version of the function');
     console.log('Calling GmailStart function....');
-    console.log('HERE IS THE URL', req.url);
     const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];
     const oauth2Client = new google.auth.OAuth2(
       credentials.installed.client_id,
@@ -211,23 +160,16 @@ const checkNominations = async (req, res) => {
 
     google.options({ auth: oauth2Client });
 
-    if (await req.url.indexOf('?code') > -1) {
-      // const qs = await new url.URL(req.url, `http://localhost:${PORT}/auth`)
-      // .searchParams;
+    if (req.url.indexOf('?code') > -1) {
       res.end('Authentication successful! Please return to the console. Redirecting...');
-
       const { tokens } = await oauth2Client.getToken(req.query.code);
       oauth2Client.credentials = tokens;
-      // resolve(oauth2Client);
-      console.log('HELLLLOOO');
-      await getNewDocs(oauth2Client);
+      getNewDocs(oauth2Client);
     } else {
       console.log('Authentication Error, could not create server');
     }
-    console.log('nominations check completed');
-    // return res.status(200).json({ status: 'ok' });
   } catch (error) {
-    console.log('errorjsdkfjskjnfskd', error);
+    console.log('error:', error);
     return res.status(400).json({ error: error.message });
   }
 };

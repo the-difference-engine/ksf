@@ -16,7 +16,7 @@ const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 
 const { Op } = sequelize;
-const gmailStart = require('../helper/gmailANDdrive');
+const gmailStart = require('../helper/gmailAPI');
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -179,13 +179,11 @@ const syncNominations = async (req, res) => {
 
 const checkNominations = async (req, res) => {
   try {
-    console.log('Calling GmailStart function....');
-
     gmailStart();
     console.log('nominations check completed');
     return res.status(200).json({ status: 'ok' });
   } catch (error) {
-    console.log('errorjsdkfjskjnfskd', error);
+    console.log('error:', error);
     return res.status(400).json({ error: error.message });
   }
 };
@@ -263,8 +261,6 @@ async function searchAndSend(status, query) {
     console.log(error);
   }
 }
-
-// Added Find Awaiting Hipaa nominations for ticket 109
 
 const getAwaitingHipaa = async () => {
   const nominations = await db.Nomination.findAll({ where: { status: 'Awaiting HIPAA' } });

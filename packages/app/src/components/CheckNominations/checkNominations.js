@@ -30,7 +30,7 @@ const CheckNominations = () => {
   return (
     <>
       <button onClick={handleClick} className="check-noms">
-        Check Nominations
+        Check For Documents
       </button>
 
       {message && (
