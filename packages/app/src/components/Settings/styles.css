@@ -86,6 +86,7 @@
   background-color: #fff;
   color: var(--brand);
   border-color: var(--brand);
+  text-transform: capitalize;
 }
 
 .settings__main button[disabled]:hover {
@@ -98,6 +99,11 @@
   background-color: var(--brand);
   border-color: white;
   color: white;
+}
+
+.settings__form {
+  display: flex;
+  align-items: center;
 }
 
 .settings__form-errors {
@@ -162,6 +168,7 @@
 .settings__tbody tr .icon-right-arrow {
   transition: transform 0.3s;
 }
+
 .settings__tbody tr:hover .icon-right-arrow {
   font-weight: 700;
   font-size: 20px;
@@ -239,6 +246,16 @@ button.icon-right-arrow-disabled:hover {
 
 .settings__results-link {
   color: var(--brand);
+  font-weight: 400;
+}
+
+.settings__results-link:visited {
+  color: var(--brand);
+}
+
+.settings__results-link:hover {
+  color: var(--brand);
+  font-weight: 600;
 }
 
 /* Edit Modal css */
@@ -277,6 +294,11 @@ button.icon-right-arrow-disabled:hover {
   border-color: white;
   color: white;
   margin-right: 3rem;
+  text-transform: capitalize;
+}
+
+div.button-div {
+  margin-top: 2rem;
 }
 
 .edit-modal-button-cancel,
@@ -284,11 +306,18 @@ button.icon-right-arrow-disabled:hover {
   background-color: red;
   border-color: white;
   color: white;
+  text-transform: capitalize;
 }
 
 .edit-modal-errors {
   position: absolute;
   color: red;
+}
+
+.edit-button-div {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .edit-modal-main button[disabled]:hover {
@@ -297,3 +326,32 @@ button.icon-right-arrow-disabled:hover {
   color: white;
 }
 
+.hidden {
+  display: none;
+}
+
+button.disabled-edit-btn,
+button[disabled].disabled-edit-btn:hover {
+  color: gray;
+  font-weight: bold;
+  border-color: gray;
+}
+
+button.enabled-edit-btn {
+  color: var(--brand);
+  background-color: #fff;
+  border-color: var(--brand);
+}
+
+.cycle-name,
+.end-date,
+.start-date {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 800px) {
+  legend.email-legend {
+    background-color: transparent;
+  }
+}

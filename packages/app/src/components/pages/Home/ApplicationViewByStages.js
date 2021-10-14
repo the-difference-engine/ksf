@@ -21,7 +21,7 @@ const ApplicationViewByStages = () => {
   }
 
   const renderSortArrow = (columnName) => {
-    return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === SORT_DIRECTION.DOWN ? 'arrow-down' : 'arrow-up'} />;
+    return sortConfig && sortConfig.key === columnName && <FontAwesomeIcon icon={sortConfig.direction === SORT_DIRECTION.UP ? 'arrow-down' : 'arrow-up'} />;
   };
 
   const renderSortableCell = (key, label) => {

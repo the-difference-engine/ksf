@@ -5,30 +5,30 @@ import { Link } from 'react-router-dom';
 import { formatDateString } from '../../utils/formatDateString';
 
 const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
-  const nomName = n => {
+  const nomName = (n) => {
     const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
     const state = states.getStateCodeByStateName(n.hospitalState);
     return `${lastName}-${state}`;
   };
 
   return (
-    <div className='settings__container'>
-      <header className='settings__header'>
+    <div className="settings__container">
+      <header className="settings__header">
         <FontAwesomeIcon
-          icon='arrow-left'
-          className='icon-table icon-arrow-left'
-          size='2x'
+          icon="arrow-left"
+          className="icon-table icon-arrow-left"
+          size="2x"
           onClick={() => onClick()}
         />
-        <h1 className='settings__title'>
+        <h1 className="settings__title">
           {'Grant Cycle: ' +
             formatDateString(grantCycle.openedOn) +
             ' - ' +
             formatDateString(grantCycle.closedOn)}
         </h1>
       </header>
-      <main className='settings__results'>
-        <table className='settings__results-table'>
+      <main className="settings__results">
+        <table className="settings__results-table">
           <thead>
             <tr>
               <th>Application Name</th>
@@ -38,11 +38,11 @@ const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
             </tr>
           </thead>
           <tbody>
-            {grantCycle.nominations?.map(n => (
-              <tr>
+            {grantCycle.nominations?.map((n) => (
+              <tr key={n.id}>
                 <td>
                   <Link
-                    className='settings__results-link'
+                    className="settings__results-link"
                     target={'_blank'}
                     to={`/nomination/${n.id}`}
                   >

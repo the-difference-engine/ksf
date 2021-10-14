@@ -161,7 +161,7 @@ const NominationBanner = (props) => {
                 nomination={props.nomination}
               />
             )}
-            </div>
+          </div>
 
           <div className="row">
             <div className="column hp-name">

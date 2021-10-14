@@ -144,10 +144,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.DATE
       },
-      reminderSent: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
       readyForBoardReviewTimestamp: {
         type: DataTypes.DATE,
         allowNull: true
@@ -166,6 +162,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       declinedTimestamp: {
         type: DataTypes.DATE,
+        allowNull: true
+      },
+      grantRequestInfo: {
+        type: DataTypes.TEXT,
         allowNull: true
       }
     },

@@ -20,6 +20,7 @@ const NominationPage = ({
   const [error, setError] = useState();
   const [editHasBeenClicked, setEditHasBeenClicked] = useState(false);
   const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);
+  const [cancelHasBeenClicked, setCancelHasBeenClicked] = useState(false);
 
   const [mode, setMode] = useState('view');
 
@@ -97,6 +98,11 @@ const NominationPage = ({
     'How did you hear about KSF?': '',
   };
 
+  const grantRequestSupportData = {
+    'Grant Request Support': '',
+    'Grant List': `${activeNomination.grantRequestInfo}`
+  }
+
   const familyMemberData = {
     'Family Member Information': '',
     'Representative Name': `${activeNomination.representativeName}`,
@@ -115,6 +121,10 @@ const NominationPage = ({
     setSaveHasBeenClicked(saveHasBeenClicked => !saveHasBeenClicked);
   }
 
+  function handleCancelHasBeenClicked() {
+    setCancelHasBeenClicked(cancelHasBeenClicked => !cancelHasBeenClicked)
+  }
+
   // used by cancel button and onSubmit to change mode back to 'view' from 'edit'
   function revertMode(mode) {
     setMode(mode);
@@ -123,7 +133,8 @@ const NominationPage = ({
   const patientInformationDataKeys = Object.keys(patientInformationData)
   const familyMemberDataKeys = Object.keys(familyMemberData)
   const healthProviderDataKeys = Object.keys(healthProviderData)
-
+  const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData)
+  
   return (
     <>
       {activeNomination ? (
@@ -136,6 +147,7 @@ const NominationPage = ({
             saveHasBeenClicked={saveHasBeenClicked}
             handleSaveHasBeenClicked={handleSaveHasBeenClicked}
             handleEditHasBeenClicked={handleEditHasBeenClicked}
+            handleCancelHasBeenClicked={handleCancelHasBeenClicked}
             nomination={activeNomination}
           />
           <ApplicationStages />
@@ -143,12 +155,15 @@ const NominationPage = ({
             patientInformationData={patientInformationData}
             familyMemberData={familyMemberData}
             healthProviderData={healthProviderData}
+            grantRequestSupportData = {grantRequestSupportData}
             patientInformationDataKeys={patientInformationDataKeys}
             familyMemberDataKeys={familyMemberDataKeys}
             healthProviderDataKeys={healthProviderDataKeys}
+            grantRequestSupportDataKeys = {grantRequestSupportDataKeys}
             mode={mode}
             editHasBeenClicked={editHasBeenClicked}
             saveHasBeenClicked={saveHasBeenClicked}
+            cancelHasBeenClicked={cancelHasBeenClicked}
             id={id}
             revertMode={revertMode}
           />

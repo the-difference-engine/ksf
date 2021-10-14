@@ -33,6 +33,14 @@ const nominationsAPI = {
   checkNominations: function () {
     return axios.get(`${cleanURL(API_URL)}/api/checknominations`);
   },
+  validateEmail: function (token) {
+    return axios.post(`${cleanURL(API_URL)}/api/confirmation/${token}`);
+  },
+  resendEmail: function(id, recipient, emailType) {
+    return axios.post(`${cleanURL(API_URL)}/api/nominations/${id}`, {
+      recipient, emailType
+    });
+  }
 };
 
 export default nominationsAPI;
