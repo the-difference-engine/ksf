@@ -10,7 +10,6 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 const states = require('us-state-codes');
 
-const currentDate = new Date().getTime();
 
 /**
  * Creates and renders the active nomination banner.
@@ -31,7 +30,7 @@ const NominationBanner = (props) => {
       .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
   const hipaaDate = props.nomination.hipaaTimestamp;
-  const hippaReminder = props.nomination.awaitingHipaaReminderEmailTimestamp;
+  const hipaaReminder = props.nomination.awaitingHipaaReminderEmailTimestamp;
   const valid = new Date(hipaaDate).getTime() > 0;
   let newDate = new Date(hipaaDate);
   const time = newDate.toLocaleDateString();
@@ -65,21 +64,8 @@ const NominationBanner = (props) => {
     }
   }
 
-  let hipaaStatus = hippaReminder ? 'Reminder Email Sent   ' : 'Awaiting HIPAA';
+  let hipaaStatus = hipaaReminder ? 'Reminder Email Sent   ' : 'Awaiting';
 
-  const getNumberOfDays = (start, end) => {
-    const date1 = new Date(start);
-    const date2 = new Date(end);
-    const dayConversion = 1000 * 60;
-    const diffInTime = date2.getTime() - date1.getTime();
-    const diffInDays = Math.round(diffInTime / dayConversion);
-
-    if (diffInDays >= 2) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   return (
     <div className="nomination-banner-container">
@@ -179,8 +165,8 @@ const NominationBanner = (props) => {
                       finalDate
                     ) : (
                       <>
-                        {hipaaStatus}
-                        {getNumberOfDays(hipaaDate, currentDate) ? (
+                      {hipaaStatus}
+                        {hipaaReminder && hipaaStatus ? (
                           <FontAwesomeIcon
                             className="red"
                             color="red"

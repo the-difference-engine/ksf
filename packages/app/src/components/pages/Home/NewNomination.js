@@ -3,27 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 
-const currentDate = new Date().getTime();
-
-const getNumberOfDays = (start, end) => {
-  const date1 = new Date(start);
-  const date2 = new Date(end);
-  const dayConversion = 1000 * 60;
-  const diffInTime = date2.getTime() - date1.getTime();
-  const diffInDays = Math.round(diffInTime / dayConversion);
-
-  if (diffInDays >= 2) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
 const NewNomination = ({ nomination }) => {
   if (nomination) {
     if (
       nomination.awaitingHipaaTimestamp &&
-      getNumberOfDays(nomination.awaitingHipaaTimestamp, currentDate)
+      nomination.awaitingHipaaReminderEmailTimestamp
     ) {
       return (
         <tr className="landing-table" key={nomination.id}>
