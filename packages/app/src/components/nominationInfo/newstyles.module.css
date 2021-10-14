@@ -71,6 +71,15 @@
   padding: 0 30px;
 }
 
+#docsBtn {
+  background-color: white;
+  color: var(--brand);
+  border-color: var(--light-background);
+  border-radius: 4rem;
+  padding: 0 30px;
+  margin-left: 10px;
+}
+
 #saveBtn {
   background-color: green;
   color: white;
@@ -85,6 +94,10 @@
   border-radius: 4rem;
   padding: 0 20px;
 }
+
+/* svg.svg-inline--fa.fa-external-link-alt.fa-w-16.fa-lg.cog-icon {
+  vertical-align: middle;
+} */
 
 /* Content */
 

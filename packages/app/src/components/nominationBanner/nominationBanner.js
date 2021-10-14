@@ -1,6 +1,6 @@
 import styles from '../../components/nominationInfo/newstyles.module.css';
 import style from './style.css';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import EditButton from './EditButton';
@@ -9,6 +9,7 @@ import ResendEmailBtn from './resendEmailBtn.js';
 import ResendEmailModal from './resendEmailModal.js';
 import DeclineAppModal from './declineAppModal.js';
 import DeclineAppBtn from './declineAppBtn.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const states = require('us-state-codes');
 
@@ -19,8 +20,6 @@ const states = require('us-state-codes');
  * @returns - nomination banner component
  */
 const NominationBanner = (props) => {
-  // console.log('this is running in nomination banner');
-  // console.log(props.nomination);
   const date = new Date(props.nomination.dateReceived).toLocaleDateString();
   const lastName = props.nomination.patientName
     ? props.nomination.patientName.split(' ')[1]
@@ -44,6 +43,33 @@ const NominationBanner = (props) => {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
+  console.log('this is active nomination in nomination banner');
+  console.log(activeNomination);
+
+  const [showDocsButton, setShowDocsButton] = useState(false);
+
+  const firstUpdate = useRef(true);
+
+  useEffect(() => {
+    if (
+      // activeNomination.driveFolderId != '' &&
+      // typeof activeNomination.driveFolderId != 'string' &&
+      activeNomination.status != 'received' &&
+      activeNomination.status != 'Awaiting HIPAA'
+    ) {
+      setShowDocsButton((showDocsButton) => (showDocsButton = true));
+      console.log(`show Docs button is ${showDocsButton}`);
+    } else {
+      setShowDocsButton((showDocsButton) => (showDocsButton = false));
+      console.log(`show Docs button is ${showDocsButton}`);
+    }
+
+    firstUpdate.current = false;
+  }, [activeNomination]);
+
+  const openWindow = (val) => {
+    window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
+  };
 
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
   const toggleDeclineAppModalState = () => {
@@ -62,7 +88,7 @@ const NominationBanner = (props) => {
 
   function updateNomination(s) {
     try {
-      nominationsAPI.updateNomination(props.nomination.id, s)
+      nominationsAPI.updateNomination(props.nomination.id, s);
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +128,28 @@ const NominationBanner = (props) => {
                 status={activeNomination.status}
                 toggleEmailModalState={toggleEmailModalState}
               />
+              {showDocsButton ? (
+                <span>
+                  <button
+                    onClick={() => {
+                      openWindow(`${activeNomination.driveFolderId}`);
+                      console.log(
+                        `this is the driveFolderId: ${activeNomination.driveFolderId}`
+                      );
+                    }}
+                    className={`docs-btn banner-buttons ${styles.docsBtn}`}
+                  >
+                    <FontAwesomeIcon
+                      // className="cog-icon"
+                      icon="external-link-alt"
+                      size="lg"
+                    />
+                    View Documents
+                  </button>
+                </span>
+              ) : (
+                <span></span>
+              )}
             </div>
             {declineAppModalVisible && (
               <DeclineAppModal
@@ -163,6 +211,7 @@ const NominationBanner = (props) => {
             </div>
           </div>
         </div>
+
         <div>
           {props.mode === 'view' ? (
             <EditButton handleHasBeenClicked={props.handleEditHasBeenClicked} />

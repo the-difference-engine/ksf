@@ -172,7 +172,7 @@ const updateNomination = async (req, res) => {
 
           nomination.update({ driveFolderId: driveFolderId });
 
-          return res.status(200).json(driveFolderId);
+          return res.status(200).json(driveFolderId, nomination.status);
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
@@ -184,6 +184,7 @@ const updateNomination = async (req, res) => {
       if (nomination.status === NOMINATION_STATUS.verified) {
         try {
           nomination.update({ hipaaTimestamp: Date() });
+          return res.status(200).json(nomination.status);
         } catch (err) {
           console.log('Nomination Not Found', err);
           return res.status(400);
@@ -203,6 +204,7 @@ const updateNomination = async (req, res) => {
             readyForBoardReviewTimestamp: Date(),
             grantCycleId: grant.id,
           });
+          return res.status(200).json(nomination.status);
         } catch (error) {
           console.log('Could not record readyForBoardReviewTimestamp ', error);
         }

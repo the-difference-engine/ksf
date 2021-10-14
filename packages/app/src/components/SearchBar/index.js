@@ -15,9 +15,6 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 SettingsModal.setAppElement('#root');
 
 const SearchBar = (props) => {
-  const firstUpdate = useRef(true);
-  const [load, reload] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState();
   const [showResults, setShowResults] = useState(false);
   const [settingsResults, setSettingsResults] = useState({});
@@ -28,18 +25,6 @@ const SearchBar = (props) => {
   const [ActiveNomination, SetActiveNomination] = useContext(
     ActiveNominationContext
   );
-
-  useEffect(() => {
-    if (!firstUpdate.current) {
-      console.log('activenomination RELOADED');
-      reload((load) => !load);
-    }
-    firstUpdate.current = false;
-  }, [ActiveNomination]);
-
-  // console.log('this is ActiveNomination in searchBar component');
-  // // console.dir(props.nomination); // TODO CLEANUP
-  // console.log(ActiveNomination);
 
   const [NominationsData, setNominationsData] = useContext(
     NominationsDataContext
@@ -123,10 +108,6 @@ const SearchBar = (props) => {
     setShowResults(false);
   }
 
-  const openWindow = (val) => {
-    window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
-  };
-
   return (
     <>
       <SettingsModal
@@ -173,7 +154,6 @@ const SearchBar = (props) => {
             />
           </form>
         </div>
-        {/* {props.nomination.driveFolderId} */}
         <div className="cog-container">
           {/* <a
             target="_blank"
@@ -181,23 +161,7 @@ const SearchBar = (props) => {
           >
             Policies
           </a> */}
-          {/* ActiveNomination.driveFolderId != '' ? */}
-          {console.log('this is active nomination in searchbar jsx')}
-          {console.log(ActiveNomination)}
-          {ActiveNomination.driveFolderId}
-          {ActiveNomination.driveFolderId && (
-            <>
-              <FontAwesomeIcon
-                onClick={() => {
-                  openWindow(props.nomination?.driveFolderId);
-                }}
-                // icon="fa-solid fa-arrow-up-right-from-square"
-                className="cog-icon"
-                icon={faExternalLinkAlt}
-                // size="3x"
-              />
-            </>
-          )}
+
           <FontAwesomeIcon
             onClick={() => setModalIsOpen(true)}
             icon="cog"

@@ -4,10 +4,14 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
+import { NominationsDataContext } from '../../utils/context/NominationsContext';
 
 const ApplicationStages = (props) => {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
+  );
+  const [nominationsData, setNominationsData] = useContext(
+    NominationsDataContext
   );
   const [currentStatus, setCurrentStatus] = useState();
   // status array is used as the param in
@@ -69,17 +73,27 @@ const ApplicationStages = (props) => {
         .updateNomination(activeNomination.id, currentStatus)
         .then((res) => {
           if (res.status == 200) {
-            let driveFolderId = res.data;
-            activeNomination.driveFolderId = driveFolderId;
+            let response = res.data;
 
-            console.log(
-              'this is our driveFolderId from updateNom',
-              driveFolderId
-            );
-            // console.dir(activeNomination)
-            setActiveNomination(activeNomination);
-            console.log('before calling reload nomination');
-            props.reloadNomination();
+            if (typeof response.driveFolderId == 'string') {
+              console.log(
+                'this is our driveFolderId from updateNom',
+                response.driveFolderId.driveFolderId
+              );
+              activeNomination.driveFolderId = response.driveFolderId;
+              setActiveNomination((activeNomination) => {
+                return {
+                  ...activeNomination,
+                  driveFolderId: response.driveFolderId,
+                };
+              });
+            }
+            setActiveNomination((activeNomination) => {
+              return {
+                ...activeNomination,
+                status: response.status,
+              };
+            });
           }
         });
     } catch (err) {
