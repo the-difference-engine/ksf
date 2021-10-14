@@ -12,19 +12,50 @@
   width: 60px;
 }
 
-.decline-button {
-  background-color: #f72314;
+/* Shared button class */
+
+.banner-buttons {
   color: #ffffff;
   border: #8a8a8a;
   text-transform: capitalize;
   border: #8a8a8a;
   border-radius: 5rem;
 }
+
+/* Decline App Button */
+
+.decline-button {
+  background-color: #f72314;
+}
+
 .decline-button:disabled {
   background-color: #5a5959;
 }
 
 .decline-button:disabled:hover {
+  background-color: #5a5959;
+}
+
+.decline-button:hover {
+  background-color: #d4190c;
+}
+
+/* Resend Email Button */
+
+.resend-email-btn {
+  background-color: #128b3e;
+  margin-left: 10px;
+}
+
+.resend-email-btn:hover {
+  background-color: #167c3d;
+}
+
+.resend-email-btn:disabled {
+  background-color: #5a5959;
+}
+
+.resend-email-btn:disabled:hover {
   background-color: #5a5959;
 }
 
@@ -35,8 +66,57 @@
   transform: translateY(-50%);
 }
 
-.decline-button:hover {
-  background-color: #d4190c;
+/* Resend Email Modal Styling */
+
+label.survey {
+  font-size: 1.6rem;
+  letter-spacing: 0.01em;
+  align-items: center;
+  font-weight: 300;
+  padding: 0px 5px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+input[type='radio'].radio {
+  margin-right: 5px;
+}
+
+input[type='radio'] {
+  height: 12px;
+}
+
+fieldset.resend-fieldset {
+  border: 1px solid lightgray;
+  border-radius: 5%;
+  box-shadow: 0 8px 16px 0 lightgray;
+  padding: 0 5px;
+  margin: 5px 10px;
+  width: 50%;
+}
+
+legend.resend-legend {
+  font-weight: 500;
+  font-size: 1.6rem;
+  background-color: white;
+  padding: 1rem;
+}
+
+form.email-form {
+  margin: 0;
+}
+
+div.email-form-container {
+  display: flex;
+  margin: 0px 25px;
+}
+
+.email-modal-buttons {
+  display: flex;
+  line-height: 20px;
+  align-items: flex-end;
+  margin: 20px 0 15px 0;
+  justify-content: flex-end;
 }
 
 .banner-top {
@@ -78,11 +158,11 @@
   white-space: nowrap;
 }
 /* modal style */
-.modal-background{
+.modal-background {
   opacity: 1;
   pointer-events: none;
-  transition: opacity 0.4s case-in-out ;
-  position: absolute; 
+  transition: opacity 0.4s case-in-out;
+  position: absolute;
   z-index: 1000;
   position: fixed;
   top: 0;
@@ -92,7 +172,8 @@
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-.modal-container{
+.modal-container,
+.email-modal-container {
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -102,69 +183,84 @@
   overflow: inherit;
   background: #fff;
   box-sizing: border-box;
-  padding: 20px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.7);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
-  width: 469px;
-  height: 250px;
-  display: flex;
+  width: auto;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  align-content: flex-start;
   display: flex;
   pointer-events: visible;
 }
 
 .modal-text {
-  padding: 40px 40px;
-  font-weight: 300;
-  letter-spacing: .01em;
+  padding: 20px 20px;
+  font-size: 24px;
+  letter-spacing: 0.01em;
+  align-items: center;
 }
 
 .modal-buttons {
   display: flex;
-  justify-content: center;
-  align-items: center;
   line-height: 20px;
-  padding-bottom: 19px;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
-
-.modal-buttons > button {
+.modal-buttons > button,
+.email-modal-buttons > button {
   color: white;
   border: #999;
   font-weight: bold;
-  padding: 10px 40px 10px 40px;
   margin-right: 10px;
   height: 35px;
-  border-radius: 4rem;
+  border-radius: 1rem;
   font-size: 1rem;
-  letter-spacing: .01em;
+  letter-spacing: 0.01em;
   line-height: 1rem;
+  text-transform: capitalize;
 }
 
-.button-yes{
+.button-yes {
+  background-color: #128b3e;
+}
+.button-yes:hover {
   background-color: #128b3e;
 }
 
-.button-no{
-  background-color: #f72314;
+.button-no {
+  background-color: #999;
+}
+
+.button-no:hover {
+  background-color: #999;
+}
+
+button[disabled].button-yes:hover {
+  background-color: #128b3e;
 }
 
 .exit-button {
+  position: relative;
+  left: 20px;
+  align-items: flex-end;
+  justify-content: flex-end;
   cursor: pointer;
   font-size: 30px;
-  padding-left: 475px;
-  padding-top: 5px;
-  float: right;
   color: grey;
   font-weight: bold;
   border: none;
   background-color: transparent;
+  margin-left: auto;
+  margin-bottom: 0px;
 }
 
-.exit-button:hover{
+.exit-button:hover {
   color: darkgray;
   background-color: transparent;
+}
+
+@media only screen and (max-width: 800px) {
+  .email-modal-container {
+    width: 70%;
+    left: 43%;
+  }
 }

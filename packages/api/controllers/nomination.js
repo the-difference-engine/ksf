@@ -62,6 +62,7 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
+
     const hasProviderBeenValidated = nominations.some((nom) => (
       nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
     ));
@@ -77,6 +78,37 @@ const createNomination = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+const resendEmail = async (req, res) => {
+  const { id } = req.params;
+  const { recipient, emailType } = req.body;
+  try {
+    const nomination = await db.Nomination.findOne({
+      where: { id },
+    });
+    console.log(
+      `email sent to: ${recipient.replace('-', ' ')}`,
+      `email type sent: ${emailType}`
+    );
+    if (recipient === 'family-member' && emailType === 'hipaa') {
+      sendHIPAAEmail(nomination);
+    } else if (recipient === 'family-member' && emailType === 'survey') {
+      sendSurveyEmail(nomination);
+    } else if (recipient === 'healthcare-provider' && emailType === 'hipaa') {
+      sendHIPAAProvider(nomination);
+    } else if (recipient === 'healthcare-provider' && emailType === 'survey') {
+      sendSurveySocialWorker(nomination);
+    } else {
+      return res.status(400).json({
+        error: `invalid input, email for ${recipient} and ${emailType} unknown`,
+      });
+    }
+  } catch {
+    console.log('500 Internal Server Error', error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 const updateNomination = async (req, res) => {
   const { id } = req.params;
   try {
@@ -91,13 +123,6 @@ const updateNomination = async (req, res) => {
     // depending on status of application
     // current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
-      try {
-        // resets reminderSent bool every stage
-        nomination.update({ reminderSent: false });
-      } catch (error) {
-        console.error('Was not able to change reminderSent bool', error);
-      }
-
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
           nomination.update({ declinedTimestamp: Date() });
@@ -138,11 +163,8 @@ const updateNomination = async (req, res) => {
           return res.status(400);
         } finally {
           sendSurveyEmail(nomination);
+          sendSurveySocialWorker(nomination);
         }
-      }
-
-      if (nomination.status === NOMINATION_STATUS.document_review) {
-        sendSurveySocialWorker(nomination);
       }
 
       if (nomination.status === NOMINATION_STATUS.board_review) {
@@ -191,15 +213,14 @@ const checkNominations = async (req, res) => {
 const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
-    const { nomination: id } = jwt.verify(token, process.env.JWT_SECRET);
+    const { data: id } = jwt.verify(token, process.env.JWT_SECRET);
     await db.Nomination.update({ emailValidated: true }, { where: { id } });
-    return res.status(200).json({ status: 'ok' });
+    return res.status(204).end();
   } catch (error) {
     console.log('400 validation error', error);
     return res.status(400).json({ error: error.message });
   }
 };
-
 /**
  * Updates database with information from active application updates on front end.
  *
@@ -234,31 +255,41 @@ async function searchAndSend(status, query) {
     nomination = nominations[i];
     switch (status) {
       case 'HIPAA Verified':
-        sendSurveyReminder(nomination);
+        sendSurveyReminder(
+          nomination.representativeEmailAddress,
+          nomination.representativeName
+        );
+        sendSurveyReminder(
+          nomination.providerEmailAddress,
+          nomination.providerName
+        );
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
         } catch (err) {
-          console.log('Unable to update record timestamp', err);
+          console.log('Unable to update record hipaa reminder timestamp', err);
         }
-        ids.push(nomination.id);
         break;
       case 'Awaiting HIPAA':
-        sendHIPAAReminder(nomination);
+        sendHIPAAReminder(
+          nomination.representativeEmailAddress,
+          nomination.representativeName
+        );
+        sendHIPAAReminder(
+          nomination.providerEmailAddress,
+          nomination.providerName
+        );
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
-          console.log('Unable to update record timestamp', err);
+          console.log(
+            'Unable to update record awaiting hipaa reminder timestamp',
+            err
+          );
         }
-        ids.push(nomination.id);
         break;
       default:
         console.log(status, ' is not a status');
     }
-  }
-  try {
-    db.Nomination.update({ reminderSent: true }, { where: { id: ids } });
-  } catch (error) {
-    console.log(error);
   }
 }
 
@@ -294,4 +325,5 @@ module.exports = {
   getAwaitingHipaa,
   updateActiveNomData,
   checkNominations,
+  resendEmail,
 };

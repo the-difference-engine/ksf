@@ -240,3 +240,4 @@ const NominationBanner = (props) => {
 };
 
 export default NominationBanner;
+
