@@ -14,23 +14,23 @@ const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
-const { drive } = require('googleapis/build/src/apis/drive');
+// const { drive } = require('googleapis/build/src/apis/drive');
 const Op = sequelize.Op;
-const { google } = require('googleapis');
-const parsePrivateKey = require('../helper/parsePrivateKey');
-const { resolveContent } = require('nodemailer/lib/shared');
-const parentFolderId = process.env.APPLICATION_FOLDER_ID;
-const clientEmail = process.env.SERVICE_CLIENT_EMAIL;
-const privateKey = parsePrivateKey(process.env.SERVICE_PRIVATE_KEY);
-const scopes = [
-  'https://www.googleapis.com/auth/drive',
-  'https://www.googleapis.com/auth/drive.appdata',
-  'https://www.googleapis.com/auth/drive.file',
-];
+// const { google } = require('googleapis');
+// const parsePrivateKey = require('../helper/parsePrivateKey');
+// const { resolveContent } = require('nodemailer/lib/shared');
+// const parentFolderId = process.env.APPLICATION_FOLDER_ID;
+// const clientEmail = process.env.SERVICE_CLIENT_EMAIL;
+// const privateKey = parsePrivateKey(process.env.SERVICE_PRIVATE_KEY);
+// const scopes = [
+//   'https://www.googleapis.com/auth/drive',
+//   'https://www.googleapis.com/auth/drive.appdata',
+//   'https://www.googleapis.com/auth/drive.file',
+// ];
 
-const auth = new google.auth.JWT(clientEmail, null, privateKey, scopes);
+// const auth = new google.auth.JWT(clientEmail, null, privateKey, scopes);
 
-const driveFolder = google.drive({ version: 'v3', auth });
+// const driveFolder = google.drive({ version: 'v3', auth });
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -165,14 +165,12 @@ const updateNomination = async (req, res) => {
 
           const applicationName = `${lastName}-${state}`;
           let driveFolderId = await createFolder(applicationName, nomination);
-          // console.log(`This is driveId from createFolder call: ${driveId}`);
-          console.log(
-            `!!!!!This is driveFolderId in nomination: ${driveFolderId}`
-          );
 
           nomination.update({ driveFolderId: driveFolderId });
 
-          return res.status(200).json(driveFolderId, nomination.status);
+          return res
+            .status(200)
+            .json({ driveFolderId: driveFolderId, status: nomination.status });
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
