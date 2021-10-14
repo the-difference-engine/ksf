@@ -81,10 +81,10 @@ const ResendEmailModal = (props) => {
               <legend className="email-legend resend-legend">Email Type</legend>
               {props.status === 'Awaiting HIPAA' ||
               props.status === 'HIPAA Verified' ? (
-                { emailTypeHipaa }
+                emailTypeHipaa
               ) : (
                 <div>
-                  { emailTypeHipaa }
+                  {emailTypeHipaa}
                   <div>
                     <label htmlFor="survey" className="survey">
                       <input
