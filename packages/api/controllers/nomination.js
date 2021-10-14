@@ -14,23 +14,8 @@ const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 const jwt = require('jsonwebtoken');
-// const { drive } = require('googleapis/build/src/apis/drive');
+
 const Op = sequelize.Op;
-// const { google } = require('googleapis');
-// const parsePrivateKey = require('../helper/parsePrivateKey');
-// const { resolveContent } = require('nodemailer/lib/shared');
-// const parentFolderId = process.env.APPLICATION_FOLDER_ID;
-// const clientEmail = process.env.SERVICE_CLIENT_EMAIL;
-// const privateKey = parsePrivateKey(process.env.SERVICE_PRIVATE_KEY);
-// const scopes = [
-//   'https://www.googleapis.com/auth/drive',
-//   'https://www.googleapis.com/auth/drive.appdata',
-//   'https://www.googleapis.com/auth/drive.file',
-// ];
-
-// const auth = new google.auth.JWT(clientEmail, null, privateKey, scopes);
-
-// const driveFolder = google.drive({ version: 'v3', auth });
 
 const NOMINATION_STATUS = {
   received: 'received',
