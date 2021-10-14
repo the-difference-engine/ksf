@@ -161,7 +161,7 @@ const NominationBanner = (props) => {
                 nomination={props.nomination}
               />
             )}
-          </div>
+            </div>
 
           <div className="row">
             <div className="column hp-name">
@@ -202,6 +202,7 @@ const NominationBanner = (props) => {
               <p className="secondary-dark">HIPAA Date</p>
               <span>
                 <h2 className="body-font">
+<<<<<<< ticket108forPR
                   <strong>
                     {valid ? (
                       finalDate
@@ -218,19 +219,29 @@ const NominationBanner = (props) => {
                       </>
                     )}
                   </strong>
+=======
+                  <strong>{valid ? finalDate : 'Awaiting HIPAA'}</strong>
+>>>>>>> develop
                 </h2>
               </span>
             </div>
           </div>
         </div>
         <div>
+<<<<<<< ticket108forPR
           {props.mode == 'view' ? (
+=======
+          {props.mode === 'view' ? (
+>>>>>>> develop
             <EditButton handleHasBeenClicked={props.handleEditHasBeenClicked} />
           ) : (
             <SaveButton
               revertMode={props.revertMode}
               handleHasBeenClicked={props.handleSaveHasBeenClicked}
+<<<<<<< ticket108forPR
+=======
               handleCancelHasBeenClicked={props.handleCancelHasBeenClicked}
+>>>>>>> develop
             />
           )}
         </div>
@@ -240,4 +251,3 @@ const NominationBanner = (props) => {
 };
 
 export default NominationBanner;
-

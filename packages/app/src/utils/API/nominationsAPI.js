@@ -29,7 +29,6 @@ const nominationsAPI = {
   syncNominations: function () {
     return axios.get(`${cleanURL(API_URL)}/api/syncnominations`);
   },
-
   checkNominations: function () {
     return axios.get(`${cleanURL(API_URL)}/api/checknominations`);
   },
