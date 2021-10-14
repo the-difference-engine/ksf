@@ -43,8 +43,6 @@ const NominationBanner = (props) => {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-  console.log('this is active nomination in nomination banner');
-  console.log(activeNomination);
 
   const [showDocsButton, setShowDocsButton] = useState(false);
 
@@ -52,16 +50,12 @@ const NominationBanner = (props) => {
 
   useEffect(() => {
     if (
-      // activeNomination.driveFolderId != '' &&
-      // typeof activeNomination.driveFolderId != 'string' &&
       activeNomination.status != 'received' &&
       activeNomination.status != 'Awaiting HIPAA'
     ) {
       setShowDocsButton((showDocsButton) => (showDocsButton = true));
-      console.log(`show Docs button is ${showDocsButton}`);
     } else {
       setShowDocsButton((showDocsButton) => (showDocsButton = false));
-      console.log(`show Docs button is ${showDocsButton}`);
     }
 
     firstUpdate.current = false;

@@ -67,7 +67,6 @@ const ApplicationStages = (props) => {
   }
 
   function updateNom(currentStatus) {
-    console.log('update nom is running');
     try {
       nominationsAPI
         .updateNomination(activeNomination.id, currentStatus)
@@ -76,10 +75,6 @@ const ApplicationStages = (props) => {
             let response = res.data;
 
             if (typeof response.driveFolderId == 'string') {
-              console.log(
-                'this is our driveFolderId from updateNom',
-                response.driveFolderId.driveFolderId
-              );
               activeNomination.driveFolderId = response.driveFolderId;
               setActiveNomination((activeNomination) => {
                 return {
