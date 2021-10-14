@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import blockedDomainsList from '../../utils/blockedDomainsList';
 import domainAPI from '../../utils/API/domainAPI';
 
 const BlockedDomainsTab = () => {
-  const [domainValue, setDomainValue] = useState('');
+  const [domainValue, setDomainValue] = useState({ name: '' });
+  const [allDomains, setAllDomains] = useState([]);
 
   const handleChange = (e) => {
     setDomainValue(e.currentTarget.value);
@@ -11,21 +12,35 @@ const BlockedDomainsTab = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    domainAPI.addDomain(domainValue)
-    console.log('clicket----------');
+    domainAPI.addDomain({ name: domainValue });
+    console.log('clicked----------');
   };
+
+  async function getDomains() {
+    try {
+      const { data } = await domainAPI.findDomains();
+      console.log(data);
+      setAllDomains(data);
+    } catch (error) {
+      console.log('Error getting all domains');
+    }
+  }
+
+  useEffect(() => {
+    getDomains();
+  });
+
+  const domainList = allDomains.map((domain) => {
+    return <li>{domain}</li>;
+  });
 
   console.log(domainValue, '---------------DominValue-=');
   return (
     <main className="settings__main">
       <h2 className="settings__heading">Blocked Domains</h2>
-      <input type="text" value={domainValue} onChange={handleChange} />
+      <input type="text" value={domainValue.name} onChange={handleChange} />
       <button onClick={handleSubmit}>Add Domain</button>
-      <ul>
-        {blockedDomainsList.map((domain) => {
-          return <li>{domain}</li>;
-        })}
-      </ul>
+      <ul>{domainList}</ul>
     </main>
   );
 };
