@@ -7,6 +7,10 @@ import EditButton from './EditButton';
 import SaveButton from './SaveButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
+import ResendEmailBtn from './resendEmailBtn.js';
+import ResendEmailModal from './resendEmailModal.js';
+import DeclineAppModal from './declineAppModal.js';
+import DeclineAppBtn from './declineAppBtn.js';
 
 const states = require('us-state-codes');
 
@@ -48,6 +52,14 @@ const NominationBanner = (props) => {
     setIsModalVisible((isModalVisible) => !isModalVisible);
   };
 
+
+  const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
+  const toggleDeclineAppModalState = () => {
+    setDeclineAppModalVisible(
+      (declineAppModalVisible) => !declineAppModalVisible
+    );
+  };
+
   function declineApplication() {
     const declineStatus = 'Declined';
     activeNomination.status = declineStatus;
@@ -66,6 +78,13 @@ const NominationBanner = (props) => {
 
   let hipaaStatus = hipaaReminder ? 'Reminder Email Sent   ' : 'Awaiting';
 
+  const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
+
+  const toggleEmailModalState = () => {
+    setResendEmailModalVisible(
+      (resendEmailModalVisible) => !resendEmailModalVisible
+    );
+  };
 
   return (
     <div className="nomination-banner-container">
@@ -119,7 +138,30 @@ const NominationBanner = (props) => {
                 </div>
               </div>
             )}
-          </div>
+              <div className="column name">
+              <DeclineAppBtn
+                status={activeNomination.status}
+                toggleDeclineAppModalState={toggleDeclineAppModalState}
+              />
+              <ResendEmailBtn
+                status={activeNomination.status}
+                toggleEmailModalState={toggleEmailModalState}
+              />
+            </div>
+            {declineAppModalVisible && (
+              <DeclineAppModal
+                declineApplication={declineApplication}
+                toggleDeclineAppModalState={toggleDeclineAppModalState}
+              />
+            )}
+            {resendEmailModalVisible && (
+              <ResendEmailModal
+                status={activeNomination.status}
+                toggleEmailModalState={toggleEmailModalState}
+                nomination={props.nomination}
+              />
+            )}
+            </div>
 
           <div className="row">
             <div className="column hp-name">
@@ -188,6 +230,7 @@ const NominationBanner = (props) => {
             <SaveButton
               revertMode={props.revertMode}
               handleHasBeenClicked={props.handleSaveHasBeenClicked}
+              handleCancelHasBeenClicked={props.handleCancelHasBeenClicked}
             />
           )}
         </div>
