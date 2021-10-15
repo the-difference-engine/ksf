@@ -1,7 +1,6 @@
 
 packages/api/node_modules
 packages/app/node_modules
-packages/api/helper/credentials.json
 packages/api/helper/env.json
 lerna-debug.log
 

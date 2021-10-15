@@ -1,13 +1,13 @@
 const opn = require('open');
 const { google } = require('googleapis');
 const stream = require('stream');
-const credentials = require('../helper/credentials.json');
 const parsePrivateKey = require('../helper/parsePrivateKey');
-const env = require('../helper/env.json');
 const { getAwaitingHipaa } = require('./nomination');
 
-const clientEmail = env.service_client_email;
-const privateKey = parsePrivateKey(env.service_private_key);
+const { credentials } = process.env.NODE_ENV === 'TEST' ? {} : require('../helper/credentials');
+
+const clientEmail = process.env.AUTH_SERVICE_CLIENT_EMAIL;
+const privateKey = parsePrivateKey(process.env.AUTH_SERVICE_PVT_KEY);
 const PORT = 3000;
 
 const scopesDrive = [
@@ -153,8 +153,8 @@ const checkNominations = async (req, res) => {
     console.log('Calling GmailStart function....');
     const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];
     const oauth2Client = new google.auth.OAuth2(
-      credentials.installed.client_id,
-      credentials.installed.client_secret,
+      process.env.AUTH_CLIENT_ID,
+      process.env.AUTH_CLIENT_SECRET,
       credentials.installed.redirect_uris[0],
     );
 
