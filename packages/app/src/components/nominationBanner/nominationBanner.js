@@ -224,7 +224,7 @@ const NominationBanner = (props) => {
           </div>
         </div>
         <div>
-          {props.mode == 'view' ? (
+          {props.mode === 'view' ? (
             <EditButton handleHasBeenClicked={props.handleEditHasBeenClicked} />
           ) : (
             <SaveButton

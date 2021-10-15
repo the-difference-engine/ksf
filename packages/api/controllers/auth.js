@@ -56,6 +56,32 @@ async function uploadFile(nomName, img) {
   });
 }
 
+const confirmAwaiting = (goal, nomNames) => {
+  let confirmResults;
+  nomNames.forEach((app) => {
+    if (goal.includes(app)) {
+      confirmResults = app;
+    }
+  });
+  return confirmResults;
+};
+
+const markAsRead = function (messageId, gmail) {
+  gmail.users.messages.modify({
+    userId: 'me',
+    id: messageId,
+    resource: {
+      removeLabelIds: ['UNREAD'],
+    },
+  }, (err) => {
+    if (err) {
+      console.log(err, 'Failed to mark email as read!');
+    } else {
+      console.log('Email marked as Read!');
+    }
+  });
+};
+
 async function getNewDocs(auth) {
   const gmail = google.gmail({ version: 'v1', auth });
   let query = '';
@@ -87,18 +113,10 @@ async function getNewDocs(auth) {
           }, (err, res) => {
             if (err) return console.log('error retrieving message', err);
             if (res.data.payload.headers) {
-              for (let i = 0; i < res.data.payload.headers.length; i++) {
-                if (res.data.payload.headers[i].name === 'Subject') {
-                  const confirmAwaiting = (goal, nomNames) => {
-                    let confirmResults;
-                    nomNames.forEach((app) => {
-                      if (goal.includes(app)) {
-                        confirmResults = app;
-                      }
-                    });
-                    return confirmResults;
-                  };
-                  const confirmedResults = confirmAwaiting(res.data.payload.headers[i].value, nomNames);
+              const { headers } = res.data.payload;
+              for (let i = 0; i < headers.length; i++) {
+                if (headers[i].name === 'Subject') {
+                  const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
                   if (confirmedResults) {
                     nomName = confirmedResults;
                   }
@@ -106,9 +124,10 @@ async function getNewDocs(auth) {
               }
             }
             if (res.data.payload.parts.length >= 1) {
-              for (let i = 0; i < res.data.payload.parts.length; i++) {
-                if (res.data.payload.parts[i].body.attachmentId) {
-                  attachmentIds.push(res.data.payload.parts[i].body.attachmentId);
+              const { parts } = res.data.payload;
+              for (let i = 0; i < parts.length; i++) {
+                if (parts[i].body.attachmentId) {
+                  attachmentIds.push(parts[i].body.attachmentId);
                 }
               }
             }
@@ -120,23 +139,8 @@ async function getNewDocs(auth) {
                   id: attachmentId,
                 }, (err, res) => {
                   if (err) return console.log(err);
-                  const markAsRead = function (messageId) {
-                    gmail.users.messages.modify({
-                      userId: 'me',
-                      id: messageId,
-                      resource: {
-                        removeLabelIds: ['UNREAD'],
-                      },
-                    }, (err) => {
-                      if (err) {
-                        console.log(err, 'Failed to mark email as read!');
-                      } else {
-                        console.log('Email marked as Read!');
-                      }
-                    });
-                  };
                   uploadFile(nomName, res.data.data);
-                  markAsRead(message.id);
+                  markAsRead(message.id, gmail);
                 });
               });
             }
@@ -145,7 +149,6 @@ async function getNewDocs(auth) {
       }
     });
   }
-  opn(`http://localhost:${PORT}/`);
 }
 
 const checkNominations = async (req, res) => {
@@ -161,7 +164,8 @@ const checkNominations = async (req, res) => {
     google.options({ auth: oauth2Client });
 
     if (req.url.indexOf('?code') > -1) {
-      res.end('Authentication successful! Please return to the console. Redirecting...');
+      res.end(`<a href="#" onclick="javascript:window.close();opener.window.focus();" >Close Window</a>
+      Authentication successful! Please return to the console. Redirecting...`);
       const { tokens } = await oauth2Client.getToken(req.query.code);
       oauth2Client.credentials = tokens;
       getNewDocs(oauth2Client);

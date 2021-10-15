@@ -21,7 +21,6 @@ const CheckNominations = () => {
         setMessage('Nominations activity successfully updated ');
         window.location.reload();
       } else {
-        console.log(res.status, res)
         setMessage('Error occurred, Dashboard update failed...');
         removeMessage();
       }
