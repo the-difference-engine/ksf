@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SettingsModal from 'react-modal';
@@ -8,9 +8,6 @@ import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
-import ApplicationViewByStages from '../pages/Home/ApplicationViewByStages';
-import nominationsAPI from '../../utils/API/nominationsAPI';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 SettingsModal.setAppElement('#root');
 
