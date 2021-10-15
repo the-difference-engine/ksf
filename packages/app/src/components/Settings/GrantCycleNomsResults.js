@@ -15,6 +15,7 @@ const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
     if (nomination.status === 'Declined') {
       return 'red-link';
     }
+    return '';
   };
 
   return (

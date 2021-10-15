@@ -59,12 +59,35 @@ const findAll = async (req, res) => {
       const result = await Promise.all(
         grants.map(async (g) => {
           try {
+            const openedOn = new Date(g.openedOn);
+            const closedOn = new Date(g.closedOn);
+            openedOn.setHours(0, 0, 0, 0);
+            closedOn.setHours(23, 59, 59, 59);
+            const dateFormatted = openedOn
+              .toLocaleDateString()
+              .replace('/', '-');
+            var options = { hour12: false };
+            const timeFormatted = openedOn
+              .toLocaleString('en-US', options)
+              .split(', ')[1];
+            const stringFormatted = `${dateFormatted} ${timeFormatted}.000 +00:00`;
+
+            const dateFormatted2 = closedOn
+              .toLocaleDateString()
+              .replace('/', '-');
+            var options = { hour12: false };
+            const timeFormatted2 = closedOn
+              .toLocaleString('en-US', options)
+              .split(', ')[1];
+            const stringFormatted2 = `${dateFormatted2} ${timeFormatted2}.000 +00:00`;
+
+            console.log(g.openedOn);
             const nominations = await db.Nomination.findAll({
               where: {
                 [Op.and]: [
                   {
                     readyForBoardReviewTimestamp: {
-                      [Op.between]: [g.openedOn, g.closedOn],
+                      [Op.between]: [stringFormatted, stringFormatted2],
                     },
                     [Op.or]: [
                       { status: 'Ready for Board Review' },
