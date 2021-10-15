@@ -1,6 +1,6 @@
 import styles from '../../components/nominationInfo/newstyles.module.css';
 import style from './style.css';
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useState, useContext } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import EditButton from './EditButton';
@@ -45,21 +45,6 @@ const NominationBanner = (props) => {
   );
 
   const [showDocsButton, setShowDocsButton] = useState(false);
-
-  const firstUpdate = useRef(true);
-
-  useEffect(() => {
-    if (
-      activeNomination.status != 'received' &&
-      activeNomination.status != 'Awaiting HIPAA'
-    ) {
-      setShowDocsButton((showDocsButton) => (showDocsButton = true));
-    } else {
-      setShowDocsButton((showDocsButton) => (showDocsButton = false));
-    }
-
-    firstUpdate.current = false;
-  }, [activeNomination]);
 
   const openWindow = (val) => {
     window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
@@ -122,25 +107,26 @@ const NominationBanner = (props) => {
                 status={activeNomination.status}
                 toggleEmailModalState={toggleEmailModalState}
               />
-              {showDocsButton ? (
-                <span>
-                  <button
-                    onClick={() => {
-                      openWindow(`${activeNomination.driveFolderId}`);
-                    }}
-                    className={`docs-btn banner-buttons ${styles.docsBtn}`}
-                  >
-                    <FontAwesomeIcon
-                      // className="cog-icon"
-                      icon="external-link-alt"
-                      size="lg"
-                    />
-                    View Documents
-                  </button>
-                </span>
-              ) : (
-                <span></span>
-              )}
+              {activeNomination.driveFolderId &&
+                activeNomination.status != 'received' &&
+                activeNomination.status != 'Awaiting HIPAA' && (
+                  // {showDocsButton ? (
+                  <span>
+                    <button
+                      onClick={() => {
+                        openWindow(`${activeNomination.driveFolderId}`);
+                      }}
+                      className={`docs-btn banner-buttons ${styles.docsBtn}`}
+                    >
+                      <FontAwesomeIcon
+                        // className="cog-icon"
+                        icon="external-link-alt"
+                        size="lg"
+                      />
+                      View Documents
+                    </button>
+                  </span>
+                )}
             </div>
             {declineAppModalVisible && (
               <DeclineAppModal

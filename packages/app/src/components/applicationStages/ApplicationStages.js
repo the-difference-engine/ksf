@@ -83,6 +83,7 @@ const ApplicationStages = (props) => {
                 };
               });
             }
+
             setActiveNomination((activeNomination) => {
               return {
                 ...activeNomination,
