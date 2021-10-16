@@ -50,6 +50,7 @@ const ApplicationStages = () => {
       let nextItem = status[index + 1];
       activeNomination.status = nextItem;
       setCurrentStatus(nextItem);
+      setActiveNomination({ ...activeNomination });
       return updateNom(nextItem);
     }
   }
