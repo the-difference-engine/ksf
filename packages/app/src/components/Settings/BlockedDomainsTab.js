@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import blockedDomainsList from '../../utils/blockedDomainsList';
 import domainAPI from '../../utils/API/domainAPI';
 
 const BlockedDomainsTab = () => {
@@ -19,8 +18,9 @@ const BlockedDomainsTab = () => {
   async function getDomains() {
     try {
       const { data } = await domainAPI.findDomains();
-      console.log(data);
-      setAllDomains(data);
+      console.log(data, '------data------');
+      // allDomains = data
+      setAllDomains(data)
     } catch (error) {
       console.log('Error getting all domains');
     }
@@ -29,9 +29,10 @@ const BlockedDomainsTab = () => {
   useEffect(() => {
     getDomains();
   });
-
+  
+  // getDomains()
   const domainList = allDomains.map((domain) => {
-    return <li>{domain}</li>;
+    return <li>{domain.name}</li>;
   });
 
   console.log(domainValue, '---------------DominValue-=');
