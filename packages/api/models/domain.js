@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Domain',
-      tableName: 'Domains',
+      tableName: 'domains',
     },
   );
   return Domain;
