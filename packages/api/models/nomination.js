@@ -1,7 +1,7 @@
-'use strict';
 const { sendVerification } = require('../helper/mailer.js');
 const creds = require('../config/config.json').credentials;
 const { Model, Sequelize, DataTypes } = require('sequelize');
+
 const publicEmailDomains = [
   'gmail.com',
   'aol.com',
@@ -142,37 +142,41 @@ module.exports = (sequelize, DataTypes) => {
       },
       awaitingHipaaTimestamp: {
         allowNull: true,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       readyForBoardReviewTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
-      }, 
+        allowNull: true,
+      },
       hipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       awaitingHipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       grantCycleId: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       declinedTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       grantRequestInfo: {
         type: DataTypes.TEXT,
-        allowNull: true
-      }
+        allowNull: true,
+      },
+      attachments: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       hooks: {
         beforeCreate: (nomination, option) => {
-          publicEmailDomains.forEach(domain => {
+          publicEmailDomains.forEach((domain) => {
             if (nomination.providerEmailAddress.includes(domain)) {
               nomination.publicEmailDomain = true;
             }
@@ -182,7 +186,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Nomination',
       tableName: 'nominations',
-    }
+    },
   );
 
   return Nomination;

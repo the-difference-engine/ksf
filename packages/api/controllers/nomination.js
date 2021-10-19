@@ -17,6 +17,7 @@ const gsheetToDB = require('../helper/nominationGsheetToDB');
 
 const { Op } = sequelize;
 const gmailStart = require('../helper/gmailAPI');
+const nomination = require('../models/nomination');
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -294,7 +295,7 @@ async function searchAndSend(status, query) {
 
 const getAwaitingHipaa = async () => {
   const nominations = await db.Nomination.findAll({ where: { status: 'Awaiting HIPAA' } });
-  const applicationsAwait = [];
+  const applicationsAwait = {};
 
   if (nominations.length) {
     nominations.forEach((nomination) => {
@@ -306,11 +307,39 @@ const getAwaitingHipaa = async () => {
       );
       const applicationName = `${lastName}-${state}`;
 
-      applicationsAwait.push(applicationName);
+      applicationsAwait[applicationName] = nomination.id;
     });
   }
 
   return applicationsAwait;
+};
+
+const getVerifiedNoms = async () => {
+  const nominations = await db.Nomination.findAll({ where: { status: { [Op.or]: ['HIPAA Verified', 'Document Review', 'Ready for Board Review'] } } });
+  const applicationsAwait = {};
+  if (nominations.length) {
+    nominations.forEach((nomination) => {
+      const lastName = nomination.patientName
+        ? nomination.patientName.split(' ')[1]
+        : '';
+      const state = states.getStateCodeByStateName(
+        nomination.hospitalState,
+      );
+      const applicationName = `${lastName}-${state}`;
+
+      applicationsAwait[applicationName] = nomination.id;
+    });
+  }
+
+  return applicationsAwait;
+};
+
+const updateDashboard = async (trueFalse, nominationId) => {
+  const nomination = await db.Nomination.findOne({ where: { id: nominationId } });
+  nomination.update({ attachments: trueFalse }).catch((err) => {
+    console.log('Nomination Not Found', err);
+    return res.status(400);
+  });
 };
 
 module.exports = {
@@ -322,7 +351,9 @@ module.exports = {
   emailVerification,
   searchAndSend,
   getAwaitingHipaa,
+  getVerifiedNoms,
   updateActiveNomData,
   checkNominations,
   resendEmail,
+  updateDashboard,
 };

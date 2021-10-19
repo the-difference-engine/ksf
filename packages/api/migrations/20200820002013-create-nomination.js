@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('nominations', {
@@ -98,6 +97,9 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+      },
+      attachments: {
+        type: Sequelize.BOOLEAN,
       },
     });
   },
