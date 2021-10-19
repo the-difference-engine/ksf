@@ -177,8 +177,6 @@ const updateNomination = async (req, res) => {
             where: { isActive: true },
           });
 
-          // const grant = await db.GrantCycle.findByPk(id);
-
           nomination.update({
             readyForBoardReviewTimestamp: Date(),
             grantCycleId: grant.id,

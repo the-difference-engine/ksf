@@ -1,5 +1,6 @@
 const { Op, ValidationError } = require('sequelize');
 const db = require('../models');
+const dateHelper = require('../helper/dateHelpers');
 
 const create = async (req, res) => {
   try {
@@ -56,13 +57,21 @@ const findAll = async (req, res) => {
       raw: true,
     });
     if (grants.length) {
+      console.log(`grants length ${grants.length}`);
       const result = await Promise.all(
         grants.map(async (g) => {
           try {
+            // const openedOnDate = dateHelper.setOpenedOnDate(g.openedOn);
+            // const closedOnDate = dateHelper.setClosedOnDate(g.closedOn);
+
+            // console.log(openedOnDate);
+            // console.log(closedOnDate);
             const openedOn = new Date(g.openedOn);
-            const closedOn = new Date(g.closedOn);
+            const closedOn = new Date(
+              new Date(g.closedOn).getTime() + 60 * 60 * 24 * 1000
+            );
             openedOn.setHours(0, 0, 0, 0);
-            closedOn.setHours(23, 59, 59, 59);
+            closedOn.setHours(0, 0, 0, 0);
             const dateFormatted = openedOn
               .toLocaleDateString()
               .replace('/', '-');
@@ -81,7 +90,6 @@ const findAll = async (req, res) => {
               .split(', ')[1];
             const stringFormatted2 = `${dateFormatted2} ${timeFormatted2}.000 +00:00`;
 
-            console.log(g.openedOn);
             const nominations = await db.Nomination.findAll({
               where: {
                 [Op.and]: [
@@ -99,7 +107,21 @@ const findAll = async (req, res) => {
               order: [['readyForBoardReviewTimestamp', 'DESC']],
             });
             g.nominations = nominations;
+            if (g.name === '17-18') {
+              console.log('OPENED ON');
+              console.log(stringFormatted);
+              console.log('CLOSED ON');
+              console.log(stringFormatted2);
+              for (i = 0; i < nominations.length; i++) {
+                if (
+                  nominations[i].id === 'dc1b8a88-8ace-418b-ac98-c71ff593bc38'
+                ) {
+                  console.log('ID IS HERE');
+                }
+              }
+            }
           } catch (error) {
+            console.log(error);
             return res.status(404).send(error);
           }
         })
