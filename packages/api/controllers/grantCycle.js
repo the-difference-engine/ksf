@@ -94,6 +94,8 @@ const findAll = async (req, res) => {
             // 1.) try with date object like here: https://stackoverflow.com/a/43127894/9312505
             // 2.) make it work with the way the date has a timezone in the db
             // 3.) if 1 and 2 fail try raw sql query with date function from postgresql date/time docs
+
+            // begin new branch
             const nominations = await db.Nomination.findAll({
               where: {
                 [Op.and]: [
