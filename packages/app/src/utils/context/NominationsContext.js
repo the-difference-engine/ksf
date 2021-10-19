@@ -43,7 +43,7 @@ export const NominationsDataProvider = (props) => {
 
   const getNominationById = (id) => {
     nominationsAPI.fetchNomination(id).then((res) => {
-      nomination = res.data;
+      let nomination = res.data;
       setActiveNomination(nomination);
     });
   };
