@@ -99,8 +99,21 @@ const findAll = async (req, res) => {
             // 3.) if 1 and 2 fail try raw sql query with date function from postgresql date/time docs
 
             // https://moment.github.io/luxon/#/formatting
+            // console.log('this is opened on');
+            // console.log(openedOn);
+            // console.log('this is closed on');
+            // console.log(closedOn);
+
+            // the dates come in like this
+            // this is opened on
+            // 2021-10-18T00:00:00.000Z
+            // this is closed on
+            // 2021-10-19T00:00:00.000Z
+
+            // Z is for zulu time, which is GMT, which, at midnight, is one day ahead of us, so the below plus functions add a day for the math to work
 
             openedOnDayLater = DateTime.fromJSDate(openedOn).plus({ days: 1 });
+            // two days are added here because of the math in the sql query and how that's interpreted.
             closedOnDayLater = DateTime.fromJSDate(closedOn).plus({ days: 2 });
 
             let openedOnDateString = openedOnDayLater.toISODate();
