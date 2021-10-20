@@ -111,7 +111,7 @@ const findAll = async (req, res) => {
             let sqlQueryForDateRange =
               'SELECT * FROM nominations WHERE "readyForBoardReviewTimestamp" >=  \'' +
               openedOnDateString +
-              '\' AND "readyForBoardReviewTimestamp" <= \'' +
+              '\' AND "readyForBoardReviewTimestamp" < \'' +
               closedOnDateString +
               "'";
 
