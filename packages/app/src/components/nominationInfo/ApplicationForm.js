@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
-import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import ViewCard from './ViewCard';
 import EditCard from './EditCard';
 import { formatPhoneNumber } from 'react-phone-number-input';
@@ -21,14 +20,12 @@ const ApplicationForm = (props) => {
   };
 
   // all nominations
-  const { NominationsData, setNominationsData } = useContext(
-    NominationsDataContext
-  );
-
-  // current nomination rendered on screen
-  const [activeNomination, setActiveNomination] = useContext(
-    ActiveNominationContext
-  );
+  const {
+    NominationsData,
+    setNominationsData,
+    activeNomination,
+    setActiveNomination,
+  } = useContext(NominationsDataContext);
 
   // watches for Save button click
   useEffect(() => {

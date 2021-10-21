@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { ActiveNominationContext } from '../../../utils/context/ActiveNominationContext';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
@@ -11,12 +10,12 @@ const NominationPage = ({
     params: { id },
   },
 }) => {
-  const [activeNomination, setActiveNomination] = useContext(
-    ActiveNominationContext
-  );
-  const { NominationsData, setNominationsData } = useContext(
-    NominationsDataContext
-  );
+  const {
+    activeNomination,
+    setActiveNomination,
+    NominationsData,
+    setNominationsData,
+  } = useContext(NominationsDataContext);
   const [error, setError] = useState();
   const [editHasBeenClicked, setEditHasBeenClicked] = useState(false);
   const [saveHasBeenClicked, setSaveHasBeenClicked] = useState(false);

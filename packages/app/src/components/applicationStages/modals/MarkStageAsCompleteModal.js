@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useContext } from 'react';
-import { ActiveNominationContext } from '../../../utils/context/ActiveNominationContext';
+import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 
 Modal.setAppElement('#root');
 
 const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {
-  const [activeNomination, setActiveNomination] = useContext(
-    ActiveNominationContext
+  const { activeNomination, setActiveNomination } = useContext(
+    NominationsDataContext
   );
   const [isOpen, setIsOpen] = useState(false);
 

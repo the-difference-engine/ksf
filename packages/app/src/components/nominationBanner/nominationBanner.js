@@ -2,7 +2,7 @@ import styles from '../../components/nominationInfo/newstyles.module.css';
 import style from './style.css';
 import React, { useEffect, useState, useContext } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI';
-import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+import { NominationsDataContext } from '../../utils/context/NominationsContext';
 import EditButton from './EditButton';
 import SaveButton from './SaveButton';
 import ResendEmailBtn from './resendEmailBtn.js';
@@ -39,8 +39,8 @@ const NominationBanner = (props) => {
     minute: '2-digit',
   });
   const finalDate = `${time} – ${minutes}`;
-  const [activeNomination, setActiveNomination] = useContext(
-    ActiveNominationContext
+  const { activeNomination, setActiveNomination } = useContext(
+    NominationsDataContext
   );
 
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
