@@ -8,6 +8,7 @@ const ToggleActiveGrantCycle = ({
   setActiveGrantCycle,
   showEditModal,
 }) => {
+  
   async function updateActiveGrantCycle() {
     grantCycle.isActive = true;
     try {

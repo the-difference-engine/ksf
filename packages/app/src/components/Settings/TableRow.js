@@ -21,8 +21,6 @@ const TableRow = (props) => {
     return date > now;
   };
 
-  // console.log(object);
-
   return (
     <tr>
       <td>

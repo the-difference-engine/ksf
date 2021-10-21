@@ -118,9 +118,6 @@ const updateNomination = async (req, res) => {
       console.log('Nomination Not Found', err);
       return res.status(400);
     });
-    //can continue using additional conditional to use other email functions,
-    //depending on status of application
-    //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
