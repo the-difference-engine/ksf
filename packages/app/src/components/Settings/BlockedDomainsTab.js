@@ -13,6 +13,7 @@ const BlockedDomainsTab = () => {
     e.preventDefault();
     domainAPI.addDomain({ name: domainValue });
     console.log('clicked----------');
+    setAllDomains([...allDomains])
   };
 
   async function getDomains() {
@@ -28,11 +29,11 @@ const BlockedDomainsTab = () => {
 
   useEffect(() => {
     getDomains();
-  });
+  },[domainValue]);
   
   // getDomains()
   const domainList = allDomains.map((domain) => {
-    return <li>{domain.name}</li>;
+    return <li key={domain.id}>{domain.name}</li>;
   });
 
   console.log(domainValue, '---------------DominValue-=');
@@ -40,7 +41,7 @@ const BlockedDomainsTab = () => {
     <main className="settings__main">
       <h2 className="settings__heading">Blocked Domains</h2>
       <input type="text" value={domainValue.name} onChange={handleChange} />
-      <button onClick={handleSubmit}>Add Domain</button>
+      <button onClick={(e) => {handleSubmit(e); }}>Add Domain</button>
       <ul>{domainList}</ul>
     </main>
   );
