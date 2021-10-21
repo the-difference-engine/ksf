@@ -3,9 +3,8 @@ import { render } from '@testing-library/react';
 import ApplicationForm from './ApplicationForm';
 import dummyData from './dummyData';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
-import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
-import {createMemoryHistory} from 'history'
-import {Router} from 'react-router-dom'
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
 
 test('renders ViewCards in ApplicationForm', () => {
   const patientInformationData = {
@@ -23,7 +22,7 @@ test('renders ViewCards in ApplicationForm', () => {
     'Provider Name': `${dummyData.providerName}`,
     'Provider Email Address': `${dummyData.providerEmailAddress}`,
     'Provider Phone Number': `${dummyData.providerPhoneNumber}`,
-    'Title': `${dummyData.providerTitle}`,
+    Title: `${dummyData.providerTitle}`,
     'Name of Hospital': `${dummyData.providerTitle}`,
     'Hospital URL': `${dummyData.providerTitle}`,
     'Hospital Address': `${dummyData.hospitalAddress}`,
@@ -35,54 +34,48 @@ test('renders ViewCards in ApplicationForm', () => {
     'Representative Name': `${dummyData.representativeName}`,
     'Representative Email Address': `${dummyData.representativeEmailAddress}`,
     'Representative Phone Number': `${dummyData.representativePhoneNumber}`,
-    'Relationship': `${dummyData.representativeRelationship}`,
+    Relationship: `${dummyData.representativeRelationship}`,
     'Request to communicate in Spanish?': `${dummyData.spanishRepString}`,
   };
 
   const grantRequestSupportData = {
     'Grant Request Support': '',
-    'Grant List': `${dummyData.grantRequestInfo}`
-  }
+    'Grant List': `${dummyData.grantRequestInfo}`,
+  };
 
-  const patientInformationDataKeys = Object.keys(patientInformationData)
-  const familyMemberDataKeys = Object.keys(familyMemberData)
-  const healthProviderDataKeys = Object.keys(healthProviderData)
-  const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData)
+  const patientInformationDataKeys = Object.keys(patientInformationData);
+  const familyMemberDataKeys = Object.keys(familyMemberData);
+  const healthProviderDataKeys = Object.keys(healthProviderData);
+  const grantRequestSupportDataKeys = Object.keys(grantRequestSupportData);
 
-  const history = createMemoryHistory()
+  const history = createMemoryHistory();
 
-    const { getByText } = render(
-    
+  const { getByText } = render(
     <Router history={history}>
       <NominationsDataContext.Provider value={[[dummyData], jest.fn()]}>
-        <ActiveNominationContext.Provider value={[dummyData, jest.fn()]}>
-            <ApplicationForm            
-                patientInformationData={patientInformationData}
-                familyMemberData={familyMemberData}
-                healthProviderData={healthProviderData}
-                grantRequestSupportData={grantRequestSupportData}
-                patientInformationDataKeys={patientInformationDataKeys}
-                familyMemberDataKeys={familyMemberDataKeys}
-                healthProviderDataKeys={healthProviderDataKeys}
-                grantRequestSupportDataKeys={grantRequestSupportDataKeys}
-                
-                mode={'view'}
-                editHasBeenClicked={false}
-                saveHasBeenClicked={false}
-                id={"12345"}
-                revertMode={jest.fn()} 
-            />
-        </ActiveNominationContext.Provider>
+        <ApplicationForm
+          patientInformationData={patientInformationData}
+          familyMemberData={familyMemberData}
+          healthProviderData={healthProviderData}
+          grantRequestSupportData={grantRequestSupportData}
+          patientInformationDataKeys={patientInformationDataKeys}
+          familyMemberDataKeys={familyMemberDataKeys}
+          healthProviderDataKeys={healthProviderDataKeys}
+          grantRequestSupportDataKeys={grantRequestSupportDataKeys}
+          mode={'view'}
+          editHasBeenClicked={false}
+          saveHasBeenClicked={false}
+          id={'12345'}
+          revertMode={jest.fn()}
+        />
       </NominationsDataContext.Provider>
     </Router>
-);
+  );
 
   const reg = new RegExp(dummyData.patientName, 'i');
   const patientName = getByText(reg);
   expect(patientName).toBeInTheDocument();
-
 });
-
 
 test('renders EditCards in ApplicationForm', () => {
   const patientInformationData = {
@@ -100,7 +93,7 @@ test('renders EditCards in ApplicationForm', () => {
     'Provider Name': `${dummyData.providerName}`,
     'Provider Email Address': `${dummyData.providerEmailAddress}`,
     'Provider Phone Number': `${dummyData.providerPhoneNumber}`,
-    'Title': `${dummyData.providerTitle}`,
+    Title: `${dummyData.providerTitle}`,
     'Name of Hospital': `${dummyData.providerTitle}`,
     'Hospital URL': `${dummyData.providerTitle}`,
     'Hospital Address': `${dummyData.hospitalAddress}`,
@@ -112,39 +105,36 @@ test('renders EditCards in ApplicationForm', () => {
     'Representative Name': `${dummyData.representativeName}`,
     'Representative Email Address': `${dummyData.representativeEmailAddress}`,
     'Representative Phone Number': `${dummyData.representativePhoneNumber}`,
-    'Relationship': `${dummyData.representativeRelationship}`,
+    Relationship: `${dummyData.representativeRelationship}`,
     'Request to communicate in Spanish?': `${dummyData.representativeSpanishRequested}`,
   };
 
-  const patientInformationDataKeys = Object.keys(patientInformationData)
-  const familyMemberDataKeys = Object.keys(familyMemberData)
-  const healthProviderDataKeys = Object.keys(healthProviderData)
+  const patientInformationDataKeys = Object.keys(patientInformationData);
+  const familyMemberDataKeys = Object.keys(familyMemberData);
+  const healthProviderDataKeys = Object.keys(healthProviderData);
 
-  const history = createMemoryHistory()
+  const history = createMemoryHistory();
 
   var { getByText } = render(
     <Router history={history}>
       <NominationsDataContext.Provider value={[[dummyData], jest.fn()]}>
-        <ActiveNominationContext.Provider value={[dummyData, jest.fn()]}>
-            <ApplicationForm            
-                patientInformationData={patientInformationData}
-                familyMemberData={familyMemberData}
-                healthProviderData={healthProviderData}
-                patientInformationDataKeys={patientInformationDataKeys}
-                familyMemberDataKeys={familyMemberDataKeys}
-                healthProviderDataKeys={healthProviderDataKeys}
-                mode={'edit'}
-                editHasBeenClicked={false}
-                saveHasBeenClicked={false}
-                id={"12345"}
-                revertMode={jest.fn()} 
-            />
-        </ActiveNominationContext.Provider>
+        <ApplicationForm
+          patientInformationData={patientInformationData}
+          familyMemberData={familyMemberData}
+          healthProviderData={healthProviderData}
+          patientInformationDataKeys={patientInformationDataKeys}
+          familyMemberDataKeys={familyMemberDataKeys}
+          healthProviderDataKeys={healthProviderDataKeys}
+          mode={'edit'}
+          editHasBeenClicked={false}
+          saveHasBeenClicked={false}
+          id={'12345'}
+          revertMode={jest.fn()}
+        />
       </NominationsDataContext.Provider>
     </Router>
   );
   const reg = new RegExp(dummyData.patientName, 'i');
   const patientName = getByText(reg);
   expect(patientName).toBeInTheDocument();
-  
 });
