@@ -113,9 +113,8 @@ const Settings = (props) => {
       if (gcToEdit.isActive) {
         setActiveGrantCycle(gcToEdit);
       } else {
-        setActiveGrantCycle()
+        setActiveGrantCycle();
       }
-
 
       setGcToEdit({
         id: '',

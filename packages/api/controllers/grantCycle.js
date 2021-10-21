@@ -64,6 +64,7 @@ const findAll = async (req, res) => {
         grants.map(async (g) => {
           try {
             const openedOn = new Date(g.openedOn);
+
             const closedOn = new Date(g.closedOn);
 
             openedOnDayLater = DateTime.fromJSDate(openedOn).plus({ days: 1 });
@@ -73,12 +74,14 @@ const findAll = async (req, res) => {
             let openedOnDateString = openedOnDayLater.toISODate();
 
             let closedOnDateString = closedOnDayLater.toISODate();
+
             let sqlQueryForDateRange =
               'SELECT * FROM nominations WHERE "readyForBoardReviewTimestamp" >=  \'' +
               openedOnDateString +
               '\' AND "readyForBoardReviewTimestamp" < \'' +
               closedOnDateString +
               "'";
+
             const sequelize = db.Nomination.sequelize;
             const nominations = await sequelize.query(sqlQueryForDateRange, {
               type: QueryTypes.SELECT,
@@ -86,6 +89,7 @@ const findAll = async (req, res) => {
               model: db.Nomination,
               mapToModel: true, // pass true here if you have any mapped fields
             });
+
             g.nominations = nominations;
           } catch (error) {
             console.log(error);
