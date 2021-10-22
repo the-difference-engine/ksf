@@ -6,15 +6,15 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import EditButton from './EditButton';
 import SaveButton from './SaveButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import ResendEmailBtn from './resendEmailBtn.js';
 import ResendEmailModal from './resendEmailModal.js';
 import DeclineAppModal from './declineAppModal.js';
 import DeclineAppBtn from './declineAppBtn.js';
-
+import HandleAttachmentBtn from './handleAttachmentBtn';
+import HandleAttachmentModal from './handleAttachmentModal';
 const states = require('us-state-codes');
-
-
+const paperclip = false;
 /**
  * Creates and renders the active nomination banner.
  *
@@ -30,8 +30,8 @@ const NominationBanner = (props) => {
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
     ? props.nomination.amountRequestedCents
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
   const hipaaDate = props.nomination.hipaaTimestamp;
   const hipaaReminder = props.nomination.awaitingHipaaReminderEmailTimestamp;
@@ -46,13 +46,10 @@ const NominationBanner = (props) => {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModalState = () => {
     setIsModalVisible((isModalVisible) => !isModalVisible);
   };
-
-
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
   const toggleDeclineAppModalState = () => {
     setDeclineAppModalVisible(
@@ -60,14 +57,18 @@ const NominationBanner = (props) => {
     );
   };
 
+  function attachmentsHandled() {
+    const value = false;
+    activeNomination.attachments = value;
+    setActiveNomination({...activeNomination})
+    return resetAttachments(activeNomination)
+  }
   function declineApplication() {
     const declineStatus = 'Declined';
     activeNomination.status = declineStatus;
     setActiveNomination({ ...activeNomination });
-
     return updateNomination(declineStatus);
   }
-
   function updateNomination(s) {
     try {
       nominationsAPI.updateNomination(props.nomination.id, s);
@@ -75,42 +76,60 @@ const NominationBanner = (props) => {
       console.log(error);
     }
   }
-
+  function resetAttachments(s) {
+    try {
+      nominationsAPI.updateActiveNomData(props.nomination.id, s);
+    } catch (error) {
+      console.log(error)
+    }
+  }
   let hipaaStatus = hipaaReminder ? 'Reminder Email Sent   ' : 'Awaiting';
-
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
-
   const toggleEmailModalState = () => {
     setResendEmailModalVisible(
       (resendEmailModalVisible) => !resendEmailModalVisible
     );
   };
-
+  // Added for ticket 109
+  const [
+    handleAttachmentModalVisible,
+    setHandleAttachmentModalVisible,
+  ] = useState(false);
+  const toggleHandleAttachmentModalState = () => {
+    setHandleAttachmentModalVisible(
+      (handleAttachmentModalVisible) => !handleAttachmentModalVisible
+    );
+  };
+  function handleAttachment() {
+    const declineStatus = 'Declined';
+    activeNomination.status = declineStatus;
+    setActiveNomination({ ...activeNomination });
+    return updateNomination(declineStatus);
+  }
   return (
     <div className="nomination-banner-container">
       <div className="row" id={styles.rowOverride}>
         <div className="column column-10 icon-container">
           <img src="/ksflogo.png" alt="other" />
         </div>
-
         <div className="column column-80 nomination-details">
           <div className="row banner-top">
             <div className="column name" style={{ width: '30%' }}>
               <p>Application</p>
               <span>
                 <h1 className="nom-name">
-                  <strong>{nominationName}</strong>
+                  <strong>
+                    {nominationName}
+                    {props.nomination.attachments && (
+                      <FontAwesomeIcon
+                        className="green"
+                        color="green"
+                        icon={faPaperclip}
+                      />
+                    )}
+                  </strong>
                 </h1>
               </span>
-            </div>
-            <div className="column name">
-              <button
-                disabled={activeNomination.status == 'Declined'}
-                className=" decline-button"
-                onClick={toggleModalState}
-              >
-                Decline Application
-              </button>
             </div>
             {isModalVisible && (
               <div className="modal-background">
@@ -138,7 +157,26 @@ const NominationBanner = (props) => {
                 </div>
               </div>
             )}
-              <div className="column name">
+            {props.nomination.attachments && (
+              <div>
+                <HandleAttachmentBtn
+                  status={activeNomination.status}
+                  toggleHandleAttachmentModalState={
+                    toggleHandleAttachmentModalState
+                  }
+                />
+              </div>
+            )}
+            {handleAttachmentModalVisible && (
+              <HandleAttachmentModal
+                handleAttachment={handleAttachment}
+                toggleHandleAttachmentModalState={
+                  toggleHandleAttachmentModalState
+                }
+                attachmentsHandled={attachmentsHandled}
+              />
+            )}
+            <div className="column name">
               <DeclineAppBtn
                 status={activeNomination.status}
                 toggleDeclineAppModalState={toggleDeclineAppModalState}
@@ -162,7 +200,6 @@ const NominationBanner = (props) => {
               />
             )}
           </div>
-
           <div className="row">
             <div className="column hp-name">
               <p className="secondary-dark">HP Name</p>
@@ -207,7 +244,7 @@ const NominationBanner = (props) => {
                       finalDate
                     ) : (
                       <>
-                      {hipaaStatus}
+                        {hipaaStatus}
                         {hipaaReminder && hipaaStatus ? (
                           <FontAwesomeIcon
                             className="red"
@@ -221,6 +258,18 @@ const NominationBanner = (props) => {
                 </h2>
               </span>
             </div>
+            {!paperclip && (
+              <div className="column amount">
+                <p className="secondary-dark">Grant Amount Requested</p>
+                <span>
+                  <h2 className="body-font">
+                    <strong>
+                      {formattedAmount ? `$${formattedAmount}` : ''}
+                    </strong>
+                  </h2>
+                </span>
+              </div>
+            )}
           </div>
         </div>
         <div>
@@ -238,6 +287,4 @@ const NominationBanner = (props) => {
     </div>
   );
 };
-
 export default NominationBanner;
-

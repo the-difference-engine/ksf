@@ -1,10 +1,11 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
 const NewNomination = ({ nomination }) => {
   if (nomination) {
+    let attachments = nomination.attachments
     if (
       nomination.awaitingHipaaTimestamp &&
       nomination.awaitingHipaaReminderEmailTimestamp
@@ -12,6 +13,7 @@ const NewNomination = ({ nomination }) => {
       return (
         <tr className="landing-table" key={nomination.id}>
           <td className="new-files-application-name add-padding-left detail-font-size">
+            {attachments ? (<FontAwesomeIcon classname="green" color="green" icon={faPaperclip} />) : (null)}
             <FontAwesomeIcon className="red" color="red" icon={faClock} />
             <Link
               className="green"
@@ -31,6 +33,7 @@ const NewNomination = ({ nomination }) => {
       return (
         <tr className="landing-table" key={nomination.id}>
           <td className="green new-files-application-name add-padding-left detail-font-size">
+          {attachments ? (<FontAwesomeIcon classname="green" color="green" icon={faPaperclip} />) : (null)}
             <Link target={'_blank'} to={`/nomination/${nomination.id}`}>
               {nomination.nominationName}
             </Link>

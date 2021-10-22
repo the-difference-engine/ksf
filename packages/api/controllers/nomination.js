@@ -342,6 +342,14 @@ const updateDashboard = async (trueFalse, nominationId) => {
   });
 };
 
+const updateAttachments = async (id) => {
+  const nomination = await db.Nomination.findOne({ where: { id } });
+  nomination.update({ attachments: false }).catch((err) => {
+    console.log('Nomination Not Found', err);
+    return res.status(400);
+  });
+};
+
 module.exports = {
   getNominationById,
   findAllNominations,
@@ -356,4 +364,5 @@ module.exports = {
   checkNominations,
   resendEmail,
   updateDashboard,
+  updateAttachments,
 };

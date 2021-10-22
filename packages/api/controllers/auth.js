@@ -154,7 +154,11 @@ const getNewAttachments = (nominations, gmail, query) => {
                 if (err) return console.log(err);
                 uploadFile(nomName, res.data.data);
                 markAsRead(message.id, gmail);
-                updateDashboard('true', nomId);
+                if (nomId) {
+                  updateDashboard('true', nomId);
+                } else {
+                  console.log('no nominations awaiting documents');
+                }
               });
             });
           }
