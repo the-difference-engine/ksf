@@ -3,8 +3,10 @@ const db = require('../models');
 
 const create = async (req, res) => {
   try {
-    db.Domain.create(req.body);
-    return res.status(204).end();
+    const domain = await db.Domain.create(req.body);
+    console.log("This is domain");
+    console.dir(domain);
+    return res.status(200).json(domain);
   } catch (error) {
     if (error instanceof ValidationError) {
       console.log('400 validation error', error);
