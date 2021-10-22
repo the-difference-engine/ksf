@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faPaperclip } from '@fortawesome/free-solid-svg-icons';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import SettingsModal from 'react-modal';
 import Settings from '../Settings/Settings';
 import GrantCycleNomsResults from '../Settings/GrantCycleNomsResults';
@@ -18,7 +18,7 @@ const SearchBar = () => {
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
-  const [NominationsData, setNominationsData] = useContext(
+  const [NominationsData] = useContext(
     NominationsDataContext
   );
 

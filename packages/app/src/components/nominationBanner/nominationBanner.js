@@ -56,7 +56,6 @@ const NominationBanner = (props) => {
       (declineAppModalVisible) => !declineAppModalVisible
     );
   };
-
   function attachmentsHandled() {
     const value = false;
     activeNomination.attachments = value;
@@ -90,7 +89,6 @@ const NominationBanner = (props) => {
       (resendEmailModalVisible) => !resendEmailModalVisible
     );
   };
-  // Added for ticket 109
   const [
     handleAttachmentModalVisible,
     setHandleAttachmentModalVisible,
@@ -100,12 +98,6 @@ const NominationBanner = (props) => {
       (handleAttachmentModalVisible) => !handleAttachmentModalVisible
     );
   };
-  function handleAttachment() {
-    const declineStatus = 'Declined';
-    activeNomination.status = declineStatus;
-    setActiveNomination({ ...activeNomination });
-    return updateNomination(declineStatus);
-  }
   return (
     <div className="nomination-banner-container">
       <div className="row" id={styles.rowOverride}>
@@ -169,7 +161,6 @@ const NominationBanner = (props) => {
             )}
             {handleAttachmentModalVisible && (
               <HandleAttachmentModal
-                handleAttachment={handleAttachment}
                 toggleHandleAttachmentModalState={
                   toggleHandleAttachmentModalState
                 }
