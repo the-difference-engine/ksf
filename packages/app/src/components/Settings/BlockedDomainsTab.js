@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import domainAPI from '../../utils/API/domainAPI';
-import Domain from './Domain';
 
 const BlockedDomainsTab = () => {
   const [domainValue, setDomainValue] = useState({ name: '' });
@@ -23,7 +22,7 @@ const BlockedDomainsTab = () => {
       setAllDomains((list) => {
         return [...list, res.data]
       })
-      
+      setDomainValue({name: ''});
       console.log("This is the new domain list.")
       console.log(domainList);
       // setAllDomains(domainList);
@@ -64,9 +63,9 @@ const BlockedDomainsTab = () => {
     <main className="settings__main">
       <h2 className="settings__heading">Blocked Domains</h2>
             <input type="text" value={domainValue.name} onChange={handleChange} />
-            <button onClick={(e) => { handleSubmit(e); }}>Add Domain</button>
+            <button onClick={(e) => { handleSubmit(e);  }}>Add Domain</button>
     {allDomains.map((domain) => {
-        return <Domain domain={domain} />
+        return <div key={domain.id}>{domain.name}</div>
       })
     }
     </main>
