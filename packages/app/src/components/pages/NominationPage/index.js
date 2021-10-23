@@ -11,12 +11,9 @@ import ApplicationStages from '../../applicationStages/ApplicationStages';
 import SearchBar from '../../SearchBar';
 import ApplicationForm from '../../nominationInfo/ApplicationForm';
 import nominationsAPI from '../../../utils/API/nominationsAPI';
-import { act } from 'react-dom/test-utils';
-const NominationPage = ({
-  match: {
-    params: { id },
-  },
-}) => {
+
+import { withRouter } from 'react-router-dom';
+const NominationPage = (props) => {
   const {
     activeNomination,
     setActiveNomination,
@@ -31,6 +28,14 @@ const NominationPage = ({
   const [mode, setMode] = useState('view');
 
   // const [loaded, reload] = useState(false);
+
+  // const location = useLocation();
+
+  // console.log('this is location');
+  // console.dir(location);
+
+  console.log('this is props');
+  console.dir(props);
 
   const getNominationById = (id) => {
     nominationsAPI.fetchNomination(id).then((res) => {
@@ -50,7 +55,9 @@ const NominationPage = ({
   };
 
   useEffect(() => {
-    getNominationById(id);
+    if (props.state?.nomination) {
+      getNominationById(props.state.nomination.id);
+    }
     console.log('useEffect Is running');
     // reload((load) => !load);
     // if (NominationsData) {
@@ -62,7 +69,7 @@ const NominationPage = ({
     //     }
     //   });
     // }
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     console.log('this is active nomination from useEffect [activeNomination]');
@@ -183,7 +190,7 @@ const NominationPage = ({
 
     return (
       <>
-        {activeNomination && (
+        {props.state.nomination && (
           <div className="nomination-show-page">
             <SearchBar />
             <NominationBanner
@@ -210,7 +217,7 @@ const NominationPage = ({
               editHasBeenClicked={editHasBeenClicked}
               saveHasBeenClicked={saveHasBeenClicked}
               cancelHasBeenClicked={cancelHasBeenClicked}
-              id={id}
+              id={props.state.nomination.id}
               revertMode={revertMode}
             />
           </div>
@@ -222,4 +229,4 @@ const NominationPage = ({
   }
 };
 
-export default NominationPage;
+export default withRouter(NominationPage);
