@@ -4,7 +4,7 @@ import NominationBanner from '../../nominationBanner/nominationBanner';
 import ApplicationStages from '../../applicationStages/ApplicationStages';
 import SearchBar from '../../SearchBar';
 import ApplicationForm from '../../nominationInfo/ApplicationForm';
-
+import nominationsAPI from '../../../utils/API/nominationsAPI';
 const NominationPage = ({
   match: {
     params: { id },
@@ -23,17 +23,37 @@ const NominationPage = ({
 
   const [mode, setMode] = useState('view');
 
-  useEffect(() => {
-    if (NominationsData) {
-      NominationsData.forEach((nomination) => {
-        if (nomination.id === id) {
-          return setActiveNomination(nomination);
-        } else {
-          return setError('Nomination does not exist');
-        }
+  const [loaded, reload] = useState(false);
+
+  const getNominationById = (id) => {
+    nominationsAPI.fetchNomination(id).then((res) => {
+      let nomination = res.data;
+      console.log('nomination fetch by id is running');
+      console.log('this nomination from res.data');
+      console.dir(nomination);
+      setActiveNomination(() => {
+        reload((load) => !load);
+        console.log('reload has happened');
+        return {
+          ...nomination,
+        };
       });
-    }
-  });
+    });
+  };
+
+  useEffect(() => {
+    getNominationById(id);
+    console.log('useEffect Is running');
+    // if (NominationsData) {
+    //   NominationsData.forEach((nomination) => {
+    //     if (nomination.id === id) {
+    //       return setActiveNomination(nomination);
+    //     } else {
+    //       return setError('Nomination does not exist');
+    //     }
+    //   });
+    // }
+  }, []);
 
   const {
     hospitalCity,

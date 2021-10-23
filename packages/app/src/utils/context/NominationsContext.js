@@ -41,13 +41,6 @@ export const NominationsDataProvider = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const getNominationById = (id) => {
-    nominationsAPI.fetchNomination(id).then((res) => {
-      let nomination = res.data;
-      setActiveNomination(nomination);
-    });
-  };
-
   return (
     <NominationsDataContext.Provider
       value={{
@@ -55,7 +48,6 @@ export const NominationsDataProvider = (props) => {
         setNominationsData,
         activeNomination,
         setActiveNomination,
-        getNominationById,
       }}
     >
       {props.children}

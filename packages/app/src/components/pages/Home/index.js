@@ -35,12 +35,12 @@ library.add(
 );
 
 const Home = () => {
-  console.log('this is running');
-  const {
-    NominationsData,
-    setNominationsData,
-    findAllNominations,
-  } = useContext(NominationsDataContext);
+  // console.log('this is running');
+  // const {
+  //   NominationsData,
+  //   setNominationsData,
+  //   findAllNominations,
+  // } = useContext(NominationsDataContext);
   // useEffect(() => {
   //   findAllNominations();
   // }, []);
