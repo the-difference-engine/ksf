@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useRef } from 'react';
 import nominationsAPI from '../API/nominationsAPI';
 import states from 'us-state-codes';
 
@@ -7,17 +7,17 @@ export const NominationsDataContext = createContext();
 export const NominationsDataProvider = (props) => {
   const [NominationsData, setNominationsData] = useState([]);
 
-  const [activeNomination, setActiveNomination] = useState({});
+  const [activeNomination, setActiveNomination] = useState();
 
-  const [apiCalled, setApiCall] = useState(false);
+  const apiCalled = useRef(false);
 
-  useEffect(() => {
-    if (!apiCalled) {
-      console.log('find all nominations is running in use effect');
-      findAllNominations();
-      setApiCall(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!apiCalled.current) {
+  //     console.log('find all nominations is running in use effect');
+  //     findAllNominations();
+  //     apiCalled.current = true;
+  //   }
+  // }, []);
 
   const nomName = (n) => {
     const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
