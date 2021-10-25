@@ -117,11 +117,7 @@ const NominationBanner = (props) => {
                       }}
                       className={`docs-btn banner-buttons ${styles.docsBtn}`}
                     >
-                      <FontAwesomeIcon
-                        // className="cog-icon"
-                        icon="external-link-alt"
-                        size="lg"
-                      />
+                      <FontAwesomeIcon icon="external-link-alt" size="lg" />
                       View Documents
                     </button>
                   </span>
