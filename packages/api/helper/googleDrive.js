@@ -19,15 +19,11 @@ async function createFolder(applicationName, nomination) {
     parents: [parentFolderId],
     mimeType: 'application/vnd.google-apps.folder',
   };
-
-  console.log('this is before files.create');
   let err,
     response = await drive.files.create({
       resource: fileMetadata,
       fields: 'id',
     });
-  console.log('create Folder Is running');
-  console.log(response.data.id);
   return response.data.id;
 }
 
