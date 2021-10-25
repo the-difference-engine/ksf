@@ -110,7 +110,6 @@ const NominationBanner = (props) => {
               {activeNomination.driveFolderId &&
                 activeNomination.status != 'received' &&
                 activeNomination.status != 'Awaiting HIPAA' && (
-                  // {showDocsButton ? (
                   <span>
                     <button
                       onClick={() => {
