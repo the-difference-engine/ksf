@@ -6,7 +6,7 @@ const HandleAttachmentBtn = (props) => {
       className="decline-button banner-buttons"
       onClick={props.toggleHandleAttachmentModalState}
     >
-      Handle Attachment
+      Verify Attachment(s)
     </button>
   );
 };
