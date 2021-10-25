@@ -26,7 +26,7 @@ const NominationBanner = (props) => {
   const state = states.getStateCodeByStateName(props.nomination.hospitalState);
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
-    ? props.nomination.amountRequestedCents
+    ? (props.nomination.amountRequestedCents / 100)
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
@@ -74,6 +74,7 @@ const NominationBanner = (props) => {
     );
   };
 
+    
   return (
     <div className="nomination-banner-container">
       <div className="row" id={styles.rowOverride}>
