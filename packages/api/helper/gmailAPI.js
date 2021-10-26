@@ -16,7 +16,7 @@ function gmailStart() {
     scope: SCOPES,
   });
 
-  opn(authorizeUrl, { wait: true, newInstance: false }).then((cp) => cp.unref());
+  return authorizeUrl;
 }
 
 module.exports = gmailStart;

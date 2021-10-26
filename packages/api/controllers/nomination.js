@@ -200,9 +200,8 @@ const syncNominations = async (req, res) => {
 
 const checkNominations = async (req, res) => {
   try {
-    gmailStart();
-    console.log('nominations check completed');
-    return res.status(200).json({ status: 'ok' });
+    const authorizeUrl = gmailStart();
+    return res.status(200).json({ authorizeUrl });
   } catch (error) {
     console.log('error:', error);
     return res.status(400).json({ error: error.message });
