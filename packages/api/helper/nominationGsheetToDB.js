@@ -8,17 +8,6 @@ const scopes = ['https://www.googleapis.com/auth/spreadsheets'];
 const { verifyHcEmail } = require('./mailer.js');
 const domainController = require('../controllers/domain');
 
-const publicEmailDomains = [
-  'gmail.com',
-  'aol.com',
-  'outlook.com',
-  'zoho.com',
-  'mail.com',
-  'yahoo.com',
-  'protonmail.com',
-  'icloud.com',
-];
-
 module.exports = function gsheetToDB() {
   const client = new google.auth.JWT(clientEmail, null, privateKey, scopes);
   let domains;
