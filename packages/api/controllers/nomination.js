@@ -151,7 +151,9 @@ const updateNomination = async (req, res) => {
           const applicationName = `${lastName}-${state}`;
           let driveFolderId = await createFolder(applicationName, nomination);
 
-          nomination.update({ driveFolderId: driveFolderId });
+          const updatedNomination = nomination.update({
+            driveFolderId: driveFolderId,
+          });
 
           return res
             .status(200)
