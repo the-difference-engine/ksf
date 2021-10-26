@@ -20,7 +20,6 @@ const CheckNominations = () => {
       if (res.status === 200) {
         let url = res.data.authorizeUrl;
         window.open(url, "_blank", 'noopener,noreferrer')
-        setMessage('Nominations activity successfully updated ');
       } else {
         setMessage('Error occurred, Dashboard update failed...');
         removeMessage();
