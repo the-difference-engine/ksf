@@ -74,7 +74,6 @@ const NominationBanner = (props) => {
     );
   };
 
-    
   return (
     <div className="nomination-banner-container">
       <div className="row" id={styles.rowOverride}>
