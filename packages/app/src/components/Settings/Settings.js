@@ -28,6 +28,7 @@ const Settings = (props) => {
   async function getGrantCycles() {
     try {
       const { data } = await grantCycleAPI.getGrantCycles();
+      console.log(data);
       setGrantCycles(data);
     } catch (e) {
       console.log('Error using getGrantCycles: ', e);
