@@ -33,5 +33,6 @@ router.put('/api/grantcycles/:id', grantCycleController.update);
 // domain endpoint
 router.post('/api/createDomain', domainController.create);
 router.get('/api/domains', domainController.findAll);
+router.put('/api/updateDomain', domainController.updateDomain);
 
 module.exports = router;

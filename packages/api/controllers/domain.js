@@ -26,7 +26,30 @@ const findAll = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+const updateDomain = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    await db.Domain.update(
+      { name: `${name}` },
+      {
+        where: {
+          id: `${id}`,
+        },
+      },
+    );
+    return res.status(200).json(name);
+  } catch (err) {
+    if (err) {
+      console.log('Update error', err);
+      return res.status(400).json({ error: err.message });
+    }
+    return res.status(500).json({ err: err.message });
+  }
+};
 module.exports = {
   create,
   findAll,
+  updateDomain,
 };
