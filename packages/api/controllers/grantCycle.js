@@ -59,46 +59,6 @@ const findAll = async (req, res) => {
     });
     if (grants.length) {
       console.log(`grants length ${grants.length}`);
-      // let nominations = [];
-      // for (let i = 0; i < grants.length; i++) {
-      //   const openedOn = new Date(grants[i].openedOn);
-
-      //   const closedOn = new Date(grants[i].closedOn);
-
-      //   openedOnDayLater = DateTime.fromJSDate(openedOn).plus({ days: 1 });
-      //   // two days are added here because of the math in the sql query and how that's interpreted.
-      //   closedOnDayLater = DateTime.fromJSDate(closedOn).plus({ days: 2 });
-
-      //   let openedOnDateString = openedOnDayLater.toISODate();
-
-      //   let closedOnDateString = closedOnDayLater.toISODate();
-
-      //   // let sqlQueryForDateRange =
-      //   //   'SELECT * FROM nominations WHERE "readyForBoardReviewTimestamp" >= :openedOnDateString AND "readyForBoardReviewTimestamp" < :closedOnDateString';
-
-      //   let sqlQueryForDateRange =
-      //     'SELECT * FROM nominations WHERE "readyForBoardReviewTimestamp" >=  \'' +
-      //     openedOnDateString +
-      //     '\' AND "readyForBoardReviewTimestamp" < \'' +
-      //     closedOnDateString +
-      //     "'";
-
-      //   console.log('sql query');
-      //   console.log(sqlQueryForDateRange);
-
-      //   const sequelize = db.Nomination.sequelize;
-      //   const nominations = await sequelize.query(sqlQueryForDateRange, {
-      //     // replacements: {
-      //     //   openedOnDateString: openedOnDateString,
-      //     //   closedOnDateString: closedOnDateString,
-      //     // },
-      //     type: QueryTypes.SELECT,
-      //     model: db.Nomination,
-      //     mapToModel: true, // pass true here if you have any mapped fields
-      //   });
-      //   console.log('NOMINATION RESULTS FROM LOOP');
-      //   console.log(nominations);
-      // }
       const result = await Promise.all(
         grants.map(async (g) => {
           try {
@@ -114,40 +74,27 @@ const findAll = async (req, res) => {
 
             let closedOnDateString = closedOnDayLater.toISODate();
 
-            // let sqlQueryForDateRange =
-            //   'SELECT * FROM nominations WHERE "readyForBoardReviewTimestamp" >= :openedOnDateString AND "readyForBoardReviewTimestamp" < :closedOnDateString';
-
             let sqlQueryForDateRange =
-              'SELECT * FROM nominations WHERE "readyForBoardReviewTimestamp" >=  \'' +
-              openedOnDateString +
-              '\' AND "readyForBoardReviewTimestamp" < \'' +
-              closedOnDateString +
-              "'";
-
-            // console.log('sql query');
-            // console.log(sqlQueryForDateRange);
+              'SELECT * FROM nominations WHERE "readyForBoardReviewTimestamp" >= :openedOnDateString AND "readyForBoardReviewTimestamp" < :closedOnDateString';
 
             const sequelize = db.Nomination.sequelize;
             const nominations = await sequelize.query(sqlQueryForDateRange, {
-              // replacements: {
-              //   openedOnDateString: openedOnDateString,
-              //   closedOnDateString: closedOnDateString,
-              // },
+              replacements: {
+                openedOnDateString: openedOnDateString,
+                closedOnDateString: closedOnDateString,
+              },
               type: QueryTypes.SELECT,
               model: db.Nomination,
               mapToModel: true, // pass true here if you have any mapped fields
             });
 
             g.nominations = nominations;
-            // return nominations;
           } catch (error) {
             console.log(error);
             return res.status(404).send(error);
           }
         })
       );
-      // console.log('result');
-      // console.log(result);
       return res.status(200).json(grants);
     }
 
