@@ -8,7 +8,7 @@
     "dialectOptions": {
       "useUTC": false
     },
-    "timezone": "-05:00"
+    "timezone": "America/Chicago"
   },
 
   "test": {
@@ -20,7 +20,7 @@
     "dialectOptions": {
       "useUTC": false
     },
-    "timezone": "-05:00"
+    "timezone": "America/Chicago"
   },
   "production": {
     "dialect": "postgres",
@@ -32,6 +32,6 @@
       },
       "useUTC": false
     },
-    "timezone": "-05:00"
+    "timezone": "America/Chicago"
   }
 }
