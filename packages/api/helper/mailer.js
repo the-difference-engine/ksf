@@ -55,6 +55,8 @@ function sendDeclineEmail(nomination) {
 }
 
 function sendSurveyEmail(nomination) {
+  let index = nomination.patientName.indexOf(" ");
+  let lastName = nomination.patientName.slice(index);
   email.send({
     template: 'survey',
     attachments: './survey/header.jpg',
@@ -65,6 +67,9 @@ function sendSurveyEmail(nomination) {
     locals: {
       name: nomination.representativeName,
       patientName: nomination.patientName,
+      lastName: lastName,
+      hospitalCity: nomination.hospitalCity,
+      hospitalState: nomination.hospitalState,
       email: nomination.representativeEmailAddress,
       imgUrl
     }
@@ -91,6 +96,8 @@ function verifyHcEmail(nomination) {
 }
 
 function sendHIPAAEmail(nomination) {
+  let index = nomination.patientName.indexOf(" ");
+  let lastName = nomination.patientName.slice(index);
   email
     .send(
       {
@@ -103,6 +110,9 @@ function sendHIPAAEmail(nomination) {
         locals: {
           name: nomination.representativeName,
           imgUrl,
+          lastName: lastName,
+          hospitalCity: nomination.hospitalCity,
+          hospitalState: nomination.hospitalState
         },
       }
     )
