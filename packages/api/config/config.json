@@ -16,11 +16,7 @@
     "password": "postgres",
     "database": "postgres",
     "host": "127.0.0.1",
-    "dialect": "postgres",
-    "dialectOptions": {
-      "useUTC": false
-    },
-    "timezone": "America/Chicago"
+    "dialect": "postgres"
   },
   "production": {
     "dialect": "postgres",
