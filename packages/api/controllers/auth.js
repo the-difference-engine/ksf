@@ -125,7 +125,6 @@ async function getNewDocs(auth) {
               }
             }
             if (res.data.payload.parts.length >= 1) {
-             
               getAttachmentIds(res.data.payload.parts, attachmentIds);
             }
             if (attachmentIds.length > 0) {
