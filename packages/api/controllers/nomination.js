@@ -127,7 +127,7 @@ const updateNomination = async (req, res) => {
     if (nomination.changed('status')) {
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
-          nomination.update({ declinedTimestamp: Date() });
+          await nomination.update({ declinedTimestamp: Date() });
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
@@ -140,7 +140,7 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
-          nomination.update({ awaitingHipaaTimestamp: Date() });
+          await nomination.update({ awaitingHipaaTimestamp: Date() });
           const lastName = nomination.patientName
             ? nomination.patientName.split(' ')[1]
             : '';
@@ -151,13 +151,20 @@ const updateNomination = async (req, res) => {
           const applicationName = `${lastName}-${state}`;
           let driveFolderId = await createFolder(applicationName, nomination);
 
-          const updatedNomination = nomination.update({
+          await nomination.update({
             driveFolderId: driveFolderId,
           });
 
-          return res
-            .status(200)
-            .json({ driveFolderId: driveFolderId, status: nomination.status });
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+
+          return (
+            res
+              .status(200)
+              // .json({ driveFolderId: driveFolderId, status: nomination.status });
+              .json(updatedNomination)
+          );
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
@@ -168,8 +175,16 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === NOMINATION_STATUS.verified) {
         try {
-          nomination.update({ hipaaTimestamp: Date() });
-          return res.status(200).json(nomination.status);
+          await nomination.update({ hipaaTimestamp: Date() });
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+          return (
+            res
+              .status(200)
+              // .json(nomination.status);
+              .json(updatedNomination)
+          );
         } catch (err) {
           console.log('Nomination Not Found', err);
           return res.status(400);
@@ -189,7 +204,16 @@ const updateNomination = async (req, res) => {
             readyForBoardReviewTimestamp: Date(),
             grantCycleId: grant.id,
           });
-          return res.status(200).json(nomination.status);
+
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+          return (
+            res
+              .status(200)
+              // .json(nomination.status);
+              .json(updatedNomination)
+          );
         } catch (error) {
           console.log('Could not record readyForBoardReviewTimestamp ', error);
         }
