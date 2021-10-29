@@ -73,18 +73,21 @@ const findAll = async (req, res) => {
 
             let closedOnDateString = closedOnDayLater.toISODate();
 
-            let sqlQueryForDateRange =
-              'SELECT * FROM nominations WHERE "readyForBoardReviewTimestamp" >= :openedOnDateString AND "readyForBoardReviewTimestamp" < :closedOnDateString';
-
-            const sequelize = db.Nomination.sequelize;
-            const nominations = await sequelize.query(sqlQueryForDateRange, {
-              replacements: {
-                openedOnDateString: openedOnDateString,
-                closedOnDateString: closedOnDateString,
+            const nominations = await db.Nomination.findAll({
+              where: {
+                [Op.and]: [
+                  {
+                    readyForBoardReviewTimestamp: {
+                      [Op.between]: [openedOnDateString, closedOnDateString],
+                    },
+                    [Op.or]: [
+                      { status: 'Ready for Board Review' },
+                      { status: 'Declined' },
+                    ],
+                  },
+                ],
               },
-              type: QueryTypes.SELECT,
-              model: db.Nomination,
-              mapToModel: true, // pass true here if you have any mapped fields
+              order: [['readyForBoardReviewTimestamp', 'DESC']],
             });
 
             g.nominations = nominations;
