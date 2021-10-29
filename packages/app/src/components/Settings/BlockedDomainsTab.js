@@ -31,6 +31,15 @@ const BlockedDomainsTab = (props) => {
     }
   }
 
+  async function updateDomain() {
+    try {
+      const { name } = await domainAPI.updateDomain();
+      setDomainValue({ name: name })
+    } catch (err) {
+      console.log('Error-----------', err);
+    }
+  }
+
   useEffect(() => {
     getDomains();
   }, []);
