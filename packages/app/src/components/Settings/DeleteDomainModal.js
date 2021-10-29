@@ -27,7 +27,7 @@ const DeleteDomainModal = ({
                         <div className="edit-button-div">
                             <button
                                 className="edit-modal-button"
-                                onClick={onSubmit(domain.id)}
+                                onClick={() => onSubmit(domain.id)}
                             >
                                 Delete
                             </button>
