@@ -159,12 +159,7 @@ const updateNomination = async (req, res) => {
             where: { id },
           });
 
-          return (
-            res
-              .status(200)
-              // .json({ driveFolderId: driveFolderId, status: nomination.status });
-              .json(updatedNomination)
-          );
+          return res.status(200).json(updatedNomination);
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
@@ -179,12 +174,7 @@ const updateNomination = async (req, res) => {
           const updatedNomination = await db.Nomination.findOne({
             where: { id },
           });
-          return (
-            res
-              .status(200)
-              // .json(nomination.status);
-              .json(updatedNomination)
-          );
+          return res.status(200).json(updatedNomination);
         } catch (err) {
           console.log('Nomination Not Found', err);
           return res.status(400);
@@ -208,12 +198,7 @@ const updateNomination = async (req, res) => {
           const updatedNomination = await db.Nomination.findOne({
             where: { id },
           });
-          return (
-            res
-              .status(200)
-              // .json(nomination.status);
-              .json(updatedNomination)
-          );
+          return res.status(200).json(updatedNomination);
         } catch (error) {
           console.log('Could not record readyForBoardReviewTimestamp ', error);
         }
