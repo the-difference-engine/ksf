@@ -16,7 +16,7 @@ const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
 
 const { Op } = sequelize;
-const gmailStart = require('../helper/gmailAPI');
+const getGmailAuthUrl = require('../helper/gmailAPI');
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -200,7 +200,7 @@ const syncNominations = async (req, res) => {
 
 const checkNominations = async (req, res) => {
   try {
-    const authorizeUrl = gmailStart();
+    const authorizeUrl = getGmailAuthUrl();
     return res.status(200).json({ authorizeUrl });
   } catch (error) {
     console.log('error:', error);

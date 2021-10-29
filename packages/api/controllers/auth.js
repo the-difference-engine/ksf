@@ -8,7 +8,7 @@ const { credentials } = process.env.NODE_ENV === 'TEST' ? {} : require('../helpe
 
 const clientEmail = process.env.AUTH_SERVICE_CLIENT_EMAIL;
 const privateKey = parsePrivateKey(process.env.AUTH_SERVICE_PVT_KEY);
-const PORT = 3000;
+
 
 const scopesDrive = [
   'https://www.googleapis.com/auth/drive',
@@ -120,16 +120,13 @@ async function getNewDocs(auth) {
                   if (confirmedResults) {
                     nomName = confirmedResults;
                   }
+                  break;
                 }
               }
             }
             if (res.data.payload.parts.length >= 1) {
-              const { parts } = res.data.payload;
-              for (let i = 0; i < parts.length; i++) {
-                if (parts[i].body.attachmentId) {
-                  attachmentIds.push(parts[i].body.attachmentId);
-                }
-              }
+             
+              getAttachmentIds(res.data.payload.parts, attachmentIds);
             }
             if (attachmentIds.length > 0) {
               attachmentIds.forEach((attachmentId) => {
@@ -151,6 +148,16 @@ async function getNewDocs(auth) {
   }
 }
 
+
+
+const getAttachmentIds = ( parts, attachmentIds) => {
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].body.attachmentId) {
+      attachmentIds.push(parts[i].body.attachmentId);
+    }
+  }
+}
+
 const checkNominations = async (req, res) => {
   try {
     const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];
@@ -163,8 +170,8 @@ const checkNominations = async (req, res) => {
     google.options({ auth: oauth2Client });
 
     if (req.url.indexOf('?code') > -1) {
-      res.end(`<a href="#" onclick="javascript:window.close();opener.window.focus();" >Close Window</a>
-      Authentication successful! Please return to the console. Redirecting...`);
+      res.end(`<a href="#" onclick="javascript:window.close();opener.window.focus();" > Close Window</a>
+      &nbsp; Authentication successful! `);
       const { tokens } = await oauth2Client.getToken(req.query.code);
       oauth2Client.credentials = tokens;
       getNewDocs(oauth2Client);
