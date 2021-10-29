@@ -9,6 +9,12 @@ const domainAPI = {
 
     findDomains: function() {
         return axios.get(`${API_URL}/api/domains`)
+    },
+    updateDomain: function(domain) {
+        return axios.put(`${API_URL}/api/domains/${domain.id}`, domain)
+    },
+    deleteDomain: function(id) {
+        return axios.delete(`${API_URL}/api/domains/${id}`)
     }
 }
 

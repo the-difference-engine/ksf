@@ -3,9 +3,6 @@ import DatePicker from 'react-datepicker';
 import TableRow from './TableRow';
 
 const GrantCycleTab = (props) => {
-
-    const createButton = useRef(null);
-
     return (
         <main className="settings__main">
           <h2 className="settings__heading">Create Grant Cycle</h2>
@@ -53,7 +50,7 @@ const GrantCycleTab = (props) => {
             </div>
             <div className={`${props.editModalHiddenClass} button-div`}>
               <button
-                ref={createButton}
+                ref={props.createButton}
                 disabled={props.disableButton}
                 onClick={props.handleCreate}
                 className={`settings__button ${props.disableButtonStyle}`}

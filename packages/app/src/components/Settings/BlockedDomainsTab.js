@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import domainAPI from '../../utils/API/domainAPI';
+import DomainItem from './DomainItem';
 
-const BlockedDomainsTab = () => {
+const BlockedDomainsTab = (props) => {
   const [domainValue, setDomainValue] = useState({ name: '' });
-  const [allDomains, setAllDomains] = useState([]);
 
   const handleChange = (e) => {
     setDomainValue(e.currentTarget.value);
@@ -13,8 +13,7 @@ const BlockedDomainsTab = () => {
     e.preventDefault();
     try {
       const res = await domainAPI.addDomain({ name: domainValue });
-      let domainList = allDomains;
-      setAllDomains((list) => {
+      props.setAllDomains((list) => {
         return [...list, res.data]
       })
       setDomainValue({ name: '' });
@@ -26,7 +25,7 @@ const BlockedDomainsTab = () => {
   async function getDomains() {
     try {
       const { data } = await domainAPI.findDomains();
-      setAllDomains(data)
+      props.setAllDomains(data)
     } catch (error) {
       console.log('Error getting all domains', error);
     }
@@ -39,11 +38,32 @@ const BlockedDomainsTab = () => {
   return (
     <main className="settings__main">
       <h2 className="settings__heading">Blocked Domains</h2>
-      <input type="text" value={domainValue.name} onChange={handleChange} />
-      <button onClick={(e) => { handleSubmit(e); }}>Add Domain</button>
-      {allDomains.map((domain) => {
-        return <div key={domain.id}>{domain.name}</div>
-      })
+      <div className="settings__form">
+        <div className="settings__input-block">
+          <span className="settings__input">
+            <input
+              type="text"
+              value={domainValue.name}
+              onChange={handleChange}
+              className="settings__input"
+            />
+          </span>
+        </div>
+        <button
+          onClick={(e) => handleSubmit(e)}
+          className="settings__button"
+        >
+          Add Domain
+        </button>
+      </div>
+      {props.allDomains.map((domain) => (
+        <DomainItem
+          key={domain.id}
+          domain={domain}
+          onEdit={props.onEdit}
+          onDelete={props.onDelete}
+        />
+      ))
       }
     </main>
   );

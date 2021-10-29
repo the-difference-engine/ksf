@@ -242,6 +242,11 @@ button.icon-right-arrow-disabled:hover {
   color: var(--brand);
 }
 
+.icon-table-trash {
+  cursor: pointer;
+  color: red;
+}
+
 .icon-arrow-left {
   position: absolute;
   left: 15px;
