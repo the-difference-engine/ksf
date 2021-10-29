@@ -34,7 +34,7 @@ const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
               <th>Application Name</th>
               <th>HP Name</th>
               <th>Family Member Name</th>
-              <th>Received Date</th>
+              <th>Submission Date</th>
             </tr>
           </thead>
           <tbody>
