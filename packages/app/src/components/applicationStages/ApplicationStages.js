@@ -90,14 +90,6 @@ const ApplicationStages = (props) => {
                 status: response.status,
               };
             });
-
-            // setActiveNomination((activeNomination) => {
-            //   return { ...response };
-            // });
-
-            // setActiveNomination(response);
-            // console.log('this is response in update nom');
-            // console.dir(response);
           }
         });
     } catch (err) {
