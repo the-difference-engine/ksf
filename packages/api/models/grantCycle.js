@@ -1,6 +1,13 @@
 'use strict';
+const { DateTime } = require('luxon');
 
-const { Model, Sequelize, DataTypes, ValidationError, Op } = require('sequelize');
+const {
+  Model,
+  Sequelize,
+  DataTypes,
+  ValidationError,
+  Op,
+} = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class GrantCycle extends Model {
@@ -52,13 +59,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeSave: async (instance) => {
-          if (instance.openedOn >= instance.closedOn) throw new ValidationError('openedOn must be before closedOn');
+          if (instance.openedOn >= instance.closedOn)
+            throw new ValidationError('openedOn must be before closedOn');
 
           if (instance.isActive) {
             try {
-              const activeGrant = await GrantCycle.findOne({ where: { isActive: true } });
+              const activeGrant = await GrantCycle.findOne({
+                where: { isActive: true },
+              });
               if (activeGrant && instance.id !== activeGrant.id) {
-                throw new ValidationError(`Active grant already exists: ${activeGrant.name}`);
+                throw new ValidationError(
+                  `Active grant already exists: ${activeGrant.name}`
+                );
               }
             } catch (error) {
               if (error instanceof ValidationError) {
@@ -69,34 +81,53 @@ module.exports = (sequelize, DataTypes) => {
           }
 
           try {
+            const openedOn = new Date(instance.openedOn);
+            const closedOn = new Date(instance.closedOn);
+
+            openedOnDayLater = DateTime.fromJSDate(openedOn).plus({ days: 1 });
+            closedOnDayLater = DateTime.fromJSDate(closedOn).plus({ days: 1 });
+
+            let openedOnDateString = openedOnDayLater.toISO();
+
+            let closedOnDateString = closedOnDayLater.toISO();
+
             const result = await GrantCycle.findAll({
               where: {
-                [Op.and]: [{
-                  id: {
-                    [Op.not]: [instance.id]
-                  }}, {
-                  [Op.or]: [{
-                    openedOn: {
-                      [Op.between]: [instance.openedOn, instance.closedOn]
-                    }
-                  }, {
-                    closedOn: {
-                      [Op.between]: [instance.openedOn, instance.closedOn]
-                    }
-                  }, {
-                    [Op.and]: [{
-                      openedOn: {[Op.lt]: instance.openedOn},
-                      closedOn: {[Op.gt]: instance.closedOn}
-                    }]
-                  }]
-                }]
-              }
+                [Op.and]: [
+                  {
+                    id: {
+                      [Op.not]: [instance.id],
+                    },
+                  },
+                  {
+                    [Op.or]: [
+                      {
+                        openedOn: {
+                          [Op.between]: [
+                            openedOnDateString,
+                            closedOnDateString,
+                          ],
+                        },
+                      },
+                      {
+                        closedOn: {
+                          [Op.between]: [
+                            openedOnDateString,
+                            closedOnDateString,
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
             });
             if (result.length) {
-              throw new ValidationError("Dates overlap with existing grant cycle");
+              throw new ValidationError(
+                'Dates overlap with existing grant cycle'
+              );
             }
-          }
-          catch (error) {
+          } catch (error) {
             throw error;
           }
           return instance;
@@ -105,7 +136,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'GrantCycle',
       tableName: 'grant_cycles',
-    },
+    }
   );
   return GrantCycle;
 };

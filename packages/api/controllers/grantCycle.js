@@ -35,9 +35,22 @@ const update = async (req, res) => {
       { where: { isActive: true } }
     );
 
+    const openedOnDate = new Date(openedOn);
+
+    const closedOnDate = new Date(closedOn);
+
+    openedOnDayLater = DateTime.fromJSDate(openedOnDate).plus({ days: 1 });
+    closedOnDayLater = DateTime.fromJSDate(closedOnDate).plus({ days: 1 });
+
+    let openedOnDateString = openedOnDayLater.toISO();
+
+    let closedOnDateString = closedOnDayLater.toISO();
+
     if (name) grant.name = name;
-    if (openedOn) grant.openedOn = openedOn;
-    if (closedOn) grant.closedOn = closedOn;
+    if (openedOn) grant.openedOn = openedOnDateString;
+    if (closedOn) grant.closedOn = closedOnDateString;
+    console.log(openedOnDateString);
+    console.log(closedOnDateString);
     grant.isActive = isActive;
     await grant.save();
     return res.status(200).send(grant);
@@ -58,7 +71,6 @@ const findAll = async (req, res) => {
       raw: true,
     });
     if (grants.length) {
-      console.log(`grants length ${grants.length}`);
       const result = await Promise.all(
         grants.map(async (g) => {
           try {

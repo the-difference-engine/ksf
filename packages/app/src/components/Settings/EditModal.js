@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import '../nominationInfo/calendar.css';
+import { DateTime } from 'luxon';
 
 const EditModal = ({
   show,
@@ -23,7 +24,7 @@ const EditModal = ({
     ? (openedOnInitial = new Date(grantCycle.openedOnInitial))
     : (openedOnInitial = new Date());
   grantCycle
-    ? (closedOnInitial = grantCycle.closedOnInitial)
+    ? (closedOnInitial = new Date(grantCycle.closedOnInitial))
     : (closedOnInitial = new Date());
 
   const [openedOn, setOpenedOn] = useState(openedOnInitial);
@@ -33,14 +34,33 @@ const EditModal = ({
     if (grantCycle) {
       let openedOnDate = new Date(grantCycle.openedOn);
       let closedOnDate = new Date(grantCycle.closedOn);
-      openedOnDate.setTime(
-        openedOnDate.getTime() + openedOnDate.getTimezoneOffset() * 60 * 1000
-      );
-      setOpenedOn(openedOnDate);
-      closedOnDate.setTime(
-        closedOnDate.getTime() + closedOnDate.getTimezoneOffset() * 60 * 1000
-      );
-      setClosedOn(closedOnDate);
+
+      let openedOnDayLater = DateTime.fromJSDate(openedOnDate)
+      let closedOnDayLater = DateTime.fromJSDate(closedOnDate)
+
+      let openedOnDateString = openedOnDayLater.toISO();
+
+      let closedOnDateString = closedOnDayLater.toISO();
+
+      // let openedOnDate = DateTime.fromJSDate(grantCycle.openedOn);
+      // let closedOnDate = DateTime.fromJSDate(grantCycle.closedOn);
+
+      // let openedOnDateString = openedOnDate.toISO();
+      // let closedOnDateString = closedOnDate.toISO()
+
+      setOpenedOn(openedOnDateString);
+      setClosedOn(closedOnDateString);
+
+      // openedOnDate.setTime(
+      //   openedOnDate.getTime() + openedOnDate.getTimezoneOffset() * 60 * 1000
+      // );
+      // setOpenedOn(openedOnDate);
+      // closedOnDate.setTime(
+      //   closedOnDate.getTime() + closedOnDate.getTimezoneOffset() * 60 * 1000
+      // );
+      // setClosedOn(closedOnDate);
+      console.log(openedOnDateString);
+      console.log(closedOnDateString);
     }
   }, [grantCycle]);
 
