@@ -27,7 +27,6 @@ module.exports = function gsheetToDB() {
 
   async function getRawNominationData(cl) {
     let data;
-    let dbNominations;
     const gsapi = google.sheets({ version: 'v4', auth: cl });
 
     const opt = {
@@ -37,7 +36,6 @@ module.exports = function gsheetToDB() {
 
     try {
       data = await gsapi.spreadsheets.values.get(opt);
-      dbNominations = await db.Nomination.findAll();
     } catch (error) {
       console.error(error);
       return;
@@ -45,9 +43,12 @@ module.exports = function gsheetToDB() {
 
     let nominations = data.data.values;
 
-    nominations.slice(1).forEach((nomination) => {
+    for(nomination of nominations.slice(1)) {
       try {
-        db.Nomination.findOrCreate({
+        //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements 
+        //the first element is the nomination instance object that contains the dataValues among other things  
+        //the second element is a boolean that represents whether a nomination was created
+        let array = await db.Nomination.findOrCreate({
           where: {
             dateReceived: nomination[0],
             providerName: nomination[10],
@@ -74,23 +75,22 @@ module.exports = function gsheetToDB() {
               parseFloat(nomination[37].replace(/\$/g, '')) * 100
             ),
           },
-        }).then((array) => {
-          //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements 
-          //the first element is the nomination instance object that contains the dataValues among other things  
-          //the second element is a boolean that represents whether a nomination was created
-          if(array[1]) {
-            let hasProviderBeenValidated = dbNominations.some((dbNom) => {
-              return ((dbNom.providerEmailAddress === nomination[12]) && dbNom.emailValidated);
-            });
-            if(!hasProviderBeenValidated){
-              verifyHcEmail(array[0].dataValues) 
-            }
-          }
         })
+        if(array[1]){
+          let nom = await db.Nomination.findOne({ 
+            where: { 
+              emailValidated: true,
+              providerEmailAddress: nomination[12],
+            }
+          })
+          if(nom === null) {
+            verifyHcEmail(array[0].dataValues)
+          }
+        }
       } catch (error) {
         console.error(error);
       }
-    });
+    };
 
     return nominations;
   }
