@@ -9,7 +9,6 @@ const { credentials } = process.env.NODE_ENV === 'TEST' ? {} : require('../helpe
 const clientEmail = process.env.AUTH_SERVICE_CLIENT_EMAIL;
 const privateKey = parsePrivateKey(process.env.AUTH_SERVICE_PVT_KEY);
 
-
 const scopesDrive = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/drive.appdata',
@@ -58,12 +57,12 @@ async function uploadFile(nomName, img) {
 
 const confirmAwaiting = (goal, nomNames) => {
   let confirmResults;
-  nomNames.forEach((app) => {
-    if (goal.includes(app)) {
-      confirmResults = app;
+  for (let i = 0; i < nomNames.length; i++) {
+    if (goal.includes(nomNames[i])) {
+      confirmResults = nomNames[i];
+      return confirmResults;
     }
-  });
-  return confirmResults;
+  }
 };
 
 const markAsRead = function (messageId, gmail) {
@@ -102,60 +101,62 @@ async function getNewDocs(auth) {
         console.log('no messages');
       } else if (messages.length) {
         const messageIds = [];
-        messages.forEach((message) => {
-          let nomName;
-          const { id } = message;
-          messageIds.push(id);
-          const attachmentIds = [];
-          gmail.users.messages.get({
-            userId: 'me',
-            id: message.id,
-          }, (err, res) => {
-            if (err) return console.log('error retrieving message', err);
-            if (res.data.payload.headers) {
-              const { headers } = res.data.payload;
-              for (let i = 0; i < headers.length; i++) {
-                if (headers[i].name === 'Subject') {
-                  const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
-                  if (confirmedResults) {
-                    nomName = confirmedResults;
-                  }
-                  break;
-                }
-              }
-            }
-            if (res.data.payload.parts.length >= 1) {
-              getAttachmentIds(res.data.payload.parts, attachmentIds);
-            }
-            if (attachmentIds.length > 0) {
-              attachmentIds.forEach((attachmentId) => {
-                gmail.users.messages.attachments.get({
-                  userId: 'me',
-                  messageId: message.id,
-                  id: attachmentId,
-                }, (err, res) => {
-                  if (err) return console.log(err);
-                  uploadFile(nomName, res.data.data);
-                  markAsRead(message.id, gmail);
-                });
-              });
-            }
-          });
-        });
+        messagesAndAttachments(messages, messageIds, gmail, nomNames);
       }
     });
   }
 }
 
+const messagesAndAttachments = (messages, messageIds, gmail, nomNames) => {
+  messages.forEach((message) => {
+    let nomName;
+    const { id } = message;
+    messageIds.push(id);
+    const attachmentIds = [];
+    gmail.users.messages.get({
+      userId: 'me',
+      id: message.id,
+    }, (err, res) => {
+      if (err) return console.log('error retrieving message', err);
+      if (res.data.payload.headers) {
+        const { headers } = res.data.payload;
+        for (let i = 0; i < headers.length; i++) {
+          if (headers[i].name === 'Subject') {
+            const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
+            if (confirmedResults) {
+              nomName = confirmedResults;
+            }
+            break;
+          }
+        }
+      }
+      if (res.data.payload.parts.length >= 1) {
+        getAttachmentIds(res.data.payload.parts, attachmentIds);
+      }
+      if (attachmentIds.length > 0) {
+        attachmentIds.forEach((attachmentId) => {
+          gmail.users.messages.attachments.get({
+            userId: 'me',
+            messageId: message.id,
+            id: attachmentId,
+          }, (err, res) => {
+            if (err) return console.log(err);
+            uploadFile(nomName, res.data.data);
+            markAsRead(message.id, gmail);
+          });
+        });
+      }
+    });
+  });
+};
 
-
-const getAttachmentIds = ( parts, attachmentIds) => {
+const getAttachmentIds = (parts, attachmentIds) => {
   for (let i = 0; i < parts.length; i++) {
     if (parts[i].body.attachmentId) {
       attachmentIds.push(parts[i].body.attachmentId);
     }
   }
-}
+};
 
 const checkNominations = async (req, res) => {
   try {
