@@ -29,9 +29,9 @@ const NominationBanner = (props) => {
   const state = states.getStateCodeByStateName(props.nomination.hospitalState);
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
-    ? props.nomination.amountRequestedCents
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    ? (props.nomination.amountRequestedCents / 100)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
   const hipaaDate = props.nomination.hipaaTimestamp;
   const hipaaReminder = props.nomination.awaitingHipaaReminderEmailTimestamp;
@@ -238,6 +238,7 @@ const NominationBanner = (props) => {
     </div>
   );
 };
+
 
 export default NominationBanner;
 
