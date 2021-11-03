@@ -3,18 +3,13 @@ const { google } = require('googleapis');
 const db = require('../models');
 const parsePrivateKey = require('./parsePrivateKey');
 const rangePar = 'Sheet1';
-const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL
-const privateKey = parsePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY)
-const scopes = ['https://www.googleapis.com/auth/spreadsheets']
+const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
+const privateKey = parsePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY);
+const scopes = ['https://www.googleapis.com/auth/spreadsheets'];
 const { verifyHcEmail } = require('./mailer.js');
 
 module.exports = function gsheetToDB() {
-  const client = new google.auth.JWT(
-    clientEmail,
-    null,
-    privateKey,
-    scopes
-  );
+  const client = new google.auth.JWT(clientEmail, null, privateKey, scopes);
 
   client.authorize(function (err, tokens) {
     if (err) {
@@ -43,10 +38,10 @@ module.exports = function gsheetToDB() {
 
     let nominations = data.data.values;
 
-    for(nomination of nominations.slice(1)) {
+    for (nomination of nominations.slice(1)) {
       try {
-        //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements 
-        //the first element is the nomination instance object that contains the dataValues among other things  
+        //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements
+        //the first element is the nomination instance object that contains the dataValues among other things
         //the second element is a boolean that represents whether a nomination was created
         let array = await db.Nomination.findOrCreate({
           where: {
@@ -75,22 +70,22 @@ module.exports = function gsheetToDB() {
               parseFloat(nomination[37].replace(/\$/g, '')) * 100
             ),
           },
-        })
-        if(array[1]){
-          let nom = await db.Nomination.findOne({ 
-            where: { 
+        });
+        if (array[1]) {
+          let nom = await db.Nomination.findOne({
+            where: {
               emailValidated: true,
               providerEmailAddress: nomination[12],
-            }
-          })
-          if(nom === null) {
-            verifyHcEmail(array[0].dataValues)
+            },
+          });
+          if (nom === null) {
+            verifyHcEmail(array[0].dataValues);
           }
         }
       } catch (error) {
         console.error(error);
       }
-    };
+    }
 
     return nominations;
   }
