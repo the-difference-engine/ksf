@@ -2,6 +2,7 @@
 const { sendVerification } = require('../helper/mailer.js');
 const creds = require('../config/config.json').credentials;
 const { Model, Sequelize, DataTypes } = require('sequelize');
+const db = require('../models');
 const publicEmailDomains = [
   'gmail.com',
   'aol.com',
@@ -172,6 +173,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate: (nomination, option) => {
+          const domainList = db.Domain.findAll();
+          console.log(domainList);
           publicEmailDomains.forEach(domain => {
             if (nomination.providerEmailAddress.includes(domain)) {
               nomination.publicEmailDomain = true;

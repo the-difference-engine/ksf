@@ -7,7 +7,6 @@ const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
 const privateKey = parsePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY);
 const scopes = ['https://www.googleapis.com/auth/spreadsheets'];
 const { verifyHcEmail } = require('./mailer.js');
-const domainController = require('../controllers/domain');
 
 module.exports = function gsheetToDB() {
   const client = new google.auth.JWT(clientEmail, null, privateKey, scopes);
@@ -20,10 +19,6 @@ module.exports = function gsheetToDB() {
       getRawNominationData(client);
     }
   });
-
-  async function findAllDomains() {
-    domains = await domainController.findAll();
-  }
 
   async function getRawNominationData(cl) {
     let data;
