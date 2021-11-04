@@ -26,7 +26,6 @@ const NOMINATION_STATUS = {
   board_review: 'Ready for Board Review',
   declined: 'Declined',
 };
-
 const getNominationById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -77,7 +76,6 @@ const createNomination = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
-
 const resendEmail = async (req, res) => {
   const { id } = req.params;
   const { recipient, emailType } = req.body;
@@ -107,7 +105,6 @@ const resendEmail = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
-
 const updateNomination = async (req, res) => {
   const { id } = req.params;
   try {
@@ -134,7 +131,6 @@ const updateNomination = async (req, res) => {
           sendDeclineEmail(nomination);
         }
       }
-
       if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
           nomination.update({ awaitingHipaaTimestamp: Date() });
@@ -153,7 +149,6 @@ const updateNomination = async (req, res) => {
           sendHIPAAProvider(nomination);
         }
       }
-
       if (nomination.status === NOMINATION_STATUS.verified) {
         try {
           nomination.update({ hipaaTimestamp: Date() });
@@ -165,13 +160,11 @@ const updateNomination = async (req, res) => {
           sendSurveySocialWorker(nomination);
         }
       }
-
       if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
           const grant = await db.GrantCycle.findOne({
             where: { isActive: true },
           });
-
           nomination.update({
             readyForBoardReviewTimestamp: Date(),
             grantCycleId: grant.id,
@@ -197,7 +190,6 @@ const syncNominations = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
-
 const checkNominations = async (req, res) => {
   try {
     const authorizeUrl = getGmailAuthUrl();
@@ -207,7 +199,6 @@ const checkNominations = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
-
 const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
@@ -225,14 +216,12 @@ const emailVerification = async (req, res) => {
  * @param {*} req - updated props data object
  * @param {*} res - response code
  */
-
 const updateActiveNomData = async (req, res) => {
   const { id } = req.params;
   try {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-
     await nomination.update(
       { ...req.body },
       {
@@ -244,7 +233,6 @@ const updateActiveNomData = async (req, res) => {
     return res.status(400).json({ error: err.message });
   }
 };
-
 async function searchAndSend(status, query) {
   const nominations = await db.Nomination.findAll(query);
   let nomination;
@@ -290,11 +278,9 @@ async function searchAndSend(status, query) {
     }
   }
 }
-
 const getAwaitingHipaa = async () => {
   const nominations = await db.Nomination.findAll({ where: { status: 'Awaiting HIPAA' } });
   const applicationsAwait = {};
-
   if (nominations.length) {
     nominations.forEach((nomination) => {
       const lastName = nomination.patientName
@@ -304,14 +290,11 @@ const getAwaitingHipaa = async () => {
         nomination.hospitalState,
       );
       const applicationName = `${lastName}-${state}`;
-
       applicationsAwait[applicationName] = nomination.id;
     });
   }
-
   return applicationsAwait;
 };
-
 const getVerifiedNoms = async () => {
   const nominations = await db.Nomination.findAll({ where: { status: { [Op.or]: ['HIPAA Verified', 'Document Review', 'Ready for Board Review'] } } });
   const applicationsAwait = {};
@@ -324,14 +307,11 @@ const getVerifiedNoms = async () => {
         nomination.hospitalState,
       );
       const applicationName = `${lastName}-${state}`;
-
       applicationsAwait[applicationName] = nomination.id;
     });
   }
-
   return applicationsAwait;
 };
-
 const updateDashboard = async (trueFalse, nominationId) => {
   const nomination = await db.Nomination.findOne({ where: { id: nominationId } });
   nomination.update({ attachments: trueFalse }).catch((err) => {
@@ -339,7 +319,6 @@ const updateDashboard = async (trueFalse, nominationId) => {
     return res.status(400);
   });
 };
-
 module.exports = {
   getNominationById,
   findAllNominations,
@@ -354,4 +333,5 @@ module.exports = {
   checkNominations,
   resendEmail,
   updateDashboard,
+  getVerifiedNoms,
 };

@@ -3,13 +3,10 @@ const { google } = require('googleapis');
 const stream = require('stream');
 const parsePrivateKey = require('../helper/parsePrivateKey');
 const { getAwaitingHipaa, getVerifiedNoms, updateDashboard } = require('./nomination');
-
 const { credentials } = process.env.NODE_ENV === 'TEST' ? {} : require('../helper/credentials');
 
 const clientEmail = process.env.AUTH_SERVICE_CLIENT_EMAIL;
 const privateKey = parsePrivateKey(process.env.AUTH_SERVICE_PVT_KEY);
-const PORT = 3000;
-
 const scopesDrive = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/drive.appdata',
@@ -55,7 +52,6 @@ async function uploadFile(nomName, img) {
     }
   });
 }
-
 const confirmAwaiting = (goal, nomNames) => {
   let confirmResults;
   for (let i = 0; i < nomNames.length; i++) {
@@ -65,7 +61,6 @@ const confirmAwaiting = (goal, nomNames) => {
     }
   }
 };
-
 const markAsRead = function (messageId, gmail) {
   gmail.users.messages.modify({
     userId: 'me',
@@ -81,36 +76,41 @@ const markAsRead = function (messageId, gmail) {
     }
   });
 };
-
 async function getNewDocs(auth) {
   const gmail = google.gmail({ version: 'v1', auth });
-  let query = '';
+  const query = '';
   const nomNames = await getAwaitingHipaa();
-
-  if (!nomNames) {
-    console.log('No Nominations Currently Awaiting HIPAA');
-  } else {
-    nomNames.forEach((nomination) => query += `subject:'${nomination}'`);
-    query += 'AND is:unread';
-    gmail.users.messages.list({
-      userId: 'me',
-      q: `{${query}}`,
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ', err);
-      const { messages } = res.data;
-      if (!messages) {
-        console.log('no messages');
-      } else if (messages.length) {
-        const messageIds = [];
-        messagesAndAttachments(messages, messageIds, gmail, nomNames);
-      }
-    });
+  const receiptNoms = await getVerifiedNoms();
+  if (Object.entries(nomNames).length) {
+    getNewAttachments(nomNames, gmail, query);
+  }
+  const receipts = Object.entries(receiptNoms);
+  if (receipts) {
+    getNewAttachments(receiptNoms, gmail, query);
   }
 }
-
-const messagesAndAttachments = (messages, messageIds, gmail, nomNames) => {
+const getNewAttachments = (nominations, gmail, query) => {
+  const nomNames = Object.keys(nominations);
+  nomNames.forEach((nomination) => query += `subject:'${nomination}'`);
+  query += 'AND is:unread';
+  gmail.users.messages.list({
+    userId: 'me',
+    q: `{${query}}`,
+  }, (err, res) => {
+    if (err) return console.log('The API returned an error: ', err);
+    const { messages } = res.data;
+    if (!messages) {
+      console.log('no messages');
+    } else if (messages.length) {
+      const messageIds = [];
+      messagesAndAttachments(messages, messageIds, gmail, nomNames, nominations);
+    }
+  });
+};
+const messagesAndAttachments = (messages, messageIds, gmail, nomNames, nominations) => {
   messages.forEach((message) => {
     let nomName;
+    let nomId;
     const { id } = message;
     messageIds.push(id);
     const attachmentIds = [];
@@ -126,6 +126,7 @@ const messagesAndAttachments = (messages, messageIds, gmail, nomNames) => {
             const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
             if (confirmedResults) {
               nomName = confirmedResults;
+              nomId = nominations[nomName];
             }
             break;
           }
@@ -143,6 +144,11 @@ const messagesAndAttachments = (messages, messageIds, gmail, nomNames) => {
           }, (err, res) => {
             if (err) return console.log(err);
             uploadFile(nomName, res.data.data);
+            if (nomId) {
+              updateDashboard('true', nomId);
+            } else {
+              console.log('no nominations awaiting documents');
+            }
             markAsRead(message.id, gmail);
           });
         });
@@ -150,7 +156,6 @@ const messagesAndAttachments = (messages, messageIds, gmail, nomNames) => {
     });
   });
 };
-
 const getAttachmentIds = (parts, attachmentIds) => {
   for (let i = 0; i < parts.length; i++) {
     if (parts[i].body.attachmentId) {
@@ -158,7 +163,6 @@ const getAttachmentIds = (parts, attachmentIds) => {
     }
   }
 };
-
 const checkNominations = async (req, res) => {
   try {
     const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];

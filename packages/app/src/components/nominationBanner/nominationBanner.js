@@ -170,13 +170,6 @@ const NominationBanner = (props) => {
               />
             )}
             <div className="column name">
-              <button
-                disabled={activeNomination.status == 'Declined'}
-                className=" decline-button"
-                onClick={toggleModalState}
-              >
-                Decline Application
-              </button>
             </div>
             {isModalVisible && (
               <div className="modal-background">
@@ -272,7 +265,7 @@ const NominationBanner = (props) => {
                       finalDate
                     ) : (
                       <>
-                      {hipaaStatus}
+                        {hipaaStatus}
                         {hipaaReminder && hipaaStatus ? (
                           <FontAwesomeIcon
                             className="red"
@@ -315,7 +308,5 @@ const NominationBanner = (props) => {
     </div>
   );
 };
-
-
 export default NominationBanner;
 
