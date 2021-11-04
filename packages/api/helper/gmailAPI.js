@@ -2,7 +2,7 @@ const opn = require('open');
 const { google } = require('googleapis');
 const { credentials } = require('./credentials');
 
-function gmailStart() {
+function getGmailAuthUrl() {
   const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];
   const oauth2Client = new google.auth.OAuth2(
     process.env.AUTH_CLIENT_ID,
@@ -16,7 +16,7 @@ function gmailStart() {
     scope: SCOPES,
   });
 
-  opn(authorizeUrl, { wait: true, newInstance: false }).then((cp) => cp.unref());
+  return authorizeUrl;
 }
 
-module.exports = gmailStart;
+module.exports = getGmailAuthUrl;

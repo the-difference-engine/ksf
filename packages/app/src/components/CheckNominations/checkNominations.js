@@ -9,20 +9,14 @@ const CheckNominations = () => {
     getCheckedNoms();
   };
 
-  function removeMessage() {
-    setTimeout(() => {
-      setMessage('');
-    }, 2000);
-  }
 
   function getCheckedNoms() {
     nominationsAPI.checkNominations().then((res) => {
       if (res.status === 200) {
-        setMessage('Nominations activity successfully updated ');
-        window.location.reload();
+        let url = res.data.authorizeUrl;
+        window.open(url, "_blank", 'noopener,noreferrer')
       } else {
         setMessage('Error occurred, Dashboard update failed...');
-        removeMessage();
       }
     });
   }

@@ -15,7 +15,9 @@ const auth = new google.auth.JWT(
   clientEmail, null,
   privateKey, scopesDrive,
 );
+
 const drive = google.drive({ version: 'v3', auth });
+
 async function uploadFile(nomName, img) {
   const query = `name = '${nomName}'`;
   drive.files.list({
@@ -81,8 +83,8 @@ async function getNewDocs(auth) {
   if (Object.entries(nomNames).length) {
     getNewAttachments(nomNames, gmail, query);
   }
-  const letSee = Object.entries(receiptNoms);
-  if (letSee) {
+  const receipts = Object.entries(receiptNoms);
+  if (receipts) {
     getNewAttachments(receiptNoms, gmail, query);
   }
 }
@@ -168,7 +170,9 @@ const checkNominations = async (req, res) => {
       process.env.AUTH_CLIENT_SECRET,
       credentials.installed.redirect_uris[0],
     );
+
     google.options({ auth: oauth2Client });
+
     if (req.url.indexOf('?code') > -1) {
       res.end(`<a href="#" onclick="javascript:window.close();opener.window.focus();" > Close Window</a>
       &nbsp; Authentication successful! `);
@@ -183,4 +187,5 @@ const checkNominations = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
 module.exports = { checkNominations };
