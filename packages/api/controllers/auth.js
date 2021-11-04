@@ -3,13 +3,9 @@ const { google } = require('googleapis');
 const stream = require('stream');
 const parsePrivateKey = require('../helper/parsePrivateKey');
 const { getAwaitingHipaa, getVerifiedNoms, updateDashboard } = require('./nomination');
-
 const { credentials } = process.env.NODE_ENV === 'TEST' ? {} : require('../helper/credentials');
-
 const clientEmail = process.env.AUTH_SERVICE_CLIENT_EMAIL;
 const privateKey = parsePrivateKey(process.env.AUTH_SERVICE_PVT_KEY);
-const PORT = 3000;
-
 const scopesDrive = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/drive.appdata',
@@ -19,9 +15,7 @@ const auth = new google.auth.JWT(
   clientEmail, null,
   privateKey, scopesDrive,
 );
-
 const drive = google.drive({ version: 'v3', auth });
-
 async function uploadFile(nomName, img) {
   const query = `name = '${nomName}'`;
   drive.files.list({
@@ -55,17 +49,15 @@ async function uploadFile(nomName, img) {
     }
   });
 }
-
 const confirmAwaiting = (goal, nomNames) => {
   let confirmResults;
-  nomNames.forEach((app) => {
-    if (goal.includes(app)) {
-      confirmResults = app;
+  for (let i = 0; i < nomNames.length; i++) {
+    if (goal.includes(nomNames[i])) {
+      confirmResults = nomNames[i];
+      return confirmResults;
     }
-  });
-  return confirmResults;
+  }
 };
-
 const markAsRead = function (messageId, gmail) {
   gmail.users.messages.modify({
     userId: 'me',
@@ -81,25 +73,20 @@ const markAsRead = function (messageId, gmail) {
     }
   });
 };
-
 async function getNewDocs(auth) {
-  const query = '';
   const gmail = google.gmail({ version: 'v1', auth });
+  const query = '';
   const nomNames = await getAwaitingHipaa();
   const receiptNoms = await getVerifiedNoms();
-
   if (Object.entries(nomNames).length) {
     getNewAttachments(nomNames, gmail, query);
   }
   const letSee = Object.entries(receiptNoms);
-  console.log('HELLLO', letSee);
   if (letSee) {
     getNewAttachments(receiptNoms, gmail, query);
   }
 }
-
 const getNewAttachments = (nominations, gmail, query) => {
-  console.log(nominations, 'NOMINATIONS');
   const nomNames = Object.keys(nominations);
   nomNames.forEach((nomination) => query += `subject:'${nomination}'`);
   query += 'AND is:unread';
@@ -113,76 +100,78 @@ const getNewAttachments = (nominations, gmail, query) => {
       console.log('no messages');
     } else if (messages.length) {
       const messageIds = [];
-      messages.forEach((message) => {
-        let nomName;
-        let nomId;
-        const { id } = message;
-        messageIds.push(id);
-        const attachmentIds = [];
-        gmail.users.messages.get({
-          userId: 'me',
-          id: message.id,
-        }, (err, res) => {
-          if (err) return console.log('error retrieving message', err);
-          if (res.data.payload.headers) {
-            const { headers } = res.data.payload;
-            for (let i = 0; i < headers.length; i++) {
-              if (headers[i].name === 'Subject') {
-                const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
-                if (confirmedResults) {
-                  nomName = confirmedResults;
-                  nomId = nominations[nomName];
-                }
-              }
-            }
-          }
-          if (res.data.payload.parts.length >= 1) {
-            const { parts } = res.data.payload;
-            for (let i = 0; i < parts.length; i++) {
-              if (parts[i].body.attachmentId) {
-                attachmentIds.push(parts[i].body.attachmentId);
-              }
-            }
-          }
-          if (attachmentIds.length > 0) {
-            attachmentIds.forEach((attachmentId) => {
-              gmail.users.messages.attachments.get({
-                userId: 'me',
-                messageId: message.id,
-                id: attachmentId,
-              }, (err, res) => {
-                if (err) return console.log(err);
-                uploadFile(nomName, res.data.data);
-                markAsRead(message.id, gmail);
-                if (nomId) {
-                  updateDashboard('true', nomId);
-                } else {
-                  console.log('no nominations awaiting documents');
-                }
-              });
-            });
-          }
-        });
-      });
+      messagesAndAttachments(messages, messageIds, gmail, nomNames, nominations);
     }
   });
 };
-
+const messagesAndAttachments = (messages, messageIds, gmail, nomNames, nominations) => {
+  messages.forEach((message) => {
+    let nomName;
+    let nomId;
+    const { id } = message;
+    messageIds.push(id);
+    const attachmentIds = [];
+    gmail.users.messages.get({
+      userId: 'me',
+      id: message.id,
+    }, (err, res) => {
+      if (err) return console.log('error retrieving message', err);
+      if (res.data.payload.headers) {
+        const { headers } = res.data.payload;
+        for (let i = 0; i < headers.length; i++) {
+          if (headers[i].name === 'Subject') {
+            const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
+            if (confirmedResults) {
+              nomName = confirmedResults;
+              nomId = nominations[nomName];
+            }
+            break;
+          }
+        }
+      }
+      if (res.data.payload.parts.length >= 1) {
+        getAttachmentIds(res.data.payload.parts, attachmentIds);
+      }
+      if (attachmentIds.length > 0) {
+        attachmentIds.forEach((attachmentId) => {
+          gmail.users.messages.attachments.get({
+            userId: 'me',
+            messageId: message.id,
+            id: attachmentId,
+          }, (err, res) => {
+            if (err) return console.log(err);
+            uploadFile(nomName, res.data.data);
+            if (nomId) {
+              updateDashboard('true', nomId);
+            } else {
+              console.log('no nominations awaiting documents');
+            }
+            markAsRead(message.id, gmail);
+          });
+        });
+      }
+    });
+  });
+};
+const getAttachmentIds = (parts, attachmentIds) => {
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].body.attachmentId) {
+      attachmentIds.push(parts[i].body.attachmentId);
+    }
+  }
+};
 const checkNominations = async (req, res) => {
   try {
-    console.log('Calling GmailStart function....');
     const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];
     const oauth2Client = new google.auth.OAuth2(
       process.env.AUTH_CLIENT_ID,
       process.env.AUTH_CLIENT_SECRET,
       credentials.installed.redirect_uris[0],
     );
-
     google.options({ auth: oauth2Client });
-
     if (req.url.indexOf('?code') > -1) {
-      res.end(`<a href="#" onclick="javascript:window.close();opener.window.focus();" >Close Window</a>
-      Authentication successful! Please return to the console. Redirecting...`);
+      res.end(`<a href="#" onclick="javascript:window.close();opener.window.focus();" > Close Window</a>
+      &nbsp; Authentication successful! `);
       const { tokens } = await oauth2Client.getToken(req.query.code);
       oauth2Client.credentials = tokens;
       getNewDocs(oauth2Client);
@@ -194,5 +183,4 @@ const checkNominations = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
-
 module.exports = { checkNominations };
