@@ -29,7 +29,7 @@ const NominationBanner = (props) => {
   const state = states.getStateCodeByStateName(props.nomination.hospitalState);
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
-    ? props.nomination.amountRequestedCents
+    ? (props.nomination.amountRequestedCents / 100)
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
@@ -50,6 +50,8 @@ const NominationBanner = (props) => {
   const toggleModalState = () => {
     setIsModalVisible((isModalVisible) => !isModalVisible);
   };
+
+
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
   const toggleDeclineAppModalState = () => {
     setDeclineAppModalVisible(
@@ -168,6 +170,41 @@ const NominationBanner = (props) => {
               />
             )}
             <div className="column name">
+              <button
+                disabled={activeNomination.status == 'Declined'}
+                className=" decline-button"
+                onClick={toggleModalState}
+              >
+                Decline Application
+              </button>
+            </div>
+            {isModalVisible && (
+              <div className="modal-background">
+                <div className="modal-container">
+                  <button className="exit-button" onClick={toggleModalState}>
+                    &times;
+                  </button>
+                  <h3 className="modal-text">
+                    Do you want to decline the application?
+                  </h3>
+                  <div className="modal-buttons">
+                    <button
+                      className="button-yes"
+                      onClick={() => {
+                        declineApplication();
+                        toggleModalState();
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button className="button-no" onClick={toggleModalState}>
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+              <div className="column name">
               <DeclineAppBtn
                 status={activeNomination.status}
                 toggleDeclineAppModalState={toggleDeclineAppModalState}
@@ -235,7 +272,7 @@ const NominationBanner = (props) => {
                       finalDate
                     ) : (
                       <>
-                        {hipaaStatus}
+                      {hipaaStatus}
                         {hipaaReminder && hipaaStatus ? (
                           <FontAwesomeIcon
                             className="red"
@@ -278,4 +315,7 @@ const NominationBanner = (props) => {
     </div>
   );
 };
+
+
 export default NominationBanner;
+

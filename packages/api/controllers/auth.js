@@ -58,12 +58,12 @@ async function uploadFile(nomName, img) {
 
 const confirmAwaiting = (goal, nomNames) => {
   let confirmResults;
-  nomNames.forEach((app) => {
-    if (goal.includes(app)) {
-      confirmResults = app;
+  for (let i = 0; i < nomNames.length; i++) {
+    if (goal.includes(nomNames[i])) {
+      confirmResults = nomNames[i];
+      return confirmResults;
     }
-  });
-  return confirmResults;
+  }
 };
 
 const markAsRead = function (messageId, gmail) {
@@ -83,94 +83,84 @@ const markAsRead = function (messageId, gmail) {
 };
 
 async function getNewDocs(auth) {
-  const query = '';
   const gmail = google.gmail({ version: 'v1', auth });
+  let query = '';
   const nomNames = await getAwaitingHipaa();
-  const receiptNoms = await getVerifiedNoms();
 
-  if (Object.entries(nomNames).length) {
-    getNewAttachments(nomNames, gmail, query);
-  }
-  const letSee = Object.entries(receiptNoms);
-  console.log('HELLLO', letSee);
-  if (letSee) {
-    getNewAttachments(receiptNoms, gmail, query);
+  if (!nomNames) {
+    console.log('No Nominations Currently Awaiting HIPAA');
+  } else {
+    nomNames.forEach((nomination) => query += `subject:'${nomination}'`);
+    query += 'AND is:unread';
+    gmail.users.messages.list({
+      userId: 'me',
+      q: `{${query}}`,
+    }, (err, res) => {
+      if (err) return console.log('The API returned an error: ', err);
+      const { messages } = res.data;
+      if (!messages) {
+        console.log('no messages');
+      } else if (messages.length) {
+        const messageIds = [];
+        messagesAndAttachments(messages, messageIds, gmail, nomNames);
+      }
+    });
   }
 }
 
-const getNewAttachments = (nominations, gmail, query) => {
-  console.log(nominations, 'NOMINATIONS');
-  const nomNames = Object.keys(nominations);
-  nomNames.forEach((nomination) => query += `subject:'${nomination}'`);
-  query += 'AND is:unread';
-  gmail.users.messages.list({
-    userId: 'me',
-    q: `{${query}}`,
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ', err);
-    const { messages } = res.data;
-    if (!messages) {
-      console.log('no messages');
-    } else if (messages.length) {
-      const messageIds = [];
-      messages.forEach((message) => {
-        let nomName;
-        let nomId;
-        const { id } = message;
-        messageIds.push(id);
-        const attachmentIds = [];
-        gmail.users.messages.get({
-          userId: 'me',
-          id: message.id,
-        }, (err, res) => {
-          if (err) return console.log('error retrieving message', err);
-          if (res.data.payload.headers) {
-            const { headers } = res.data.payload;
-            for (let i = 0; i < headers.length; i++) {
-              if (headers[i].name === 'Subject') {
-                const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
-                if (confirmedResults) {
-                  nomName = confirmedResults;
-                  nomId = nominations[nomName];
-                }
-              }
+const messagesAndAttachments = (messages, messageIds, gmail, nomNames) => {
+  messages.forEach((message) => {
+    let nomName;
+    const { id } = message;
+    messageIds.push(id);
+    const attachmentIds = [];
+    gmail.users.messages.get({
+      userId: 'me',
+      id: message.id,
+    }, (err, res) => {
+      if (err) return console.log('error retrieving message', err);
+      if (res.data.payload.headers) {
+        const { headers } = res.data.payload;
+        for (let i = 0; i < headers.length; i++) {
+          if (headers[i].name === 'Subject') {
+            const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
+            if (confirmedResults) {
+              nomName = confirmedResults;
             }
+            break;
           }
-          if (res.data.payload.parts.length >= 1) {
-            const { parts } = res.data.payload;
-            for (let i = 0; i < parts.length; i++) {
-              if (parts[i].body.attachmentId) {
-                attachmentIds.push(parts[i].body.attachmentId);
-              }
-            }
-          }
-          if (attachmentIds.length > 0) {
-            attachmentIds.forEach((attachmentId) => {
-              gmail.users.messages.attachments.get({
-                userId: 'me',
-                messageId: message.id,
-                id: attachmentId,
-              }, (err, res) => {
-                if (err) return console.log(err);
-                uploadFile(nomName, res.data.data);
-                markAsRead(message.id, gmail);
-                if (nomId) {
-                  updateDashboard('true', nomId);
-                } else {
-                  console.log('no nominations awaiting documents');
-                }
-              });
-            });
-          }
+        }
+      }
+      if (res.data.payload.parts.length >= 1) {
+        getAttachmentIds(res.data.payload.parts, attachmentIds);
+      }
+      if (attachmentIds.length > 0) {
+        attachmentIds.forEach((attachmentId) => {
+          gmail.users.messages.attachments.get({
+            userId: 'me',
+            messageId: message.id,
+            id: attachmentId,
+          }, (err, res) => {
+            if (err) return console.log(err);
+            uploadFile(nomName, res.data.data);
+            markAsRead(message.id, gmail);
+          });
         });
-      });
-    }
+      }
+    });
   });
+};
+
+const getAttachmentIds = (parts, attachmentIds) => {
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].body.attachmentId) {
+      attachmentIds.push(parts[i].body.attachmentId);
+    }
+  }
 };
 
 const checkNominations = async (req, res) => {
   try {
-    console.log('Calling GmailStart function....');
     const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];
     const oauth2Client = new google.auth.OAuth2(
       process.env.AUTH_CLIENT_ID,
@@ -181,8 +171,8 @@ const checkNominations = async (req, res) => {
     google.options({ auth: oauth2Client });
 
     if (req.url.indexOf('?code') > -1) {
-      res.end(`<a href="#" onclick="javascript:window.close();opener.window.focus();" >Close Window</a>
-      Authentication successful! Please return to the console. Redirecting...`);
+      res.end(`<a href="#" onclick="javascript:window.close();opener.window.focus();" > Close Window</a>
+      &nbsp; Authentication successful! `);
       const { tokens } = await oauth2Client.getToken(req.query.code);
       oauth2Client.credentials = tokens;
       getNewDocs(oauth2Client);
