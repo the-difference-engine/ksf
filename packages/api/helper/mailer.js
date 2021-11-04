@@ -36,13 +36,25 @@ const email = new emailTemplate({
   preview: false,
 });
 
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+const recEmail = (nomEmail) => {
+  if(process.env.SEND_TO_TEST && validateEmail(process.env.RECIPIENT_EMAIL)){
+    return process.env.RECIPIENT_EMAIL
+  }else{
+    return nomEmail
+  }
+}
+
 function sendDeclineEmail(nomination) {
   email
     .send({
       template: 'decline',
       message: {
         from: formmasterEmail,
-        to: nomination.representativeEmailAddress,
+        to: recEmail(nomination.representativeEmailAddress),
       },
       locals: {
         name: nomination.providerName,
@@ -60,7 +72,7 @@ function sendSurveyEmail(nomination) {
     attachments: './survey/header.jpg',
     message: {
       from: adminEmail,
-      to: nomination.representativeEmailAddress
+      to: recEmail(nomination.representativeEmailAddress)
     },
     locals: {
       name: nomination.representativeName,
@@ -79,7 +91,7 @@ function verifyHcEmail(nomination) {
       template: 'verifyHcEmail',
       message: {
         from: formmasterEmail,
-        to: nomination.providerEmailAddress,
+        to: recEmail(nomination.providerEmailAddress)
       },
       locals: {
         name: nomination.providerName,
@@ -98,7 +110,7 @@ function sendHIPAAEmail(nomination) {
         message: {
           from: infoEmail,
           replyTo: infoEmail,
-          to: nomination.representativeEmailAddress,
+          to: recEmail(nomination.representativeEmailAddress),
         },
         locals: {
           name: nomination.representativeName,
@@ -118,7 +130,7 @@ function sendSurveyReminder(emailAddress, fullName) {
         message: {
           from: infoEmail,
           replyTo: infoEmail,
-          to: emailAddress,
+          to: recEmail(emailAddress),
         },
         locals: {
           name: fullName,
@@ -137,7 +149,7 @@ function sendHIPAAReminder(emailAddress, fullName) {
         message: {
           from: infoEmail,
           replyTo: infoEmail,
-          to: emailAddress,
+          to: recEmail(emailAddress),
         },
         locals: {
           name: fullName,
@@ -156,7 +168,7 @@ function sendHIPAAProvider(nomination) {
       message: {
         from: infoEmail,
         replyTo: infoEmail,
-        to: nomination.providerEmailAddress,
+        to: recEmail(nomination.providerEmailAddress),
       },
       locals: {
         name: nomination.patientName,
@@ -174,7 +186,7 @@ function sendSurveySocialWorker(nomination) {
       template: 'surveySocialWorker',
       message: {
         from: formmasterEmail,
-        to: nomination.providerEmailAddress,
+        to: recEmail(nomination.providerEmailAddress),
       },
       locals: {
         name: nomination.providerName,
