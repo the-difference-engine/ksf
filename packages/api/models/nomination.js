@@ -3,17 +3,28 @@ const { sendVerification } = require('../helper/mailer.js');
 const creds = require('../config/config.json').credentials;
 const { Model, Sequelize, DataTypes } = require('sequelize');
 const db = require('../models');
-const publicEmailDomains = [
-  'gmail.com',
-  'aol.com',
-  'outlook.com',
-  'zoho.com',
-  'mail.com',
-  'yahoo.com',
-  'protonmail.com',
-  'icloud.com',
+const domainController = require('../controllers/domain.js');
+const domain = require('./domain');
+let publicEmailDomains = [
+  // 'gmail.com',
+  // 'aol.com',
+  // 'outlook.com',
+  // 'zoho.com',
+  // 'mail.com',
+  // 'yahoo.com',
+  // 'protonmail.com',
+  // 'icloud.com',
 ];
 
+const getDomains = async (req, res) => {
+  try {
+    publicEmailDomains = await db.Domain.findAll();
+    console.log('This is public email domains.' + publicEmailDomains);
+  } catch (error) {
+    console.log('Error in publicEmailDomains', error);
+  }
+}
+getDomains();
 module.exports = (sequelize, DataTypes) => {
   class Nomination extends Model {
     static associate(models) {
