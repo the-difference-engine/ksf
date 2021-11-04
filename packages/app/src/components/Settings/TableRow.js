@@ -11,20 +11,33 @@ const TableRow = (props) => {
     onResultsClick,
     activeGrantCycle,
     setActiveGrantCycle,
-    showEditModal
+    showEditModal,
   } = props;
 
   const timeDiff = (dateString) => {
     const date = DateTime.fromISO(dateString);
     const now = DateTime.now().startOf('day');
 
+    // const date = new Date(dateString);
+    // const now = new Date();
+    // if (grantCycle.name === '12/7-12/9') {
+    //   console.log('date', date);
+    //   console.log('now', now);
+    // }
+
     return date > now;
   };
+
+  const openedOn = new Date(grantCycle.openedOn);
+  const closedOn = new Date(grantCycle.closedOn);
+
+  let openedOnString = openedOn.toLocaleDateString();
+  let closedOnString = closedOn.toLocaleDateString();
 
   return (
     <tr>
       <td>
-        {formatDateString(grantCycle.openedOn)} &nbsp;&nbsp;
+        {openedOnString} &nbsp;&nbsp;
         {timeDiff(grantCycle.openedOn) ? (
           <FontAwesomeIcon
             onClick={() => onEdit(grantCycle)}
@@ -36,7 +49,7 @@ const TableRow = (props) => {
         )}
       </td>
       <td>
-        {formatDateString(grantCycle.closedOn)} &nbsp;&nbsp;
+        {closedOnString} &nbsp;&nbsp;
         {timeDiff(grantCycle.closedOn) ? (
           <FontAwesomeIcon
             onClick={() => onEdit(grantCycle)}

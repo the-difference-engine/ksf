@@ -20,27 +20,63 @@ const EditModal = ({
 
   let openedOnInitial;
   let closedOnInitial;
+
   grantCycle
-    ? (openedOnInitial = new Date(grantCycle.openedOnInitial))
+    ? (openedOnInitial = new Date(grantCycle.openedOn))
     : (openedOnInitial = new Date());
   grantCycle
-    ? (closedOnInitial = new Date(grantCycle.closedOnInitial))
+    ? (closedOnInitial = new Date(grantCycle.closedOn))
     : (closedOnInitial = new Date());
 
-  const [openedOn, setOpenedOn] = useState(openedOnInitial);
-  const [closedOn, setClosedOn] = useState(closedOnInitial);
+  const openedOnDateReversedOffset = openedOnInitial;
+  openedOnDateReversedOffset.setTime(
+    openedOnDateReversedOffset.getTime() +
+      openedOnDateReversedOffset.getTimezoneOffset() * 60 * 1000
+  );
+
+  const closedOnDateReversedOffset = closedOnInitial;
+  closedOnDateReversedOffset.setTime(
+    closedOnDateReversedOffset.getTime() +
+      closedOnDateReversedOffset.getTimezoneOffset() * 60 * 1000
+  );
+
+  const [openedOn, setOpenedOn] = useState(openedOnDateReversedOffset);
+  const [closedOn, setClosedOn] = useState(closedOnDateReversedOffset);
 
   useEffect(() => {
+    // Convert existing date to another Timezone
+    // const dateTime = dateTime.setZone('utc');
+    // console.log('Custom date, utc', dateTime.toISO());
+    //2021-05-01T21:11:45.641-04:00
+
     if (grantCycle) {
-      let openedOnDate = new Date(grantCycle.openedOn);
-      let closedOnDate = new Date(grantCycle.closedOn);
+      const openedOnDateReversedOffset = new Date(grantCycle.openedOn);
+      // openedOnDateReversedOffset.setTime(
+      //   openedOnDateReversedOffset.getTime() +
+      //     openedOnDateReversedOffset.getTimezoneOffset() * 60 * 1000
+      // );
 
-      let openedOnDayLater = DateTime.fromJSDate(openedOnDate)
-      let closedOnDayLater = DateTime.fromJSDate(closedOnDate)
+      const closedOnDateReversedOffset = new Date(grantCycle.closedOn);
+      // closedOnDateReversedOffset.setTime(
+      //   closedOnDateReversedOffset.getTime() +
+      //     closedOnDateReversedOffset.getTimezoneOffset() * 60 * 1000
+      // );
 
-      let openedOnDateString = openedOnDayLater.toISO();
+      setOpenedOn(openedOnDateReversedOffset);
+      setClosedOn(closedOnDateReversedOffset);
 
-      let closedOnDateString = closedOnDayLater.toISO();
+      // let openedOnDate = new Date(grantCycle.openedOn);
+      // let closedOnDate = new Date(grantCycle.closedOn);
+
+      // let openedOnDayLater = DateTime.fromJSDate(openedOnDate);
+      // let closedOnDayLater = DateTime.fromJSDate(closedOnDate);
+
+      // openedOnDayLater.setZone('utc');
+      // closedOnDayLater.setZone('utc');
+
+      // let openedOnDateString = openedOnDayLater.setZone('utc').toISO();
+
+      // let closedOnDateString = closedOnDayLater.setZone('utc').toISO();
 
       // let openedOnDate = DateTime.fromJSDate(grantCycle.openedOn);
       // let closedOnDate = DateTime.fromJSDate(grantCycle.closedOn);
@@ -48,8 +84,8 @@ const EditModal = ({
       // let openedOnDateString = openedOnDate.toISO();
       // let closedOnDateString = closedOnDate.toISO()
 
-      setOpenedOn(openedOnDateString);
-      setClosedOn(closedOnDateString);
+      // setOpenedOn(openedOnDateString);
+      // setClosedOn(closedOnDateString);
 
       // openedOnDate.setTime(
       //   openedOnDate.getTime() + openedOnDate.getTimezoneOffset() * 60 * 1000
@@ -59,8 +95,6 @@ const EditModal = ({
       //   closedOnDate.getTime() + closedOnDate.getTimezoneOffset() * 60 * 1000
       // );
       // setClosedOn(closedOnDate);
-      console.log(openedOnDateString);
-      console.log(closedOnDateString);
     }
   }, [grantCycle]);
 

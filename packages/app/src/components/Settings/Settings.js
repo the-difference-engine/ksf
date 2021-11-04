@@ -72,15 +72,29 @@ const Settings = (props) => {
 
   const handleOpenedOnDateChanges = (date) => {
     date = date ?? new Date();
+
+    let luxonDate = DateTime.fromJSDate(date);
+    let openedOnDateString = luxonDate
+      .setZone('utc')
+      // .minus({ days: 1 })
+      .toISO();
+
     if (handleYearValidation(date)) {
-      setGcToEdit({ ...gcToEdit, openedOn: date });
+      setGcToEdit({ ...gcToEdit, openedOn: openedOnDateString });
     }
   };
 
   const handleClosedOnDateChanges = (date) => {
     date = date ?? new Date();
+
+    let luxonDate = DateTime.fromJSDate(date);
+    let closedOnDateString = luxonDate
+      .setZone('utc')
+      // .minus({ days: 1 })
+      .toISO();
+
     if (handleYearValidation(date)) {
-      setGcToEdit({ ...gcToEdit, closedOn: date });
+      setGcToEdit({ ...gcToEdit, closedOn: closedOnDateString });
     }
   };
 
@@ -222,6 +236,11 @@ const Settings = (props) => {
   const disableButtonStyle = disableButton
     ? 'disabled-edit-btn'
     : 'enabled-edit-btn';
+
+  if (allGrantCycles && allGrantCycles[0]) {
+    console.log('openedOn', allGrantCycles[0].openedOn);
+    console.log('closed on', allGrantCycles[0].closedOn);
+  }
 
   return (
     <div className="settings__container">
