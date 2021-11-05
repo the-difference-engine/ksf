@@ -28,7 +28,12 @@ const NominationPage = ({
     if (NominationsData) {
       NominationsData.forEach((nomination) => {
         if (nomination.id === id) {
-          return setActiveNomination(nomination);
+          console.log('the loop to set activenomination by id is running');
+          // return setActiveNomination((oldNomination) => ({
+          //   ...oldNomination,
+          //   ...nomination,
+          // }));
+          setActiveNomination(nomination);
         } else {
           return setError('Nomination does not exist');
         }

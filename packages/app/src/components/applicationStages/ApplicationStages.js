@@ -74,22 +74,27 @@ const ApplicationStages = (props) => {
           if (res.status == 200) {
             let response = res.data;
 
-            if (typeof response.driveFolderId == 'string') {
-              activeNomination.driveFolderId = response.driveFolderId;
-              setActiveNomination((activeNomination) => {
-                return {
-                  ...activeNomination,
-                  driveFolderId: response.driveFolderId,
-                };
-              });
-            }
+            // if (typeof response.driveFolderId == 'string') {
+            //   activeNomination.driveFolderId = response.driveFolderId;
+            //   setActiveNomination((activeNomination) => {
+            //     return {
+            //       ...activeNomination,
+            //       driveFolderId: response.driveFolderId,
+            //     };
+            //   });
+            // }
 
-            setActiveNomination((activeNomination) => {
-              return {
-                ...activeNomination,
-                status: response.status,
-              };
-            });
+            // setActiveNomination((activeNomination) => {
+            //   return {
+            //     ...activeNomination,
+            //     status: response.status,
+            //   };
+            // });
+
+            setActiveNomination((activeNomination) => ({
+              ...activeNomination,
+              ...response,
+            }));
           }
         });
     } catch (err) {

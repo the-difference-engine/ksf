@@ -10,6 +10,7 @@ import ResendEmailModal from './resendEmailModal.js';
 import DeclineAppModal from './declineAppModal.js';
 import DeclineAppBtn from './declineAppBtn.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect } from 'react';
 
 const states = require('us-state-codes');
 
@@ -80,6 +81,10 @@ const NominationBanner = (props) => {
       (resendEmailModalVisible) => !resendEmailModalVisible
     );
   };
+
+  useEffect(() => {
+    console.log(activeNomination);
+  });
 
   return (
     <div className="nomination-banner-container">
