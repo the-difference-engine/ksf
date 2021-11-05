@@ -62,7 +62,7 @@
     "react-hook-form": "^7.8.4",
     "react-modal": "^3.14.3",
     "react-phone-number-input": "^3.1.25",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "5.3",
     "react-select": "^4.3.1",
     "resolve": "1.15.0",
     "resolve-url-loader": "3.1.1",

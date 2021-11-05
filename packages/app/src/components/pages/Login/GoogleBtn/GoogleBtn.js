@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
-import style from '../style.css'
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import style from '../style.css';
 
 class GoogleBtn extends Component {
   state = {
     isLogined: false,
-    accessToken: ""
+    accessToken: '',
   };
 
   login = (response) => {
     if (response.accessToken) {
       this.setState((state) => ({
         isLogined: true,
-        accessToken: response.accessToken
+        accessToken: response.accessToken,
       }));
     }
   };
@@ -21,17 +21,16 @@ class GoogleBtn extends Component {
   logout = (response) => {
     this.setState((state) => ({
       isLogined: false,
-      accessToken: ""
+      accessToken: '',
     }));
   };
-  
 
   handleLoginFailure = (response) => {
-    alert("Failed to log in");
+    alert('Failed to log in');
   };
 
   handleLogoutFailure = (response) => {
-    alert("Failed to log out");
+    alert('Failed to log out');
   };
 
   render() {
@@ -52,12 +51,11 @@ class GoogleBtn extends Component {
             buttonText="Sign in with Google"
             onSuccess={this.login}
             onFailure={this.handleLoginFailure}
-            cookiePolicy={"single_host_origin"}
+            cookiePolicy={'single_host_origin'}
             responseType="code,token"
           />
         )}
-        {this.state.accessToken
-          ? <Redirect to='/' /> : null}
+        {this.state.accessToken ? <Redirect to="/" /> : null}
       </div>
     );
   }

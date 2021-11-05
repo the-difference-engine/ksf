@@ -39,7 +39,7 @@ const NewNomination = ({ nomination }) => {
               pathname: `/nomination/${nomination.id}`,
               // search: '?sort=name',
               // hash: nomination.id,
-              state: nomination,
+              state: { imapirate: 'imapirate' },
             }}
           >
             {nomination.nominationName}

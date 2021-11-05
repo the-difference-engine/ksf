@@ -12,7 +12,7 @@ import SearchBar from '../../SearchBar';
 import ApplicationForm from '../../nominationInfo/ApplicationForm';
 import nominationsAPI from '../../../utils/API/nominationsAPI';
 
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 const NominationPage = (props) => {
   const {
     activeNomination,
@@ -229,4 +229,4 @@ const NominationPage = (props) => {
   }
 };
 
-export default withRouter(NominationPage);
+export default NominationPage;

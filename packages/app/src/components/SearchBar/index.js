@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SettingsModal from 'react-modal';
 import Settings from '../Settings/Settings';
