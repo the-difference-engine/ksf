@@ -79,7 +79,7 @@ const SearchResultsCard = () => {
                 </td>
                 <td>
                   <h1>
-                    <strong>Received Date</strong>
+                    <strong>Submission Date</strong>
                   </h1>
                 </td>
               </tr>

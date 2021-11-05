@@ -2,6 +2,7 @@ const { Router } = require('express');
 const nominationController = require('../controllers/nomination.js');
 const userController = require('../controllers/user.js');
 const grantCycleController = require('../controllers/grantCycle.js');
+const gmailAuthController = require('../controllers/auth.js');
 
 const router = Router();
 
@@ -10,6 +11,7 @@ router.get('/api/nominations/:id', nominationController.getNominationById);
 router.get('/api/nominations', nominationController.findAllNominations);
 router.post('/api/nominations', nominationController.createNomination);
 router.put('/api/nominations/:id', nominationController.updateNomination);
+router.get('/api/checknominations', nominationController.checkNominations);
 router.post('/api/nominations/:id', nominationController.resendEmail);
 
 // adding in new route for updateActiveNomination
@@ -28,8 +30,11 @@ router.get('/api/grantcycles/findactive', grantCycleController.findActive);
 router.post('/api/grantcycles', grantCycleController.create);
 router.get(
   '/api/grantcycles/findbyname/:name',
-  grantCycleController.findByName
+  grantCycleController.findByName,
 );
 router.put('/api/grantcycles/:id', grantCycleController.update);
+
+// auth endpoints
+router.get('/api/auth', gmailAuthController.checkNominations);
 
 module.exports = router;
