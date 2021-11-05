@@ -29,7 +29,6 @@ const Settings = (props) => {
     try {
       const { data } = await grantCycleAPI.getGrantCycles();
       setGrantCycles(data);
-      console.log('data', data);
     } catch (e) {
       console.log('Error using getGrantCycles: ', e);
     }
@@ -116,9 +115,6 @@ const Settings = (props) => {
       if (gcToEdit.isActive) {
         setActiveGrantCycle(gcToEdit);
       }
-      // else {
-      //   setActiveGrantCycle();
-      // }
 
       setGcToEdit({
         id: '',
@@ -226,10 +222,6 @@ const Settings = (props) => {
   const disableButtonStyle = disableButton
     ? 'disabled-edit-btn'
     : 'enabled-edit-btn';
-
-  if (allGrantCycles) {
-    console.log('allGrantCycles', allGrantCycles);
-  }
 
   return (
     <div className="settings__container">

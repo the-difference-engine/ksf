@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime } from 'luxon';
-import { formatDateString } from '../../utils/formatDateString';
 import ToggleActiveGrantCycle from './ToggleActiveGrantCycle';
 
 const TableRow = (props) => {
@@ -12,7 +11,7 @@ const TableRow = (props) => {
     activeGrantCycle,
     setActiveGrantCycle,
     showEditModal,
-    getGrantCycles
+    getGrantCycles,
   } = props;
 
   const timeDiff = (dateString) => {

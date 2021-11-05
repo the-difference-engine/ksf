@@ -89,11 +89,7 @@ const findAll = async (req, res) => {
 
             const closedOn = new Date(g.closedOn);
 
-            console.log('opened on under find all', g.openedOn);
-            console.log('closed on under find all', g.closedOn);
-
             openedOnDayLater = DateTime.fromJSDate(openedOn);
-            // .plus({ days: 1 });
             closedOnDayLater = DateTime.fromJSDate(closedOn).plus({ days: 1 });
 
             let openedOnDateString = openedOnDayLater.toISODate();
