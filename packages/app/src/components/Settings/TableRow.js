@@ -12,18 +12,12 @@ const TableRow = (props) => {
     activeGrantCycle,
     setActiveGrantCycle,
     showEditModal,
+    getGrantCycles
   } = props;
 
   const timeDiff = (dateString) => {
     const date = DateTime.fromISO(dateString);
     const now = DateTime.now().startOf('day');
-
-    // const date = new Date(dateString);
-    // const now = new Date();
-    // if (grantCycle.name === '12/7-12/9') {
-    //   console.log('date', date);
-    //   console.log('now', now);
-    // }
 
     return date > now;
   };
@@ -78,6 +72,7 @@ const TableRow = (props) => {
           activeGrantCycle={activeGrantCycle}
           setActiveGrantCycle={setActiveGrantCycle}
           showEditModal={showEditModal}
+          getGrantCycles={getGrantCycles}
         />
       </td>
     </tr>

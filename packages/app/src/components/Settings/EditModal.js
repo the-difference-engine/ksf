@@ -18,6 +18,8 @@ const EditModal = ({
     ? 'edit-modal edit-modal-display-block'
     : 'edit-modal edit-modal-display-none';
 
+  console.log('grant cycle', grantCycle);
+
   let openedOnInitial;
   let closedOnInitial;
 
@@ -29,16 +31,8 @@ const EditModal = ({
     : (closedOnInitial = new Date());
 
   const openedOnDateReversedOffset = openedOnInitial;
-  openedOnDateReversedOffset.setTime(
-    openedOnDateReversedOffset.getTime() +
-      openedOnDateReversedOffset.getTimezoneOffset() * 60 * 1000
-  );
 
   const closedOnDateReversedOffset = closedOnInitial;
-  closedOnDateReversedOffset.setTime(
-    closedOnDateReversedOffset.getTime() +
-      closedOnDateReversedOffset.getTimezoneOffset() * 60 * 1000
-  );
 
   const [openedOn, setOpenedOn] = useState(openedOnDateReversedOffset);
   const [closedOn, setClosedOn] = useState(closedOnDateReversedOffset);

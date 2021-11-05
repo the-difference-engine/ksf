@@ -84,9 +84,9 @@ module.exports = (sequelize, DataTypes) => {
             const openedOn = new Date(instance.openedOn);
             const closedOn = new Date(instance.closedOn);
 
-            openedOnDayLater = DateTime.fromJSDate(openedOn);
+            let openedOnDayLater = DateTime.fromJSDate(openedOn);
             // .plus({ days: 1 });
-            closedOnDayLater = DateTime.fromJSDate(closedOn);
+            let closedOnDayLater = DateTime.fromJSDate(closedOn);
             // .plus({ days: 1 });
 
             let openedOnDateString = openedOnDayLater.toISO();

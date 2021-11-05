@@ -29,6 +29,7 @@ const Settings = (props) => {
     try {
       const { data } = await grantCycleAPI.getGrantCycles();
       setGrantCycles(data);
+      console.log('data', data);
     } catch (e) {
       console.log('Error using getGrantCycles: ', e);
     }
@@ -73,28 +74,16 @@ const Settings = (props) => {
   const handleOpenedOnDateChanges = (date) => {
     date = date ?? new Date();
 
-    let luxonDate = DateTime.fromJSDate(date);
-    let openedOnDateString = luxonDate
-      .setZone('utc')
-      // .minus({ days: 1 })
-      .toISO();
-
     if (handleYearValidation(date)) {
-      setGcToEdit({ ...gcToEdit, openedOn: openedOnDateString });
+      setGcToEdit({ ...gcToEdit, openedOn: date });
     }
   };
 
   const handleClosedOnDateChanges = (date) => {
     date = date ?? new Date();
 
-    let luxonDate = DateTime.fromJSDate(date);
-    let closedOnDateString = luxonDate
-      .setZone('utc')
-      // .minus({ days: 1 })
-      .toISO();
-
     if (handleYearValidation(date)) {
-      setGcToEdit({ ...gcToEdit, closedOn: closedOnDateString });
+      setGcToEdit({ ...gcToEdit, closedOn: date });
     }
   };
 
@@ -109,7 +98,7 @@ const Settings = (props) => {
         isActive: false,
       });
       createButton.current.blur();
-      getGrantCycles();
+      await getGrantCycles();
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         setErrors(ex.response.data);
@@ -126,9 +115,10 @@ const Settings = (props) => {
 
       if (gcToEdit.isActive) {
         setActiveGrantCycle(gcToEdit);
-      } else {
-        setActiveGrantCycle();
       }
+      // else {
+      //   setActiveGrantCycle();
+      // }
 
       setGcToEdit({
         id: '',
@@ -137,7 +127,7 @@ const Settings = (props) => {
         name: '',
         isActive: '',
       });
-      getGrantCycles();
+      await getGrantCycles();
       setShowEditModal(false);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -150,8 +140,8 @@ const Settings = (props) => {
 
   const handleEdit = (grantCycle) => {
     setGcToEdit({
-      openedOn: grantCycle.openedOn.split('T')[0],
-      closedOn: grantCycle.closedOn.split('T')[0],
+      openedOn: grantCycle.openedOn,
+      closedOn: grantCycle.closedOn,
       name: grantCycle.name,
       id: grantCycle.id,
       isActive: grantCycle.isActive,
@@ -237,9 +227,8 @@ const Settings = (props) => {
     ? 'disabled-edit-btn'
     : 'enabled-edit-btn';
 
-  if (allGrantCycles && allGrantCycles[0]) {
-    console.log('openedOn', allGrantCycles[0].openedOn);
-    console.log('closed on', allGrantCycles[0].closedOn);
+  if (allGrantCycles) {
+    console.log('allGrantCycles', allGrantCycles);
   }
 
   return (
@@ -357,6 +346,7 @@ const Settings = (props) => {
                   activeGrantCycle={activeGrantCycle}
                   setActiveGrantCycle={setActiveGrantCycle}
                   showEditModal={showEditModal}
+                  getGrantCycles={getGrantCycles}
                 />
               ))}
             </tbody>

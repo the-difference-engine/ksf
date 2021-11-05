@@ -30,17 +30,30 @@ const update = async (req, res) => {
       return res.status(404).send('Grant does not exist for the given ID');
     }
 
-    const previousActiveGrant = await db.GrantCycle.update(
-      { isActive: false },
-      { where: { isActive: true } }
-    );
+    if (isActive) {
+      const previousActiveGrant = await db.GrantCycle.update(
+        { isActive: false },
+        {
+          where: {
+            [Op.and]: [
+              {
+                isActive: true,
+              },
+              {
+                id: { [Op.ne]: id },
+              },
+            ],
+          },
+        }
+      );
+    }
 
     const openedOnDate = new Date(openedOn);
 
     const closedOnDate = new Date(closedOn);
 
-    openedOnDayLater = DateTime.fromJSDate(openedOnDate).plus({ days: 1 });
-    closedOnDayLater = DateTime.fromJSDate(closedOnDate).plus({ days: 1 });
+    openedOnDayLater = DateTime.fromJSDate(openedOnDate);
+    closedOnDayLater = DateTime.fromJSDate(closedOnDate);
 
     let openedOnDateString = openedOnDayLater.toISO();
 
@@ -49,8 +62,6 @@ const update = async (req, res) => {
     if (name) grant.name = name;
     if (openedOn) grant.openedOn = openedOnDateString;
     if (closedOn) grant.closedOn = closedOnDateString;
-    console.log(openedOnDateString);
-    console.log(closedOnDateString);
     grant.isActive = isActive;
     await grant.save();
     return res.status(200).send(grant);
@@ -78,10 +89,12 @@ const findAll = async (req, res) => {
 
             const closedOn = new Date(g.closedOn);
 
+            console.log('opened on under find all', g.openedOn);
+            console.log('closed on under find all', g.closedOn);
+
             openedOnDayLater = DateTime.fromJSDate(openedOn);
             // .plus({ days: 1 });
-            closedOnDayLater = DateTime.fromJSDate(closedOn);
-            // .plus({ days: 2 });
+            closedOnDayLater = DateTime.fromJSDate(closedOn).plus({ days: 1 });
 
             let openedOnDateString = openedOnDayLater.toISODate();
 
