@@ -40,9 +40,6 @@ module.exports = function gsheetToDB() {
 
     for (nomination of nominations.slice(1)) {
       try {
-        //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements
-        //the first element is the nomination instance object that contains the dataValues among other things
-        //the second element is a boolean that represents whether a nomination was created
         let array = await db.Nomination.findOrCreate({
           where: {
             dateReceived: nomination[0],
