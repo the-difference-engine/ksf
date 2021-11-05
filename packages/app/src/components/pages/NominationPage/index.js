@@ -39,7 +39,7 @@ const NominationPage = ({
         }
       });
     }
-  });
+  }, [NominationsData]);
 
   const {
     hospitalCity,
