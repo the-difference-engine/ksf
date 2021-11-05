@@ -55,10 +55,10 @@ const NominationPage = (props) => {
   };
 
   useEffect(() => {
-    if (props.state?.nomination) {
-      getNominationById(props.state.nomination.id);
-    }
-    console.log('useEffect Is running');
+    // if (props.state?.nomination) {
+    //   getNominationById(props.location.state.id);
+    // }
+    // console.log('useEffect Is running');
     // reload((load) => !load);
     // if (NominationsData) {
     //   NominationsData.forEach((nomination) => {
@@ -69,24 +69,25 @@ const NominationPage = (props) => {
     //     }
     //   });
     // }
-  }, [props]);
+    setActiveNomination({ ...props.location.state });
+  }, []);
 
-  useEffect(() => {
-    console.log('this is active nomination from useEffect [activeNomination]');
-    console.dir(activeNomination);
-    // reload((load) => !load);
-    if (activeNomination) {
-      if (typeof activeNomination.status == 'string') {
-        console.log('status is a string');
-      } else {
-        let type = typeof activeNomination.status;
-        console.log('status is not a string');
-        console.log(`activeNomination.status type is: ${type}`);
-        console.log(`activeNominaton.status is ${activeNomination.status}`);
-      }
-    }
-    // console.log('reload has happened');
-  }, [activeNomination]);
+  // useEffect(() => {
+  //   console.log('this is active nomination from useEffect [activeNomination]');
+  //   console.dir(activeNomination);
+  //   // reload((load) => !load);
+  //   if (activeNomination) {
+  //     if (typeof activeNomination.status == 'string') {
+  //       console.log('status is a string');
+  //     } else {
+  //       let type = typeof activeNomination.status;
+  //       console.log('status is not a string');
+  //       console.log(`activeNomination.status type is: ${type}`);
+  //       console.log(`activeNominaton.status is ${activeNomination.status}`);
+  //     }
+  //   }
+  //   // console.log('reload has happened');
+  // }, [activeNomination]);
 
   if (activeNomination) {
     const {
@@ -188,9 +189,11 @@ const NominationPage = (props) => {
       setMode(mode);
     }
 
+    // props.location.state &&
+
     return (
       <>
-        {props.state.nomination && (
+        {
           <div className="nomination-show-page">
             <SearchBar />
             <NominationBanner
@@ -217,11 +220,11 @@ const NominationPage = (props) => {
               editHasBeenClicked={editHasBeenClicked}
               saveHasBeenClicked={saveHasBeenClicked}
               cancelHasBeenClicked={cancelHasBeenClicked}
-              id={props.state.nomination.id}
+              id={props.location.state.id}
               revertMode={revertMode}
             />
           </div>
-        )}
+        }
       </>
     );
   } else {

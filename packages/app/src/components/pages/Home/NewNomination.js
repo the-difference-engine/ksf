@@ -34,12 +34,12 @@ const NewNomination = ({ nomination }) => {
       <tr className="landing-table" key={nomination.id}>
         <td className="green new-files-application-name add-padding-left detail-font-size">
           <Link
-            target={'_blank'}
+            // target={'_blank'}
             to={{
               pathname: `/nomination/${nomination.id}`,
               // search: '?sort=name',
               // hash: nomination.id,
-              state: { imapirate: 'imapirate' },
+              state: { ...nomination },
             }}
           >
             {nomination.nominationName}
