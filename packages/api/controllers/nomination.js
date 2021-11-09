@@ -1,6 +1,7 @@
 const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize');
 const { ValidationError, where } = require('sequelize');
+const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
@@ -13,8 +14,9 @@ const { sendHIPAAEmail } = require('../helper/mailer');
 const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
-const jwt = require('jsonwebtoken');
-const Op = sequelize.Op;
+
+const { Op } = sequelize;
+const getGmailAuthUrl = require('../helper/gmailAPI');
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -60,11 +62,10 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
-    const hasProviderBeenValidated = nominations.some((nom) => {
-      return (
+    const hasProviderBeenValidated = nominations.some(
+      (nom) =>
         nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
-      );
-    });
+    );
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
     }
@@ -118,9 +119,9 @@ const updateNomination = async (req, res) => {
       console.log('Nomination Not Found', err);
       return res.status(400);
     });
-    //can continue using additional conditional to use other email functions,
-    //depending on status of application
-    //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
+    // can continue using additional conditional to use other email functions,
+    // depending on status of application
+    // current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
@@ -134,7 +135,10 @@ const updateNomination = async (req, res) => {
             grantCycleId: grant.id,
           });
         } catch (error) {
-          console.log('Could not update status to declined', error);
+          console.log(
+            'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
+            error
+          );
         } finally {
           sendDeclineEmail(nomination);
         }
@@ -202,6 +206,17 @@ const syncNominations = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+const checkNominations = async (req, res) => {
+  try {
+    const authorizeUrl = getGmailAuthUrl();
+    return res.status(200).json({ authorizeUrl });
+  } catch (error) {
+    console.log('error:', error);
+    return res.status(400).json({ error: error.message });
+  }
+};
+
 const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
@@ -242,6 +257,7 @@ const updateActiveNomData = async (req, res) => {
 async function searchAndSend(status, query) {
   const nominations = await db.Nomination.findAll(query);
   let nomination;
+  const ids = [];
   for (let i = 0; i < nominations.length; i++) {
     nomination = nominations[i];
     switch (status) {
@@ -283,14 +299,38 @@ async function searchAndSend(status, query) {
     }
   }
 }
+
+const getAwaitingHipaa = async () => {
+  const nominations = await db.Nomination.findAll({
+    where: { status: 'Awaiting HIPAA' },
+  });
+  const applicationsAwait = [];
+
+  if (nominations.length) {
+    nominations.forEach((nomination) => {
+      const lastName = nomination.patientName
+        ? nomination.patientName.split(' ')[1]
+        : '';
+      const state = states.getStateCodeByStateName(nomination.hospitalState);
+      const applicationName = `${lastName}-${state}`;
+
+      applicationsAwait.push(applicationName);
+    });
+  }
+
+  return applicationsAwait;
+};
+
 module.exports = {
   getNominationById,
   findAllNominations,
   createNomination,
   updateNomination,
   syncNominations,
-  updateActiveNomData,
   emailVerification,
   searchAndSend,
+  getAwaitingHipaa,
+  updateActiveNomData,
+  checkNominations,
   resendEmail,
 };

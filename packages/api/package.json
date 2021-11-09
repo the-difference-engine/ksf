@@ -30,6 +30,7 @@
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
     "pug": "^3.0.2",
+    "react-phone-number-input": "^3.1.33",
     "semver": "^5.7.1",
     "sequelize": "^6.6.2",
     "us-state-codes": "^1.1.2",
@@ -54,6 +55,6 @@
   },
   "engines": {
     "node": ">=16 <17",
-    "npm": ">=7 <8"
+    "npm": ">=7 <9"
   }
 }
