@@ -4,15 +4,12 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
-import { NominationsDataContext } from '../../utils/context/NominationsContext';
 
 const ApplicationStages = (props) => {
   const [activeNomination, setActiveNomination] = useContext(
     ActiveNominationContext
   );
-  const [nominationsData, setNominationsData] = useContext(
-    NominationsDataContext
-  );
+
   const [currentStatus, setCurrentStatus] = useState();
   // status array is used as the param in
   const status = [
