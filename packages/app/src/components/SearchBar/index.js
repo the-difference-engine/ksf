@@ -5,7 +5,6 @@ import SettingsModal from 'react-modal';
 import Settings from '../Settings/Settings';
 import GrantCycleNomsResults from '../Settings/GrantCycleNomsResults';
 import { NominationsDataContext } from '../../utils/context/NominationsContext';
-import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import { SearchResultDataContext } from '../../utils/context/SearchResultsContext';
 import './style.css';
 
@@ -17,10 +16,6 @@ const SearchBar = (props) => {
   const [settingsResults, setSettingsResults] = useState({});
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
-  );
-
-  const [ActiveNomination, SetActiveNomination] = useContext(
-    ActiveNominationContext
   );
 
   const [NominationsData, setNominationsData] = useContext(
