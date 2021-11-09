@@ -72,6 +72,7 @@ const Settings = (props) => {
 
   const handleOpenedOnDateChanges = (date) => {
     date = date ?? new Date();
+
     if (handleYearValidation(date)) {
       setGcToEdit({ ...gcToEdit, openedOn: date });
     }
@@ -79,6 +80,7 @@ const Settings = (props) => {
 
   const handleClosedOnDateChanges = (date) => {
     date = date ?? new Date();
+
     if (handleYearValidation(date)) {
       setGcToEdit({ ...gcToEdit, closedOn: date });
     }
@@ -95,7 +97,7 @@ const Settings = (props) => {
         isActive: false,
       });
       createButton.current.blur();
-      getGrantCycles();
+      await getGrantCycles();
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         setErrors(ex.response.data);
@@ -121,7 +123,7 @@ const Settings = (props) => {
         name: '',
         isActive: '',
       });
-      getGrantCycles();
+      await getGrantCycles();
       setShowEditModal(false);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -134,8 +136,8 @@ const Settings = (props) => {
 
   const handleEdit = (grantCycle) => {
     setGcToEdit({
-      openedOn: grantCycle.openedOn.split('T')[0],
-      closedOn: grantCycle.closedOn.split('T')[0],
+      openedOn: grantCycle.openedOn,
+      closedOn: grantCycle.closedOn,
       name: grantCycle.name,
       id: grantCycle.id,
       isActive: grantCycle.isActive,
@@ -336,6 +338,7 @@ const Settings = (props) => {
                   activeGrantCycle={activeGrantCycle}
                   setActiveGrantCycle={setActiveGrantCycle}
                   showEditModal={showEditModal}
+                  getGrantCycles={getGrantCycles}
                 />
               ))}
             </tbody>

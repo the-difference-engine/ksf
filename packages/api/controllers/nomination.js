@@ -62,9 +62,10 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
-    const hasProviderBeenValidated = nominations.some((nom) => (
-      nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
-    ));
+    const hasProviderBeenValidated = nominations.some(
+      (nom) =>
+        nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
+    );
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
     }
@@ -87,7 +88,7 @@ const resendEmail = async (req, res) => {
     });
     console.log(
       `email sent to: ${recipient.replace('-', ' ')}`,
-      `email type sent: ${emailType}`,
+      `email type sent: ${emailType}`
     );
     if (recipient === 'family-member' && emailType === 'hipaa') {
       sendHIPAAEmail(nomination);
@@ -124,11 +125,19 @@ const updateNomination = async (req, res) => {
     if (nomination.changed('status')) {
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
-          nomination.update({ declinedTimestamp: Date() });
+          const grant = await db.GrantCycle.findOne({
+            where: { isActive: true },
+          });
+
+          nomination.update({
+            readyForBoardReviewTimestamp: Date(),
+            declinedTimestamp: Date(),
+            grantCycleId: grant.id,
+          });
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
-            error,
+            error
           );
         } finally {
           sendDeclineEmail(nomination);
@@ -142,7 +151,7 @@ const updateNomination = async (req, res) => {
             ? nomination.patientName.split(' ')[1]
             : '';
           const state = states.getStateCodeByStateName(
-            nomination.hospitalState,
+            nomination.hospitalState
           );
           const applicationName = `${lastName}-${state}`;
           createFolder(applicationName);
@@ -237,7 +246,7 @@ const updateActiveNomData = async (req, res) => {
       { ...req.body },
       {
         where: { id },
-      },
+      }
     );
     return res.status(200).json({ message: 'updated' });
   } catch (err) {
@@ -255,11 +264,11 @@ async function searchAndSend(status, query) {
       case 'HIPAA Verified':
         sendSurveyReminder(
           nomination.representativeEmailAddress,
-          nomination.representativeName,
+          nomination.representativeName
         );
         sendSurveyReminder(
           nomination.providerEmailAddress,
-          nomination.providerName,
+          nomination.providerName
         );
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
@@ -270,18 +279,18 @@ async function searchAndSend(status, query) {
       case 'Awaiting HIPAA':
         sendHIPAAReminder(
           nomination.representativeEmailAddress,
-          nomination.representativeName,
+          nomination.representativeName
         );
         sendHIPAAReminder(
           nomination.providerEmailAddress,
-          nomination.providerName,
+          nomination.providerName
         );
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
           console.log(
             'Unable to update record awaiting hipaa reminder timestamp',
-            err,
+            err
           );
         }
         break;
@@ -292,7 +301,9 @@ async function searchAndSend(status, query) {
 }
 
 const getAwaitingHipaa = async () => {
-  const nominations = await db.Nomination.findAll({ where: { status: 'Awaiting HIPAA' } });
+  const nominations = await db.Nomination.findAll({
+    where: { status: 'Awaiting HIPAA' },
+  });
   const applicationsAwait = [];
 
   if (nominations.length) {
@@ -300,9 +311,7 @@ const getAwaitingHipaa = async () => {
       const lastName = nomination.patientName
         ? nomination.patientName.split(' ')[1]
         : '';
-      const state = states.getStateCodeByStateName(
-        nomination.hospitalState,
-      );
+      const state = states.getStateCodeByStateName(nomination.hospitalState);
       const applicationName = `${lastName}-${state}`;
 
       applicationsAwait.push(applicationName);
