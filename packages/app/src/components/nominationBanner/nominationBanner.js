@@ -48,7 +48,7 @@ const NominationBanner = (props) => {
   const [showDocsButton, setShowDocsButton] = useState(false);
 
   const openWindow = (val) => {
-    window.open(`https://drive.google.com/drive/u/5/folders/${val}`);
+    window.open(`https://drive.google.com/drive/folders/${val}`);
   };
 
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
