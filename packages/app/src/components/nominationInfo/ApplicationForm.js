@@ -87,14 +87,10 @@ const ApplicationForm = (props) => {
       const newNominationData = NominationsData.map((nomination) => {
         if (nomination.id === props.id) {
           data['Admission Date']
-            ? (nomination.admissionDate = data[
-                'Admission Date'
-              ].toLocaleDateString())
+            ? (nomination.admissionDate = data['Admission Date'].toString())
             : (nomination.admissionDate = data['Admission Date']);
           data['Discharge Date']
-            ? (nomination.dischargeDate = data[
-                'Discharge Date'
-              ].toLocaleDateString())
+            ? (nomination.dischargeDate = data['Discharge Date'].toString())
             : (nomination.dischargeDate = data['Discharge Date']);
           nomination.representativeEmailAddress =
             data['Representative Email Address'];
@@ -109,6 +105,8 @@ const ApplicationForm = (props) => {
             nomination.representativeSpanishRequested = false;
           }
           newActiveNomination = nomination;
+          console.log('this is new nomination data');
+          console.dir(newActiveNomination);
         }
         return nomination;
       });
