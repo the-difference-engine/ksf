@@ -2,6 +2,8 @@ const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
+
+let previewState = false;
 const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL;
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 const formmasterEmail = 'formmaster@keepswimmingfoundation.org';
@@ -25,15 +27,24 @@ transporter.verify((error, success) => {
   if (error) {
     console.log(error);
   } else {
+    // previewEmails();
+    // console.log(preview, 'hereee');
     console.log('All works fine, congratz!');
   }
 });
 
+const changeState = (toggleStatus) => {
+  console.log('original Previestate before change', previewState);
+  console.log('changeState in the mailer file', toggleStatus);
+  previewState = toggleStatus;
+  console.log('previewState:', previewState);
+};
+
 const email = new emailTemplate({
   transport: transporter,
   send: true,
-  //send status will eventually need to be updated to true
-  preview: false,
+  // send status will eventually need to be updated to true
+  preview: { previewState },
 });
 
 function sendDeclineEmail(nomination) {
@@ -60,16 +71,16 @@ function sendSurveyEmail(nomination) {
     attachments: './survey/header.jpg',
     message: {
       from: adminEmail,
-      to: nomination.representativeEmailAddress
+      to: nomination.representativeEmailAddress,
     },
     locals: {
       name: nomination.representativeName,
       patientName: nomination.patientName,
       email: nomination.representativeEmailAddress,
-      imgUrl
-    }
+      imgUrl,
+    },
   }).catch((err) => console.log(err))
-  .then(() => console.log('email has been sent!'));
+    .then(() => console.log('email has been sent!'));
 }
 
 function verifyHcEmail(nomination) {
@@ -104,10 +115,10 @@ function sendHIPAAEmail(nomination) {
           name: nomination.representativeName,
           imgUrl,
         },
-      }
+      },
     )
     .then(() => console.log('email has been sent!'))
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 }
 
 function sendSurveyReminder(emailAddress, fullName) {
@@ -122,11 +133,11 @@ function sendSurveyReminder(emailAddress, fullName) {
         },
         locals: {
           name: fullName,
-          imgUrl
-        }
-      }
+          imgUrl,
+        },
+      },
     )
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 }
 
 function sendHIPAAReminder(emailAddress, fullName) {
@@ -141,31 +152,31 @@ function sendHIPAAReminder(emailAddress, fullName) {
         },
         locals: {
           name: fullName,
-          imgUrl
-        }
-      }
+          imgUrl,
+        },
+      },
     )
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 }
 
 function sendHIPAAProvider(nomination) {
   email
-  .send(
-    {
-      template: 'hipaaProvider',
-      message: {
-        from: infoEmail,
-        replyTo: infoEmail,
-        to: nomination.providerEmailAddress,
+    .send(
+      {
+        template: 'hipaaProvider',
+        message: {
+          from: infoEmail,
+          replyTo: infoEmail,
+          to: nomination.providerEmailAddress,
+        },
+        locals: {
+          name: nomination.patientName,
+          providerName: nomination.providerName,
+        },
       },
-      locals: {
-        name: nomination.patientName,
-        providerName: nomination.providerName,
-      }
-    }
-  )
-  .then(console.log('the provider has been notified about HIPAA Authorization process'))
-  .catch((err) => console.log(err))
+    )
+    .then(console.log('the provider has been notified about HIPAA Authorization process'))
+    .catch((err) => console.log(err));
 }
 
 function sendSurveySocialWorker(nomination) {
@@ -183,7 +194,7 @@ function sendSurveySocialWorker(nomination) {
       },
     })
     .then(() => console.log('email has been sent!'))
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 }
 
 module.exports = {
@@ -194,5 +205,6 @@ module.exports = {
   sendHIPAAReminder,
   sendSurveyReminder,
   sendHIPAAProvider,
-  sendSurveySocialWorker
+  sendSurveySocialWorker,
+  changeState,
 };

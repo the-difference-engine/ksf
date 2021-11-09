@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { useContext } from 'react';
 import { ActiveNominationContext } from '../../../utils/context/ActiveNominationContext';
 
+
 Modal.setAppElement('#root');
 
 const MarkStageAsCompleteModal = ({ advanceStage, currentStatus }) => {

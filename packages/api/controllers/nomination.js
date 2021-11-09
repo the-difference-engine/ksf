@@ -3,7 +3,8 @@ const sequelize = require('sequelize');
 const { ValidationError, where } = require('sequelize');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
-const { sendSurveyEmail } = require('../helper/mailer');
+const { sendSurveyEmail, changeState } = require('../helper/mailer');
+
 const { createFolder } = require('../helper/googleDrive');
 const states = require('../../app/node_modules/us-state-codes/index');
 const { sendDeclineEmail } = require('../helper/mailer');
@@ -312,6 +313,20 @@ const getAwaitingHipaa = async () => {
   return applicationsAwait;
 };
 
+const previewEmails = async (req, res) => {
+  try {
+    console.log('hello', req.body.data);
+    changeState(req.body.data);
+    // return res.data;
+  } catch {
+    console.log('I made it but I failed');
+  }
+};
+
+// const previewEmails = () => {
+//   console.log('Yo');
+// };
+
 module.exports = {
   getNominationById,
   findAllNominations,
@@ -324,4 +339,5 @@ module.exports = {
   updateActiveNomData,
   checkNominations,
   resendEmail,
+  previewEmails,
 };

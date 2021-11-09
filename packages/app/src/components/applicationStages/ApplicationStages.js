@@ -4,6 +4,7 @@ import { ActiveNominationContext } from '../../utils/context/ActiveNominationCon
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
 import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
+import Toggle from './ToggleEmailPreviews'
 
 const ApplicationStages = () => {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
@@ -14,7 +15,7 @@ const ApplicationStages = () => {
   useEffect(() => {
     setCurrentStatus(capitalize(activeNomination.status));
   }, [activeNomination, currentStatus]);
- 
+
   function createStatusEl() {
     const activeStatusIndex = status.indexOf(currentStatus);
     if (activeNomination.status === "Declined") {
@@ -41,7 +42,7 @@ const ApplicationStages = () => {
             ) : null}
           </>
         ));
-    } 
+    }
   }
 
   function advanceStage(value) {
@@ -74,10 +75,14 @@ const ApplicationStages = () => {
           {currentStatus === "Declined" ?  <div className="status-bar red-arrow-steps clearfix">{createStatusEl()}</div> : <div className="status-bar arrow-steps clearfix">{createStatusEl()}</div>}
           <div className="button-next-wrapper">
           <div className="modal-wrapper">
+            <div className="right-hand-buttons">
             <MarkStageAsComplete
               advanceStage={advanceStage}
               currentStatus={currentStatus}
             />
+            {process.env.NODE_ENV === "development" ? (<Toggle/>) : (null)}
+            </div>
+
             </div>
           </div>
         </div>

@@ -39,6 +39,9 @@ const nominationsAPI = {
     return axios.post(`${cleanURL(API_URL)}/api/nominations/${id}`, {
       recipient, emailType
     });
+  },
+  toggleEmailPreviews: function(toggleStatus) {
+    return axios.post(`${cleanURL(API_URL)}/api/previewemails`, {data: toggleStatus});
   }
 };
 

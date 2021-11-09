@@ -13,6 +13,7 @@ router.post('/api/nominations', nominationController.createNomination);
 router.put('/api/nominations/:id', nominationController.updateNomination);
 router.get('/api/checknominations', nominationController.checkNominations);
 router.post('/api/nominations/:id', nominationController.resendEmail);
+router.post('/api/previewemails', nominationController.previewEmails);
 
 // adding in new route for updateActiveNomination
 router.patch('/api/nominations/:id', nominationController.updateActiveNomData);
