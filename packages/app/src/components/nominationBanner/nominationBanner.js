@@ -127,6 +127,16 @@ const NominationBanner = (props) => {
                     </button>
                   </span>
                 )}
+              {activeNomination.driveFolderId != '' &&
+                activeNomination.status != 'received' &&
+                activeNomination.status != 'Awaiting HIPAA' && (
+                  <span>
+                    <h1 style={{ color: 'red' }}>
+                      There was a problem creating a google drive folder. Please
+                      recreate the nomination.
+                    </h1>
+                  </span>
+                )}
             </div>
             {declineAppModalVisible && (
               <DeclineAppModal

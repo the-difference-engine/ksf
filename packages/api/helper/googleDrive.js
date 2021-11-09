@@ -19,12 +19,17 @@ async function createFolder(applicationName, nomination) {
     parents: [parentFolderId],
     mimeType: 'application/vnd.google-apps.folder',
   };
-  let err,
-    response = await drive.files.create({
-      resource: fileMetadata,
-      fields: 'id',
-    });
-  return response.data.id;
+
+  let response = await drive.files.create({
+    resource: fileMetadata,
+    fields: 'id',
+  });
+  if (response.status != 200) {
+    console.log(response.code);
+    console.log(response.errors[0].message);
+  } else {
+    return response.data.id;
+  }
 }
 
 module.exports = { createFolder };
