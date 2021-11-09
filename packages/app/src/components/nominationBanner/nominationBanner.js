@@ -118,7 +118,7 @@ const NominationBanner = (props) => {
                   <span>
                     <button
                       onClick={() => {
-                        openWindow(`${activeNomination.driveFolderId}`);
+                        openWindow(activeNomination.driveFolderId);
                       }}
                       className={`docs-btn banner-buttons ${styles.docsBtn}`}
                     >
