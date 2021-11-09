@@ -57,8 +57,8 @@ const ApplicationStages = (props) => {
     let index = status.indexOf(value);
     if (index >= 0 && index < status.length - 1) {
       let nextItem = status[index + 1];
-      activeNomination.status = nextItem;
       setCurrentStatus(nextItem);
+      setActiveNomination({ ...activeNomination, status: nextItem });
       return updateNom(nextItem);
     }
   }

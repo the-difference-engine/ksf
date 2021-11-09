@@ -5,6 +5,8 @@ import nominationsAPI from '../../utils/API/nominationsAPI';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import EditButton from './EditButton';
 import SaveButton from './SaveButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 import ResendEmailBtn from './resendEmailBtn.js';
 import ResendEmailModal from './resendEmailModal.js';
 import DeclineAppModal from './declineAppModal.js';
@@ -28,11 +30,12 @@ const NominationBanner = (props) => {
   const state = states.getStateCodeByStateName(props.nomination.hospitalState);
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
-    ? props.nomination.amountRequestedCents
+    ? (props.nomination.amountRequestedCents / 100)
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
   const hipaaDate = props.nomination.hipaaTimestamp;
+  const hipaaReminder = props.nomination.awaitingHipaaReminderEmailTimestamp;
   const valid = new Date(hipaaDate).getTime() > 0;
   let newDate = new Date(hipaaDate);
   const time = newDate.toLocaleDateString();
@@ -49,6 +52,11 @@ const NominationBanner = (props) => {
 
   const openWindow = (val) => {
     window.open(`https://drive.google.com/drive/folders/${val}`);
+  };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const toggleModalState = () => {
+    setIsModalVisible((isModalVisible) => !isModalVisible);
   };
 
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
@@ -73,6 +81,8 @@ const NominationBanner = (props) => {
       console.log(error);
     }
   }
+
+  let hipaaStatus = hipaaReminder ? 'Reminder Email Sent   ' : 'Awaiting';
 
   const [resendEmailModalVisible, setResendEmailModalVisible] = useState(false);
 
@@ -103,6 +113,41 @@ const NominationBanner = (props) => {
                 </h1>
               </span>
             </div>
+            <div className="column name">
+              <button
+                disabled={activeNomination.status == 'Declined'}
+                className=" decline-button"
+                onClick={toggleModalState}
+              >
+                Decline Application
+              </button>
+            </div>
+            {isModalVisible && (
+              <div className="modal-background">
+                <div className="modal-container">
+                  <button className="exit-button" onClick={toggleModalState}>
+                    &times;
+                  </button>
+                  <h3 className="modal-text">
+                    Do you want to decline the application?
+                  </h3>
+                  <div className="modal-buttons">
+                    <button
+                      className="button-yes"
+                      onClick={() => {
+                        declineApplication();
+                        toggleModalState();
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button className="button-no" onClick={toggleModalState}>
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="column name">
               <DeclineAppBtn
                 status={activeNomination.status}
@@ -192,7 +237,22 @@ const NominationBanner = (props) => {
               <p className="secondary-dark">HIPAA Date</p>
               <span>
                 <h2 className="body-font">
-                  <strong>{valid ? finalDate : 'Awaiting HIPAA'}</strong>
+                  <strong>
+                    {valid ? (
+                      finalDate
+                    ) : (
+                      <>
+                        {hipaaStatus}
+                        {hipaaReminder && hipaaStatus ? (
+                          <FontAwesomeIcon
+                            className="red"
+                            color="red"
+                            icon={faClock}
+                          />
+                        ) : null}
+                      </>
+                    )}
+                  </strong>
                 </h2>
               </span>
             </div>

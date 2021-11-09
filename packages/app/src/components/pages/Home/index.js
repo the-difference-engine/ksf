@@ -5,6 +5,7 @@ import SyncNominations from '../../syncNominations/syncNominations';
 import { NominationsDataContext } from '../../../utils/context/NominationsContext';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import CheckNominations from '../../CheckNominations/checkNominations';
 import {
   faExternalLinkAlt,
   faChevronCircleDown,
@@ -46,7 +47,11 @@ const Home = () => {
         <SearchBar />
       </div>
       <div>
-        <SyncNominations />
+        <div>
+          <div>
+            <SyncNominations /> <CheckNominations />
+          </div>
+        </div>
         <NewFilesToReview />
       </div>
       <div>
