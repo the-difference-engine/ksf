@@ -11,7 +11,6 @@ import ResendEmailBtn from './resendEmailBtn.js';
 import ResendEmailModal from './resendEmailModal.js';
 import DeclineAppModal from './declineAppModal.js';
 import DeclineAppBtn from './declineAppBtn.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
 
 const states = require('us-state-codes');
@@ -172,7 +171,7 @@ const NominationBanner = (props) => {
                     </button>
                   </span>
                 )}
-              {activeNomination.driveFolderId != '' &&
+              {activeNomination.driveFolderId == '' &&
                 activeNomination.status != 'received' &&
                 activeNomination.status != 'Awaiting HIPAA' && (
                   <span>

@@ -138,8 +138,6 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
-          // TODO: MAKE INTO SINGLE UPDATE QUERY
-          await nomination.update({ awaitingHipaaTimestamp: Date() });
           const lastName = nomination.patientName
             ? nomination.patientName.split(' ')[1]
             : '';
@@ -151,6 +149,7 @@ const updateNomination = async (req, res) => {
           let driveFolderId = await createFolder(applicationName, nomination);
 
           await nomination.update({
+            awaitingHipaaTimestamp: Date(),
             driveFolderId: driveFolderId,
           });
 
