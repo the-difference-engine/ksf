@@ -105,8 +105,6 @@ const ApplicationForm = (props) => {
             nomination.representativeSpanishRequested = false;
           }
           newActiveNomination = nomination;
-          console.log('this is new nomination data');
-          console.dir(newActiveNomination);
         }
         return nomination;
       });

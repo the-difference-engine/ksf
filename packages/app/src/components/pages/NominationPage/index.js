@@ -47,11 +47,7 @@ const NominationPage = ({
 
   const admissionDateObject = new Date(admissionDate);
 
-  console.log(`this is admissionDateObject + ${admissionDateObject}`);
-
   const dischargeDateObject = new Date(dischargeDate);
-
-  console.log(`this is dischargeDateObject + ${dischargeDateObject}`);
 
   const diffDays =
     Math.round(
