@@ -10,7 +10,7 @@ const { verifyHcEmail } = require('./mailer.js');
 
 module.exports = function gsheetToDB() {
   const client = new google.auth.JWT(clientEmail, null, privateKey, scopes);
-  let domains;
+  
   client.authorize(function (err, tokens) {
     if (err) {
       console.log(err);

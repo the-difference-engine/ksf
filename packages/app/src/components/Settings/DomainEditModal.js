@@ -14,7 +14,7 @@ const DomainEditModal = ({
     return (
         <div className={showHideClassName}>
             <div className="edit-modal-main">
-                {domain ? (
+                {domain &&
                     <>
                         <h1 className="settings__heading">Edit Domain</h1>
                         <div className="settings__form">
@@ -45,7 +45,7 @@ const DomainEditModal = ({
                             </button>
                         </div>
                     </>
-                ) : null}
+                }
             </div>
         </div>
     )
