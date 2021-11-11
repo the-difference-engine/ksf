@@ -125,7 +125,15 @@ const updateNomination = async (req, res) => {
     if (nomination.changed('status')) {
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
-          await nomination.update({ declinedTimestamp: Date() });
+          const grant = await db.GrantCycle.findOne({
+            where: { isActive: true },
+          });
+
+          nomination.update({
+            readyForBoardReviewTimestamp: Date(),
+            declinedTimestamp: Date(),
+            grantCycleId: grant.id,
+          });
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
