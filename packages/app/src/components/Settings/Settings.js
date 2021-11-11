@@ -4,7 +4,7 @@ import BlockedDomainsTab from './BlockedDomainsTab';
 import GrantCycleTab from './GrantCycleTab';
 
 const Settings = (props) => {
-
+ 
   const [currentTab, setCurrentTab] = useState('Grant Cycle');
 
   const changeTabView = (e) => {

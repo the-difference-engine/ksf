@@ -266,6 +266,20 @@ button.icon-right-arrow-disabled:hover {
   font-weight: 600;
 }
 
+a.red-link {
+  color: red;
+  font-weight: 400;
+}
+
+a.red-link:visited {
+  color: red;
+}
+
+a.red-link:hover {
+  color: red;
+  font-weight: 600;
+}
+
 /* Edit Modal css */
 
 .edit-modal {

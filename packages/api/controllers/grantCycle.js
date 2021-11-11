@@ -1,5 +1,7 @@
 const { Op, ValidationError } = require('sequelize');
 const db = require('../models');
+const { QueryTypes } = require('sequelize');
+const { DateTime } = require('luxon');
 
 const create = async (req, res) => {
   try {
@@ -28,14 +30,38 @@ const update = async (req, res) => {
       return res.status(404).send('Grant does not exist for the given ID');
     }
 
-    const previousActiveGrant = await db.GrantCycle.update(
-      { isActive: false },
-      { where: { isActive: true } }
-    );
+    if (isActive) {
+      const previousActiveGrant = await db.GrantCycle.update(
+        { isActive: false },
+        {
+          where: {
+            [Op.and]: [
+              {
+                isActive: true,
+              },
+              {
+                id: { [Op.ne]: id },
+              },
+            ],
+          },
+        }
+      );
+    }
+
+    const openedOnDate = new Date(openedOn);
+
+    const closedOnDate = new Date(closedOn);
+
+    openedOnDayLater = DateTime.fromJSDate(openedOnDate);
+    closedOnDayLater = DateTime.fromJSDate(closedOnDate);
+
+    let openedOnDateString = openedOnDayLater.toISO();
+
+    let closedOnDateString = closedOnDayLater.toISO();
 
     if (name) grant.name = name;
-    if (openedOn) grant.openedOn = openedOn;
-    if (closedOn) grant.closedOn = closedOn;
+    if (openedOn) grant.openedOn = openedOnDateString;
+    if (closedOn) grant.closedOn = closedOnDateString;
     grant.isActive = isActive;
     await grant.save();
     return res.status(200).send(grant);
@@ -59,29 +85,44 @@ const findAll = async (req, res) => {
       const result = await Promise.all(
         grants.map(async (g) => {
           try {
+            const openedOn = new Date(g.openedOn);
+
+            const closedOn = new Date(g.closedOn);
+
+            openedOnDayLater = DateTime.fromJSDate(openedOn);
+            closedOnDayLater = DateTime.fromJSDate(closedOn).plus({ days: 1 });
+
+            let openedOnDateString = openedOnDayLater.toISODate();
+
+            let closedOnDateString = closedOnDayLater.toISODate();
+
             const nominations = await db.Nomination.findAll({
               where: {
                 [Op.and]: [
                   {
                     readyForBoardReviewTimestamp: {
-                      [Op.between]: [g.openedOn, g.closedOn],
+                      [Op.between]: [openedOnDateString, closedOnDateString],
                     },
-                    status: {
-                      [Op.eq]: 'Ready for Board Review',
-                    },
+                    [Op.or]: [
+                      { status: 'Ready for Board Review' },
+                      { status: 'Declined' },
+                    ],
                   },
                 ],
               },
               order: [['readyForBoardReviewTimestamp', 'DESC']],
             });
+
             g.nominations = nominations;
           } catch (error) {
+            console.log(error);
             return res.status(404).send(error);
           }
         })
       );
       return res.status(200).json(grants);
     }
+
     return res.status(404).send('No grants found');
   } catch (error) {
     console.error('500 error at GET /grantcycle/findall', error);
