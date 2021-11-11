@@ -45,23 +45,14 @@ const NominationPage = ({
   } = activeNomination;
   const hospitalAddress = `${hospitalCity}, ${hospitalState}, ${hospitalZipCode}`;
 
-  const admissionDateObjectReversedOffset = new Date(admissionDate);
-  admissionDateObjectReversedOffset.setTime(
-    admissionDateObjectReversedOffset.getTime() +
-      admissionDateObjectReversedOffset.getTimezoneOffset() * 60 * 1000
-  );
+  const admissionDateObject = new Date(admissionDate);
 
-  const dischargeDateObjectReversedOffset = new Date(dischargeDate);
-  dischargeDateObjectReversedOffset.setTime(
-    dischargeDateObjectReversedOffset.getTime() +
-      dischargeDateObjectReversedOffset.getTimezoneOffset() * 60 * 1000
-  );
+  const dischargeDateObject = new Date(dischargeDate);
 
   const diffDays =
     Math.round(
       Math.abs(
-        (admissionDateObjectReversedOffset -
-          dischargeDateObjectReversedOffset) /
+        (admissionDateObject - dischargeDateObject) /
           /* hours*minutes*seconds*milliseconds */
           (24 * 60 * 60 * 1000)
       )
@@ -81,8 +72,8 @@ const NominationPage = ({
     'Patient Name': `${activeNomination.patientName}`,
     'Patient Age': `${activeNomination.patientAge}`,
     'Diagnosis/case information': `${activeNomination.patientDiagnosis}`,
-    'Admission Date': admissionDateObjectReversedOffset,
-    'Discharge Date': dischargeDateObjectReversedOffset,
+    'Admission Date': admissionDateObject,
+    'Discharge Date': dischargeDateObject,
     'Hospitalized for at least 21 days?': `${diffDays}`,
   };
 
@@ -139,7 +130,7 @@ const NominationPage = ({
     <>
       {activeNomination ? (
         <div className="nomination-show-page">
-          <SearchBar nomination={activeNomination} />
+          <SearchBar />
           <NominationBanner
             mode={mode}
             revertMode={revertMode}

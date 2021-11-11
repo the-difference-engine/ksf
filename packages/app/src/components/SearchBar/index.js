@@ -10,7 +10,7 @@ import './style.css';
 
 SettingsModal.setAppElement('#root');
 
-const SearchBar = (props) => {
+const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
   const [showResults, setShowResults] = useState(false);
   const [settingsResults, setSettingsResults] = useState({});
