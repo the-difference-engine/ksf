@@ -59,7 +59,7 @@
   padding-right: 3rem;
   padding-top: 2rem;
   grid-area: main;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .settings__heading {

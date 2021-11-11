@@ -140,15 +140,20 @@ const BlockedDomainsTab = (props) => {
             Add Domain
           </button>
         </div>
-        {allDomains.map((domain) => (
-          <DomainItem
-            key={domain.id}
-            domain={domain}
-            onEdit={handleDomainEdit}
-            onDelete={handleDomainDeleteModal}
-          />
-        ))
-        }
+        <div className="settings__table-wrapper">
+          <table className="setting__table">
+            <tbody className="settings__tbody example">
+              {allDomains.map((domain) => (
+                <DomainItem
+                  key={domain.id}
+                  domain={domain}
+                  onEdit={handleDomainEdit}
+                  onDelete={handleDomainDeleteModal}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </main>
     </>
   );
