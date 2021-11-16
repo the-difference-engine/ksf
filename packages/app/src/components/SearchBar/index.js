@@ -28,13 +28,7 @@ const SearchBar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function getNumOfAttachments(nominations) {
-    let counter = 0;
-    nominations.forEach((nomination) => {
-      if(nomination.attachments) {
-        counter++
-      }
-    })
-    return counter;
+    return nominations.filter(nomination => nomination.attachments).length
   }
 
   useEffect(() => {

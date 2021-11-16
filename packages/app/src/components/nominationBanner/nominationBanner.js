@@ -58,10 +58,8 @@ const NominationBanner = (props) => {
       (declineAppModalVisible) => !declineAppModalVisible
     );
   };
-  function attachmentsHandled() {
-    const value = false;
-    activeNomination.attachments = value;
-    setActiveNomination({...activeNomination})
+  function hasAttachments() {
+    setActiveNomination({...activeNomination, attachments: false})
     return resetAttachments(activeNomination)
   }
   function declineApplication() {
@@ -166,7 +164,7 @@ const NominationBanner = (props) => {
                 toggleHandleAttachmentModalState={
                   toggleHandleAttachmentModalState
                 }
-                attachmentsHandled={attachmentsHandled}
+                attachmentsHandled={hasAttachments}
               />
             )}
             <div className="column name">

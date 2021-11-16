@@ -62,8 +62,7 @@ const createNomination = async (req, res) => {
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
     const hasProviderBeenValidated = nominations.some(
-      (nom) =>
-        nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
+      (nom) => nom.providerEmailAddress === providerEmailAddress && nom.emailValidated,
     );
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
@@ -86,7 +85,7 @@ const resendEmail = async (req, res) => {
     });
     console.log(
       `email sent to: ${recipient.replace('-', ' ')}`,
-      `email type sent: ${emailType}`
+      `email type sent: ${emailType}`,
     );
     if (recipient === 'family-member' && emailType === 'hipaa') {
       sendHIPAAEmail(nomination);
@@ -134,7 +133,7 @@ const updateNomination = async (req, res) => {
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
-            error
+            error,
           );
         } finally {
           sendDeclineEmail(nomination);
@@ -147,7 +146,7 @@ const updateNomination = async (req, res) => {
             ? nomination.patientName.split(' ')[1]
             : '';
           const state = states.getStateCodeByStateName(
-            nomination.hospitalState
+            nomination.hospitalState,
           );
           const applicationName = `${lastName}-${state}`;
           createFolder(applicationName);
@@ -235,7 +234,7 @@ const updateActiveNomData = async (req, res) => {
       { ...req.body },
       {
         where: { id },
-      }
+      },
     );
     return res.status(200).json({ message: 'updated' });
   } catch (err) {
@@ -252,11 +251,11 @@ async function searchAndSend(status, query) {
       case 'HIPAA Verified':
         sendSurveyReminder(
           nomination.representativeEmailAddress,
-          nomination.representativeName
+          nomination.representativeName,
         );
         sendSurveyReminder(
           nomination.providerEmailAddress,
-          nomination.providerName
+          nomination.providerName,
         );
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
@@ -267,18 +266,18 @@ async function searchAndSend(status, query) {
       case 'Awaiting HIPAA':
         sendHIPAAReminder(
           nomination.representativeEmailAddress,
-          nomination.representativeName
+          nomination.representativeName,
         );
         sendHIPAAReminder(
           nomination.providerEmailAddress,
-          nomination.providerName
+          nomination.providerName,
         );
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
           console.log(
             'Unable to update record awaiting hipaa reminder timestamp',
-            err
+            err,
           );
         }
         break;
@@ -288,16 +287,8 @@ async function searchAndSend(status, query) {
   }
 }
 const getAwaitingHipaa = async () => {
-<<<<<<< Updated upstream
   const nominations = await db.Nomination.findAll({ where: { status: 'Awaiting HIPAA' } });
   const applicationsAwait = {};
-=======
-  const nominations = await db.Nomination.findAll({
-    where: { status: 'Awaiting HIPAA' },
-  });
-  const applicationsAwait = [];
-
->>>>>>> Stashed changes
   if (nominations.length) {
     nominations.forEach((nomination) => {
       const lastName = nomination.patientName
@@ -327,9 +318,9 @@ const getVerifiedNoms = async () => {
   }
   return applicationsAwait;
 };
-const updateDashboard = async (trueFalse, nominationId) => {
+const updateDashboard = async (hasAttachment, nominationId) => {
   const nomination = await db.Nomination.findOne({ where: { id: nominationId } });
-  nomination.update({ attachments: trueFalse }).catch((err) => {
+  nomination.update({ attachments: hasAttachment }).catch((err) => {
     console.log('Nomination Not Found', err);
     return res.status(400);
   });
@@ -348,5 +339,4 @@ module.exports = {
   checkNominations,
   resendEmail,
   updateDashboard,
-  getVerifiedNoms,
 };

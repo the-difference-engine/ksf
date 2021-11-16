@@ -90,8 +90,8 @@ async function getNewDocs(auth) {
   }
 }
 const getNewAttachments = (nominations, gmail, query) => {
-  const nomNames = Object.keys(nominations);
-  nomNames.forEach((nomination) => query += `subject:'${nomination}'`);
+  const nomNamesArray = Object.keys(nominations);
+  nomNamesArray.forEach((nomination) => query += `subject:'${nomination}'`);
   query += 'AND is:unread';
   gmail.users.messages.list({
     userId: 'me',
@@ -103,7 +103,7 @@ const getNewAttachments = (nominations, gmail, query) => {
       console.log('no messages');
     } else if (messages.length) {
       const messageIds = [];
-      messagesAndAttachments(messages, messageIds, gmail, nomNames, nominations);
+      messagesAndAttachments(messages, messageIds, gmail, nomNamesArray, nominations);
     }
   });
 };
