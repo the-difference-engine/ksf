@@ -19,11 +19,12 @@ const EditModal = ({
 
   let openedOnInitial;
   let closedOnInitial;
+
   grantCycle
-    ? (openedOnInitial = new Date(grantCycle.openedOnInitial))
+    ? (openedOnInitial = new Date(grantCycle.openedOn))
     : (openedOnInitial = new Date());
   grantCycle
-    ? (closedOnInitial = grantCycle.closedOnInitial)
+    ? (closedOnInitial = new Date(grantCycle.closedOn))
     : (closedOnInitial = new Date());
 
   const [openedOn, setOpenedOn] = useState(openedOnInitial);
@@ -31,16 +32,10 @@ const EditModal = ({
 
   useEffect(() => {
     if (grantCycle) {
-      let openedOnDate = new Date(grantCycle.openedOn);
-      let closedOnDate = new Date(grantCycle.closedOn);
-      openedOnDate.setTime(
-        openedOnDate.getTime() + openedOnDate.getTimezoneOffset() * 60 * 1000
-      );
-      setOpenedOn(openedOnDate);
-      closedOnDate.setTime(
-        closedOnDate.getTime() + closedOnDate.getTimezoneOffset() * 60 * 1000
-      );
-      setClosedOn(closedOnDate);
+      const openedOnDateReversedOffset = new Date(grantCycle.openedOn);
+      const closedOnDateReversedOffset = new Date(grantCycle.closedOn);
+      setOpenedOn(openedOnDateReversedOffset);
+      setClosedOn(closedOnDateReversedOffset);
     }
   }, [grantCycle]);
 
