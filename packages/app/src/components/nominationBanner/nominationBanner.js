@@ -91,10 +91,6 @@ const NominationBanner = (props) => {
     );
   };
 
-  useEffect(() => {
-    console.log(activeNomination);
-  });
-
   return (
     <div className="nomination-banner-container">
       <div className="row" id={styles.rowOverride}>
