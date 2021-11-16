@@ -38,7 +38,7 @@ const email = new emailTemplate({
 
 
 const recEmail = (nomEmail) => {
-  if(process.env.RECIPIENT_EMAIL !== null && process.env.RECIPIENT_EMAIL.length > 0){
+  if(process.env.RECIPIENT_EMAIL != null && process.env.RECIPIENT_EMAIL.length > 0){
     return process.env.RECIPIENT_EMAIL
   }else{
     return nomEmail
