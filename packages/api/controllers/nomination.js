@@ -132,7 +132,7 @@ const updateNomination = async (req, res) => {
           nomination.update({
             readyForBoardReviewTimestamp: Date(),
             declinedTimestamp: Date(),
-            grantCycleId: grant.id,
+            grantCycleId: grant.id, // TODO @geoff7709 and @somersbmatthews : figure out what this is supposed to do. Two buttons could be using the same backend route and function .
           });
         } catch (error) {
           console.log(
