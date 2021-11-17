@@ -7,6 +7,7 @@ const ToggleActiveGrantCycle = ({
   activeGrantCycle,
   setActiveGrantCycle,
   showEditModal,
+  getGrantCycles,
 }) => {
   async function updateActiveGrantCycle() {
     grantCycle.isActive = true;
@@ -17,9 +18,10 @@ const ToggleActiveGrantCycle = ({
     }
   }
 
-  const handleToggle = (e) => {
+  const handleToggle = async (e) => {
     if (e.target.checked) {
-      updateActiveGrantCycle();
+      await updateActiveGrantCycle();
+      await getGrantCycles();
       setActiveGrantCycle(grantCycle);
     }
   };
