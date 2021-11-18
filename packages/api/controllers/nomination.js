@@ -130,9 +130,10 @@ const updateNomination = async (req, res) => {
           });
 
           nomination.update({
-            readyForBoardReviewTimestamp: Date(),
+            // readyForBoardReviewTimestamp: Date(), // this commented code fixes #326 and we're not sure what it
+            // was supposed to do originally, so we should keep it commented and not fully delete it.
             declinedTimestamp: Date(),
-            grantCycleId: grant.id, // TODO @geoff7709 and @somersbmatthews : figure out what this is supposed to do. Two buttons could be using the same backend route and function .
+            grantCycleId: grant.id,
           });
         } catch (error) {
           console.log(
