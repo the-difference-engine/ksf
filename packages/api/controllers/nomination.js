@@ -201,6 +201,7 @@ const syncNominations = async (req, res) => {
 const checkNominations = async (req, res) => {
   try {
     const authorizeUrl = getGmailAuthUrl();
+    console.log(authorizeUrl, 'authorizeURL');
     return res.status(200).json({ authorizeUrl });
   } catch (error) {
     console.log('error:', error);
