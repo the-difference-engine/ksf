@@ -85,7 +85,7 @@ async function getNewDocs(auth) {
     getNewAttachments(nomNames, gmail, query);
   }
   const receipts = Object.entries(receiptNoms);
-  if (receipts) {
+  if (receipts.length) {
     getNewAttachments(receiptNoms, gmail, query);
   }
 }
