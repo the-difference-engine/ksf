@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 
 const states = require('us-state-codes');
 
+
 /**
  * Creates and renders the active nomination banner.
  *
@@ -52,7 +53,6 @@ const NominationBanner = (props) => {
   const openWindow = (val) => {
     window.open(`https://drive.google.com/drive/folders/${val}`);
   };
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModalState = () => {
     setIsModalVisible((isModalVisible) => !isModalVisible);
@@ -144,6 +144,7 @@ const NominationBanner = (props) => {
               </div>
             )}
             <div className="column name">
+
               <DeclineAppBtn
                 status={activeNomination.status}
                 toggleDeclineAppModalState={toggleDeclineAppModalState}
@@ -271,3 +272,4 @@ const NominationBanner = (props) => {
 };
 
 export default NominationBanner;
+

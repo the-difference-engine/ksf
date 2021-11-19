@@ -14,6 +14,7 @@ const { sendHIPAAEmail } = require('../helper/mailer');
 const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
+
 const getGmailAuthUrl = require('../helper/gmailAPI');
 
 const NOMINATION_STATUS = {
@@ -86,7 +87,7 @@ const resendEmail = async (req, res) => {
     });
     console.log(
       `email sent to: ${recipient.replace('-', ' ')}`,
-      `email type sent: ${emailType}`
+      `email type sent: ${emailType}`,
     );
     if (recipient === 'family-member' && emailType === 'hipaa') {
       sendHIPAAEmail(nomination);
@@ -137,7 +138,7 @@ const updateNomination = async (req, res) => {
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
-            error
+            error,
           );
         } finally {
           sendDeclineEmail(nomination);
@@ -150,7 +151,7 @@ const updateNomination = async (req, res) => {
             ? nomination.patientName.split(' ')[1]
             : '';
           const state = states.getStateCodeByStateName(
-            nomination.hospitalState
+            nomination.hospitalState,
           );
 
           const applicationName = `${lastName}-${state}`;
@@ -266,7 +267,7 @@ const updateActiveNomData = async (req, res) => {
       { ...req.body },
       {
         where: { id },
-      }
+      },
     );
     return res.status(200).json({ message: 'updated' });
   } catch (err) {
@@ -284,11 +285,11 @@ async function searchAndSend(status, query) {
       case 'HIPAA Verified':
         sendSurveyReminder(
           nomination.representativeEmailAddress,
-          nomination.representativeName
+          nomination.representativeName,
         );
         sendSurveyReminder(
           nomination.providerEmailAddress,
-          nomination.providerName
+          nomination.providerName,
         );
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
@@ -299,18 +300,18 @@ async function searchAndSend(status, query) {
       case 'Awaiting HIPAA':
         sendHIPAAReminder(
           nomination.representativeEmailAddress,
-          nomination.representativeName
+          nomination.representativeName,
         );
         sendHIPAAReminder(
           nomination.providerEmailAddress,
-          nomination.providerName
+          nomination.providerName,
         );
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
           console.log(
             'Unable to update record awaiting hipaa reminder timestamp',
-            err
+            err,
           );
         }
         break;

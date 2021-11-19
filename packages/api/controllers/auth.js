@@ -164,7 +164,7 @@ const checkNominations = async (req, res) => {
     const oauth2Client = new google.auth.OAuth2(
       process.env.AUTH_CLIENT_ID,
       process.env.AUTH_CLIENT_SECRET,
-      credentials.installed.redirect_uris[0],
+      process.env.REDIRECT_URI,
     );
 
     google.options({ auth: oauth2Client });
