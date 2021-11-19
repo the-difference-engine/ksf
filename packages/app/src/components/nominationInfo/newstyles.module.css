@@ -71,6 +71,15 @@
   padding: 0 30px;
 }
 
+#docsBtn {
+  background-color: white;
+  color: var(--brand);
+  border-color: var(--light-background);
+  border-radius: 4rem;
+  padding: 0 30px;
+  margin-left: 10px;
+}
+
 #saveBtn {
   background-color: green;
   color: white;

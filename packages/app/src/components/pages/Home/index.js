@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import CheckNominations from '../../CheckNominations/checkNominations';
 import {
+  faExternalLinkAlt,
   faChevronCircleDown,
   faChevronCircleUp,
   faFileImage,
@@ -14,6 +15,7 @@ import {
   faCog,
   faTimes,
   faPencilAlt,
+  faTrashAlt,
   faArrowRight,
   faArrowLeft,
   faArrowUp,
@@ -21,6 +23,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import ApplicationViewByStages from './ApplicationViewByStages';
 library.add(
+  faExternalLinkAlt,
   fab,
   faChevronCircleDown,
   faChevronCircleUp,
@@ -29,6 +32,7 @@ library.add(
   faCog,
   faTimes,
   faPencilAlt,
+  faTrashAlt,
   faArrowRight,
   faArrowLeft,
   faArrowUp,

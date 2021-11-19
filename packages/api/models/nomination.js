@@ -2,16 +2,7 @@
 const { sendVerification } = require('../helper/mailer.js');
 const creds = require('../config/config.json').credentials;
 const { Model, Sequelize, DataTypes } = require('sequelize');
-const publicEmailDomains = [
-  'gmail.com',
-  'aol.com',
-  'outlook.com',
-  'zoho.com',
-  'mail.com',
-  'yahoo.com',
-  'protonmail.com',
-  'icloud.com',
-];
+let publicEmailDomains = [];
 
 module.exports = (sequelize, DataTypes) => {
   class Nomination extends Model {
@@ -142,38 +133,43 @@ module.exports = (sequelize, DataTypes) => {
       },
       awaitingHipaaTimestamp: {
         allowNull: true,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       readyForBoardReviewTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
-      }, 
+        allowNull: true,
+      },
       hipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       awaitingHipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       grantCycleId: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       declinedTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       grantRequestInfo: {
         type: DataTypes.TEXT,
-        allowNull: true
-      }
+        allowNull: true,
+      },
+      driveFolderId: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       hooks: {
-        beforeCreate: (nomination, option) => {
+        beforeCreate: async (nomination, option) => {
+          publicEmailDomains =  await sequelize.models.Domain.findAll();
           publicEmailDomains.forEach(domain => {
-            if (nomination.providerEmailAddress.includes(domain)) {
+            if (nomination.providerEmailAddress.includes(domain.dataValues.name)) {
               nomination.publicEmailDomain = true;
             }
           });

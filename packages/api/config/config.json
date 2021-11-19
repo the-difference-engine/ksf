@@ -4,14 +4,20 @@
     "password": "postgres",
     "database": "postgres",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "dialectOptions": {
+      "useUTC": false
+    },
+    "timezone": "America/Chicago"
   },
+
   "test": {
     "username": "postgres",
     "password": "postgres",
     "database": "postgres",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone": "America/Chicago"
   },
   "production": {
     "dialect": "postgres",
@@ -20,7 +26,9 @@
       "ssl": {
         "require": true,
         "rejectUnauthorized": false
-      }
-    }
+      },
+      "useUTC": false
+    },
+    "timezone": "America/Chicago"
   }
 }

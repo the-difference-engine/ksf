@@ -2,6 +2,7 @@ const { Router } = require('express');
 const nominationController = require('../controllers/nomination.js');
 const userController = require('../controllers/user.js');
 const grantCycleController = require('../controllers/grantCycle.js');
+const domainController = require('../controllers/domain.js');
 const gmailAuthController = require('../controllers/auth.js');
 
 const router = Router();
@@ -28,6 +29,14 @@ router.post('/api/user', userController.create);
 router.get('/api/grantcycles', grantCycleController.findAll);
 router.get('/api/grantcycles/findactive', grantCycleController.findActive);
 router.post('/api/grantcycles', grantCycleController.create);
+router.get('/api/grantcycles/findbyname/:name', grantCycleController.findByName);
+router.put('/api/grantcycles/:id', grantCycleController.update);
+
+// domain endpoint
+router.post('/api/createDomain', domainController.create);
+router.get('/api/domains', domainController.findAll);
+router.put('/api/domains/:id', domainController.update);
+router.delete('/api/domains/:id', domainController.deleteDomain);
 router.get(
   '/api/grantcycles/findbyname/:name',
   grantCycleController.findByName,
