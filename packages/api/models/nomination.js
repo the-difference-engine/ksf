@@ -2,16 +2,7 @@
 const { sendVerification } = require('../helper/mailer.js');
 const creds = require('../config/config.json').credentials;
 const { Model, Sequelize, DataTypes } = require('sequelize');
-const publicEmailDomains = [
-  'gmail.com',
-  'aol.com',
-  'outlook.com',
-  'zoho.com',
-  'mail.com',
-  'yahoo.com',
-  'protonmail.com',
-  'icloud.com',
-];
+let publicEmailDomains = [];
 
 module.exports = (sequelize, DataTypes) => {
   class Nomination extends Model {
@@ -175,9 +166,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeCreate: (nomination, option) => {
-          publicEmailDomains.forEach((domain) => {
-            if (nomination.providerEmailAddress.includes(domain)) {
+        beforeCreate: async (nomination, option) => {
+          publicEmailDomains =  await sequelize.models.Domain.findAll();
+          publicEmailDomains.forEach(domain => {
+            if (nomination.providerEmailAddress.includes(domain.dataValues.name)) {
               nomination.publicEmailDomain = true;
             }
           });
