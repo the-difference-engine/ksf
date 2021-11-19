@@ -12,6 +12,11 @@
   width: 60px;
 }
 
+.svg-inline--fa.fa-lg {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
 /* Shared button class */
 
 .banner-buttons {
@@ -43,6 +48,10 @@
 /* Resend Email Button */
 
 .resend-email-btn {
+  background-color: #128b3e;
+  margin-left: 10px;
+}
+.docs-btn {
   background-color: #128b3e;
   margin-left: 10px;
 }

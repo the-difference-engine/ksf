@@ -4,7 +4,6 @@ const { Model, Sequelize, DataTypes } = require('sequelize');
 
 let publicEmailDomains = [];
 
-
 module.exports = (sequelize, DataTypes) => {
   class Nomination extends Model {
     static associate(models) {
@@ -164,12 +163,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      driveFolderId: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       hooks: {
         beforeCreate: async (nomination, option) => {
-          publicEmailDomains =  await sequelize.models.Domain.findAll();
-          publicEmailDomains.forEach(domain => {
+          publicEmailDomains = await sequelize.models.Domain.findAll();
+          publicEmailDomains.forEach((domain) => {
             if (nomination.providerEmailAddress.includes(domain.dataValues.name)) {
               nomination.publicEmailDomain = true;
             }

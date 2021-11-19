@@ -41,8 +41,6 @@ const SearchBar = () => {
   function findSearchResults(searchTerm) {
     let filteredNoms = [];
     if (NominationsData) {
-
-
       filteredNoms = NominationsData.filter((nomination) => {
         return [
           formatSearch(nomination.providerName),
@@ -120,6 +118,7 @@ const SearchBar = () => {
         ) : (
           <Settings onResultsClick={handleShowingResults} />
         )}
+
         <FontAwesomeIcon
           onClick={closeModal}
           icon="times"
