@@ -133,32 +133,36 @@ module.exports = (sequelize, DataTypes) => {
       },
       awaitingHipaaTimestamp: {
         allowNull: true,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       readyForBoardReviewTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
-      }, 
+        allowNull: true,
+      },
       hipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       awaitingHipaaReminderEmailTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       grantCycleId: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       declinedTimestamp: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
       },
       grantRequestInfo: {
         type: DataTypes.TEXT,
-        allowNull: true
-      }
+        allowNull: true,
+      },
+      driveFolderId: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       hooks: {

@@ -14,8 +14,6 @@ const { sendHIPAAEmail } = require('../helper/mailer');
 const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
-
-const { Op } = sequelize;
 const getGmailAuthUrl = require('../helper/gmailAPI');
 
 const NOMINATION_STATUS = {
@@ -115,13 +113,15 @@ const updateNomination = async (req, res) => {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    nomination.update({ status: req.body.status }).catch((err) => {
-      console.log('Nomination Not Found', err);
-      return res.status(400);
-    });
-    // can continue using additional conditional to use other email functions,
-    // depending on status of application
-    // current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
+    const response = nomination
+      .update({ status: req.body.status })
+      .catch((err) => {
+        console.log('Nomination Not Found', err);
+        return res.status(400);
+      });
+    //can continue using additional conditional to use other email functions,
+    //depending on status of application
+    //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
@@ -146,15 +146,26 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
-          nomination.update({ awaitingHipaaTimestamp: Date() });
           const lastName = nomination.patientName
             ? nomination.patientName.split(' ')[1]
             : '';
           const state = states.getStateCodeByStateName(
             nomination.hospitalState
           );
+
           const applicationName = `${lastName}-${state}`;
-          createFolder(applicationName);
+          let driveFolderId = await createFolder(applicationName, nomination);
+
+          await nomination.update({
+            awaitingHipaaTimestamp: Date(),
+            driveFolderId: driveFolderId,
+          });
+
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+
+          return res.status(200).json(updatedNomination);
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
@@ -165,7 +176,11 @@ const updateNomination = async (req, res) => {
 
       if (nomination.status === NOMINATION_STATUS.verified) {
         try {
-          nomination.update({ hipaaTimestamp: Date() });
+          await nomination.update({ hipaaTimestamp: Date() });
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+          return res.status(200).json(updatedNomination);
         } catch (err) {
           console.log('Nomination Not Found', err);
           return res.status(400);
@@ -185,6 +200,11 @@ const updateNomination = async (req, res) => {
             readyForBoardReviewTimestamp: Date(),
             grantCycleId: grant.id,
           });
+
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+          return res.status(200).json(updatedNomination);
         } catch (error) {
           console.log('Could not record readyForBoardReviewTimestamp ', error);
         }

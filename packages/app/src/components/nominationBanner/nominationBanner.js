@@ -1,6 +1,6 @@
 import styles from '../../components/nominationInfo/newstyles.module.css';
 import style from './style.css';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
 import EditButton from './EditButton';
@@ -11,9 +11,9 @@ import ResendEmailBtn from './resendEmailBtn.js';
 import ResendEmailModal from './resendEmailModal.js';
 import DeclineAppModal from './declineAppModal.js';
 import DeclineAppBtn from './declineAppBtn.js';
+import { useEffect } from 'react';
 
 const states = require('us-state-codes');
-
 
 /**
  * Creates and renders the active nomination banner.
@@ -47,11 +47,16 @@ const NominationBanner = (props) => {
     ActiveNominationContext
   );
 
+  const [showDocsButton, setShowDocsButton] = useState(false);
+
+  const openWindow = (val) => {
+    window.open(`https://drive.google.com/drive/folders/${val}`);
+  };
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModalState = () => {
     setIsModalVisible((isModalVisible) => !isModalVisible);
   };
-
 
   const [declineAppModalVisible, setDeclineAppModalVisible] = useState(false);
   const toggleDeclineAppModalState = () => {
@@ -138,7 +143,7 @@ const NominationBanner = (props) => {
                 </div>
               </div>
             )}
-              <div className="column name">
+            <div className="column name">
               <DeclineAppBtn
                 status={activeNomination.status}
                 toggleDeclineAppModalState={toggleDeclineAppModalState}
@@ -147,6 +152,31 @@ const NominationBanner = (props) => {
                 status={activeNomination.status}
                 toggleEmailModalState={toggleEmailModalState}
               />
+              {activeNomination.driveFolderId &&
+                activeNomination.status != 'received' &&
+                activeNomination.status != 'Awaiting HIPAA' && (
+                  <span>
+                    <button
+                      onClick={() => {
+                        openWindow(activeNomination.driveFolderId);
+                      }}
+                      className={`docs-btn banner-buttons ${styles.docsBtn}`}
+                    >
+                      <FontAwesomeIcon icon="external-link-alt" size="lg" />
+                      View Documents
+                    </button>
+                  </span>
+                )}
+              {activeNomination.driveFolderId == '' &&
+                activeNomination.status != 'received' &&
+                activeNomination.status != 'Awaiting HIPAA' && (
+                  <span>
+                    <h1 style={{ color: 'red' }}>
+                      There was a problem creating a google drive folder. Please
+                      recreate the nomination.
+                    </h1>
+                  </span>
+                )}
             </div>
             {declineAppModalVisible && (
               <DeclineAppModal
@@ -207,7 +237,7 @@ const NominationBanner = (props) => {
                       finalDate
                     ) : (
                       <>
-                      {hipaaStatus}
+                        {hipaaStatus}
                         {hipaaReminder && hipaaStatus ? (
                           <FontAwesomeIcon
                             className="red"
@@ -223,6 +253,7 @@ const NominationBanner = (props) => {
             </div>
           </div>
         </div>
+
         <div>
           {props.mode === 'view' ? (
             <EditButton handleHasBeenClicked={props.handleEditHasBeenClicked} />
@@ -239,6 +270,4 @@ const NominationBanner = (props) => {
   );
 };
 
-
 export default NominationBanner;
-
