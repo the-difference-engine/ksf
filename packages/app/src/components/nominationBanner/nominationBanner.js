@@ -27,12 +27,10 @@ const NominationBanner = (props) => {
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
     ? ((props.nomination.amountRequestedCents) / 100)
-    // .toFixed(2)
-    // .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    .toFixed(2)
+    .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
 
-
-  console.log(props.nomination.amountRequestedCents);
 
   const hipaaDate = props.nomination.hipaaTimestamp;
   const valid = new Date(hipaaDate).getTime() > 0;
