@@ -98,9 +98,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      attachments: {
-        type: Sequelize.BOOLEAN,
-      },
     });
   },
   down: async (queryInterface) => {
