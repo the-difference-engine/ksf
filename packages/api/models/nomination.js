@@ -1,7 +1,7 @@
-'use strict';
 const { sendVerification } = require('../helper/mailer.js');
 const creds = require('../config/config.json').credentials;
 const { Model, Sequelize, DataTypes } = require('sequelize');
+
 let publicEmailDomains = [];
 
 module.exports = (sequelize, DataTypes) => {
@@ -159,6 +159,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      attachments: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       driveFolderId: {
         type: DataTypes.TEXT,
         allowNull: true,
@@ -167,8 +171,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate: async (nomination, option) => {
-          publicEmailDomains =  await sequelize.models.Domain.findAll();
-          publicEmailDomains.forEach(domain => {
+          publicEmailDomains = await sequelize.models.Domain.findAll();
+          publicEmailDomains.forEach((domain) => {
             if (nomination.providerEmailAddress.includes(domain.dataValues.name)) {
               nomination.publicEmailDomain = true;
             }
@@ -178,7 +182,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Nomination',
       tableName: 'nominations',
-    }
+    },
   );
 
   return Nomination;

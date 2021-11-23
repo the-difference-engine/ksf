@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import SettingsModal from 'react-modal';
 import Settings from '../Settings/Settings';
 import GrantCycleNomsResults from '../Settings/GrantCycleNomsResults';
@@ -17,28 +18,37 @@ const SearchBar = () => {
   const [SearchResultData, setSearchResultData] = useContext(
     SearchResultDataContext
   );
-
-  const [NominationsData, setNominationsData] = useContext(
+  const [NominationsData] = useContext(
     NominationsDataContext
   );
+
+  const [counter, setCounter] = useState(0)
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [startEmpty, setStartEmpty] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  function getNumOfAttachments(nominations) {
+    return nominations.filter(nomination => nomination.attachments).length
+  }
+
+  useEffect(() => {
+    if(NominationsData) {
+      let count = getNumOfAttachments(NominationsData)
+      setCounter(count);
+    }
+  })
+
   function findSearchResults(searchTerm) {
     let filteredNoms = [];
-
     if (NominationsData) {
       filteredNoms = NominationsData.filter((nomination) => {
         return [
           formatSearch(nomination.providerName),
           formatSearch(nomination.patientName),
           formatSearch(nomination.nominationName),
-
           //  The Representative name(called Family Member name on the fronted)
           // is not included as one of columns in the search result. Therefore the is confusion when search results don't seem to match the search term.
           // Waiting to hear from Bill if the line in question (formatSearch(nomination.representativeName)) should stay or not
-
           formatSearch(nomination.representativeName),
         ].some((nom) => nom.includes(searchTerm));
       });
@@ -48,7 +58,6 @@ const SearchBar = () => {
         : setShowErrorMessage(false);
     }
   }
-
   function handleInputChange(e) {
     const { value } = e.target;
     if (value.length === 0) {
@@ -57,7 +66,6 @@ const SearchBar = () => {
     }
     setSearchTerm(formatSearch(value));
   }
-
   function handleSubmit(e) {
     e.preventDefault();
     setStartEmpty(false);
@@ -67,11 +75,9 @@ const SearchBar = () => {
       findSearchResults(searchTerm);
     }
   }
-
   function formatSearch(str) {
     return str.toLowerCase();
   }
-
   function searchResultRedirect() {
     if (!startEmpty) {
       if (SearchResultData.length === 1) {
@@ -83,23 +89,19 @@ const SearchBar = () => {
       }
     }
   }
-
   function closeModal() {
     setShowResults(false);
     setModalIsOpen(false);
   }
-
   function handleShowingResults(grantCycle) {
     if (grantCycle.nominations.length) {
       setShowResults(true);
       setSettingsResults(grantCycle);
     }
   }
-
   function handleGoBack() {
     setShowResults(false);
   }
-
   return (
     <>
       <SettingsModal
@@ -147,6 +149,16 @@ const SearchBar = () => {
           </form>
         </div>
         <div className="cog-container">
+          <div className="tooltip">
+            {counter >= 1 && <FontAwesomeIcon
+              onClick={() => setModalIsOpen(true)}
+              icon={faPaperclip}
+              className="cog-icon"
+              size="3x"
+            />}
+
+            <span className="tooltiptext">{`New Attachments: ${counter}`}</span>
+          </div>
           <FontAwesomeIcon
             onClick={() => setModalIsOpen(true)}
             icon="cog"
@@ -154,7 +166,6 @@ const SearchBar = () => {
             size="3x"
           />
         </div>
-
         <div data-id="error-message">
           {showErrorMessage ? <Redirect to="/searchresults" /> : null}
         </div>
@@ -163,5 +174,4 @@ const SearchBar = () => {
     </>
   );
 };
-
 export default SearchBar;
