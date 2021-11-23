@@ -26,10 +26,14 @@ const NominationBanner = (props) => {
   const state = states.getStateCodeByStateName(props.nomination.hospitalState);
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
-    ? (props.nomination.amountRequestedCents / 100)
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    ? ((props.nomination.amountRequestedCents) / 100)
+    // .toFixed(2)
+    // .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
+
+
+  console.log(props.nomination.amountRequestedCents);
+
   const hipaaDate = props.nomination.hipaaTimestamp;
   const valid = new Date(hipaaDate).getTime() > 0;
   let newDate = new Date(hipaaDate);
