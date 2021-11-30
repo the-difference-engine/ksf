@@ -35,6 +35,8 @@ const NominationBanner = (props) => {
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
+
+
   const hipaaDate = props.nomination.hipaaTimestamp;
   const hipaaReminder = props.nomination.awaitingHipaaReminderEmailTimestamp;
   const valid = new Date(hipaaDate).getTime() > 0;
@@ -340,5 +342,6 @@ const NominationBanner = (props) => {
     </div>
   );
 };
+
 export default NominationBanner;
 

@@ -63,9 +63,7 @@ module.exports = function gsheetToDB() {
             dischargeDate: nomination[32],
             patientDiagnosis: nomination[34],
             grantRequestInfo: nomination[35],
-            amountRequestedCents: parseInt(
-              parseFloat(nomination[37].replace(/\$/g, '')) * 100
-            ),
+            amountRequestedCents: parseFloat(nomination[37].replace("$", "").replace(",", "") ) * 100,
           },
         });
         if (array[1]) {
@@ -92,8 +90,8 @@ module.exports = function gsheetToDB() {
       } catch (error) {
         console.error(error);
       }
-    }
-
+    } 
+    });
     return nominations;
   }
 };
