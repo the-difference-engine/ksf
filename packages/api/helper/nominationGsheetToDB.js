@@ -10,7 +10,7 @@ const { verifyHcEmail } = require('./mailer.js');
 
 module.exports = function gsheetToDB() {
   const client = new google.auth.JWT(clientEmail, null, privateKey, scopes);
-  
+
   client.authorize(function (err, tokens) {
     if (err) {
       console.log(err);
@@ -77,6 +77,16 @@ module.exports = function gsheetToDB() {
           });
           if (nom === null) {
             verifyHcEmail(array[0].dataValues);
+            db.Nomination.update(
+              {
+                emailValidated: true,
+              },
+              {
+                where: {
+                  emailValidated: false,
+                },
+              }
+            );
           }
         }
       } catch (error) {
