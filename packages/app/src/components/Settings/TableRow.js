@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime } from 'luxon';
-import { formatDateString } from '../../utils/formatDateString';
 import ToggleActiveGrantCycle from './ToggleActiveGrantCycle';
 
 const TableRow = (props) => {
@@ -11,7 +10,8 @@ const TableRow = (props) => {
     onResultsClick,
     activeGrantCycle,
     setActiveGrantCycle,
-    showEditModal
+    showEditModal,
+    getGrantCycles,
   } = props;
 
   const timeDiff = (dateString) => {
@@ -21,10 +21,16 @@ const TableRow = (props) => {
     return date > now;
   };
 
+  const openedOn = new Date(grantCycle.openedOn);
+  const closedOn = new Date(grantCycle.closedOn);
+
+  let openedOnString = openedOn.toLocaleDateString();
+  let closedOnString = closedOn.toLocaleDateString();
+
   return (
     <tr>
       <td>
-        {formatDateString(grantCycle.openedOn)} &nbsp;&nbsp;
+        {openedOnString} &nbsp;&nbsp;
         {timeDiff(grantCycle.openedOn) ? (
           <FontAwesomeIcon
             onClick={() => onEdit(grantCycle)}
@@ -36,7 +42,7 @@ const TableRow = (props) => {
         )}
       </td>
       <td>
-        {formatDateString(grantCycle.closedOn)} &nbsp;&nbsp;
+        {closedOnString} &nbsp;&nbsp;
         {timeDiff(grantCycle.closedOn) ? (
           <FontAwesomeIcon
             onClick={() => onEdit(grantCycle)}
@@ -65,6 +71,7 @@ const TableRow = (props) => {
           activeGrantCycle={activeGrantCycle}
           setActiveGrantCycle={setActiveGrantCycle}
           showEditModal={showEditModal}
+          getGrantCycles={getGrantCycles}
         />
       </td>
     </tr>

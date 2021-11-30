@@ -11,6 +11,13 @@ const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
     return `${lastName}-${state}`;
   };
 
+  const redLinkHelper = (nomination) => {
+    if (nomination.status === 'Declined') {
+      return 'red-link';
+    }
+    return '';
+  };
+
   return (
     <div className="settings__container">
       <header className="settings__header">
@@ -34,7 +41,7 @@ const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
               <th>Application Name</th>
               <th>HP Name</th>
               <th>Family Member Name</th>
-              <th>Received Date</th>
+              <th>Submission Date</th>
             </tr>
           </thead>
           <tbody>
@@ -42,7 +49,7 @@ const GrantCycleNomsResults = ({ results: grantCycle, onClick }) => {
               <tr key={n.id}>
                 <td>
                   <Link
-                    className="settings__results-link"
+                    className={`settings__results-link ${redLinkHelper(n)}`}
                     target={'_blank'}
                     to={`/nomination/${n.id}`}
                   >
