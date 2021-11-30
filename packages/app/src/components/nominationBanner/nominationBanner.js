@@ -30,8 +30,8 @@ const NominationBanner = (props) => {
   const nominationName = `${lastName}-${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
     ? (props.nomination.amountRequestedCents / 100)
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
   const hipaaDate = props.nomination.hipaaTimestamp;
   const hipaaReminder = props.nomination.awaitingHipaaReminderEmailTimestamp;
@@ -104,13 +104,10 @@ const NominationBanner = (props) => {
               </span>
             </div>
             <div className="column name">
-              <button
-                disabled={activeNomination.status == 'Declined'}
-                className=" decline-button"
-                onClick={toggleModalState}
-              >
-                Decline Application
-              </button>
+              <DeclineAppBtn
+                status={activeNomination.status}
+                toggleDeclineAppModalState={toggleDeclineAppModalState}
+              />
             </div>
             {isModalVisible && (
               <div className="modal-background">
@@ -138,11 +135,8 @@ const NominationBanner = (props) => {
                 </div>
               </div>
             )}
-              <div className="column name">
-              <DeclineAppBtn
-                status={activeNomination.status}
-                toggleDeclineAppModalState={toggleDeclineAppModalState}
-              />
+            <div className="column name">
+
               <ResendEmailBtn
                 status={activeNomination.status}
                 toggleEmailModalState={toggleEmailModalState}
@@ -207,7 +201,7 @@ const NominationBanner = (props) => {
                       finalDate
                     ) : (
                       <>
-                      {hipaaStatus}
+                        {hipaaStatus}
                         {hipaaReminder && hipaaStatus ? (
                           <FontAwesomeIcon
                             className="red"
