@@ -28,13 +28,13 @@ const NominationPage = ({
     if (NominationsData) {
       NominationsData.forEach((nomination) => {
         if (nomination.id === id) {
-          return setActiveNomination(nomination);
+          setActiveNomination(nomination);
         } else {
           return setError('Nomination does not exist');
         }
       });
     }
-  });
+  }, [NominationsData]);
 
   const {
     hospitalCity,
