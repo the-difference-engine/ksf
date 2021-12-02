@@ -1,6 +1,7 @@
 const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize');
 const { ValidationError, where } = require('sequelize');
+const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer');
 const { createFolder } = require('../helper/googleDrive');
@@ -13,8 +14,8 @@ const { sendHIPAAEmail } = require('../helper/mailer');
 const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
-const jwt = require('jsonwebtoken');
-const Op = sequelize.Op;
+
+const getGmailAuthUrl = require('../helper/gmailAPI');
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -24,7 +25,6 @@ const NOMINATION_STATUS = {
   board_review: 'Ready for Board Review',
   declined: 'Declined',
 };
-
 const getNominationById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -60,11 +60,10 @@ const createNomination = async (req, res) => {
     const { providerEmailAddress } = req.body;
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
-    const hasProviderBeenValidated = nominations.some((nom) => {
-      return (
+    const hasProviderBeenValidated = nominations.some(
+      (nom) =>
         nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
-      );
-    });
+    );
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
     }
@@ -77,7 +76,6 @@ const createNomination = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
-
 const resendEmail = async (req, res) => {
   const { id } = req.params;
   const { recipient, emailType } = req.body;
@@ -87,7 +85,7 @@ const resendEmail = async (req, res) => {
     });
     console.log(
       `email sent to: ${recipient.replace('-', ' ')}`,
-      `email type sent: ${emailType}`
+      `email type sent: ${emailType}`,
     );
     if (recipient === 'family-member' && emailType === 'hipaa') {
       sendHIPAAEmail(nomination);
@@ -107,45 +105,64 @@ const resendEmail = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
-
 const updateNomination = async (req, res) => {
   const { id } = req.params;
   try {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-    nomination.update({ status: req.body.status }).catch((err) => {
-      console.log('Nomination Not Found', err);
-      return res.status(400);
-    });
+    const response = nomination
+      .update({ status: req.body.status })
+      .catch((err) => {
+        console.log('Nomination Not Found', err);
+        return res.status(400);
+      });
     //can continue using additional conditional to use other email functions,
     //depending on status of application
     //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
-          nomination.update({ declinedTimestamp: Date() });
+          const grant = await db.GrantCycle.findOne({
+            where: { isActive: true },
+          });
+
+          nomination.update({
+            readyForBoardReviewTimestamp: Date(),
+            declinedTimestamp: Date(),
+            grantCycleId: grant.id,
+          });
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
-            error
+            error,
           );
         } finally {
           sendDeclineEmail(nomination);
         }
       }
-
       if (nomination.status === NOMINATION_STATUS.awaiting) {
         try {
-          nomination.update({ awaitingHipaaTimestamp: Date() });
           const lastName = nomination.patientName
             ? nomination.patientName.split(' ')[1]
             : '';
           const state = states.getStateCodeByStateName(
-            nomination.hospitalState
+            nomination.hospitalState,
           );
+
           const applicationName = `${lastName}-${state}`;
-          createFolder(applicationName);
+          let driveFolderId = await createFolder(applicationName, nomination);
+
+          await nomination.update({
+            awaitingHipaaTimestamp: Date(),
+            driveFolderId: driveFolderId,
+          });
+
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+
+          return res.status(200).json(updatedNomination);
         } catch (err) {
           console.error('Could not create a folder', err);
         } finally {
@@ -153,10 +170,13 @@ const updateNomination = async (req, res) => {
           sendHIPAAProvider(nomination);
         }
       }
-
       if (nomination.status === NOMINATION_STATUS.verified) {
         try {
-          nomination.update({ hipaaTimestamp: Date() });
+          await nomination.update({ hipaaTimestamp: Date() });
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+          return res.status(200).json(updatedNomination);
         } catch (err) {
           console.log('Nomination Not Found', err);
           return res.status(400);
@@ -165,17 +185,20 @@ const updateNomination = async (req, res) => {
           sendSurveySocialWorker(nomination);
         }
       }
-
       if (nomination.status === NOMINATION_STATUS.board_review) {
         try {
           const grant = await db.GrantCycle.findOne({
             where: { isActive: true },
           });
-
           nomination.update({
             readyForBoardReviewTimestamp: Date(),
             grantCycleId: grant.id,
           });
+
+          const updatedNomination = await db.Nomination.findOne({
+            where: { id },
+          });
+          return res.status(200).json(updatedNomination);
         } catch (error) {
           console.log('Could not record readyForBoardReviewTimestamp ', error);
         }
@@ -197,6 +220,15 @@ const syncNominations = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+const checkNominations = async (req, res) => {
+  try {
+    const authorizeUrl = getGmailAuthUrl();
+    return res.status(200).json({ authorizeUrl });
+  } catch (error) {
+    console.log('error:', error);
+    return res.status(400).json({ error: error.message });
+  }
+};
 const emailVerification = async (req, res) => {
   try {
     const { token } = req.params;
@@ -214,40 +246,38 @@ const emailVerification = async (req, res) => {
  * @param {*} req - updated props data object
  * @param {*} res - response code
  */
-
 const updateActiveNomData = async (req, res) => {
   const { id } = req.params;
   try {
     const nomination = await db.Nomination.findOne({
       where: { id },
     });
-
     await nomination.update(
       { ...req.body },
       {
         where: { id },
-      }
+      },
     );
     return res.status(200).json({ message: 'updated' });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
 };
-
 async function searchAndSend(status, query) {
   const nominations = await db.Nomination.findAll(query);
   let nomination;
+  const ids = [];
   for (let i = 0; i < nominations.length; i++) {
     nomination = nominations[i];
     switch (status) {
       case 'HIPAA Verified':
         sendSurveyReminder(
           nomination.representativeEmailAddress,
-          nomination.representativeName
+          nomination.representativeName,
         );
         sendSurveyReminder(
           nomination.providerEmailAddress,
-          nomination.providerName
+          nomination.providerName,
         );
         try {
           nomination.update({ hipaaReminderEmailTimestamp: Date() });
@@ -258,18 +288,18 @@ async function searchAndSend(status, query) {
       case 'Awaiting HIPAA':
         sendHIPAAReminder(
           nomination.representativeEmailAddress,
-          nomination.representativeName
+          nomination.representativeName,
         );
         sendHIPAAReminder(
           nomination.providerEmailAddress,
-          nomination.providerName
+          nomination.providerName,
         );
         try {
           nomination.update({ awaitingHipaaReminderEmailTimestamp: Date() });
         } catch (err) {
           console.log(
             'Unable to update record awaiting hipaa reminder timestamp',
-            err
+            err,
           );
         }
         break;
@@ -278,14 +308,55 @@ async function searchAndSend(status, query) {
     }
   }
 }
+const getAwaitingHipaa = async () => {
+  const nominations = await db.Nomination.findAll({ where: { status: 'Awaiting HIPAA' } });
+  const applicationsAwait = {};
+  if (nominations.length) {
+    nominations.forEach((nomination) => {
+      const lastName = nomination.patientName
+        ? nomination.patientName.split(' ')[1]
+        : '';
+      const state = states.getStateCodeByStateName(nomination.hospitalState);
+      const applicationName = `${lastName}-${state}`;
+      applicationsAwait[applicationName] = nomination.id;
+    });
+  }
+  return applicationsAwait;
+};
+const getVerifiedNoms = async () => {
+  const nominations = await db.Nomination.findAll({ where: { status: { [Op.or]: ['HIPAA Verified', 'Document Review', 'Ready for Board Review'] } } });
+  const applicationsAwait = {};
+  if (nominations.length) {
+    nominations.forEach((nomination) => {
+      const lastName = nomination.patientName
+        ? nomination.patientName.split(' ')[1]
+        : '';
+      const state = states.getStateCodeByStateName(nomination.hospitalState);
+      const applicationName = `${lastName}-${state}`;
+      applicationsAwait[applicationName] = nomination.id;
+    });
+  }
+  return applicationsAwait;
+};
+const updateDashboard = async (hasAttachment, nominationId) => {
+  const nomination = await db.Nomination.findOne({ where: { id: nominationId } });
+  nomination.update({ attachments: hasAttachment }).catch((err) => {
+    console.log('Nomination Not Found', err);
+    return res.status(400);
+  });
+};
 module.exports = {
   getNominationById,
   findAllNominations,
   createNomination,
   updateNomination,
   syncNominations,
-  updateActiveNomData,
   emailVerification,
   searchAndSend,
+  getAwaitingHipaa,
+  getVerifiedNoms,
+  updateActiveNomData,
+  checkNominations,
   resendEmail,
+  updateDashboard,
 };

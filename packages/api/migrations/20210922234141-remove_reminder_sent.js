@@ -8,7 +8,7 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     await queryInterface.addColumn('nominations', 'reminderSent', {
       type: Sequelize.BOOLEAN,
-      defaultValue: false
-    })
-  }
+      defaultValue: false,
+    });
+  },
 };
