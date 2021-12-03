@@ -12,7 +12,7 @@ const ApplicationViewByStages = () => {
   const { sortedNoms, requestSort, sortConfig } = useSort(NominationsData);
   
   function renderOptionList() {
-    const statuses = ['HIPAA Verified', 'Document Review', 'Ready for Board Review'];
+    const statuses = ['Awaiting HIPAA','HIPAA Verified', 'Document Review', 'Ready for Board Review'];
     return statuses.map((status, index) => (
       <option key={index} selected={status === currentlyViewing} value={status}>
         {status}
