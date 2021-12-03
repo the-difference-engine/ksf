@@ -131,8 +131,7 @@ const updateNomination = async (req, res) => {
 
           if (nomination.dataValues.readyForBoardReviewTimestamp == 'null') {
             nomination.update({
-              readyForBoardReviewTimestamp: Date(), // this commented code fixes #326 and we're not sure what it
-              // was supposed to do originally, so we should keep it commented and not fully delete it.
+              readyForBoardReviewTimestamp: Date(),
               declinedTimestamp: Date(),
               grantCycleId: grant.id,
             })
