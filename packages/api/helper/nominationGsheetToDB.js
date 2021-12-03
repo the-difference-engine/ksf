@@ -10,7 +10,7 @@ const { verifyHcEmail } = require('./mailer.js');
 
 module.exports = function gsheetToDB() {
   const client = new google.auth.JWT(clientEmail, null, privateKey, scopes);
-  
+
   client.authorize(function (err, tokens) {
     if (err) {
       console.log(err);
@@ -38,9 +38,9 @@ module.exports = function gsheetToDB() {
 
     let nominations = data.data.values;
 
-    nominations.slice(1).forEach((nomination) => {
+    for (nomination of nominations.slice(1)) {
       try {
-        db.Nomination.findOrCreate({
+        let array = await db.Nomination.findOrCreate({
           where: {
             dateReceived: nomination[0],
             providerName: nomination[10],
@@ -63,21 +63,41 @@ module.exports = function gsheetToDB() {
             dischargeDate: nomination[32],
             patientDiagnosis: nomination[34],
             grantRequestInfo: nomination[35],
-            amountRequestedCents: parseFloat(nomination[37].replace("$", "").replace(",", "") ) * 100,
+            amountRequestedCents: parseInt(
+              parseFloat(nomination[37].replace(/\$/g, '')) * 100
+            ),
           },
-        }).then((array) => {
-          //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements 
-          //the first element is the nomination instance object that contains the dataValues among other things  
-          //the second element is a boolean that represents whether a nomination was created
-          if (array[1]) {
-            verifyHcEmail(array[0].dataValues)
+        });
+        //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements 
+        //the first element is the nomination instance object that contains the dataValues among other things  
+        //the second element is a boolean that represents whether a nomination was created
+        if (array[1]) {
+          let nom = await db.Nomination.findOne({
+            where: {
+              emailValidated: true,
+              providerEmailAddress: nomination[12],
+            },
+          });
+          if (nom === null) {
+            verifyHcEmail(array[0].dataValues);
           }
-        })
+          if (nom) {
+            db.Nomination.update(
+              {
+                emailValidated: true,
+              },
+              {
+                where: {
+                  id: array[0].dataValues.id,
+                },
+              }
+            );
+          }
+        }
       } catch (error) {
         console.error(error);
       }
-      
-    });
+    }
 
     return nominations;
   }
