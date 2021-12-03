@@ -123,7 +123,6 @@ const messagesAndAttachments = (messages, messageIds, gmail, nomNames, nominatio
         const { headers } = res.data.payload;
         for (let i = 0; i < headers.length; i++) {
           if (headers[i].name === 'Subject') {
-            console.log(headers[i].name);
             const confirmedResults = confirmAwaiting(headers[i].value, nomNames);
             if (confirmedResults) {
               nomName = confirmedResults;

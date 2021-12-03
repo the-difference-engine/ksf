@@ -14,7 +14,6 @@ export const NominationsDataProvider = (props) => {
   const nomName = (n) => {
     const lastName = n.patientName ? n.patientName.split(' ')[1] : '';
     const geoState = states.getStateCodeByStateName(n.hospitalState);
-    // const state = n.hospitalState;
     const city = n.hospitalCity;
     return `${lastName}, ${city}, ${geoState}`;
   };
