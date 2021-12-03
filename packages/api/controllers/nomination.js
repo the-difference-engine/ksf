@@ -129,7 +129,7 @@ const updateNomination = async (req, res) => {
             where: { isActive: true },
           });
 
-          if (nomination.dataValues.readyForBoardReviewTimestamp == 'null') {
+          if (nomination.dataValues.readyForBoardReviewTimestamp == null) {
             nomination.update({
               readyForBoardReviewTimestamp: Date(),
               declinedTimestamp: Date(),
