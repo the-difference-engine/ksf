@@ -8,6 +8,7 @@ const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 const formmasterEmail = 'formmaster@keepswimmingfoundation.org';
 const infoEmail = 'Keep Swimming Foundation <info@keepswimmingfoundation.org>';
 const previewStatus = process.env.PREVIEW_EMAILS ? JSON.parse(process.env.PREVIEW_EMAILS) : false;
+const states = require('../../app/node_modules/us-state-codes/index');
 
 const transport = {
   port: 587,
@@ -78,8 +79,10 @@ function sendSurveyEmail(nomination) {
       name: nomination.representativeName,
       patientName: nomination.patientName,
       email: nomination.representativeEmailAddress,
-      lastName,
-      hospitalState: nomination.hospitalState,
+      lastName: lastName,
+      hospitalState:  states.getStateCodeByStateName(
+        nomination.hospitalState,
+      ),
       hospitalCity: nomination.hospitalCity,
       imgUrl,
     },
@@ -122,7 +125,9 @@ function sendHIPAAEmail(nomination) {
           name: nomination.representativeName,
           lastName,
           hospitalCity: nomination.hospitalCity,
-          hospitalState: nomination.hospitalState,
+          hospitalState: states.getStateCodeByStateName(
+            nomination.hospitalState,
+          ),
           imgUrl,
         },
       },

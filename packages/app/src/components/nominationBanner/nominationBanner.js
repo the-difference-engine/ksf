@@ -28,8 +28,9 @@ const NominationBanner = (props) => {
   const lastName = props.nomination.patientName
     ? props.nomination.patientName.split(' ')[1]
     : '';
+    const city = props.nomination.hospitalCity;
   const state = states.getStateCodeByStateName(props.nomination.hospitalState);
-  const nominationName = `${lastName}-${state}`;
+  const nominationName = `${lastName}, ${city}, ${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
     ? (props.nomination.amountRequestedCents / 100)
       .toFixed(2)
