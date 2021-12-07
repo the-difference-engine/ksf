@@ -1,6 +1,6 @@
 const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize');
-const { ValidationError, where } = require('sequelize');
+const { ValidationError, where, Op } = require('sequelize');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer');

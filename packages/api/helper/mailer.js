@@ -64,6 +64,9 @@ function sendDeclineEmail(nomination) {
 }
 
 function sendSurveyEmail(nomination) {
+  const lastName = nomination.patientName
+  ? nomination.patientName.split(' ')[1]
+  : '';
   email.send({
     template: 'survey',
     attachments: './survey/header.jpg',
@@ -75,6 +78,9 @@ function sendSurveyEmail(nomination) {
       name: nomination.representativeName,
       patientName: nomination.patientName,
       email: nomination.representativeEmailAddress,
+      lastName: lastName,
+      hospitalState: nomination.hospitalState,
+      hospitalCity: nomination.hospitalCity,
       imgUrl
     }
   }).catch((err) => console.log(err))
@@ -100,6 +106,9 @@ function verifyHcEmail(nomination) {
 }
 
 function sendHIPAAEmail(nomination) {
+  const lastName = nomination.patientName
+  ? nomination.patientName.split(' ')[1]
+  : '';
   email
     .send(
       {
@@ -111,6 +120,9 @@ function sendHIPAAEmail(nomination) {
         },
         locals: {
           name: nomination.representativeName,
+          lastName: lastName,
+          hospitalCity: nomination.hospitalCity,
+          hospitalState: nomination.hospitalState,
           imgUrl,
         },
       }
