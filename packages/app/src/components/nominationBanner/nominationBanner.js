@@ -290,6 +290,7 @@ const NominationBanner = (props) => {
                 </span>
               </div>
             )}
+            
             <div className="column hippa">
               <p className="secondary-dark">HIPAA Date</p>
               <span>
