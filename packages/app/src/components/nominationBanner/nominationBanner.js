@@ -220,13 +220,19 @@ const NominationBanner = (props) => {
                   <span>
                     <button
                       onClick={() => {
-                        openWindow(activeNomination.driveFolderId);
+                        // create if statement that triggers display of error
+                        if (props.nomination.attachments) {
+                          openWindow(activeNomination.driveFolderId);
+                        } else {
+                          console.log('false')
+                        }
                       }}
                       className={`docs-btn banner-buttons ${styles.docsBtn}`}
                     >
                       <FontAwesomeIcon icon="external-link-alt" size="lg" />
                       View Documents
                     </button>
+                    {/* create error message with display true/false funcrtion */}
                   </span>
                 )}
               {activeNomination.driveFolderId == '' &&
