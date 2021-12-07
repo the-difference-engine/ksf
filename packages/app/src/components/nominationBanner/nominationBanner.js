@@ -33,8 +33,8 @@ const NominationBanner = (props) => {
   const nominationName = `${lastName}, ${city}, ${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
     ? (props.nomination.amountRequestedCents / 100)
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
     : '';
 
 
@@ -178,6 +178,10 @@ const NominationBanner = (props) => {
               />
             )}
             <div className="column name">
+              <DeclineAppBtn
+                status={activeNomination.status}
+                toggleDeclineAppModalState={toggleDeclineAppModalState}
+              />
             </div>
             {isModalVisible && (
               <div className="modal-background">
@@ -206,11 +210,6 @@ const NominationBanner = (props) => {
               </div>
             )}
             <div className="column name">
-
-              <DeclineAppBtn
-                status={activeNomination.status}
-                toggleDeclineAppModalState={toggleDeclineAppModalState}
-              />
               <ResendEmailBtn
                 status={activeNomination.status}
                 toggleEmailModalState={toggleEmailModalState}

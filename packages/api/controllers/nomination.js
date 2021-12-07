@@ -127,11 +127,18 @@ const updateNomination = async (req, res) => {
             where: { isActive: true },
           });
 
-          nomination.update({
-            readyForBoardReviewTimestamp: Date(),
-            declinedTimestamp: Date(),
-            grantCycleId: grant.id,
-          });
+          if (nomination.dataValues.readyForBoardReviewTimestamp == null) {
+            nomination.update({
+              readyForBoardReviewTimestamp: Date(),
+              declinedTimestamp: Date(),
+              grantCycleId: grant.id,
+            })
+          } else {
+            nomination.update({
+              declinedTimestamp: Date(),
+              grantCycleId: grant.id,
+            })
+          };
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
