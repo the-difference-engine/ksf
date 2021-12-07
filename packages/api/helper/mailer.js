@@ -2,10 +2,12 @@ const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
+
 const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL;
 const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
 const formmasterEmail = 'formmaster@keepswimmingfoundation.org';
 const infoEmail = 'Keep Swimming Foundation <info@keepswimmingfoundation.org>';
+const previewStatus = process.env.PREVIEW_EMAILS ? JSON.parse(process.env.PREVIEW_EMAILS) : false;
 
 const transport = {
   port: 587,
@@ -32,18 +34,16 @@ transporter.verify((error, success) => {
 const email = new emailTemplate({
   transport: transporter,
   send: true,
-  //send status will eventually need to be updated to true
-  preview: false,
+  // send status will eventually need to be updated to true
+  preview: previewStatus,
 });
 
-
 const recEmail = (nomEmail) => {
-  if(process.env.RECIPIENT_EMAIL != null && process.env.RECIPIENT_EMAIL.length > 0){
-    return process.env.RECIPIENT_EMAIL
-  }else{
-    return nomEmail
+  if (process.env.RECIPIENT_EMAIL != null && process.env.RECIPIENT_EMAIL.length > 0) {
+    return process.env.RECIPIENT_EMAIL;
   }
-}
+  return nomEmail;
+};
 
 function sendDeclineEmail(nomination) {
   email
@@ -65,26 +65,26 @@ function sendDeclineEmail(nomination) {
 
 function sendSurveyEmail(nomination) {
   const lastName = nomination.patientName
-  ? nomination.patientName.split(' ')[1]
-  : '';
+    ? nomination.patientName.split(' ')[1]
+    : '';
   email.send({
     template: 'survey',
     attachments: './survey/header.jpg',
     message: {
       from: adminEmail,
-      to: recEmail(nomination.representativeEmailAddress)
+      to: recEmail(nomination.representativeEmailAddress),
     },
     locals: {
       name: nomination.representativeName,
       patientName: nomination.patientName,
       email: nomination.representativeEmailAddress,
-      lastName: lastName,
+      lastName,
       hospitalState: nomination.hospitalState,
       hospitalCity: nomination.hospitalCity,
-      imgUrl
-    }
+      imgUrl,
+    },
   }).catch((err) => console.log(err))
-  .then(() => console.log('email has been sent!'));
+    .then(() => console.log('email has been sent!'));
 }
 
 function verifyHcEmail(nomination) {
@@ -94,7 +94,7 @@ function verifyHcEmail(nomination) {
       template: 'verifyHcEmail',
       message: {
         from: formmasterEmail,
-        to: recEmail(nomination.providerEmailAddress)
+        to: recEmail(nomination.providerEmailAddress),
       },
       locals: {
         name: nomination.providerName,
@@ -107,8 +107,8 @@ function verifyHcEmail(nomination) {
 
 function sendHIPAAEmail(nomination) {
   const lastName = nomination.patientName
-  ? nomination.patientName.split(' ')[1]
-  : '';
+    ? nomination.patientName.split(' ')[1]
+    : '';
   email
     .send(
       {
@@ -120,15 +120,15 @@ function sendHIPAAEmail(nomination) {
         },
         locals: {
           name: nomination.representativeName,
-          lastName: lastName,
+          lastName,
           hospitalCity: nomination.hospitalCity,
           hospitalState: nomination.hospitalState,
           imgUrl,
         },
-      }
+      },
     )
     .then(() => console.log('email has been sent!'))
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 }
 
 function sendSurveyReminder(emailAddress, fullName) {
@@ -143,11 +143,11 @@ function sendSurveyReminder(emailAddress, fullName) {
         },
         locals: {
           name: fullName,
-          imgUrl
-        }
-      }
+          imgUrl,
+        },
+      },
     )
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 }
 
 function sendHIPAAReminder(emailAddress, fullName) {
@@ -162,31 +162,31 @@ function sendHIPAAReminder(emailAddress, fullName) {
         },
         locals: {
           name: fullName,
-          imgUrl
-        }
-      }
+          imgUrl,
+        },
+      },
     )
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 }
 
 function sendHIPAAProvider(nomination) {
   email
-  .send(
-    {
-      template: 'hipaaProvider',
-      message: {
-        from: infoEmail,
-        replyTo: infoEmail,
-        to: recEmail(nomination.providerEmailAddress),
+    .send(
+      {
+        template: 'hipaaProvider',
+        message: {
+          from: infoEmail,
+          replyTo: infoEmail,
+          to: recEmail(nomination.providerEmailAddress),
+        },
+        locals: {
+          name: nomination.patientName,
+          providerName: nomination.providerName,
+        },
       },
-      locals: {
-        name: nomination.patientName,
-        providerName: nomination.providerName,
-      }
-    }
-  )
-  .then(console.log('the provider has been notified about HIPAA Authorization process'))
-  .catch((err) => console.log(err))
+    )
+    .then(console.log('the provider has been notified about HIPAA Authorization process'))
+    .catch((err) => console.log(err));
 }
 
 function sendSurveySocialWorker(nomination) {
@@ -204,7 +204,7 @@ function sendSurveySocialWorker(nomination) {
       },
     })
     .then(() => console.log('email has been sent!'))
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 }
 
 module.exports = {
@@ -215,5 +215,5 @@ module.exports = {
   sendHIPAAReminder,
   sendSurveyReminder,
   sendHIPAAProvider,
-  sendSurveySocialWorker
+  sendSurveySocialWorker,
 };
