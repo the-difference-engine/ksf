@@ -53,7 +53,7 @@ const NominationBanner = (props) => {
   );
 
   const [showDocsButton, setShowDocsButton] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState('')
   const openWindow = (val) => {
     window.open(`https://drive.google.com/drive/folders/${val}`);
   };
@@ -224,7 +224,7 @@ const NominationBanner = (props) => {
                         if (props.nomination.attachments) {
                           openWindow(activeNomination.driveFolderId);
                         } else {
-                          console.log('false')
+                          setErrorMessage('There are no attachments for this nomination')
                         }
                       }}
                       className={`docs-btn banner-buttons ${styles.docsBtn}`}
@@ -232,7 +232,7 @@ const NominationBanner = (props) => {
                       <FontAwesomeIcon icon="external-link-alt" size="lg" />
                       View Documents
                     </button>
-                    {/* create error message with display true/false funcrtion */}
+                    {errorMessage && <div className='error'>{errorMessage}</div>}
                   </span>
                 )}
               {activeNomination.driveFolderId == '' &&

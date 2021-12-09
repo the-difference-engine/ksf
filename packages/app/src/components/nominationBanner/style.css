@@ -262,6 +262,10 @@ button[disabled].button-yes:hover {
   margin-bottom: 0px;
 }
 
+.error {
+  color: red;
+}
+
 .exit-button:hover {
   color: darkgray;
   background-color: transparent;
