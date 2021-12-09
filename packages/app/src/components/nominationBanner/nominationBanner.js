@@ -220,7 +220,6 @@ const NominationBanner = (props) => {
                   <span>
                     <button
                       onClick={() => {
-                        // create if statement that triggers display of error
                         if (props.nomination.attachments) {
                           openWindow(activeNomination.driveFolderId);
                         } else {

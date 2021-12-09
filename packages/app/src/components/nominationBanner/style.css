@@ -264,6 +264,7 @@ button[disabled].button-yes:hover {
 
 .error {
   color: red;
+  font-weight: bold;
 }
 
 .exit-button:hover {
