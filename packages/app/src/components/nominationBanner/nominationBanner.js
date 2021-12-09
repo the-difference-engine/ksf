@@ -28,14 +28,14 @@ const NominationBanner = (props) => {
   const lastName = props.nomination.patientName
     ? props.nomination.patientName.split(' ')[1]
     : '';
-    const city = props.nomination.hospitalCity;
   const state = states.getStateCodeByStateName(props.nomination.hospitalState);
+  const city = props.nomination.hospitalCity;
   const nominationName = `${lastName}, ${city}, ${state}`;
   const formattedAmount = props.nomination.amountRequestedCents
-  ? ((props.nomination.amountRequestedCents) / 100)
-  .toFixed(2)
-  .replace(/\d(?=(\d{3})+\.)/g, '$&,')
-  : '';
+    ? (props.nomination.amountRequestedCents / 100)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    : '';
 
 
   const hipaaDate = props.nomination.hipaaTimestamp;
@@ -69,8 +69,10 @@ const NominationBanner = (props) => {
     );
   };
   function hasAttachments() {
-    setActiveNomination({...activeNomination, attachments: false})
-    return resetAttachments(activeNomination)
+    let newNomination = activeNomination;
+    newNomination.attachments = false;
+    setActiveNomination(newNomination);
+    return resetAttachments(newNomination)
   }
   function declineApplication() {
     const declineStatus = 'Declined';
@@ -171,10 +173,11 @@ const NominationBanner = (props) => {
             )}
             {handleAttachmentModalVisible && (
               <HandleAttachmentModal
+                attachmentsHandled={hasAttachments}
                 toggleHandleAttachmentModalState={
                   toggleHandleAttachmentModalState
                 }
-                attachmentsHandled={hasAttachments}
+
               />
             )}
             <div className="column name">
@@ -279,19 +282,16 @@ const NominationBanner = (props) => {
                 </h2>
               </span>
             </div>
-            {!paperclip && (
-              <div className="column amount">
-                <p className="secondary-dark">Grant Amount Requested</p>
-                <span>
-                  <h2 className="body-font">
-                    <strong>
-                      {formattedAmount ? `$${formattedAmount}` : ''}
-                    </strong>
-                  </h2>
-                </span>
-              </div>
-            )}
-            
+            <div className="column amount">
+              <p className="secondary-dark">Grant Amount Requested</p>
+              <span>
+                <h2 className="body-font">
+                  <strong>
+                    {formattedAmount ? `$${formattedAmount}` : ''}
+                  </strong>
+                </h2>
+              </span>
+            </div>
             <div className="column hippa">
               <p className="secondary-dark">HIPAA Date</p>
               <span>
@@ -315,8 +315,21 @@ const NominationBanner = (props) => {
                 </h2>
               </span>
             </div>
+            {!paperclip && (
+              <div className="column amount">
+                <p className="secondary-dark">Grant Amount Requested</p>
+                <span>
+                  <h2 className="body-font">
+                    <strong>
+                      {formattedAmount ? `$${formattedAmount}` : ''}
+                    </strong>
+                  </h2>
+                </span>
+              </div>
+            )}
           </div>
         </div>
+
         <div>
           {props.mode === 'view' ? (
             <EditButton handleHasBeenClicked={props.handleEditHasBeenClicked} />
