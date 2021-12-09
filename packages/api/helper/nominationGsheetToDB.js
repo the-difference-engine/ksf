@@ -75,7 +75,7 @@ module.exports = function gsheetToDB() {
           let nom = await db.Nomination.findOne({
             where: {
               emailValidated: true,
-              providerEmailAddress: nomination[12],
+              providerEmailAddress: array[0].dataValues.providerEmailAddress,
             },
           });
           if (nom === null) {
