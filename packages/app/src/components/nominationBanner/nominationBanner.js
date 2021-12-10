@@ -69,8 +69,7 @@ const NominationBanner = (props) => {
     );
   };
   function hasAttachments() {
-    let newNomination = activeNomination;
-    newNomination.attachments = false;
+    let newNomination = {...activeNomination, attachments: false};
     setActiveNomination(newNomination);
     return resetAttachments(newNomination)
   }
