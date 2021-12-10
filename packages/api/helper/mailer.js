@@ -94,7 +94,6 @@ function verifyHcEmail(nomination) {
       template: 'verifyHcEmail',
       message: {
         from: nomsEmail,
-        replyTo: nomsEmail,
         to: recEmail(nomination.providerEmailAddress)
       },
       locals: {
@@ -116,7 +115,6 @@ function sendHIPAAEmail(nomination) {
         template: 'hipaa',
         message: {
           from: nomsEmail,
-          replyTo: nomsEmail,
           to: recEmail(nomination.representativeEmailAddress),
         },
         locals: {
@@ -141,7 +139,6 @@ function sendSurveyReminder(emailAddress, fullName) {
         template: 'surveyReminder',
         message: {
           from: nomsEmail,
-          replyTo: nomsEmail,
           to: recEmail(emailAddress),
         },
         locals: {
@@ -160,7 +157,6 @@ function sendHIPAAReminder(emailAddress, fullName) {
         template: 'hipaaReminder',
         message: {
           from: nomsEmail,
-          replyTo: nomsEmail,
           to: recEmail(emailAddress),
         },
         locals: {
@@ -178,8 +174,7 @@ function sendHIPAAProvider(nomination) {
     {
       template: 'hipaaProvider',
       message: {
-        from: nomsEmail,
-        replyTo: nomsEmail,
+        from: nomsEmail
         to: recEmail(nomination.providerEmailAddress),
         },
         locals: {
