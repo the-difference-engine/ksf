@@ -46,10 +46,7 @@ const getNominationById = async (req, res) => {
 const findAllNominations = async (req, res) => {
   try {
     const nominations = await db.Nomination.findAll({ where: { emailValidated: true } });
-    if (nominations.length) {
-      return res.status(200).json(nominations);
-    }
-    return res.status(404).send('No nominations found');
+    return res.status(200).json(nominations);
   } catch (error) {
     console.error('500 on findAllNominations', error);
     return res.status(500).json({ error: error.message });
