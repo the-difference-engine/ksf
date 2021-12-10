@@ -82,7 +82,7 @@ module.exports = function gsheetToDB() {
             verifyHcEmail(array[0].dataValues);
           }
           if (nom) {
-            db.Nomination.update(
+            await db.Nomination.update(
               {
                 emailValidated: true,
               },
