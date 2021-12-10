@@ -151,7 +151,6 @@ const SearchBar = () => {
         <div className="cog-container">
           <div className="tooltip">
             {counter >= 1 && <FontAwesomeIcon
-              onClick={() => setModalIsOpen(true)}
               icon={faPaperclip}
               className="cog-icon"
               size="3x"
