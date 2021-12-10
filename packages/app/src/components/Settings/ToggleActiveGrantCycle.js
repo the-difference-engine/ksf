@@ -21,7 +21,7 @@ const ToggleActiveGrantCycle = ({
   const handleToggle = async (e) => {
     if (e.target.checked) {
       await updateActiveGrantCycle();
-      await getGrantCycles();
+      await grantCycleAPI.getGrantCycles();
       setActiveGrantCycle(grantCycle);
     }
   };

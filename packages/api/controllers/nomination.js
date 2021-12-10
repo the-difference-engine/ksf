@@ -156,8 +156,9 @@ const updateNomination = async (req, res) => {
           const state = states.getStateCodeByStateName(
             nomination.hospitalState,
           );
+          const city = nomination.hospitalCity;
 
-          const applicationName = `${lastName}-${state}`;
+          const applicationName = `${lastName}, ${city}, ${state}`;
           let driveFolderId = await createFolder(applicationName, nomination);
 
           await nomination.update({
@@ -324,7 +325,8 @@ const getAwaitingHipaa = async () => {
         ? nomination.patientName.split(' ')[1]
         : '';
       const state = states.getStateCodeByStateName(nomination.hospitalState);
-      const applicationName = `${lastName}-${state}`;
+      const city = nomination.hospitalCity;
+      const applicationName = `${lastName}, ${city}, ${state}`;
       applicationsAwait[applicationName] = nomination.id;
     });
   }
@@ -339,7 +341,8 @@ const getVerifiedNoms = async () => {
         ? nomination.patientName.split(' ')[1]
         : '';
       const state = states.getStateCodeByStateName(nomination.hospitalState);
-      const applicationName = `${lastName}-${state}`;
+      const city = nomination.hospitalCity;
+      const applicationName = `${lastName}, ${city}, ${state}`;
       applicationsAwait[applicationName] = nomination.id;
     });
   }
