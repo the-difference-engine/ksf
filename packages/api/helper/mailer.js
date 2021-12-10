@@ -174,7 +174,7 @@ function sendHIPAAProvider(nomination) {
     {
       template: 'hipaaProvider',
       message: {
-        from: nomsEmail
+        from: nomsEmail,
         to: recEmail(nomination.providerEmailAddress),
         },
         locals: {
