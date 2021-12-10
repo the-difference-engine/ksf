@@ -16,7 +16,6 @@ import HandleAttachmentModal from './handleAttachmentModal';
 import { useEffect } from 'react';
 
 const states = require('us-state-codes');
-const paperclip = false;
 /**
  * Creates and renders the active nomination banner.
  *
@@ -286,18 +285,16 @@ const NominationBanner = (props) => {
                 </h2>
               </span>
             </div>
-            {!paperclip && (
-              <div className="column amount">
-                <p className="secondary-dark">Grant Amount Requested</p>
-                <span>
-                  <h2 className="body-font">
-                    <strong>
-                      {formattedAmount ? `$${formattedAmount}` : ''}
-                    </strong>
-                  </h2>
-                </span>
-              </div>
-            )}
+            <div className="column amount">
+              <p className="secondary-dark">Grant Amount Requested</p>
+              <span>
+                <h2 className="body-font">
+                  <strong>
+                    {formattedAmount ? `$${formattedAmount}` : ''}
+                  </strong>
+                </h2>
+              </span>
+            </div>
             <div className="column hippa">
               <p className="secondary-dark">HIPAA Date</p>
               <span>
