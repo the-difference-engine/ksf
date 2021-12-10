@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require('../../server');
 const db = require('../../models');
 const { generateToken } = require('../../helper/generateToken');
+
 const nominationData = {
   dateReceived: '12/01/01',
   providerName: 'Hugo Strange',
@@ -14,7 +15,7 @@ const nominationData = {
   hospitalCity: 'Gotham',
   hospitalState: 'New Jersey',
   hospitalZipCode: '07320',
-  emailValidated: false,
+  emailValidated: true,
   representativeName: 'Alfred Pennyworth',
   representativeEmailAddress: 'abeagle@dc.com',
   representativePhoneNumber: '222-222-2222',
@@ -39,7 +40,7 @@ describe('GET Nomination Endpoint', () => {
   });
   it('return a 404 when nomination does not exist', async () => {
     const res = await request(app).get(
-      '/api/nominations/00000000-0000-0000-0000-000000000000'
+      '/api/nominations/00000000-0000-0000-0000-000000000000',
     );
     expect(res.statusCode).toBe(404);
   });
@@ -52,14 +53,14 @@ describe('GET ALL Nomination Endpoint', () => {
   it('returns a 200 when nominations exist', async () => {
     const nomination = await db.Nomination.build(nominationData);
     await nomination.save();
-    const res = await request(app).get(`/api/nominations`);
+    const res = await request(app).get('/api/nominations');
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toEqual(1);
   });
-  it('return a 404 when no nomination exist', async () => {
+  it('return a 200 when no nomination exist', async () => {
     await db.Nomination.destroy({ where: {} });
     const res = await request(app).get('/api/nominations');
-    expect(res.statusCode).toBe(404);
+    expect(res.statusCode).toBe(200);
   });
 });
 describe('Create Nomination Endpoint', () => {
@@ -133,7 +134,7 @@ describe('PATCH - updates nomination with edited data', () => {
       .patch(`/api/nominations/${nomination.id}`)
       .send({ editedNomination })
       .expect(200)
-      .then(res => {
+      .then((res) => {
         request(app)
           .get(`/api/nominations/${nomination.id}`)
           .expect(newNomination);
@@ -158,7 +159,7 @@ describe('GET Email Validated Endpoint', () => {
 
   it('return a 400 when token is not valid', async () => {
     const res = await request(app).post(
-      '/api/confirmation/00000000-0000-0000-0000'
+      '/api/confirmation/00000000-0000-0000-0000',
     );
     expect(res.statusCode).toBe(400);
   });
