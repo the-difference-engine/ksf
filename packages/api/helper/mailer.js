@@ -2,11 +2,8 @@ const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const emailTemplate = require('email-templates');
 const { generateToken } = require('./generateToken');
-
 const imgUrl = process.env.IMG_BASE_URL ?? process.env.APP_URL;
-const adminEmail = 'Bill <bill@keepswimmingfoundation.org>';
-const formmasterEmail = 'formmaster@keepswimmingfoundation.org';
-const infoEmail = 'Keep Swimming Foundation <info@keepswimmingfoundation.org>';
+const nomsEmail = 'Keep Swimming Foundation <nomination@keepswimmingfoundation.org>';
 const previewStatus = process.env.PREVIEW_EMAILS ? JSON.parse(process.env.PREVIEW_EMAILS) : false;
 const states = require('../../app/node_modules/us-state-codes/index');
 
@@ -51,7 +48,7 @@ function sendDeclineEmail(nomination) {
     .send({
       template: 'decline',
       message: {
-        from: formmasterEmail,
+        from: nomsEmail,
         to: recEmail(nomination.representativeEmailAddress),
       },
       locals: {
@@ -72,8 +69,8 @@ function sendSurveyEmail(nomination) {
     template: 'survey',
     attachments: './survey/header.jpg',
     message: {
-      from: adminEmail,
-      to: recEmail(nomination.representativeEmailAddress),
+      from: nomsEmail,
+      to: recEmail(nomination.representativeEmailAddress)
     },
     locals: {
       name: nomination.representativeName,
@@ -96,8 +93,8 @@ function verifyHcEmail(nomination) {
     .send({
       template: 'verifyHcEmail',
       message: {
-        from: formmasterEmail,
-        to: recEmail(nomination.providerEmailAddress),
+        from: nomsEmail,
+        to: recEmail(nomination.providerEmailAddress)
       },
       locals: {
         name: nomination.providerName,
@@ -117,8 +114,7 @@ function sendHIPAAEmail(nomination) {
       {
         template: 'hipaa',
         message: {
-          from: infoEmail,
-          replyTo: infoEmail,
+          from: nomsEmail,
           to: recEmail(nomination.representativeEmailAddress),
         },
         locals: {
@@ -142,8 +138,7 @@ function sendSurveyReminder(emailAddress, fullName) {
       {
         template: 'surveyReminder',
         message: {
-          from: infoEmail,
-          replyTo: infoEmail,
+          from: nomsEmail,
           to: recEmail(emailAddress),
         },
         locals: {
@@ -161,8 +156,7 @@ function sendHIPAAReminder(emailAddress, fullName) {
       {
         template: 'hipaaReminder',
         message: {
-          from: infoEmail,
-          replyTo: infoEmail,
+          from: nomsEmail,
           to: recEmail(emailAddress),
         },
         locals: {
@@ -176,13 +170,12 @@ function sendHIPAAReminder(emailAddress, fullName) {
 
 function sendHIPAAProvider(nomination) {
   email
-    .send(
-      {
-        template: 'hipaaProvider',
-        message: {
-          from: infoEmail,
-          replyTo: infoEmail,
-          to: recEmail(nomination.providerEmailAddress),
+   .send(
+    {
+      template: 'hipaaProvider',
+      message: {
+        from: nomsEmail,
+        to: recEmail(nomination.providerEmailAddress),
         },
         locals: {
           name: nomination.patientName,
@@ -199,7 +192,7 @@ function sendSurveySocialWorker(nomination) {
     .send({
       template: 'surveySocialWorker',
       message: {
-        from: formmasterEmail,
+        from: nomsEmail,
         to: recEmail(nomination.providerEmailAddress),
       },
       locals: {
