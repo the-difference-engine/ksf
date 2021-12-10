@@ -1,6 +1,6 @@
 const { validate: uuidValidate } = require('uuid');
 const sequelize = require('sequelize');
-const { ValidationError, where } = require('sequelize');
+const { ValidationError, where, Op } = require('sequelize');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { sendSurveyEmail } = require('../helper/mailer');
@@ -127,11 +127,18 @@ const updateNomination = async (req, res) => {
             where: { isActive: true },
           });
 
-          nomination.update({
-            readyForBoardReviewTimestamp: Date(),
-            declinedTimestamp: Date(),
-            grantCycleId: grant.id,
-          });
+          if (nomination.dataValues.readyForBoardReviewTimestamp == null) {
+            nomination.update({
+              readyForBoardReviewTimestamp: Date(),
+              declinedTimestamp: Date(),
+              grantCycleId: grant.id,
+            })
+          } else {
+            nomination.update({
+              declinedTimestamp: Date(),
+              grantCycleId: grant.id,
+            })
+          };
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
@@ -149,8 +156,9 @@ const updateNomination = async (req, res) => {
           const state = states.getStateCodeByStateName(
             nomination.hospitalState,
           );
+          const city = nomination.hospitalCity;
 
-          const applicationName = `${lastName}-${state}`;
+          const applicationName = `${lastName}, ${city}, ${state}`;
           let driveFolderId = await createFolder(applicationName, nomination);
 
           await nomination.update({
@@ -317,7 +325,8 @@ const getAwaitingHipaa = async () => {
         ? nomination.patientName.split(' ')[1]
         : '';
       const state = states.getStateCodeByStateName(nomination.hospitalState);
-      const applicationName = `${lastName}-${state}`;
+      const city = nomination.hospitalCity;
+      const applicationName = `${lastName}, ${city}, ${state}`;
       applicationsAwait[applicationName] = nomination.id;
     });
   }
@@ -332,7 +341,8 @@ const getVerifiedNoms = async () => {
         ? nomination.patientName.split(' ')[1]
         : '';
       const state = states.getStateCodeByStateName(nomination.hospitalState);
-      const applicationName = `${lastName}-${state}`;
+      const city = nomination.hospitalCity;
+      const applicationName = `${lastName}, ${city}, ${state}`;
       applicationsAwait[applicationName] = nomination.id;
     });
   }

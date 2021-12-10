@@ -63,9 +63,7 @@ module.exports = function gsheetToDB() {
             dischargeDate: nomination[32],
             patientDiagnosis: nomination[34],
             grantRequestInfo: nomination[35],
-            amountRequestedCents: parseInt(
-              parseFloat(nomination[37].replace(/\$/g, '')) * 100
-            ),
+            amountRequestedCents: parseFloat(nomination[37].replace("$", "").replace(",", "") ) * 100,
           },
         });
         //db.Nomination.findOrCreate returns a promise that when fulfilled returns an array with two elements 
@@ -75,7 +73,7 @@ module.exports = function gsheetToDB() {
           let nom = await db.Nomination.findOne({
             where: {
               emailValidated: true,
-              providerEmailAddress: nomination[12],
+              providerEmailAddress: array[0].dataValues.providerEmailAddress,
             },
           });
           if (nom === null) {
