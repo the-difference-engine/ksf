@@ -45,7 +45,7 @@ const getNominationById = async (req, res) => {
 };
 const findAllNominations = async (req, res) => {
   try {
-    const nominations = await db.Nomination.findAll();
+    const nominations = await db.Nomination.findAll({ where: { emailValidated: true } });
     if (nominations.length) {
       return res.status(200).json(nominations);
     }
@@ -61,8 +61,7 @@ const createNomination = async (req, res) => {
     const newNomination = await db.Nomination.create(req.body);
     const nominations = await db.Nomination.findAll();
     const hasProviderBeenValidated = nominations.some(
-      (nom) =>
-        nom.providerEmailAddress === providerEmailAddress && nom.emailValidated
+      (nom) => nom.providerEmailAddress === providerEmailAddress && nom.emailValidated,
     );
     if (!hasProviderBeenValidated) {
       verifyHcEmail(newNomination.dataValues);
@@ -117,9 +116,9 @@ const updateNomination = async (req, res) => {
         console.log('Nomination Not Found', err);
         return res.status(400);
       });
-    //can continue using additional conditional to use other email functions,
-    //depending on status of application
-    //current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
+    // can continue using additional conditional to use other email functions,
+    // depending on status of application
+    // current nominations don't have decline status, that should come after nominations hit ready for board review. TBD
     if (nomination.changed('status')) {
       if (nomination.status === NOMINATION_STATUS.declined) {
         try {
@@ -132,13 +131,13 @@ const updateNomination = async (req, res) => {
               readyForBoardReviewTimestamp: Date(),
               declinedTimestamp: Date(),
               grantCycleId: grant.id,
-            })
+            });
           } else {
             nomination.update({
               declinedTimestamp: Date(),
               grantCycleId: grant.id,
-            })
-          };
+            });
+          }
         } catch (error) {
           console.log(
             'Error declining nomination. Could not record readyForBoardReviewTimestamp ',
@@ -159,11 +158,11 @@ const updateNomination = async (req, res) => {
           const city = nomination.hospitalCity;
 
           const applicationName = `${lastName}, ${city}, ${state}`;
-          let driveFolderId = await createFolder(applicationName, nomination);
+          const driveFolderId = await createFolder(applicationName, nomination);
 
           await nomination.update({
             awaitingHipaaTimestamp: Date(),
-            driveFolderId: driveFolderId,
+            driveFolderId,
           });
 
           const updatedNomination = await db.Nomination.findOne({
