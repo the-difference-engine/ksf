@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/pages/Login/index';
 import Home from './components/pages/Home/index';
 import SearchResults from './components/SearchResultsCard';
+import { GoogleAccessTokenProvider } from './utils/context/GoogleBtnContext'
 import { NominationsDataProvider } from './utils/context/NominationsContext';
 import { SearchResultDataProvider } from './utils/context/SearchResultsContext';
 import SearchHealthProvider from './components/nominationInfo/healthProviderSearch/index';
@@ -16,22 +17,24 @@ import './App.css';
 ReactDOM.render(
   <Router>
     <React.StrictMode>
-      <Switch>
-        <NominationsDataProvider>
-          <SearchResultDataProvider>
-            <ActiveNominationProvider>
-              <Route exact path={'/login'} component={Login} />
-              <Route exact path={'/searchresults'} component={SearchResults} />
-              <Route exact path={'/searchhealthprovider/:id'} component={SearchHealthProvider} />
-              <Route exact path="/nomination/:id" component={NominationsPage} />
-              <Route exact path={['/', '/home']} component={Home} />
-              <Route exact path={'/email-verification/:token'} component={VerifyEmail} />
-              {/* <Route path={'*'} component={Home} /> */}
-              {/* redirect nonavailable urls to home component */}
-            </ActiveNominationProvider>
-          </SearchResultDataProvider>
-        </NominationsDataProvider>
-      </Switch>
+      <GoogleAccessTokenProvider>
+        <Switch>
+            <NominationsDataProvider>
+              <SearchResultDataProvider>
+                <ActiveNominationProvider>
+                  <Route exact path={'/login'} component={Login} />
+                  <Route exact path={'/searchresults'} component={SearchResults} />
+                  <Route exact path={'/searchhealthprovider/:id'} component={SearchHealthProvider} />
+                  <Route exact path="/nomination/:id" component={NominationsPage} />
+                  <Route exact path={['/', '/home']} component={Home} />
+                  <Route exact path={'/email-verification/:token'} component={VerifyEmail} />
+                  {/* <Route path={'*'} component={Home} /> */}
+                  {/* redirect nonavailable urls to home component */}
+                </ActiveNominationProvider>
+              </SearchResultDataProvider>
+            </NominationsDataProvider>
+        </Switch>
+      </GoogleAccessTokenProvider>
     </React.StrictMode>
   </Router>,
   document.getElementById('root')

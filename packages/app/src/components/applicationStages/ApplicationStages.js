@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ActiveNominationContext } from '../../utils/context/ActiveNominationContext';
+
+// import { GoogleAccessTokenContext } from '../../utils/context/GoogleBtnContext';
 // importing activeNominationContext has attribute status
 import nominationsAPI from '../../utils/API/nominationsAPI';
 import './style.css';
@@ -7,9 +9,12 @@ import MarkStageAsComplete from './modals/MarkStageAsCompleteModal';
 
 const ApplicationStages = () => {
   const [activeNomination, setActiveNomination] = useContext(ActiveNominationContext);
+  // const [googleAccessToken, setGoogleAccessToken] = useContext(GoogleAccessTokenContext);
   const [currentStatus, setCurrentStatus] = useState();
   // status array is used as the param in
   const status = ['Received', 'Awaiting HIPAA', 'HIPAA Verified', 'Document Review', 'Ready for Board Review'];
+  
+  // console.log("checking google access token in application stages", googleAccessToken);
 
   useEffect(() => {
     setCurrentStatus(capitalize(activeNomination.status));

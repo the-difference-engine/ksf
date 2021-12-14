@@ -1,66 +1,68 @@
-import React, { Component } from "react";
+import React, { useState, useContext, useEffect } from "react";
+
 import { Redirect } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
+import Cookies from 'universal-cookie';
+// import {GoogleAccessTokenContext} from '../../../../utils/context/GoogleBtnContext'
 import style from '../style.css'
 
-class GoogleBtn extends Component {
-  state = {
-    isLogined: false,
-    accessToken: ""
-  };
+const GoogleBtn = () => {
+  // const [googleAccessToken, setGoogleAccessToken] = useContext(GoogleAccessTokenContext);
+  const [isLogined, setIsLogined] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
 
-  login = (response) => {
-    if (response.accessToken) {
-      this.setState((state) => ({
-        isLogined: true,
-        accessToken: response.accessToken
-      }));
+
+
+  const login = (response) => {
+    if (response) {
+      console.log("tokenId:", response.tokenId, 'response:', response)
+      setIsLogined(true)
+      setAccessToken(response.accessToken)
+      const cookies = new Cookies();
+      cookies.set('gAuth', response.tokenId, { path: '/' });
     }
   };
 
-  logout = (response) => {
-    this.setState((state) => ({
-      isLogined: false,
-      accessToken: ""
-    }));
+  const logout = (response) => {
+    setIsLogined(true)
+    setAccessToken("")
+    // setGoogleAccessToken("")
   };
   
 
-  handleLoginFailure = (response) => {
+  const handleLoginFailure = (response) => {
     alert("Failed to log in");
   };
 
-  handleLogoutFailure = (response) => {
+  const handleLogoutFailure = (response) => {
     alert("Failed to log out");
   };
 
-  render() {
-    return (
-      <div>
-        {this.state.isLogined ? (
-          <GoogleLogout
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText="Logout"
-            className="google-logout"
-            onLogoutSuccess={this.logout}
-            onFailure={this.handleLogoutFailure}
-          ></GoogleLogout>
-        ) : (
-          <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            className="google-login"
-            buttonText="Sign in with Google"
-            onSuccess={this.login}
-            onFailure={this.handleLoginFailure}
-            cookiePolicy={"single_host_origin"}
-            responseType="code,token"
-          />
-        )}
-        {this.state.accessToken
-          ? <Redirect to='/' /> : null}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {isLogined ? (
+        <GoogleLogout
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Logout"
+          className="google-logout"
+          onLogoutSuccess={logout}
+          onFailure={handleLogoutFailure}
+        ></GoogleLogout>
+      ) : (
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          className="google-login"
+          buttonText="Sign in with Google"
+          onSuccess={login}
+          onFailure={handleLoginFailure}
+          cookiePolicy={"single_host_origin"}
+          responseType="code,token"
+        />
+      )}
+      {accessToken
+        ? <Redirect to='/' /> : null}
+    </div>
+  );
 }
 
 export default GoogleBtn;

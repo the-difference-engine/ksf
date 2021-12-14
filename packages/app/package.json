@@ -72,6 +72,7 @@
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "2.3.5",
     "ts-pnp": "1.1.6",
+    "universal-cookie": "^4.0.4",
     "url-loader": "2.3.0",
     "us-state-codes": "^1.1.2",
     "webpack": "4.42.0",

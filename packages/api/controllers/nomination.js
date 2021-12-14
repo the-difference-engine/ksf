@@ -14,9 +14,10 @@ const { sendHIPAAEmail } = require('../helper/mailer');
 const { sendHIPAAProvider } = require('../helper/mailer');
 const { sendSurveySocialWorker } = require('../helper/mailer');
 const gsheetToDB = require('../helper/nominationGsheetToDB');
-
+const { google } = require('googleapis');
 const { Op } = sequelize;
 const getGmailAuthUrl = require('../helper/gmailAPI');
+const { functions } = require('../helper/tokenVerification')
 
 const NOMINATION_STATUS = {
   received: 'received',
@@ -188,6 +189,13 @@ const updateNomination = async (req, res) => {
   }
 };
 const syncNominations = async (req, res) => {
+  
+
+  functions.gValidate(req.header('authorization'));
+  
+
+  console.log('=================================================================',functions.gValidate(req.header('authorization')),'===============================================================================');
+
   try {
     gsheetToDB();
     console.log('nominations synced successfully');
